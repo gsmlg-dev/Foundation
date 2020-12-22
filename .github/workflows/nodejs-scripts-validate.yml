@@ -46,8 +46,9 @@ jobs:
         run: npm run validate
 
       - name: ⬆️ Upload coverage report
-        working-directory: 'nodejs/packages/scripts'
         uses: codecov/codecov-action@v1
+        with:
+          directory: 'nodejs/packages/scripts/coverage/reports/'
 
   release:
     needs: main
@@ -72,9 +73,9 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
-        working-directory: 'nodejs/packages/scripts'
         with:
           useLockFile: false
+          working-directory: 'nodejs/packages/scripts'
 
       - name: 🏗 Run build script
         working-directory: 'nodejs/packages/scripts'
