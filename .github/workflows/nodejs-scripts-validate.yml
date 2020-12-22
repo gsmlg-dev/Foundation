@@ -2,7 +2,7 @@ name: nodejs-scripts-validate
 on:
   push:
     paths:
-      #  - 'nodejs/packages/scripts'
+      - 'nodejs/packages/scripts'
     branches:
       - '+([0-9])?(.{+([0-9]),x}).x'
       - 'master'
