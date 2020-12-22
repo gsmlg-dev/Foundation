@@ -1,6 +1,8 @@
-name: validate
+name: nodejs-scripts-validate
 on:
   push:
+    paths:
+      - 'nodejs/packages/scripts'
     branches:
       - '+([0-9])?(.{+([0-9]),x}).x'
       - 'master'
@@ -16,8 +18,8 @@ jobs:
     if: ${{ !contains(github.head_ref, 'all-contributors') }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [10.18, 12, 14, 15]
+        os: [ubuntu-latest, macos-latest]
+        node: [12, 14, 15]
     runs-on: ${{ matrix.os }}
     steps:
       - name: 🛑 Cancel Previous Runs
@@ -35,20 +37,23 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
+        working-directory: 'nodejs/packages/scripts'
         with:
           useLockFile: false
 
       - name: ▶️ Run validate script
+        working-directory: 'nodejs/packages/scripts'
         run: npm run validate
 
       - name: ⬆️ Upload coverage report
+        working-directory: 'nodejs/packages/scripts'
         uses: codecov/codecov-action@v1
 
   release:
     needs: main
     runs-on: ubuntu-latest
     if:
-      ${{ github.repository == 'gsmlg/gsmlg-scripts' &&
+      ${{ github.repository == 'gsmlg/Foundation' &&
       contains('refs/heads/master,refs/heads/beta,refs/heads/next,refs/heads/alpha',
       github.ref) && github.event_name == 'push' }}
     steps:
@@ -67,13 +72,16 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
+        working-directory: 'nodejs/packages/scripts'
         with:
           useLockFile: false
 
       - name: 🏗 Run build script
+        working-directory: 'nodejs/packages/scripts'
         run: npm run build
 
       - name: 🚀 Release
+        working-directory: 'nodejs/packages/scripts'
         uses: cycjimmy/semantic-release-action@v2
         with:
           semantic_version: 17
