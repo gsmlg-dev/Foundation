@@ -1,0 +1,122 @@
+{
+  "name": "@gsmlg/scripts",
+  "version": "v7.7.0",
+  "description": "CLI for common scripts for my projects",
+  "engines": {
+    "node": ">=10.18",
+    "npm": ">=6",
+    "yarn": ">=1"
+  },
+  "bin": {
+    "@gsmlg/scripts": "dist/index.js"
+  },
+  "scripts": {
+    "test": "node src test",
+    "test:update": "node src test --updateSnapshot",
+    "build": "node src build",
+    "lint": "node src lint",
+    "format": "node src format",
+    "validate": "node src validate"
+  },
+  "files": [
+    "dist",
+    "babel.js",
+    "config.js",
+    "eslint.js",
+    "husky.js",
+    "jest.js",
+    "prettier.js",
+    "shared-tsconfig.json"
+  ],
+  "keywords": [],
+  "author": "Jonathan Gao <me@gsmlg.org> (https://gsmlg.com)",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "@babel/preset-typescript": "^7.12.7",
+    "@babel/runtime": "^7.12.5",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "@rollup/plugin-replace": "^2.3.4",
+    "@types/jest": "^26.0.16",
+    "arrify": "^2.0.1",
+    "babel-jest": "^26.6.3",
+    "babel-plugin-macros": "^3.0.0",
+    "babel-plugin-minify-dead-code-elimination": "^0.5.1",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "browserslist": "^4.14.7",
+    "chalk": "^4.1.0",
+    "concurrently": "^5.3.0",
+    "cosmiconfig": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "cross-spawn": "^7.0.3",
+    "doctoc": "^1.4.0",
+    "eslint": "^7.14.0",
+    "eslint-config-kentcdodds": "^17.2.0",
+    "eslint-config-prettier": "^6.15.0",
+    "glob": "^7.1.6",
+    "husky": "^4.3.0",
+    "is-ci": "^2.0.0",
+    "jest": "^26.6.3",
+    "jest-serializer-path": "^0.1.15",
+    "jest-watch-typeahead": "^0.6.1",
+    "lint-staged": "^10.5.2",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.has": "^4.5.2",
+    "lodash.omit": "^4.5.0",
+    "mkdirp": "^1.0.4",
+    "prettier": "2.2.1",
+    "read-pkg-up": "^7.0.1",
+    "resolve": "^1.19.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.34.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-size-snapshot": "^0.12.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "semver": "^7.3.4",
+    "which": "^2.0.2",
+    "yargs-parser": "^20.2.4"
+  },
+  "eslintConfig": {
+    "extends": [
+      "kentcdodds",
+      "kentcdodds/jest"
+    ],
+    "rules": {
+      "no-process-exit": "off",
+      "import/no-dynamic-require": "off",
+      "import/no-unassigned-import": "off",
+      "no-console": "off",
+      "no-nested-ternary": "off",
+      "no-useless-catch": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gsmlg/@gsmlg/scripts"
+  },
+  "bugs": {
+    "url": "https://github.com/gsmlg/@gsmlg/scripts/issues"
+  },
+  "homepage": "https://github.com/gsmlg/@gsmlg/scripts#readme",
+  "devDependencies": {
+    "jest-in-case": "^1.0.2",
+    "slash": "^3.0.0"
+  }
+}
