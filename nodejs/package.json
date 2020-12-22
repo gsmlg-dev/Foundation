@@ -1,0 +1,16 @@
+{
+  "name": "@gsmlg/base",
+  "version": "0.0.0-semantically-released",
+  "description": "My packages base.",
+  "main": "main.js",
+  "repository": "https://github.com/gsmlg/Foundation",
+  "author": "Jonathan Gao",
+  "license": "GPLv3",
+  "private": true,
+  "workspaces": [
+     "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}
