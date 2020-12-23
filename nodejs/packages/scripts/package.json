@@ -109,12 +109,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gsmlg/@gsmlg/scripts"
+    "url": "https://github.com/gsmlg/Foundation"
   },
   "bugs": {
-    "url": "https://github.com/gsmlg/@gsmlg/scripts/issues"
+    "url": "https://github.com/gsmlg/Foundation/issues"
   },
-  "homepage": "https://github.com/gsmlg/@gsmlg/scripts#readme",
+  "homepage": "https://github.com/gsmlg/Foundation/tree/master/nodejs/packages/scripts#readme",
   "devDependencies": {
     "jest-in-case": "^1.0.2",
     "slash": "^3.0.0"
