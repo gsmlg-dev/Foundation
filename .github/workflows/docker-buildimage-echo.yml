@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths:
       - 'docker/echo/**'
+      - '.github/workflows/docker-buildimage-echo.yml'
 
 jobs:
   buildx:
@@ -21,7 +22,7 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          version: buildx-version
 
       - name: Login to Docker Hub
         run: docker login --username ${{ secrets.DOCKERHUB_USER }} --password ${{ secrets.DOCKERHUB_PASSWD }}

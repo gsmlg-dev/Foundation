@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'nodejs/packages/scripts/**'
+      - '.github/workflows/nodejs-scripts-validate-and-release.yml'
     branches:
       - '+([0-9])?(.{+([0-9]),x}).x'
       - 'master'
