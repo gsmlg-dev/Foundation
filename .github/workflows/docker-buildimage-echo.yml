@@ -1,0 +1,36 @@
+name: docker-buildimage-echo
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'docker/echo/**'
+
+jobs:
+  buildx:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'docker/echo'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+
+      - name: Login to Docker Hub
+        run: docker login --username ${{ secrets.DOCKERHUB_USER }} --password ${{ secrets.DOCKERHUB_PASSWD }}
+
+      - name: Run Buildx
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6 \
+            --push \
+            . \
+            -t gsmlg/echo:latest
+
