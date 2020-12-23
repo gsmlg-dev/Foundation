@@ -6,6 +6,16 @@
 
 ---
 
+## Commands
+
+- `build`
+- `format`
+- `lint.js`
+- `pre-commit`
+- `test`
+- `typecheck`
+- `validate`
+
 <!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
