@@ -82,7 +82,7 @@ jobs:
         run: npm run build
 
       - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v2
+        uses: gsmlg/semantic-release-action@v2
         with:
           working-directory: 'nodejs/packages/scripts'
           semantic_version: 17
