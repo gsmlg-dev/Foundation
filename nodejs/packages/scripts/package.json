@@ -8,7 +8,7 @@
     "yarn": ">=1"
   },
   "bin": {
-    "@gsmlg/scripts": "dist/index.js"
+    "gsmlg-scripts": "dist/index.js"
   },
   "scripts": {
     "test": "node src test",
