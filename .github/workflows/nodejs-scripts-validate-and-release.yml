@@ -1,4 +1,4 @@
-name: nodejs-scripts-validate
+name: nodejs-scripts-validate-and-release
 on:
   push:
     paths:
