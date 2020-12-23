@@ -4,8 +4,18 @@ My personal foundation.
 
 This repo will include all my public software, scripts, configs and CI system.
 
+## What is this repo?
 
-### Commit Message Type
+My github repo aggregation.
+
+I've manage too many repositories, that I have to combine them to one so that I can manage them easily.
+
+## Repos
+
+- [nodejs](nodejs)
+    - [scripts](nodejs/scripts)
+
+## Commit Message Type
 Must be one of the following:
 
 * feat: A new feature
