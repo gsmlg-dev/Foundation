@@ -1,6 +1,7 @@
 FROM ubuntu:20.04
 
-RUN apt update && apt install -y curl ca-certificates
+RUN apt update && apt install -y curl ca-certificates zsh && \
+    useradd coder --create-home --shell /bin/zsh
 
 COPY install.sh /tmp/install.sh
 
@@ -8,6 +9,8 @@ RUN /tmp/install.sh --prefix=/usr/local --version 3.8.0
 
 RUN rm -rf /root/.cache && rm -rf /tmp
 
+WORKDIR /home/coder
+USER coder
 
-# CMD ["/usr/local/bin/code-server"]
-
+ENTRYPOINT ["/usr/bin/code-server"]
+CMD ["--disable-update-check", "--bind-addr", "0.0.0.0:8080", "--disable-telemetry"]
