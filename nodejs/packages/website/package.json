@@ -12,7 +12,8 @@
     "@material-ui/icons": "^4.11.2",
     "next": "10.0.4",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "rxjs": "^6.6.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.16",
