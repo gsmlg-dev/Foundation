@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { P } from './P';
-import { Helmet } from 'react-helmet-async';
+import {P} from './P';
+import {Helmet} from 'react-helmet-async';
 
 export function NotFoundPage() {
   return (
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   margin-top: -8vh;
   font-weight: bold;
-  color: ${p => p.theme.text};
+  color: ${(p) => p.theme.text};
   font-size: 3.375rem;
 
   span {

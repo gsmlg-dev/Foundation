@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,9 +14,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     minHeight: '100vh',
@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   copyright: {},
 }));
 
-const Layout = ({ children, menus = [] }, ref) => {
+const Layout = ({children, menus = []}, ref) => {
   const classes = useStyles();
   const requestPerm = React.useCallback(() => {
     Notification.requestPermission();
@@ -68,13 +68,9 @@ const Layout = ({ children, menus = [] }, ref) => {
             <MenuIcon />
           </IconButton>
           <Typography type="title" color="inherit" className={classes.flex}>
-            {menus.map(({ name, href, }) => (
-              <Button
-                color="inherit"
-              >
-                <Link href={href}>
-                  {name}
-                </Link>
+            {menus.map(({name, href}) => (
+              <Button key={name} color="inherit">
+                <Link href={href}>{name}</Link>
               </Button>
             ))}
           </Typography>
