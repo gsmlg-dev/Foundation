@@ -5,7 +5,6 @@
  */
 
 import React from 'react';
-// import styled from 'styled-components';
 import { makeStyles } from '@material-ui/styles';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -50,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   copyright: {},
 }));
 
-const Layout = ({ children }, ref) => {
+const Layout = ({ children, menus = [] }, ref) => {
   const classes = useStyles();
   const requestPerm = React.useCallback(() => {
     Notification.requestPermission();
@@ -69,46 +68,15 @@ const Layout = ({ children }, ref) => {
             <MenuIcon />
           </IconButton>
           <Typography type="title" color="inherit" className={classes.flex}>
-            <Button
-              color="inherit"
-              // component={Link}
-              href="/"
-
-            >
-              Home
-            </Button>
-            <Button
-              color="inherit"
-              // component={Link}
-              href="/blogs"
-
-            >
-              Blog
-            </Button>
-            <Button
-              color="inherit"
-              // component={Link}
-              href="/Presentation"
-
-            >
-              Presentation
-            </Button>
-            <Button
-              color="inherit"
-              // component={Link}
-              href="/tools"
-
-            >
-              Tools
-            </Button>
-            <Button
-              color="inherit"
-              // component={Link}
-              href="/games"
-
-            >
-              Games
-            </Button>
+            {menus.map(({ name, href, }) => (
+              <Button
+                color="inherit"
+              >
+                <Link href={href}>
+                  {name}
+                </Link>
+              </Button>
+            ))}
           </Typography>
         </Toolbar>
       </AppBar>
