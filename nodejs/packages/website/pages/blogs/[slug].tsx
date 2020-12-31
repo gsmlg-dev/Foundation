@@ -28,11 +28,20 @@ const menus = [
   { name: 'Blog', href: '/blogs' },
 ];
 
+interface BlogStruct {
+  id: number;
+  author: string;
+  title: string;
+  name: string;
+  date: string;
+  content: string;
+}
+
 export default function Blog() {
   const classes = useStyles();
   const router = useRouter();
   const { slug } = router.query;
-  const [blog, setBlog] = useState({});
+  const [blog, setBlog] = useState({} as BlogStruct);
 
   useEffect(() => {
     if (slug === undefined) return null;
