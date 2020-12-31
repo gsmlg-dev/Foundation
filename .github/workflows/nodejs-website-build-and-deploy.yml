@@ -1,0 +1,45 @@
+name: nodejs-website-build-and-deploy
+on:
+  push:
+    paths:
+      - "nodejs/packages/website/**"
+      - ".github/workflows/nodejs-website-build-and-deploy.yml"
+    branches:
+      - "+([0-9])?(.{+([0-9]),x}).x"
+      - "master"
+      - "next"
+      - "next-major"
+      - "beta"
+      - "alpha"
+      - "!all-contributors/**"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: "nodejs/packages/website"
+
+      - name: 🏗 Run build script
+        working-directory: "nodejs/packages/website"
+        run: npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: "nodejs/packages/website/build" # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
+          REPOSITORY_NAME: "gsmlg/gsmlg.github.io"
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
