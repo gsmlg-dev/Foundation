@@ -34,10 +34,16 @@ jobs:
         working-directory: "nodejs/packages/website"
         run: npm run build
 
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SSH: true
           BRANCH: master # The branch the action should deploy to.
           FOLDER: "nodejs/packages/website/build" # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
