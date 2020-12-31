@@ -4,10 +4,12 @@ import path from 'path'
 import Head from 'next/head';
 import { makeStyles } from '@material-ui/styles';
 
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+
+import gfm from 'remark-gfm'
 
 import Layout from 'components/Layout';
 
@@ -59,7 +61,7 @@ export default function Blog({ blog }) {
         </header>
         <Divider />
         <Typography className="blog-content" component="section">
-          <ReactMarkdown>{blog.content}</ReactMarkdown>
+          <ReactMarkdown plugins={[gfm]}>{blog.content}</ReactMarkdown>
         </Typography>
       </Paper>
     </Layout>
