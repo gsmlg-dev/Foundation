@@ -4,5 +4,5 @@ module.exports = {
   serverRuntimeConfig: {
     PROJECT_ROOT: __dirname
   },
-  assetPrefix: '/'
+  assetPrefix: '/static'
 }
