@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <Layout menus={menus}>
       <Head>
-        <title>Create Next App</title>
+        <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper className={classes.root} elevation={4}>

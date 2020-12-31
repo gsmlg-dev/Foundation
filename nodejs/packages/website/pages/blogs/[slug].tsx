@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
+import fs from 'fs'
+import path from 'path'
+
 import Head from 'next/head';
 import { makeStyles } from '@material-ui/styles';
-
-import { timer, of } from 'rxjs';
-import { fromFetch } from 'rxjs/fetch';
-import { switchMap, catchError, takeUntil } from 'rxjs/operators';
 
 import ReactMarkdown from 'react-markdown'
 import Paper from '@material-ui/core/Paper';
@@ -12,7 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
 import Layout from 'components/Layout';
-import { useRouter } from 'next/router';
+
+import blogList from 'blogList';
 
 const useStyles = makeStyles((theme: any) => ({
   root: theme.mixins.gutters({
@@ -34,43 +33,16 @@ interface BlogStruct {
   title: string;
   name: string;
   date: string;
-  content: string;
+  content: string | null;
 }
 
-export default function Blog() {
+export default function Blog({ blog }) {
   const classes = useStyles();
-  const router = useRouter();
-  const { slug } = router.query;
-  const [blog, setBlog] = useState({} as BlogStruct);
-
-  useEffect(() => {
-    if (slug === undefined) return null;
-    const ob = fromFetch(`/api/blogs/${slug}`)
-      .pipe(
-        switchMap((resp) => {
-          if (resp.ok)
-            return resp.json();
-          else {
-            return of({ error: true, message: `Error ${resp.status}` });
-          }
-        }),
-        catchError(err => {
-          // Network or other error, handle appropriately
-          console.error(err);
-          return of({ error: true, message: err.message })
-        }),
-        takeUntil(timer(5e3))
-      );
-    const subscriber = ob.subscribe((data) => {
-      setBlog(data);
-    });
-    return () => subscriber.unsubscribe();
-  }, [slug]);
 
   return (
     <Layout menus={menus}>
       <Head>
-        <title>{blog && blog.title ? blog.title : slug}</title>
+        <title>{blog && blog.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper className={classes.root} elevation={4}>
@@ -92,4 +64,33 @@ export default function Blog() {
       </Paper>
     </Layout>
   );
+}
+
+export async function getStaticPaths() {
+  const paramsList = blogList.map(({ name }) => ({
+    params: { slug: name },
+  }));
+
+  return {
+    paths: paramsList,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const { slug } = params;
+  const blog = blogList.find((b) => b.name === slug);
+  const blogDir = path.join(process.cwd(), 'data/blogs');
+  const blogPath = `${blogDir}/${slug}.md`;
+  const content = fs.readFileSync(blogPath, { encoding: 'utf-8', flag: 'r' });
+
+  return {
+    props: {
+      slug,
+      blog: {
+        ...blog,
+        content,
+      },
+    },
+  }
 }

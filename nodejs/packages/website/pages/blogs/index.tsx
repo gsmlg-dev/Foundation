@@ -2,13 +2,8 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { makeStyles } from '@material-ui/styles';
 
-import { timer, of } from 'rxjs';
-import { fromFetch } from 'rxjs/fetch';
-import { switchMap, catchError, takeUntil } from 'rxjs/operators';
-
 import Link from 'next/link';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -16,6 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import WebIcon from '@material-ui/icons/Web';
 
 import Layout from 'components/Layout';
+
+import blogList from 'blogList';
 
 const useStyles = makeStyles((theme: any) => ({
   root: theme.mixins.gutters({
@@ -35,36 +32,14 @@ const menus = [
   { name: 'Blog', href: '/blogs' },
 ];
 
-export default function BlogList() {
+export default function BlogList({ blogs, ...props }) {
   const classes = useStyles();
-  const [blogs, setBlogs] = useState([]);
-  useEffect(() => {
-    const ob = fromFetch('/api/blogs')
-      .pipe(
-        switchMap((resp) => {
-          if (resp.ok)
-            return resp.json();
-          else {
-            return of({ error: true, message: `Error ${resp.status}` });
-          }
-        }),
-        catchError(err => {
-          // Network or other error, handle appropriately
-          console.error(err);
-          return of({ error: true, message: err.message })
-        }),
-        takeUntil(timer(5e3))
-      );
-    const subscriber = ob.subscribe((data) => {
-      setBlogs(data);
-    });
-    return () => subscriber.unsubscribe();
-  }, []);
-
+  console.log(props);
+  if (!blogs) return null;
   return (
     <Layout menus={menus}>
       <Head>
-        <title>Create Next App</title>
+        <title>Blog List</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper className={classes.root} elevation={4}>
@@ -86,4 +61,13 @@ export default function BlogList() {
       </Paper>
     </Layout>
   );
+}
+
+export async function getStaticProps(context) {
+
+  return {
+    props: {
+      blogs: blogList,
+    }, // will be passed to the page component as props
+  }
 }
