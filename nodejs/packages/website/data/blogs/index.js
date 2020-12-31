@@ -1,10 +1,4 @@
-export default (req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(blogs.slice().reverse()));
-}
-
-export const blogs = [];
+const blogs = [];
 
 blogs.push({
   id: 1,
@@ -397,3 +391,5 @@ blogs.push({
   date: '2020-11-03',
   author: 'Gao',
 });
+
+export default blogs;

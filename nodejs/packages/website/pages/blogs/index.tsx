@@ -17,7 +17,7 @@ import WebIcon from '@material-ui/icons/Web';
 
 import Layout from 'components/Layout';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: theme.mixins.gutters({
     flex: 1,
     paddingTop: 16,
@@ -35,7 +35,7 @@ const menus = [
   { name: 'Blog', href: '/blogs' },
 ];
 
-export default function Home() {
+export default function BlogList() {
   const classes = useStyles();
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
@@ -73,7 +73,6 @@ export default function Home() {
             (blog): JSX.Element => (
               <ListItem
                 key={blog.name}
-                component={'a'}
               >
                 <ListItemIcon>
                   <WebIcon />

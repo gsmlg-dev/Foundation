@@ -6,28 +6,21 @@ import { timer, of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { switchMap, catchError, takeUntil } from 'rxjs/operators';
 
-import Link from 'next/link';
+import ReactMarkdown from 'react-markdown'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import WebIcon from '@material-ui/icons/Web';
+import Divider from '@material-ui/core/Divider';
 
 import Layout from 'components/Layout';
+import { useRouter } from 'next/router';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: theme.mixins.gutters({
     flex: 1,
     paddingTop: 16,
     paddingBottom: 16,
     margin: theme.spacing(3),
   }),
-  text: {
-    fontSize: '3rem',
-    transition: '3000ms all',
-  },
 }));
 
 const menus = [
@@ -35,11 +28,15 @@ const menus = [
   { name: 'Blog', href: '/blogs' },
 ];
 
-export default function Home() {
+export default function Blog() {
   const classes = useStyles();
-  const [blogs, setBlogs] = useState([]);
+  const router = useRouter();
+  const { slug } = router.query;
+  const [blog, setBlog] = useState({});
+
   useEffect(() => {
-    const ob = fromFetch('/api/blogs')
+    if (slug === undefined) return null;
+    const ob = fromFetch(`/api/blogs/${slug}`)
       .pipe(
         switchMap((resp) => {
           if (resp.ok)
@@ -56,34 +53,33 @@ export default function Home() {
         takeUntil(timer(5e3))
       );
     const subscriber = ob.subscribe((data) => {
-      setBlogs(data);
+      setBlog(data);
     });
     return () => subscriber.unsubscribe();
-  }, []);
+  }, [slug]);
 
   return (
     <Layout menus={menus}>
       <Head>
-        <title>Create Next App</title>
+        <title>{blog && blog.title ? blog.title : slug}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper className={classes.root} elevation={4}>
-        <List>
-          {blogs.map(
-            (blog): JSX.Element => (
-              <ListItem
-                key={blog.name}
-                component={'a'}
-              >
-                <ListItemIcon>
-                  <WebIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Link href={`/blogs/${blog.name}`}>{blog.title}</Link>} />
-                <ListItemText secondary={blog.date} />
-              </ListItem>
-            ),
-          )}
-        </List>
+        <header>
+          <Typography component="h1">{blog.title}</Typography>
+          <Typography component="div">
+            Author:
+            {blog.author}
+          </Typography>
+          <Typography component="div">
+            Created At:
+            {blog.date}
+          </Typography>
+        </header>
+        <Divider />
+        <Typography className="blog-content" component="section">
+          <ReactMarkdown>{blog.content}</ReactMarkdown>
+        </Typography>
       </Paper>
     </Layout>
   );
