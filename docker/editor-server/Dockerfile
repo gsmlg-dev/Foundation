@@ -1,8 +1,5 @@
 FROM docker.io/gsmlg/code-server:v3.8.0
 
-# Switch to root
-USER root
-
 # update package list
 RUN sudo apt update && sudo apt upgrade -y
 
@@ -20,6 +17,4 @@ RUN ARCH=`dpkg --print-architecture` && \
   sudo echo "export PATH=$PATH:/usr/local/go/bin" >> "/etc/bash.bashrc"
 
 # clean cache install
-RUN rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
-
-USER coder
+RUN sudo rm -rf /var/lib/apt/lists/* && sudo rm -rf /tmp/*
