@@ -9,8 +9,13 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
   sudo npm install -g yarn
 
 # install golang
-RUN ARCH=`sudo dpkg --print-architecture` && \
-  GO_VERSION="1.15.6" && \
+RUN GO_VERSION="1.15.6" && \
+  ARCH= && dpkgArch="$(dpkg --print-architecture)" \
+  && case "${dpkgArch##*-}" in \
+  amd64) ARCH='amd64';; \
+  arm64) ARCH='arm64';; \
+  *) echo "unsupported architecture"; exit 1 ;; \
+  esac && \
   GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz" && \
   sudo curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" && \
   sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" && \
