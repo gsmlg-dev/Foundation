@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 RUN apt update && apt install -y curl ca-certificates zsh && \
-    useradd coder --create-home --shell /bin/zsh
+  useradd coder --create-home --shell $(which zsh)
 
 COPY install.sh /tmp/install.sh
 
