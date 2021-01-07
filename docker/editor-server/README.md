@@ -5,7 +5,6 @@ My editor server
 Support language envirionent
 
 - nodejs
-- golang
 
 Editor user is `coder` without root permision
 
@@ -15,9 +14,10 @@ Mount data volume at `/home/coder` to serve persistent data.
 
 Add more language environments
 
-- [] Erlang
-- [] Elixir
-- [] PHP
-- [] Ruby
+- [ ] Erlang
+- [ ] Elixir
+- [ ] PHP
+- [ ] Ruby
+- [ ] Golang
 
 
