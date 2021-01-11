@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt update && apt install -y gnupg \
   && sed -i 's/# deb/deb/g' /etc/apt/sources.list \
-  && apt-get install -y systemd systemd-sysv \
+  && apt-get install -y systemd systemd-sysv systemctl \
   && cd /lib/systemd/system/sysinit.target.wants/ \
   && ls | grep -v systemd-tmpfiles-setup | xargs rm -f $1 \
   && rm -f /lib/systemd/system/multi-user.target.wants/* \
