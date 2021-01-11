@@ -1,0 +1,34 @@
+name: docker-buildimage-dell-poweredge
+
+on:
+  push:
+    branches: master
+    paths:
+      - "docker/dell-poweredge/**"
+      - ".github/workflows/docker-buildimage-dell-poweredge.yml"
+
+jobs:
+  path-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWD }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: docker/dell-poweredge/
+          file: docker/dell-poweredge//Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            docker.io/gsmlg/dell-poweredge:v9.5.0
+            docker.io/gsmlg/dell-poweredge:latest
