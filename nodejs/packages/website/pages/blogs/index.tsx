@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { makeStyles } from '@material-ui/styles';
 
@@ -27,35 +26,28 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-const menus = [
-  { name: 'Home', href: '/' },
-  { name: 'Blog', href: '/blogs' },
-];
-
-export default function BlogList({ blogs, ...props }) {
+export default function BlogList({ blogs = [], ...props }) {
   const classes = useStyles();
-  console.log(props);
-  if (!blogs) return null;
+
   return (
-    <Layout menus={menus}>
+    <Layout>
       <Head>
         <title>Blog List</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Paper className={classes.root} elevation={4}>
         <List>
-          {blogs.map(
-            (blog): JSX.Element => (
-              <ListItem
-                key={blog.name}
-              >
-                <ListItemIcon>
-                  <WebIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Link href={`/blogs/${blog.name}`}>{blog.title}</Link>} />
-                <ListItemText secondary={blog.date} />
-              </ListItem>
-            ),
+          {blogs.map((blog): JSX.Element => (
+            <ListItem
+              key={blog.name}
+            >
+              <ListItemIcon>
+                <WebIcon />
+              </ListItemIcon>
+              <ListItemText primary={<Link href={`/blogs/${blog.name}`}>{blog.title}</Link>} />
+              <ListItemText secondary={blog.date} />
+            </ListItem>
+          ),
           )}
         </List>
       </Paper>

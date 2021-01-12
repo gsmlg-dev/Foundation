@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import {makeStyles} from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -49,7 +49,15 @@ const useStyles = makeStyles((theme) => ({
   copyright: {},
 }));
 
-const Layout = ({children, menus = []}, ref) => {
+const menus = [
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: '/blogs' },
+  { name: 'Presentation', href: '/presentations' },
+  { name: 'Tool', href: '/tools' },
+  { name: 'Game', href: '/games' },
+];
+
+const Layout = ({ children, }, ref) => {
   const classes = useStyles();
   const requestPerm = React.useCallback(() => {
     Notification.requestPermission();
@@ -68,7 +76,7 @@ const Layout = ({children, menus = []}, ref) => {
             <MenuIcon />
           </IconButton>
           <Typography type="title" color="inherit" className={classes.flex}>
-            {menus.map(({name, href}) => (
+            {menus.map(({ name, href }) => (
               <Button key={name} color="inherit">
                 <Link href={href}>{name}</Link>
               </Button>

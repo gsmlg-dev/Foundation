@@ -20,11 +20,6 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-const menus = [
-  { name: 'Home', href: '/' },
-  { name: 'Blog', href: '/blogs' },
-];
-
 export default function Home() {
   const classes = useStyles();
   const [colors, setColors] = useState(['#000', '#000', '#000', '#000']);
@@ -43,7 +38,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Layout menus={menus}>
+    <Layout>
       <Head>
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
