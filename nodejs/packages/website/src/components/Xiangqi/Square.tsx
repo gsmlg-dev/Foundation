@@ -1,6 +1,6 @@
 import React from 'react';
 import { DropTarget } from 'react-dnd';
-import { PieceShape } from './types';
+import { PieceShape } from 'types/xiangqi';
 
 /**
  * Specifies the drop target contract.

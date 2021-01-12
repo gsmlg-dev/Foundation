@@ -24,11 +24,6 @@ const useStyles = makeStyles((theme: any) => ({
   }),
 }));
 
-const menus = [
-  { name: 'Home', href: '/' },
-  { name: 'Blog', href: '/blogs' },
-];
-
 interface BlogStruct {
   id: number;
   author: string;
@@ -42,7 +37,7 @@ export default function Blog({ blog }) {
   const classes = useStyles();
 
   return (
-    <Layout menus={menus}>
+    <Layout>
       <Head>
         <title>{blog && blog.title}</title>
         <link rel="icon" href="/favicon.ico" />

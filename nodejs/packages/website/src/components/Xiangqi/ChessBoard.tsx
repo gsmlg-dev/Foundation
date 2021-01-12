@@ -9,7 +9,7 @@ import React from 'react';
 import Square from './Square';
 import Piece from './Piece';
 
-import { PieceShape, ChessColor } from './types';
+import { PieceShape, ChessColor } from 'types/xiangqi';
 
 interface Props {
   redPieces: PieceShape[];

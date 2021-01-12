@@ -9,7 +9,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { DndProvider } from 'react-dnd';
 
-import { PieceShape, ChessColor } from './types';
+import { PieceShape, ChessColor } from 'types/xiangqi';
 import { ChessBoard } from './ChessBoard';
 import canDrop from './canDrop';
 
@@ -18,7 +18,6 @@ interface Props {
   blackPieces: PieceShape[];
   kill: (item: object) => any;
   movePiece: (item: object) => any;
-  canDrop: (item: object, pos: object, pieces: object) => Boolean;
   turn: ChessColor;
 }
 

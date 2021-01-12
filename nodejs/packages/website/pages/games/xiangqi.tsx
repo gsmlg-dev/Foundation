@@ -12,8 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Layout from 'components/Layout';
-
 import GameBoard from 'components/Xiangqi/DndContext';
+
+import { ChessColor } from 'types/xiangqi';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -42,7 +43,7 @@ function Xiangqi(props: Props) {
   const classes = useStyles();
 
   const xiangqi = {
-    turn: 'red',
+    turn: ChessColor.Red,
     redPieces: [],
     blackPieces: [],
   };

@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 function ElixirNodes(props: Props) {
   const classes = useStyles();
 
-  const elixirNodes = { name: 'self', nodes: [], from: {} };
+  const elixirNodes = { name: 'self', nodes: [], node_list: [], from: {}, isAlive: false };
 
   useEffect(() => {
 
