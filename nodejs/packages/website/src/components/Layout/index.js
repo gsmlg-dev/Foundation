@@ -93,7 +93,7 @@ const Layout = ({ children, }, ref) => {
             </>
           ) : null} */}
           <span className={classes.copyright}>
-            Copyright © 2017-2020 GSMLG - Powered by GSMLG Web.
+            Copyright © 2017-2021 GSMLG - Powered by GSMLG Web.
           </span>
         </div>
       </footer>
