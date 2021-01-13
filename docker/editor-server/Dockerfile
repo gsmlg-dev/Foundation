@@ -4,14 +4,13 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN sudo echo "Asia/Shanghai" > /etc/timezone \
-  && sudo dpkg-reconfigure --frontend noninteractive tzdata
-
 # update package list
 RUN sudo apt update && sudo apt upgrade -y
 
 # install useful packages
-RUN sudo apt install -y silversearcher-ag
+RUN sudo apt install -y silversearcher-ag tzdata \
+  && sudo echo "Asia/Shanghai" > /etc/timezone \
+  && sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
