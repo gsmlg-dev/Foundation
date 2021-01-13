@@ -1,5 +1,9 @@
 FROM ubuntu:20.04
 
+ENV container docker
+ENV LC_ALL C
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt update && apt install -y curl ca-certificates zsh sudo && \
   useradd coder --create-home --shell $(which zsh) && \
   echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder 

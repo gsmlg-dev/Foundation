@@ -1,5 +1,9 @@
 FROM docker.io/gsmlg/code-server:v3.8.0
 
+ENV container docker
+ENV LC_ALL C
+ENV DEBIAN_FRONTEND noninteractive
+
 # update package list
 RUN sudo apt update && sudo apt upgrade -y
 
