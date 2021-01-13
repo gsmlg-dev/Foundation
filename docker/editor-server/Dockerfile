@@ -12,12 +12,17 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
   sudo npm install -g yarn
 
 # install golang
-RUN ARCH=`sudo dpkg --print-architecture` && \
-  GO_VERSION="1.15.6" && \
-  GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz" && \
-  sudo curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" && \
-  sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" && \
-  sudo echo "export PATH=$PATH:/usr/local/go/bin" >> "/etc/bash.bashrc"
+RUN sudo apt install -y golang
+
+# install kubectl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.20.0/bin/linux/amd64/kubectl \
+  && chmod +x kubectl \
+  && sudo mv kubectl /usr/local/bin/kubectl
+
+# install skaffold
+RUN curl -sSLfo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 \
+  && chmod +x skaffold \
+  && sudo mv skaffold /usr/local/bin/skaffold
 
 # clean cache install
 RUN sudo rm -rf /var/cache/* && sudo rm -rf /tmp/*
