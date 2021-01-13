@@ -15,12 +15,14 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
 RUN sudo apt install -y golang
 
 # install kubectl
-RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.20.0/bin/linux/amd64/kubectl \
+RUN ARCH= ; test `uname -i` '==' x86_64 && ARCH=amd64 || ARCH=arm64 ; \
+  curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.20.0/bin/linux/${ARCH}/kubectl \
   && chmod +x kubectl \
   && sudo mv kubectl /usr/local/bin/kubectl
 
 # install skaffold
-RUN curl -sSLfo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 \
+RUN ARCH= ; test `uname -i` '==' x86_64 && ARCH=amd64 || ARCH=arm64 ; \
+  curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-${ARCH} \
   && chmod +x skaffold \
   && sudo mv skaffold /usr/local/bin/skaffold
 
