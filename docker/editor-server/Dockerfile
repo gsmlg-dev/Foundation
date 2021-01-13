@@ -4,6 +4,9 @@ ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN sudo echo "Asia/Shanghai" > /etc/timezone \
+  && sudo dpkg-reconfigure --frontend noninteractive tzdata
+
 # update package list
 RUN sudo apt update && sudo apt upgrade -y
 
