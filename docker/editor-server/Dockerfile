@@ -11,6 +11,8 @@ RUN sudo apt-get update && sudo apt-get upgrade -y
 # install useful packages
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   git \
+  gnupg \
+  lsb-release \
   silversearcher-ag \
   tzdata
 
