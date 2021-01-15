@@ -8,7 +8,11 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN sudo apt update && sudo apt upgrade -y
 
 # install useful packages
-RUN sudo apt install -y silversearcher-ag tzdata
+RUN sudo apt install -y \
+  git \
+  silversearcher-ag \
+  tzdata \
+
 
 RUN echo "Asia/Shanghai" | sudo tee /etc/timezone \
   && sudo dpkg-reconfigure --frontend noninteractive tzdata
