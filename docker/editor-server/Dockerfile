@@ -12,7 +12,8 @@ RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   gnupg \
   lsb-release \
   silversearcher-ag \
-  tzdata
+  tzdata \
+  vim
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
@@ -24,13 +25,13 @@ RUN sudo apt-get install -y -qq golang
 
 # install kubectl
 RUN ARCH=`dpkg --print-architecture` \
-  curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.0/bin/linux/${ARCH}/kubectl" \
+  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.20.0/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
   && sudo mv kubectl /usr/local/bin/kubectl
 
 # install skaffold
 RUN ARCH=`dpkg --print-architecture` \
-  curl -Lo skaffold "https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-${ARCH}" \
+  curl -sSfLo skaffold "https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-${ARCH}" \
   && chmod +x skaffold \
   && sudo mv skaffold /usr/local/bin/skaffold
 
