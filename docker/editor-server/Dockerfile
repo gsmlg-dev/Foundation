@@ -1,28 +1,25 @@
 FROM docker.io/gsmlg/code-server:v3.8.0
 
-ENV container docker
-ENV LC_ALL C
-ENV DEBIAN_FRONTEND noninteractive
+ENV container=docker
+ENV LC_ALL=C
+ENV DEBIAN_FRONTEND=noninteractive
 
 # update package list
 RUN sudo apt update && sudo apt upgrade -y
 
 # install useful packages
-RUN sudo apt install -y \
+RUN sudo apt install -y -qq \
   git \
-  silversearcher-ag \
-  tzdata
+  silversearcher-ag
 
-RUN echo "Asia/Shanghai" | sudo tee /etc/timezone \
-  && sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
-  sudo apt install -y nodejs && \
+  sudo apt install -y -qq nodejs && \
   sudo npm install -g yarn
 
 # install golang
-RUN sudo apt install -y golang
+RUN sudo apt install -y -qq golang
 
 # install kubectl
 RUN ARCH=`dpkg --print-architecture` \
