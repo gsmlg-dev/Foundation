@@ -9,7 +9,7 @@ ENV TZ=Asia/Shanghai
 RUN sudo apt-get update && sudo apt-get upgrade -y
 
 # install useful packages
-RUN sudo apt-get install -y -qq \
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   git \
   silversearcher-ag \
   tzdata
