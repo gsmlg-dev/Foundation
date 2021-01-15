@@ -2,8 +2,6 @@ FROM docker.io/gsmlg/code-server:v3.8.0
 
 ENV container=docker
 ENV LC_ALL=C
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Shanghai
 
 # update package list
 RUN sudo apt-get update && sudo apt-get upgrade -y
