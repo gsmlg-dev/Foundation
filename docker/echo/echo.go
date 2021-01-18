@@ -36,10 +36,22 @@ func myHandler (w http.ResponseWriter, r *http.Request) {
         os.Stdout.WriteString("\r\n====> End request \r\n")
 }
 
+func getPort() string {
+        val, ok := os.LookupEnv("PORT")
+        if !ok {
+                return "80"
+        } else {
+                return val
+        }
+}
+
 func main() {
 
+        port := getPort()
+        addr := fmt.Sprintf(":%s", port)
+
         s := &http.Server{
-                Addr:           ":80",
+                Addr:           addr,
                 Handler:        http.HandlerFunc(myHandler),
                 ReadTimeout:    10 * time.Second,
                 WriteTimeout:   10 * time.Second,
