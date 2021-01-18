@@ -13,9 +13,9 @@ I've manage too many repositories, that I have to combine them to one so that I 
 ## Repos
 
 - [nodejs](nodejs)
-    - [scripts](nodejs/scripts)
+    - [scripts](nodejs/packages/scripts)
     gsmlg-scripts(@gsmlg/scripts) Support open source project build, format, lint, pre-commit, validate and typecheck
-    - [website](nodejs/website)
+    - [website](nodejs/packages/website)
     My website, now at gsmlg.github.io
     TODO: Start my backend service.
 - [golang](golang)
