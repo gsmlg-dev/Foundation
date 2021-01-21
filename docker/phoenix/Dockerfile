@@ -8,8 +8,6 @@ RUN apk update \
     && mix local.rebar --force \
     && mix local.hex --force \
     && mix archive.install --force hex phx_new \
-    && apk add nodejs \
-    && apk add git \
     && rm -rf /var/cache/apk/*
 
 
