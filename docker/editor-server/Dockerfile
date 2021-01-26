@@ -40,5 +40,12 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && chmod +x skaffold \
   && sudo mv skaffold /usr/local/bin/skaffold
 
+# install helm
+RUN export ARCH=`dpkg --print-architecture`; \
+  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.5.0-linux-${ARCH}.tar.gz" \
+  && tar zxf /tmp/helm.tar.gz --strip=1 -C /tmp \
+  && sudo mv /tmp/helm /usr/local/bin/helm
+
 # clean cache install
 RUN sudo rm -rf /var/cache/* && sudo rm -rf /tmp/*
+
