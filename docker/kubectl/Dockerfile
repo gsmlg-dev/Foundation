@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM gsmlg/curl:latest
 
 LABEL maintainer="gsmlg.com@gmail.com"
 
