@@ -1,0 +1,14 @@
+# Saved backups
+ignore/
+rebuild/
+logs/
+.vscode/
+# Trash
+.DS_Store
+Thumbs.db
+bin/
+flux
+*.iso
+# Ansible
+ansible/roles/xanmanning.k3s*
+hack/op2vault.sh

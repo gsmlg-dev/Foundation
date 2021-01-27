@@ -1,4 +1,5 @@
 # Used by git-crypt
 *.key filter=git-crypt diff=git-crypt
+.cluster-secrets.env filter=git-crypt diff=git-crypt
 private/** filter=git-crypt diff=git-crypt
 .gitattributes !filter !diff
