@@ -8,7 +8,7 @@ on:
       - ".github/workflows/docker-buildimage-dell-poweredge.yml"
 
 jobs:
-  path-context:
+  build-image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
