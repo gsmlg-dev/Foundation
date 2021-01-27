@@ -1,5 +1,7 @@
 FROM docker.io/gsmlg/code-server:v3.8.0
 
+LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+
 ENV container=docker
 ENV LC_ALL=C
 

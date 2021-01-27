@@ -1,6 +1,6 @@
 FROM gsmlg/curl:latest
 
-LABEL maintainer="gsmlg.com@gmail.com"
+LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
 # install kubectl
 RUN export A=`arch`; \
@@ -19,3 +19,6 @@ RUN export A=`arch`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.20.2/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
   && mv kubectl /usr/local/bin/kubectl
+
+  ENTRYPOINT ["/usr/local/bin/kubectl"]
+  

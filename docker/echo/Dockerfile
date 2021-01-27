@@ -6,9 +6,9 @@ RUN CGO_ENABLED=0 go build echo.go
 
 FROM scratch
 
-LABEL maintainer="GSMLG <me@gsmlg.org>"
+LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
-EXPOSE 80
+ENV PORT=80
 
 COPY --from=builder /go/echo /echo
 

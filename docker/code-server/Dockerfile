@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
