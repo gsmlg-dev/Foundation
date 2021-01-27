@@ -1,6 +1,8 @@
 # Use CentOS 7 base image from Docker Hub
 FROM centos:7.6.1810
-MAINTAINER Steve Kamerman "https://github.com/kamermans"
+
+LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+#MAINTAINER Steve Kamerman "https://github.com/kamermans"
 #MAINTAINER Jose De la Rosa "https://github.com/jose-delarosa"
 
 # Environment variables

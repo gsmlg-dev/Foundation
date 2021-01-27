@@ -1,6 +1,6 @@
 FROM alpine:3.12
 
-MAINTAINER GSMLG < me@gsmlg.org >
+LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
 ENV PROXY_MODE=master \
     PROXY_SERVER="" \
