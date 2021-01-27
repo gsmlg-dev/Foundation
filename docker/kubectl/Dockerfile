@@ -18,4 +18,4 @@ RUN export A=`arch`; \
   esac; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.20.2/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
-  && sudo mv kubectl /usr/local/bin/kubectl
+  && mv kubectl /usr/local/bin/kubectl
