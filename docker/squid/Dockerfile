@@ -9,7 +9,7 @@ RUN apk update \
     && apk add squid \
     && rm -rf /var/cache/apk/*
 
-COPY squid.conf passwords /etc/squid/
+COPY squid.conf passwords.key /etc/squid/
 
 EXPOSE 3128
 
