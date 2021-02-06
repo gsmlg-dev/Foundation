@@ -1,0 +1,37 @@
+name: docker-buildimage-go-ethereum
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'docker/go-ethereum/**'
+      - '.github/workflows/docker-buildimage-go-ethereum.yml'
+
+jobs:
+  buildx:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'docker/go-ethereum'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: buildx-version
+
+      - name: Login to Docker Hub
+        run: docker login --username ${{ secrets.DOCKERHUB_USER }} --password ${{ secrets.DOCKERHUB_PASSWD }}
+
+      - name: Run Buildx
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64/v8 \
+            --push \
+            . \
+            -t gsmlg/go-ethereum:latest
+
