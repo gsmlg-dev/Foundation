@@ -393,4 +393,13 @@ blogs.push({
   author: 'Gao',
 });
 
+blogs.push({
+  id: 50,
+  name: 'component-driven-ui',
+  title: '组件驱动的用户界面',
+  date: '2021-02-07',
+  author: 'Gao',
+});
+
+
 export default blogs.slice().reverse();
