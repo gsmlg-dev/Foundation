@@ -1,6 +1,6 @@
 # 组件驱动的用户界面
 
-* 翻译自 [componentdriven.org](componentdriven.org)
+* 翻译自 [componentdriven.org](https://componentdriven.org)
 
 使用模块化的组件来进行开发和设计.
 UI界面“自上而下”开始构建, 从基本组件开始, 然后逐步组合以组装成为一个视图.
