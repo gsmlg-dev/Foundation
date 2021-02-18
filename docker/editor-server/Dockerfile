@@ -29,7 +29,8 @@ RUN export ARCH=`dpkg --print-architecture`; \
   sudo curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" \
   && echo "export PATH=$PATH:/usr/local/go/bin" | sudo tee -a "/etc/zsh/zshenv" \
-  && go get -v golang.org/x/tools/gopls
+  && echo "export GOPATH=/usr/local/go" | sudo tee -a "/etc/zsh/zshenv" \
+  && /usr/local/go/bin/go get -v golang.org/x/tools/gopls
 
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
