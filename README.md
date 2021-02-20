@@ -1,6 +1,6 @@
 # Foundation
 
-My personal foundation.
+My software foundation.
 
 This repo will include all my public software, scripts, configs and CI system.
 
