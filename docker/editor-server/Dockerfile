@@ -30,7 +30,8 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" \
   && echo "export PATH=$PATH:/usr/local/go/bin" | sudo tee -a "/etc/zsh/zshenv" \
   && echo "export GOPATH=/usr/local/go" | sudo tee -a "/etc/zsh/zshenv" \
-  && /usr/local/go/bin/go get -v golang.org/x/tools/gopls
+  && /usr/local/go/bin/go get -v golang.org/x/tools/gopls \
+  && /usr/local/go/bin/go get -v github.com/ramya-rao-a/go-outline
 
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
