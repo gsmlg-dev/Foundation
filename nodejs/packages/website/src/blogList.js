@@ -401,5 +401,13 @@ blogs.push({
   author: 'Gao',
 });
 
+blogs.push({
+  id: 51,
+  name: 'semantic-release',
+  title: '语义化版本发布',
+  date: '2021-02-25',
+  author: 'Gao',
+});
+
 
 export default blogs.slice().reverse();
