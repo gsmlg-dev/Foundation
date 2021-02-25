@@ -1,5 +1,7 @@
 # Foundation
 
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/gsmlg/Foundation)
+
 My software foundation.
 
 This repo will include all my public software, scripts, configs and CI system.
