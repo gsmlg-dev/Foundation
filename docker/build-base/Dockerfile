@@ -24,7 +24,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   bzip2 \
   wget \
   python \
-  bash
+  bash \
+  genisoimage
 
 
 ENTRYPOINT ["/bin/bash"]
