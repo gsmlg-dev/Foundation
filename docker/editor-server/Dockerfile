@@ -26,6 +26,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
 RUN export ARCH=`dpkg --print-architecture`; \
   export GO_VERSION="1.15.6"; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
+  export GOPATH="/usr/local/go"; \
   sudo curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" \
   && echo "export PATH=$PATH:/usr/local/go/bin" | sudo tee -a "/etc/zsh/zshenv" \
