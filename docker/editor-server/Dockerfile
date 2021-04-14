@@ -24,13 +24,13 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - && \
 
 # install golang
 RUN export ARCH=`dpkg --print-architecture`; \
-  export GO_VERSION="1.15.6"; \
+  export GO_VERSION="1.16.3"; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   sudo curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" \
-  && export GOPATH="/opt/go" && mkdir -p ${GOPATH} \
-  && echo "export PATH=$PATH:/usr/local/go/bin:${GOPATH}/bin" | sudo tee -a "/etc/zsh/zshenv" \
-  && echo "export GOPATH=/usr/local/go" | sudo tee -a "/etc/zsh/zshenv" \
+  && export GOPATH="/opt/go" && mkdir -p "${GOPATH}" \
+  && echo "export PATH=${PATH|:/usr/local/go/bin:${GOPATH}/bin" | sudo tee -a "/etc/zsh/zshenv" \
+  && echo "export GOPATH=/opt/go" | sudo tee -a "/etc/zsh/zshenv" \
   && /usr/local/go/bin/go get -v golang.org/x/tools/gopls \
   && /usr/local/go/bin/go get -v github.com/ramya-rao-a/go-outline
 
