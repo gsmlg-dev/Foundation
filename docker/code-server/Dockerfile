@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
+ARG VERSION=3.9.3
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
@@ -12,7 +13,7 @@ RUN apt update && apt install -y curl ca-certificates zsh sudo && \
 
 COPY install.sh /tmp/install.sh
 
-RUN /tmp/install.sh --prefix=/usr/local --version 3.8.0
+RUN /tmp/install.sh --prefix=/usr/local --version $VERSION
 
 RUN rm -rf /root/.cache && rm -rf /tmp/*
 
