@@ -30,7 +30,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && sudo tar -C /usr/local -xzf "/tmp/${GOPKG}" \
   && export GOPATH="/opt/go" && mkdir -p "${GOPATH}" \
   && echo "export PATH=${PATH}:/usr/local/go/bin:${GOPATH}/bin" | sudo tee -a "/etc/zsh/zshenv" \
-  && echo "export GOPATH=/opt/go" | sudo tee -a "/etc/zsh/zshenv" \
+  && echo "export GOPATH=${GOPATH}" | sudo tee -a "/etc/zsh/zshenv" \
   && /usr/local/go/bin/go get -v golang.org/x/tools/gopls \
   && /usr/local/go/bin/go get -v github.com/ramya-rao-a/go-outline
 
