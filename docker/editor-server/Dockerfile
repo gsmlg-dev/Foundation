@@ -1,9 +1,11 @@
-FROM docker.io/gsmlg/code-server:v3.8.0
+FROM docker.io/gsmlg/code-server:v3.9.3
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
 ENV container=docker
 ENV LC_ALL=C
+
+USER root
 
 # update package list
 RUN sudo apt-get update && sudo apt-get upgrade -y
@@ -55,3 +57,4 @@ RUN export ARCH=`dpkg --print-architecture`; \
 # clean cache install
 RUN sudo rm -rf /var/cache/* && sudo rm -rf /tmp/*
 
+USER coder
