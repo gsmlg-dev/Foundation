@@ -1,4 +1,4 @@
-FROM gsmlg/build-base:focal as build
+FROM gsmlg/build-base:focal as builder
 
 RUN git clone --depth 1 --single-branch --branch openwrt-21.02 https://git.openwrt.org/openwrt/openwrt.git /openwrt
 
@@ -12,5 +12,5 @@ RUN cd /openwrt \
 
 FROM alpine
 
-COPY --from build /openwrt/bin /openwrt
+COPY --from=builder /openwrt/bin /openwrt
 
