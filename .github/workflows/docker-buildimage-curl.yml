@@ -2,7 +2,7 @@ name: docker-buildimage-curl
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - 'docker/curl/**'
       - '.github/workflows/docker-buildimage-curl.yml'

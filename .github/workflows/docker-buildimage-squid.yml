@@ -2,7 +2,7 @@ name: docker-buildimage-squid
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - 'docker/squid/**'
       - '.github/workflows/docker-buildimage-squid.yml'

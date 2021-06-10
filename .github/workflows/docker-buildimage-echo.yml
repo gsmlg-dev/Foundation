@@ -2,7 +2,7 @@ name: docker-buildimage-echo
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - 'docker/echo/**'
       - '.github/workflows/docker-buildimage-echo.yml'

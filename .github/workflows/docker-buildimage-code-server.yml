@@ -2,7 +2,7 @@ name: docker-buildimage-code-server
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - 'docker/code-server/**'
       - '.github/workflows/docker-buildimage-code-server.yml'

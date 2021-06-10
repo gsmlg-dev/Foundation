@@ -2,7 +2,7 @@ name: docker-buildimage-stunnel
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - 'docker/stunnel/**'
       - '.github/workflows/docker-buildimage-stunnel.yml'

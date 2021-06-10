@@ -2,7 +2,7 @@ name: docker-buildimage-kubectl
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - 'docker/kubectl/**'
       - '.github/workflows/docker-buildimage-kubectl.yml'

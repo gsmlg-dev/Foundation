@@ -2,7 +2,7 @@ name: docker-buildimage-go-ethereum
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - 'docker/go-ethereum/**'
       - '.github/workflows/docker-buildimage-go-ethereum.yml'

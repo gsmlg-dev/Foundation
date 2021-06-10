@@ -2,7 +2,7 @@ name: docker-buildimage-build-base
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - 'docker/build-base/**'
       - '.github/workflows/docker-buildimage-build-base.yml'

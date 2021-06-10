@@ -2,7 +2,7 @@ name: docker-buildimage-dell-poweredge
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - "docker/dell-poweredge/**"
       - ".github/workflows/docker-buildimage-dell-poweredge.yml"

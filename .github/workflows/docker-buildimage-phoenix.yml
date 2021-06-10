@@ -2,7 +2,7 @@ name: docker-buildimage-phoenix
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - 'docker/phoenix/**'
       - '.github/workflows/docker-buildimage-phoenix.yml'

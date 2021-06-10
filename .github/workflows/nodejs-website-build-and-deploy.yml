@@ -6,7 +6,7 @@ on:
       - ".github/workflows/nodejs-website-build-and-deploy.yml"
     branches:
       - "+([0-9])?(.{+([0-9]),x}).x"
-      - "master"
+      - "main"
       - "next"
       - "next-major"
       - "beta"
@@ -44,7 +44,7 @@ jobs:
         with:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SSH: true
-          BRANCH: master # The branch the action should deploy to.
+          BRANCH: main # The branch the action should deploy to.
           FOLDER: "nodejs/packages/website/build" # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
           REPOSITORY_NAME: "gsmlg/gsmlg.github.io"

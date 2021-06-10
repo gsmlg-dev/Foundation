@@ -2,7 +2,7 @@ name: docker-buildimage-nginx
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - 'docker/nginx/**'
       - '.github/workflows/docker-buildimage-nginx.yml'

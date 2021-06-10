@@ -2,7 +2,7 @@ name: docker-buildimage-dell-openmanage
 
 on:
   push:
-    branches: master
+    branches: main
     paths:
       - "docker/dell-openmanage/**"
       - ".github/workflows/docker-buildimage-dell-openmanage.yml"

@@ -2,7 +2,7 @@ name: docker-buildimage-openwrt
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - 'docker/openwrt/**'
       - '.github/workflows/docker-buildimage-openwrt.yml'
