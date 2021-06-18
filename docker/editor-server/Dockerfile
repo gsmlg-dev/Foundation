@@ -1,4 +1,4 @@
-FROM docker.io/gsmlg/code-server:v3.9.3
+FROM docker.io/gsmlg/code-server:v3.10.2
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
@@ -42,7 +42,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.20.2/bin/linux/${ARCH}/kubectl" \
+  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.1/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
   && sudo mv kubectl /usr/local/bin/kubectl
 
@@ -54,7 +54,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install helm
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.5.0-linux-${ARCH}.tar.gz" \
+  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.6.1-linux-${ARCH}.tar.gz" \
   && tar zxf /tmp/helm.tar.gz --strip=1 -C /tmp \
   && sudo mv /tmp/helm /usr/local/bin/helm
 
