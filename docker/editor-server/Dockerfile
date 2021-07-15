@@ -1,4 +1,4 @@
-FROM docker.io/gsmlg/code-server:v3.10.2
+FROM docker.io/gsmlg/code-server:v3.11.0
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
@@ -29,7 +29,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
 
 # install golang
 RUN export ARCH=`dpkg --print-architecture`; \
-  export GO_VERSION="1.16.3"; \
+  export GO_VERSION="1.14.2"; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && tar -C /usr/local -xzf "/tmp/${GOPKG}" \
