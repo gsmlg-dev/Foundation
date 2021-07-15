@@ -29,7 +29,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
 
 # install golang
 RUN export ARCH=`dpkg --print-architecture`; \
-  export GO_VERSION="1.14.2"; \
+  export GO_VERSION="1.16.6"; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && tar -C /usr/local -xzf "/tmp/${GOPKG}" \
@@ -57,7 +57,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install helm
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.6.1-linux-${ARCH}.tar.gz" \
+  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.6.3-linux-${ARCH}.tar.gz" \
   && tar zxf /tmp/helm.tar.gz --strip=1 -C /tmp \
   && mv /tmp/helm /usr/local/bin/helm
 
