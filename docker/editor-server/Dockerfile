@@ -17,6 +17,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   lsb-release \
   silversearcher-ag \
   tzdata \
+  make \
+  gcc pkg-config libssl-dev libcrypto++-dev \
   vim
 
 # install jdk
