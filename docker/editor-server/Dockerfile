@@ -54,6 +54,13 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
 
+# install python
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 \
+  && cd /tmp && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+  && python get-pip.py \
+  && python -m pip install ansible
+
+
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.1/bin/linux/${ARCH}/kubectl" \
