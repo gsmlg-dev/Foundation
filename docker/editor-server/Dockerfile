@@ -55,8 +55,9 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
 
 # install python
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1 \
-  && cd /tmp && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+RUN apt-get install -y python3 python3-pip \
+  && update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1 \
+  && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
   && python get-pip.py \
   && python -m pip install ansible
 
