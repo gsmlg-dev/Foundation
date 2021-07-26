@@ -19,10 +19,19 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   tzdata \
   make \
   gcc pkg-config libssl-dev libcrypto++-dev \
-  vim
+  vim \
+  zip unzip \
+  wget
 
 # install jdk
-RUN apt-get install -y default-jdk
+RUN apt-get install -y default-jdk \
+  && curl -sSLf https://www.antlr.org/download/antlr-4.9.2-complete.jar -o /usr/local/lib/antlr-4.9.2-complete.jar \
+  && echo "#!/bin/bash" > /usr/local/bin/antlr \
+  && echo 'java -jar /usr/local/lib/antlr-4.9.2-complete.jar "$@"' >> /usr/local/bin/antlr \
+  && chmod +x /usr/local/bin/antlr \
+  && echo "#!/bin/bash" > /usr/local/bin/grun \
+  && echo 'java org.antlr.v4.gui.TestRig "$@"' >> /usr/local/bin/grun \
+  && chmod +x /usr/local/bin/grun
 
 # install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
