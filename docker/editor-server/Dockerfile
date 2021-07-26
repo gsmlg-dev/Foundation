@@ -21,7 +21,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   gcc pkg-config libssl-dev libcrypto++-dev \
   vim \
   zip unzip \
-  wget
+  wget \
+  protobuf-compiler
 
 # install jdk
 RUN apt-get install -y default-jdk \
@@ -51,6 +52,9 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go get -v github.com/ramya-rao-a/go-outline \
   && /usr/local/go/bin/go get -v golang.org/x/tools/cmd/goimports \
   && /usr/local/go/bin/go get -v github.com/rogpeppe/godef \
+  && /usr/local/go/bin/go get -v github.com/golang/protobuf/proto \
+  && /usr/local/go/bin/go get -v github.com/golang/protobuf/protoc-gen-go \
+  && /usr/local/go/bin/go get -v google.golang.org/grpc \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
 
