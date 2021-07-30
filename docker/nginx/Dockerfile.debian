@@ -1,0 +1,18 @@
+FROM debian:10
+
+LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+
+RUN apt-get update -qq \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nginx \
+    && mkdir /etc/nginx/sites \
+    && rm -rf /etc/nginx/sites-enabled \
+    && rm -rf /etc/nginx/sites-available \
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && rm -rf /var/cache/apt/*
+
+EXPOSE 80
+
+COPY nginx.debian.conf /etc/nginx/nginx.conf 
+
+ENTRYPOINT ["/usr/sbin/nginx"]
