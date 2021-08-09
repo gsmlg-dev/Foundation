@@ -22,7 +22,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   vim \
   zip unzip \
   wget \
-  protobuf-compiler
+  protobuf-compiler \
+  jq
 
 # install jdk
 RUN apt-get install -y default-jdk \
