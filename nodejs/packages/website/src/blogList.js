@@ -409,5 +409,14 @@ blogs.push({
   author: 'Gao',
 });
 
+blogs.push({
+  id: 52,
+  name: 'openssl-ca',
+  title: 'OpenSSL Certificate Authority',
+  date: '2021-08-17',
+  author: 'Gao',
+});
+
+
 
 export default blogs.slice().reverse();
