@@ -35,12 +35,12 @@ jobs:
         run: npm run build
 
       - name: Install SSH Client 🔑
-        uses: webfactory/ssh-agent@v0.4.1
+        uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SSH: true
