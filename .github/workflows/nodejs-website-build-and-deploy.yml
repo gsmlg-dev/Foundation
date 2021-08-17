@@ -43,9 +43,9 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SSH: true
-          BRANCH: main # The branch the action should deploy to.
-          FOLDER: "nodejs/packages/website/build" # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
-          REPOSITORY_NAME: "gsmlg/gsmlg.github.io"
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          branch: main # The branch the action should deploy to.
+          folder: "nodejs/packages/website/build" # The folder the action should deploy.
+          clean: true # Automatically remove deleted files from the deploy branch
+          repository-name: "gsmlg/gsmlg.github.io"
+          token: ${{ secrets.ACCESS_TOKEN }}
