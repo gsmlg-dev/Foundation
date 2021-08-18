@@ -66,6 +66,8 @@ RUN apt-get install -y python3 python3-pip \
   && python get-pip.py \
   && python -m pip install ansible
 
+# install rust
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
