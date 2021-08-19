@@ -67,7 +67,9 @@ RUN apt-get install -y python3 python3-pip \
   && python -m pip install ansible
 
 # install rust
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+RUN export RUSTUP_HOME=/opt/rust \
+  && export CARGO_HOME=/opt/rust \
+  && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
 
 # install php
 RUN apt-get install -y php-cli
