@@ -69,6 +69,9 @@ RUN apt-get install -y python3 python3-pip \
 # install rust
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
+# install php
+RUN apt-get install -y php-cli
+
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.1/bin/linux/${ARCH}/kubectl" \
