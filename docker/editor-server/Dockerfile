@@ -69,6 +69,9 @@ RUN apt-get install -y python3 python3-pip \
 # install rust
 RUN export RUSTUP_HOME=/opt/rust \
   && export CARGO_HOME=/opt/rust \
+  && echo "export PATH=${PATH}:/opt/rust/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export RUSTUP_HOME=/opt/rust" | tee -a "/etc/zsh/zshenv" \
+  && echo "export CARGO_HOME=/opt/rust" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
 
 # install php
