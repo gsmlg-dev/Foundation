@@ -77,6 +77,13 @@ RUN export RUSTUP_HOME=/opt/rust \
 # install php
 RUN apt-get install -y php-cli
 
+# install erlang and elixir
+RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
+  && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
+  && apt-get update \
+  && apt-get install -y -qq esl-erlang \
+  && apt-get install -y -qq elixir
+
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.1/bin/linux/${ARCH}/kubectl" \
