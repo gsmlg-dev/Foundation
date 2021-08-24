@@ -23,7 +23,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   zip unzip \
   wget \
   protobuf-compiler \
-  jq
+  jq \
+  nasm
 
 # install jdk
 RUN apt-get install -y default-jdk \
