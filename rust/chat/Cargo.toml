@@ -1,0 +1,10 @@
+[package]
+name = "chat"
+version = "0.1.0"
+authors = ["gsmlg <me@gsmlg.org>"]
+edition = "2018"
+
+[dependencies]
+term = "0.4.6"
+rustyline = "5.0.2"
+reqwest = "0.9.19"
