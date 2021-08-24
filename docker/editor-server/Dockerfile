@@ -58,7 +58,8 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go get -v github.com/golang/protobuf/protoc-gen-go \
   && /usr/local/go/bin/go get -v google.golang.org/grpc \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
-  && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
+  && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct \
+  && chown -R coder:coder "${GOPATH}" 
 
 # install python
 RUN apt-get install -y python3 python3-pip \
@@ -68,12 +69,14 @@ RUN apt-get install -y python3 python3-pip \
   && python -m pip install ansible
 
 # install rust
-RUN export RUSTUP_HOME=/opt/rust \
-  && export CARGO_HOME=/opt/rust \
-  && echo "export PATH=${PATH}:/opt/rust/bin" | tee -a "/etc/zsh/zshenv" \
-  && echo "export RUSTUP_HOME=/opt/rust" | tee -a "/etc/zsh/zshenv" \
-  && echo "export CARGO_HOME=/opt/rust" | tee -a "/etc/zsh/zshenv" \
-  && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
+RUN export RUSTPATH=/opt/rust \
+  && export RUSTUP_HOME=${RUSTPATH} \
+  && export CARGO_HOME=${RUSTPATH} \
+  && echo "export PATH=${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
+  && chown -R coder:coder "${RUSTPATH}"
 
 # install php
 RUN apt-get install -y php-cli
