@@ -36,7 +36,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=v1.10.2
+            VERSION=v1.10.8
           tags: |
             gsmlg/go-ethereum:latest
-            gsmlg/go-ethereum:v1.10.2
+            gsmlg/go-ethereum:v1.10.8
