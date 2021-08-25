@@ -20,8 +20,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   make \
   gcc pkg-config libssl-dev libcrypto++-dev \
   vim \
-  zip unzip \
-  wget \
+  zip unzip xz-utils \
+  wget aria2 \
   protobuf-compiler \
   jq \
   nasm
@@ -105,6 +105,9 @@ RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.6.3-linux-${ARCH}.tar.gz" \
   && tar zxf /tmp/helm.tar.gz --strip=1 -C /tmp \
   && mv /tmp/helm /usr/local/bin/helm
+
+# install flutter
+RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
