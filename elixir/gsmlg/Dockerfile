@@ -6,8 +6,6 @@ ENV MIX_ENV=prod \
 COPY . /build
 
 RUN apk update \
-    && rm -rf /build/assets/node_modules /build/assets/_build /build/assets/deps \
-    && cd /build/assets && ./yarn && ./yarn run build \
     && cd /build && mix do deps.get, compile \
     && mix distillery.release --env=prod \
     && mkdir /app \
