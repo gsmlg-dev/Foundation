@@ -48,7 +48,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && tar -C /usr/local -xzf "/tmp/${GOPKG}" \
   && export GOPATH="/opt/go" && mkdir -p "${GOPATH}" \
-  && echo "export PATH=${PATH}:/usr/local/go/bin:${GOPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export PATH=\${PATH}:/usr/local/go/bin:${GOPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export GOPATH=${GOPATH}" | tee -a "/etc/zsh/zshenv" \
   && /usr/local/go/bin/go get -v golang.org/x/tools/gopls \
   && /usr/local/go/bin/go get -v github.com/ramya-rao-a/go-outline \
@@ -72,7 +72,7 @@ RUN apt-get install -y python3 python3-pip \
 RUN export RUSTPATH=/opt/rust \
   && export RUSTUP_HOME=${RUSTPATH} \
   && export CARGO_HOME=${RUSTPATH} \
-  && echo "export PATH=${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
