@@ -24,7 +24,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   wget aria2 \
   protobuf-compiler \
   jq \
-  nasm
+  nasm \
+  bind9-dnsutils
 
 # install jdk
 RUN apt-get install -y default-jdk \
