@@ -3,7 +3,7 @@ FROM docker.io/gsmlg/code-server:v3.11.1
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
 ENV container=docker
-ENV LC_ALL=C
+ENV LC_ALL=en_US.UTF-8
 
 USER root
 
@@ -25,7 +25,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   protobuf-compiler \
   jq \
   nasm \
-  bind9-dnsutils
+  bind9-dnsutils \
+  locales
+
+# Gen locale
+RUN export LANG=en_US.UTF-8 \
+    && echo $LANG UTF-8 | tee -a /etc/locale.gen \
+    && locale-gen \
+    && update-locale LANG=$LANG \
+    && update-locale LC_ALL=en_US.UTF-8
 
 # install jdk
 RUN apt-get install -y default-jdk \
