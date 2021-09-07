@@ -46,9 +46,10 @@ RUN apt-get install -y default-jdk \
   && chmod +x /usr/local/bin/grun
 
 # install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
-  apt-get install -y -qq nodejs && \
-  npm install -g yarn
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+  && apt-get install -y -qq nodejs \
+  && npm install -g npm \
+  && npm install -g yarn
 
 # install golang
 RUN export ARCH=`dpkg --print-architecture`; \
