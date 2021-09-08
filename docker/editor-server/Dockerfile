@@ -66,8 +66,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/ramya-rao-a/go-outline@latest \
   && /usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest \
   && /usr/local/go/bin/go install github.com/rogpeppe/godef@latest \
-  && /usr/local/go/bin/go install github.com/golang/protobuf/proto@latest \
-  && /usr/local/go/bin/go install github.com/golang/protobuf/protoc-gen-go@latest \
+  && /usr/local/go/bin/go install github.com/golang/protobuf@latest \
   && /usr/local/go/bin/go install google.golang.org/grpc@latest \
   && /usr/local/go/bin/go install github.com/minio/mc@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
