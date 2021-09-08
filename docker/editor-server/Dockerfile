@@ -26,7 +26,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   jq \
   nasm \
   bind9-dnsutils \
-  locales
+  locales \
+  inotify-tools
 
 # Gen locale
 RUN export LANG=en_US.UTF-8 \
