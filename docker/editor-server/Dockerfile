@@ -61,13 +61,15 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && export GOPATH="/opt/go" && mkdir -p "${GOPATH}" \
   && echo "export PATH=\${PATH}:/usr/local/go/bin:${GOPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export GOPATH=${GOPATH}" | tee -a "/etc/zsh/zshenv" \
-  && /usr/local/go/bin/go get -v golang.org/x/tools/gopls \
-  && /usr/local/go/bin/go get -v github.com/ramya-rao-a/go-outline \
-  && /usr/local/go/bin/go get -v golang.org/x/tools/cmd/goimports \
-  && /usr/local/go/bin/go get -v github.com/rogpeppe/godef \
-  && /usr/local/go/bin/go get -v github.com/golang/protobuf/proto \
-  && /usr/local/go/bin/go get -v github.com/golang/protobuf/protoc-gen-go \
-  && /usr/local/go/bin/go get -v google.golang.org/grpc \
+  && export GO111MODULE=on \
+  && /usr/local/go/bin/go install golang.org/x/tools/gopls@latest \
+  && /usr/local/go/bin/go install github.com/ramya-rao-a/go-outline@latest \
+  && /usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest \
+  && /usr/local/go/bin/go install github.com/rogpeppe/godef@latest \
+  && /usr/local/go/bin/go install github.com/golang/protobuf/proto@latest \
+  && /usr/local/go/bin/go install github.com/golang/protobuf/protoc-gen-go@latest \
+  && /usr/local/go/bin/go install google.golang.org/grpc@latest \
+  && /usr/local/go/bin/go install github.com/minio/mc@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct \
   && chown -R coder:coder "${GOPATH}" 
