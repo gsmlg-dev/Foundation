@@ -1,9 +1,11 @@
-FROM elixir:1.12.3
+ARG ELIXIR_VERSION="1.12"
+FROM elixir:${ELIXIR_VERSION}
 
 ARG PHOENIX_VERSION="1.5"
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
+LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
 RUN mix local.rebar --force \

@@ -9,6 +9,9 @@ on:
 
 jobs:
   build-image:
+    strategy:
+      matrix:
+        type: ["latest", "alpine", "slim"]
     runs-on: ubuntu-latest
     steps:
       -
@@ -31,37 +34,11 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: docker/phoenix/
-          file: docker/phoenix//Dockerfile
+          file: docker/phoenix//Dockerfile.${{ matrix.type }}
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
           push: true
           build-args: |
+            ELIXIR_VERSION=1.12.3
             PHOENIX_VERSION=1.5.12
           tags: |
-            docker.io/gsmlg/phoenix:1.5.12
-            docker.io/gsmlg/phoenix:latest
-      -
-        name: Build and push slim
-        uses: docker/build-push-action@v2
-        with:
-          context: docker/phoenix/
-          file: docker/phoenix//Dockerfile.slim
-          platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
-          push: true
-          build-args: |
-            PHOENIX_VERSION=1.5.12
-          tags: |
-            docker.io/gsmlg/phoenix:1.5.12-slim
-            docker.io/gsmlg/phoenix:slim
-      -
-        name: Build and push alpine
-        uses: docker/build-push-action@v2
-        with:
-          context: docker/phoenix/
-          file: docker/phoenix//Dockerfile.alpine
-          platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
-          push: true
-          build-args: |
-            PHOENIX_VERSION=1.5.12
-          tags: |
-            docker.io/gsmlg/phoenix:1.5.12-alpine
-            docker.io/gsmlg/phoenix:alpine
+            docker.io/gsmlg/phoenix:${{ matrix.type }}
