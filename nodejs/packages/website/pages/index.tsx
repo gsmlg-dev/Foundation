@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import Head from 'next/head';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -47,28 +47,28 @@ export default function Home() {
         <Typography
           component="h3"
           className={classes.text}
-          style={{ color: colors[0] }}
+          style={{color: colors[0]}}
         >
           吾日三省吾身
         </Typography>
         <Typography
           component="h3"
           className={classes.text}
-          style={{ color: colors[1] }}
+          style={{color: colors[1]}}
         >
           为人谋而不忠乎
         </Typography>
         <Typography
           component="h3"
           className={classes.text}
-          style={{ color: colors[2] }}
+          style={{color: colors[2]}}
         >
           与朋友交而不信乎
         </Typography>
         <Typography
           component="h3"
           className={classes.text}
-          style={{ color: colors[3] }}
+          style={{color: colors[3]}}
         >
           传不习乎
         </Typography>

@@ -14,8 +14,7 @@ npm install -g react-native-cli
 
 ### iOS 开发环境环境安装：
 
-需要安装 XCode
-版本大于 8
+需要安装 XCode 版本大于 8
 
 #### 创建项目
 
@@ -67,8 +66,7 @@ yo rn-toolbox:assets --icon icon.png
 
 ### Android 开发环境安装：
 
-需要安装 _Java SE_
-版本 8.0 以上
+需要安装 _Java SE_ 版本 8.0 以上
 
 需要安装 _Android SDK_
 

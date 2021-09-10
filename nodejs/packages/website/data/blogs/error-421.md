@@ -58,7 +58,8 @@ keepalive_timeoute 0;
       421 Misdirected Request （RFC 7540）
         该请求针对的是无法产生响应的服务器（例如因为连接重用）。
 
-RFC 7540 Hypertext Transfer Protocol Version 2 (HTTP/2) [链接](https://tools.ietf.org/html/rfc7540)
+RFC 7540 Hypertext Transfer Protocol Version 2 (HTTP/2)
+[链接](https://tools.ietf.org/html/rfc7540)
 
 指定说明[Section](https://tools.ietf.org/html/rfc7540#section-9.1.2)
 

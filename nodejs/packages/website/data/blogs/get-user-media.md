@@ -38,7 +38,8 @@ navigator.mediaDevices.getUsermedia({ video: { frameRate: { ideal: 10, max: 15 }
 
 `Promise` 对象
 
-- 成功返回为 [`MediaStream`](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream)
+- 成功返回为
+  [`MediaStream`](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream)
 
 - 失败异常
   - AbortError
@@ -84,7 +85,7 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
 }
 
 navigator.mediaDevices
-  .getUserMedia({ audio: true, video: true })
+  .getUserMedia({audio: true, video: true})
   .then(function (stream) {
     var video = document.querySelector('video');
     // Older browsers may not have srcObject

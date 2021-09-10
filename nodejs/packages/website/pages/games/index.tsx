@@ -4,8 +4,8 @@
  *
  */
 
-import React, { memo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {memo} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -14,8 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '1em',
   },
@@ -27,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-interface Props { }
+interface Props {}
 
 const Game = memo((props: Props) => {
   const classes = useStyles();

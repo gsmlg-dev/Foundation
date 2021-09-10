@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragSource } from 'react-dnd';
+import {DragSource} from 'react-dnd';
 
 /**
  * Specifies the drag source contract.
@@ -58,7 +58,7 @@ function collect(connect, monitor) {
   };
 }
 
-const Piece = ({ connectDragSource, item, turn }) => {
+const Piece = ({connectDragSource, item, turn}) => {
   return connectDragSource(
     <div
       style={{

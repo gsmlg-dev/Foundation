@@ -9,7 +9,7 @@ import React from 'react';
 import Square from './Square';
 import Piece from './Piece';
 
-import { PieceShape, ChessColor } from 'types/xiangqi';
+import {PieceShape, ChessColor} from 'types/xiangqi';
 
 interface Props {
   redPieces: PieceShape[];
@@ -33,8 +33,10 @@ export const ChessBoard = ({
   const renderSquare = (i): JSX.Element => {
     const x = i % 9;
     const y = Math.floor(i / 9);
-    const pieces = allPieces.filter(p => p.live === true);
-    const item = pieces.find(({ position: { x: px, y: py } }) => px === x && py === y);
+    const pieces = allPieces.filter((p) => p.live === true);
+    const item = pieces.find(
+      ({position: {x: px, y: py}}) => px === x && py === y,
+    );
     const key = item != null ? <Piece item={item} turn={turn} /> : null;
     const killPiece = () => {
       item && kill(item);

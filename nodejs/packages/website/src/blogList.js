@@ -1,4 +1,3 @@
-
 const blogs = [];
 
 blogs.push({
@@ -416,7 +415,5 @@ blogs.push({
   date: '2021-08-17',
   author: 'Gao',
 });
-
-
 
 export default blogs.slice().reverse();

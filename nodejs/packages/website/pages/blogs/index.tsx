@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
 import Link from 'next/link';
 import Paper from '@material-ui/core/Paper';
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-export default function BlogList({ blogs = [], ...props }) {
+export default function BlogList({blogs = [], ...props}) {
   const classes = useStyles();
 
   return (
@@ -37,17 +37,20 @@ export default function BlogList({ blogs = [], ...props }) {
       </Head>
       <Paper className={classes.root} elevation={4}>
         <List>
-          {blogs.map((blog): JSX.Element => (
-            <ListItem
-              key={blog.name}
-            >
-              <ListItemIcon>
-                <WebIcon />
-              </ListItemIcon>
-              <ListItemText primary={<Link href={`/blogs/${blog.name}`}>{blog.title}</Link>} />
-              <ListItemText secondary={blog.date} />
-            </ListItem>
-          ),
+          {blogs.map(
+            (blog): JSX.Element => (
+              <ListItem key={blog.name}>
+                <ListItemIcon>
+                  <WebIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Link href={`/blogs/${blog.name}`}>{blog.title}</Link>
+                  }
+                />
+                <ListItemText secondary={blog.date} />
+              </ListItem>
+            ),
           )}
         </List>
       </Paper>
@@ -56,10 +59,9 @@ export default function BlogList({ blogs = [], ...props }) {
 }
 
 export async function getStaticProps(context) {
-
   return {
     props: {
       blogs: blogList,
     }, // will be passed to the page component as props
-  }
+  };
 }

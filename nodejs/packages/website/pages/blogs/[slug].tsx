@@ -1,15 +1,15 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
 import Head from 'next/head';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
 import ReactMarkdown from 'react-markdown';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
-import gfm from 'remark-gfm'
+import gfm from 'remark-gfm';
 
 import Layout from 'components/Layout';
 
@@ -33,7 +33,7 @@ interface BlogStruct {
   content: string | null;
 }
 
-export default function Blog({ blog }) {
+export default function Blog({blog}) {
   const classes = useStyles();
 
   return (
@@ -64,8 +64,8 @@ export default function Blog({ blog }) {
 }
 
 export async function getStaticPaths() {
-  const paramsList = blogList.map(({ name }) => ({
-    params: { slug: name },
+  const paramsList = blogList.map(({name}) => ({
+    params: {slug: name},
   }));
 
   return {
@@ -74,12 +74,12 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }) {
-  const { slug } = params;
+export async function getStaticProps({params}) {
+  const {slug} = params;
   const blog = blogList.find((b) => b.name === slug);
   const blogDir = path.join(process.cwd(), 'data/blogs');
   const blogPath = `${blogDir}/${slug}.md`;
-  const content = fs.readFileSync(blogPath, { encoding: 'utf-8', flag: 'r' });
+  const content = fs.readFileSync(blogPath, {encoding: 'utf-8', flag: 'r'});
 
   return {
     props: {
@@ -89,5 +89,5 @@ export async function getStaticProps({ params }) {
         content,
       },
     },
-  }
+  };
 }

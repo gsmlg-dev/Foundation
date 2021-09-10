@@ -4,8 +4,8 @@
  *
  */
 
-import React, { useEffect, useMemo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect, useMemo} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 
 import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
@@ -14,9 +14,9 @@ import Button from '@material-ui/core/Button';
 import Layout from 'components/Layout';
 import GameBoard from 'components/Xiangqi/DndContext';
 
-import { ChessColor } from 'types/xiangqi';
+import {ChessColor} from 'types/xiangqi';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   grid: {
     display: 'flex',
     justifyContent: 'center',
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-interface Props { }
+interface Props {}
 
 function Xiangqi(props: Props) {
   const classes = useStyles();
@@ -47,13 +47,12 @@ function Xiangqi(props: Props) {
     redPieces: [],
     blackPieces: [],
   };
-  const start = () => { };
-  const kill = () => { };
-  const movePiece = () => { };
+  const start = () => {};
+  const kill = () => {};
+  const movePiece = () => {};
 
   useEffect(() => {
-    return () => {
-    };
+    return () => {};
   }, []);
 
   return (

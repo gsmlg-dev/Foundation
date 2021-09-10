@@ -4,8 +4,8 @@
  *
  */
 
-import React, { useEffect, useCallback } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import React, {useEffect, useCallback} from 'react';
+import {makeStyles} from '@material-ui/styles';
 
 import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
@@ -21,9 +21,9 @@ import CloudIcon from '@material-ui/icons/Cloud';
 import CloudOffIcon from '@material-ui/icons/CloudOff';
 import Layout from 'components/Layout';
 
-interface Props { }
+interface Props {}
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '1em',
   },
@@ -45,22 +45,25 @@ const useStyles = makeStyles(theme => ({
 function ElixirNodes(props: Props) {
   const classes = useStyles();
 
-  const elixirNodes = { name: 'self', nodes: [], node_list: [], from: {}, isAlive: false };
+  const elixirNodes = {
+    name: 'self',
+    nodes: [],
+    node_list: [],
+    from: {},
+    isAlive: false,
+  };
 
   useEffect(() => {
-
-    return () => {
-
-    };
+    return () => {};
   }, []);
 
   const content = useCallback(
-    state => {
+    (state) => {
       if (!state || !state.nodes) return null;
 
       return (
         <CardContent>
-          {state.nodes.map(n => (
+          {state.nodes.map((n) => (
             <Chip
               key={n}
               className={classes.chip}
@@ -70,8 +73,8 @@ function ElixirNodes(props: Props) {
                   {state.node_list.includes(n) ? (
                     <CloudIcon />
                   ) : (
-                      <CloudOffIcon />
-                    )}
+                    <CloudOffIcon />
+                  )}
                 </Avatar>
               }
             />
@@ -108,7 +111,7 @@ function ElixirNodes(props: Props) {
             </Grid>
           </Grid>
           <Grid container spacing={6} justify="center">
-            {elixirNodes.nodes.map(name => (
+            {elixirNodes.nodes.map((name) => (
               <Grid key={name} item md={3} sm={4}>
                 <Paper>
                   <Card>
@@ -118,8 +121,8 @@ function ElixirNodes(props: Props) {
                           {elixirNodes.node_list.includes(name) ? (
                             <CloudIcon />
                           ) : (
-                              <CloudOffIcon />
-                            )}
+                            <CloudOffIcon />
+                          )}
                         </Avatar>
                       }
                       title={name}

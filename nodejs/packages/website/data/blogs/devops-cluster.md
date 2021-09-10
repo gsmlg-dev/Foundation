@@ -54,7 +54,8 @@ iptables -F && systemctl restart k3s-agent
 
 如果服务重启或者网络重启，可能会导致问题，也需要这么处理
 
-- 这里使用 docker 而没有使用 containerd 是因为网络环境有问题，rancher-agent 无法运行导致的
+- 这里使用 docker 而没有使用 containerd 是因为网络环境有问题，rancher-agent 无法
+  运行导致的
 - 安装完成后禁止了在 master 运行任务，防止 master 负荷过大导致集群瘫痪
   `kubectl taint node mymasternode node-role.kubernetes.io/master:NoSchedule`
 
@@ -122,23 +123,26 @@ helm install -n kube-system nfs-client-provisioner --set nfs.server={nfs-server-
 
 需要配置项目
 
-- ssh-key
-  配置 known_hosts 和 ssh-privatekey
+- ssh-key 配置 known_hosts 和 ssh-privatekey
 
 获取权限
 
 这个项目中定义了一个 pipeline，用于跑项目任务
 
-在 rancher 和 gitlab 配置好 eventlistener 的触发 URL，就可以自动运行当前的 pipeline 了
+在 rancher 和 gitlab 配置好 eventlistener 的触发 URL，就可以自动运行当前的
+pipeline 了
 
 ### 总结问题
 
 过程中碰到 too many open files 的问题，修改 ulimit 解决
 
-测试网络和服务器不太稳定，经常连接不上，或者运行两个任务后，系统很卡，主要是虚拟平台给的性能严重不足
+测试网络和服务器不太稳定，经常连接不上，或者运行两个任务后，系统很卡，主要是虚拟
+平台给的性能严重不足
 
-nfs 服务器和集群机器之间网络有问题，导致无法共享存储，最后被迫使用了 local-path，失去了共享存储的并行任务能力
+nfs 服务器和集群机器之间网络有问题，导致无法共享存储，最后被迫使用了
+local-path，失去了共享存储的并行任务能力
 
 碰到 tekton 升级 0.12 版本，更新了 git 资源到 task 来实现共享工作空间
 
-给 nfs，tekton，rancher 增加了 toleration 和 affinity，将他们调度到 master，防止 worker 过于繁忙，导致的无法服务问题
+给 nfs，tekton，rancher 增加了 toleration 和 affinity，将他们调度到 master，防止
+worker 过于繁忙，导致的无法服务问题

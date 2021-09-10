@@ -1,4 +1,3 @@
-
 interface Host {
   id: string;
   host: string;
@@ -70,12 +69,14 @@ const Hosts = [
   },
 ];
 
-const vultrHosts = Hosts.map(({ name, host }): Host => ({
-  id: host.replace('-ping.vultr.com', ''),
-  ping: [],
-  pending: false,
-  name,
-  host,
-}));
+const vultrHosts = Hosts.map(
+  ({name, host}): Host => ({
+    id: host.replace('-ping.vultr.com', ''),
+    ping: [],
+    pending: false,
+    name,
+    host,
+  }),
+);
 
 export default vultrHosts;

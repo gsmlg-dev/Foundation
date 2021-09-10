@@ -104,20 +104,21 @@ cc := f2
 
 #### shel 中的变量
 
-由于 makefile 中的变量和 shell 格式一样，所以当要使用 shell 变量时，
-会需要使用转义序列来处理，方式是两个`$`符号
+由于 makefile 中的变量和 shell 格式一样，所以当要使用 shell 变量时，会需要使用转
+义序列来处理，方式是两个`$`符号
 
 ### shell
 
-makefile 中的 shell 使用需要注意，每一行都会启动一个 shell，单独运行
-当调用 shell 进行插值的时候，shell 的执行顺序也不是顺序执行的
+makefile 中的 shell 使用需要注意，每一行都会启动一个 shell，单独运行当调用 shell
+进行插值的时候，shell 的执行顺序也不是顺序执行的
 
-由于都是使用单独的 shell，所以当想要使用相同的上下文时，
-可以使用`.ONESHELL`指令设置，或者是转义换行符
+由于都是使用单独的 shell，所以当想要使用相同的上下文时，可以使用`.ONESHELL`指令
+设置，或者是转义换行符
 
 ### 连续的 task
 
-由于 makefile 中 shell 无法连续执行，所以，将 task 拆分成多个，然后通过 task 依赖关系顺序执行
+由于 makefile 中 shell 无法连续执行，所以，将 task 拆分成多个，然后通过 task 依
+赖关系顺序执行
 
 task 依赖，在 task 后输入其它的 task 名称，就会按照顺序，连续执行这些 task
 

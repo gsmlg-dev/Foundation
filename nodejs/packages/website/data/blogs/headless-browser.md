@@ -2,8 +2,8 @@
 
 无界面浏览器 <`headdless mode`> 在进行自动化测试和服务器上运行时非常有用。
 
-在服务器上，可能需要运行浏览器去执行一些特殊的任务，但是服务器上是没有 X Window 系统，这个时候
-就需要使用无界面浏览器了。
+在服务器上，可能需要运行浏览器去执行一些特殊的任务，但是服务器上是没有 X Window
+系统，这个时候就需要使用无界面浏览器了。
 
 无界面浏览器可以去打开一些真正的页面，并且渲染，然后输出到 html，pdf 或图片。
 
@@ -72,22 +72,23 @@ $
 
 - 远程调试
 
-`--remote-debugging-port=9222` 会打开调试端口，调试基于`DevTools protocol`协议
-可以通过编辑器连接，来进行远程调试。
+`--remote-debugging-port=9222` 会打开调试端口，调试基于`DevTools protocol`协议可
+以通过编辑器连接，来进行远程调试。
 
 ### Node 编程接口
 
 **The Puppeteer API**
 
-Puppeteer is a Node library developed by the Chrome team.
-It provides a high-level API to control headless (or full) Chrome.
-It's similar to other automated testing libraries like Phantom and NightmareJS,
-but it only works with the latest versions of Chrome.
+Puppeteer is a Node library developed by the Chrome team. It provides a
+high-level API to control headless (or full) Chrome. It's similar to other
+automated testing libraries like Phantom and NightmareJS, but it only works with
+the latest versions of Chrome.
 
-Among other things, Puppeteer can be used to easily take screenshots,
-create PDFs, navigate pages, and fetch information about those pages.
-I recommend the library if you want to quickly automate browser testing.
-It hides away the complexities of the DevTools protocol and takes care of redundant tasks like launching a debug instance of Chrome.
+Among other things, Puppeteer can be used to easily take screenshots, create
+PDFs, navigate pages, and fetch information about those pages. I recommend the
+library if you want to quickly automate browser testing. It hides away the
+complexities of the DevTools protocol and takes care of redundant tasks like
+launching a debug instance of Chrome.
 
 Install it:
 
@@ -115,14 +116,16 @@ const puppeteer = require('puppeteer');
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto('https://www.chromestatus.com', { waitUntil: 'networkidle' });
-  await page.pdf({ path: 'page.pdf', format: 'A4' });
+  await page.goto('https://www.chromestatus.com', {waitUntil: 'networkidle'});
+  await page.pdf({path: 'page.pdf', format: 'A4'});
 
   browser.close();
 })();
 ```
 
-Check out [Puppeteer's documentation](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md) to learn more about the full API.
+Check out
+[Puppeteer's documentation](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md)
+to learn more about the full API.
 
 ## Firefox
 
@@ -134,8 +137,12 @@ Headless Firefox works on Fx55+ on Linux, and 56+ on Windows/Mac.
 /path/to/firefox -headless -screenshot https://developer.mozilla.com
 ```
 
-- `-screenshot` name url — Set a custom name for the screenshot by including it between the -screenshot flag and the URL you want to capture. Note that you can specify other web-compatible image formats such as .jpg, .bmp, etc.
-- `--window-size=x` — Set a custom viewport width when taking the screenshot (full height is maintained). Note that the single argument version of this doesn't work.
+- `-screenshot` name url — Set a custom name for the screenshot by including it
+  between the -screenshot flag and the URL you want to capture. Note that you
+  can specify other web-compatible image formats such as .jpg, .bmp, etc.
+- `--window-size=x` — Set a custom viewport width when taking the screenshot
+  (full height is maintained). Note that the single argument version of this
+  doesn't work.
 - `--window-size=x,y` — Set a custom viewport width and height to capture.
 
 Firefox headless 模式可以用于自动化测试，基于`Selenium`。

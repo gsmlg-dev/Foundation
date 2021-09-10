@@ -54,9 +54,11 @@ Cydia 默认商店没有 dropbear，所以安装比较麻烦
 
 方法有一下几种：
 
-1. 自己编译， 可以参照 https://ivrodriguez.com/installing-dropbear-ssh-on-ios-10-3-3/
+1. 自己编译， 可以参照
+   https://ivrodriguez.com/installing-dropbear-ssh-on-ios-10-3-3/
 
-2. 下载安装，可以参考 https://www.reddit.com/r/jailbreak/comments/7mh516/tutorial_how_to_get_ssh_working_on_the_new_ios/
+2. 下载安装，可以参考
+   https://www.reddit.com/r/jailbreak/comments/7mh516/tutorial_how_to_get_ssh_working_on_the_new_ios/
 
 3. 添加 cydia 源，没有可以参考的
 

@@ -16,7 +16,8 @@ $ brew install source-to-image
 
 - Linux 使用
 
-在[版本发布页面](https://github.com/openshift/source-to-image/releases)找到对应链接下载
+在[版本发布页面](https://github.com/openshift/source-to-image/releases)找到对应
+链接下载
 
 ```shell
 curl -sSL https://github.com/openshift/source-to-image/releases/download/v1.1.14/source-to-image-v1.1.14-874754de-linux-amd64.tar.gz | tar zxf - -C /usr/local/bin/ './s2i'
@@ -24,7 +25,8 @@ curl -sSL https://github.com/openshift/source-to-image/releases/download/v1.1.14
 
 - Windows 使用
 
-在[版本发布页面](https://github.com/openshift/source-to-image/releases)找到对应链接下载
+在[版本发布页面](https://github.com/openshift/source-to-image/releases)找到对应
+链接下载
 
 下载
 
@@ -49,7 +51,8 @@ $ hack/build-go.sh
 s2i [source dir] [builder image] [built image name]
 ```
 
-可用的 builder 镜像源码可以在 [Software Collection](https://github.com/sclorg) 找到
+可用的 builder 镜像源码可以在 [Software Collection](https://github.com/sclorg)
+找到
 
 ### 创建镜像 PHP 项目镜像
 
@@ -75,13 +78,16 @@ docker run --rm -p 8080:8080 my-test-app
 ##### 给镜像配置以下环境变量可以作用于`php.ini`:
 
 - **ERROR_REPORTING**
-  - Informs PHP of which errors, warnings and notices you would like it to take action for
+  - Informs PHP of which errors, warnings and notices you would like it to take
+    action for
   - Default: E_ALL & ~E_NOTICE
 - **DISPLAY_ERRORS**
-  - Controls whether or not and where PHP will output errors, notices and warnings
+  - Controls whether or not and where PHP will output errors, notices and
+    warnings
   - Default: ON
 - **DISPLAY_STARTUP_ERRORS**
-  - Cause display errors which occur during PHP's startup sequence to be handled separately from display errors
+  - Cause display errors which occur during PHP's startup sequence to be handled
+    separately from display errors
   - Default: OFF
 - **TRACK_ERRORS**
   - Store the last error/warning message in \$php_errormsg (boolean)
@@ -127,30 +133,38 @@ docker run --rm -p 8080:8080 my-test-app
   - The OPcache shared memory storage size in megabytes
   - Default: 128
 - **OPCACHE_REVALIDATE_FREQ**
-  - How often to check script timestamps for updates, in seconds. 0 will result in OPcache checking for updates on every request.
+  - How often to check script timestamps for updates, in seconds. 0 will result
+    in OPcache checking for updates on every request.
   - Default: 2
 
 ##### 以下配置环境变量作用于 Apache 服务，运行于 Apache [MPM prefork](https://httpd.apache.org/docs/2.4/mod/mpm_common.html) 模式:
 
 - **HTTPD_START_SERVERS**
-  - The [StartServers](https://httpd.apache.org/docs/2.4/mod/mpm_common.html#startservers)
+  - The
+    [StartServers](https://httpd.apache.org/docs/2.4/mod/mpm_common.html#startservers)
     directive sets the number of child server processes created on startup.
   - Default: 8
 - **HTTPD_MAX_REQUEST_WORKERS**
-  - The [MaxRequestWorkers](https://httpd.apache.org/docs/2.4/mod/mpm_common.html#maxrequestworkers)
-    directive sets the limit on the number of simultaneous requests that will be served.
+  - The
+    [MaxRequestWorkers](https://httpd.apache.org/docs/2.4/mod/mpm_common.html#maxrequestworkers)
+    directive sets the limit on the number of simultaneous requests that will be
+    served.
   - `MaxRequestWorkers` was called `MaxClients` before version httpd 2.3.13.
-  - Default: 256 (this is automatically tuned by setting Cgroup limits for the container using this formula:
-    `TOTAL_MEMORY / 15MB`. The 15MB is average size of a single httpd process.
+  - Default: 256 (this is automatically tuned by setting Cgroup limits for the
+    container using this formula: `TOTAL_MEMORY / 15MB`. The 15MB is average
+    size of a single httpd process.
 
 ##### 以下配置环境变量作用于 composer:
 
 - **COMPOSER_MIRROR**
-  - Adds a custom composer repository mirror URL to composer configuration. Note: This only affects packages listed in composer.json.
+  - Adds a custom composer repository mirror URL to composer configuration.
+    Note: This only affects packages listed in composer.json.
 - **COMPOSER_INSTALLER**
-  - Overrides the default URL for downloading Composer of https://getcomposer.org/installer. Useful in disconnected environments.
+  - Overrides the default URL for downloading Composer of
+    https://getcomposer.org/installer. Useful in disconnected environments.
 - **COMPOSER_ARGS**
-  - Adds extra arguments to the `composer install` command line (for example `--no-dev`).
+  - Adds extra arguments to the `composer install` command line (for example
+    `--no-dev`).
 
 #### 代码目录配置
 
@@ -163,10 +177,11 @@ docker run --rm -p 8080:8080 my-test-app
 
 * **.htaccess**
 
-  In case the **DocumentRoot** of the application is nested within the source directory `/opt/app-root/src`,
-  users can provide their own Apache **.htaccess** file. This allows the overriding of Apache's behavior and
-  specifies how application requests should be handled. The **.htaccess** file needs to be located at the root
-  of the application source.
+  In case the **DocumentRoot** of the application is nested within the source
+  directory `/opt/app-root/src`, users can provide their own Apache
+  **.htaccess** file. This allows the overriding of Apache's behavior and
+  specifies how application requests should be handled. The **.htaccess** file
+  needs to be located at the root of the application source.
 
 * **.s2i/environment**
 
@@ -184,27 +199,29 @@ docker run --rm -p 8080:8080 my-test-app
 
 默认会调用 `npm start` 来启动服务
 
-当`DEV_MODE=true`时，默认会调用`nodemon <main attribute in package.json>`,来启动服务，如果失败再调用，`npm start` 来启动服务
+当`DEV_MODE=true`时，默认会调用`nodemon <main attribute in package.json>`,来启动
+服务，如果失败再调用，`npm start` 来启动服务
 
 #### 可配置环境变量
 
-**`NODE_ENV`**
-NodeJS runtime mode (default: "production")
+**`NODE_ENV`** NodeJS runtime mode (default: "production")
 
-**`DEV_MODE`**
-When set to "true", `nodemon` will be used to automatically reload the server while you work (default: "false"). Setting `DEV_MODE` to "true" will change the `NODE_ENV` default to "development" (if not explicitly set).
+**`DEV_MODE`** When set to "true", `nodemon` will be used to automatically
+reload the server while you work (default: "false"). Setting `DEV_MODE` to
+"true" will change the `NODE_ENV` default to "development" (if not explicitly
+set).
 
-**`NPM_RUN`**
-Select an alternate / custom runtime mode, defined in your `package.json` file's [`scripts`](https://docs.npmjs.com/misc/scripts) section (default: npm run "start"). These user-defined run-scripts are unavailable while `DEV_MODE` is in use.
+**`NPM_RUN`** Select an alternate / custom runtime mode, defined in your
+`package.json` file's [`scripts`](https://docs.npmjs.com/misc/scripts) section
+(default: npm run "start"). These user-defined run-scripts are unavailable while
+`DEV_MODE` is in use.
 
-**`HTTP_PROXY`**
-Use an npm proxy during assembly
+**`HTTP_PROXY`** Use an npm proxy during assembly
 
-**`HTTPS_PROXY`**
-Use an npm proxy during assembly
+**`HTTPS_PROXY`** Use an npm proxy during assembly
 
-**`NPM_MIRROR`**
-Use a custom NPM registry mirror to download packages during the build process
+**`NPM_MIRROR`** Use a custom NPM registry mirror to download packages during
+the build process
 
 ### 创建 go 项目镜像
 
@@ -220,7 +237,8 @@ Use a custom NPM registry mirror to download packages during the build process
 
 - **INSTALL_URL**
 
-如果`main.go`不在代码目录下时，指定 build 目录,如 `github.com/someorg/somerepo/somefolder`
+如果`main.go`不在代码目录下时，指定 build 目录,如
+`github.com/someorg/somerepo/somefolder`
 
 ### 创建 java 项目镜像
 

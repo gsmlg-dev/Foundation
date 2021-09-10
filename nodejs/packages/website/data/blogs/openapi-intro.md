@@ -1,9 +1,10 @@
 ### OpenAPI Specification 使用
 
-Open API Specification 是由社区驱动的一套开放标准
-定义了一套面向 Rest API 的不和编程语言绑定的接口规范
+Open API Specification 是由社区驱动的一套开放标准定义了一套面向 Rest API 的不和
+编程语言绑定的接口规范
 
-我们可以通过 Open API 定义的规范来生成对应的文档, Mock Server, Test, Server/Client 代码模版
+我们可以通过 Open API 定义的规范来生成对应的文档, Mock Server, Test,
+Server/Client 代码模版
 
 方便的快速开发和分享, 可以直接给客户看到对应的文档来解决问题.
 

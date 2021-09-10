@@ -2,7 +2,8 @@
 
 ## Intro
 
-Tekton Pipelines 是一个为`Kubernetes`应用程序配置和运行`CI / CD`风格的`Pipelined`的开源实现
+Tekton Pipelines 是一个为`Kubernetes`应用程序配置和运行`CI / CD`风格
+的`Pipelined`的开源实现
 
 `Pipeline` 创建 `Custom Resources` 作为构建模块来声明`pipelines`
 
@@ -24,7 +25,8 @@ Tekton Pipelines are Typed
 
 ### 此设计的高级细节：
 
-- Pipeline 运行管道，可以实现一个流程，可以由事件出发，也可以通过`PipelineRun`来运行
+- Pipeline 运行管道，可以实现一个流程，可以由事件出发，也可以通过`PipelineRun`来
+  运行
 - Task 基本运行单元，可以通过`TaskRun`来运行
 - PipelineResource `Task`的输入和输出资源
 
@@ -36,13 +38,16 @@ Tekton Pipelines are Typed
 
 Syntax:
 
-To define a configuration file for a PipelineResource, you can specify the following fields:
+To define a configuration file for a PipelineResource, you can specify the
+following fields:
 
 - Required:
   - apiVersion - Specifies the API version, for example tekton.dev/v1alpha1.
   - kind - Specify the PipelineResource resource object.
-  - metadata - Specifies data to uniquely identify the PipelineResource object, for example a name.
-  - spec - Specifies the configuration information for your PipelineResource resource object.
+  - metadata - Specifies data to uniquely identify the PipelineResource object,
+    for example a name.
+  - spec - Specifies the configuration information for your PipelineResource
+    resource object.
   - type - Specifies the type of the PipelineResource
 - Optional:
   - params - Parameters which are specific to each type of PipelineResource
@@ -58,7 +63,8 @@ Types:
 
 ### Tasks
 
-Task(or ClusterTask) 是 CI 中一个组顺序执行的 step 的集合，是基本任务单位。Task 会在 pod 中运行。
+Task(or ClusterTask) 是 CI 中一个组顺序执行的 step 的集合，是基本任务单位。Task
+会在 pod 中运行。
 
 Task 需要声明三部分：
 
@@ -70,19 +76,25 @@ Task 在 namespace 中可用，ClusterTask 在整个集群可用
 
 Syntax:
 
-To define a configuration file for a Task resource, you can specify the following fields:
+To define a configuration file for a Task resource, you can specify the
+following fields:
 
 - Required:
   - apiVersion - Specifies the API version, for example tekton.dev/v1alpha1.
   - kind - Specify the Task resource object.
-  - metadata - Specifies data to uniquely identify the Task resource object, for example a name.
-  - spec - Specifies the configuration information for your Task resource object. Task steps must be defined through either of the following fields:
-    -steps - Specifies one or more container images that you want to run in your Task.
+  - metadata - Specifies data to uniquely identify the Task resource object, for
+    example a name.
+  - spec - Specifies the configuration information for your Task resource
+    object. Task steps must be defined through either of the following fields:
+    -steps - Specifies one or more container images that you want to run in your
+    Task.
 - Optional:
   - inputs - Specifies parameters and PipelineResources needed by your Task
   - outputs - Specifies PipelineResources created by your Task
-  - volumes - Specifies one or more volumes that you want to make available to your Task's steps.
-  - stepTemplate - Specifies a Container step definition to use as the basis for all steps within your Task.
+  - volumes - Specifies one or more volumes that you want to make available to
+    your Task's steps.
+  - stepTemplate - Specifies a Container step definition to use as the basis for
+    all steps within your Task.
   - sidecars - Specifies sidecar containers to run alongside steps.
 
 ### Piplines
@@ -91,28 +103,36 @@ Pipline 定义并执行一组 Task
 
 Syntax:
 
-To define a configuration file for a Pipeline resource, you can specify the following fields:
+To define a configuration file for a Pipeline resource, you can specify the
+following fields:
 
 - Required:
   - apiVersion - Specifies the API version, for example tekton.dev/v1alpha1.
   - kind - Specify the Pipeline resource object.
-  - metadata - Specifies data to uniquely identify the Pipeline resource object, for example a name.
-  - spec - Specifies the configuration information for your Pipeline resource object. In order for a Pipeline to do anything, the spec must include:
+  - metadata - Specifies data to uniquely identify the Pipeline resource object,
+    for example a name.
+  - spec - Specifies the configuration information for your Pipeline resource
+    object. In order for a Pipeline to do anything, the spec must include:
     - tasks - Specifies which Tasks to run and how to run them
 - Optional:
-  - resources - Specifies which PipelineResources of which types the Pipeline will be using in its Tasks
+  - resources - Specifies which PipelineResources of which types the Pipeline
+    will be using in its Tasks
   - tasks
     - resources.inputs / resource.outputs
-      - from - Used when the content of the PipelineResource should come from the output of a previous Pipeline Task
-      - runAfter - Used when the Pipeline Task should be executed after another Pipeline Task, but there is no output linking required
-      - retries - Used when the task is wanted to be executed if it fails. Could be a network error or a missing dependency. It does not apply to cancellations.
-      - conditions - Used when a task is to be executed only if the specified conditions are evaluated to be true.
+      - from - Used when the content of the PipelineResource should come from
+        the output of a previous Pipeline Task
+      - runAfter - Used when the Pipeline Task should be executed after another
+        Pipeline Task, but there is no output linking required
+      - retries - Used when the task is wanted to be executed if it fails. Could
+        be a network error or a missing dependency. It does not apply to
+        cancellations.
+      - conditions - Used when a task is to be executed only if the specified
+        conditions are evaluated to be true.
 
 Task 执行顺序，所有 Task 默认都会并行执行，除非指定了
 
 - from
-- runAfter
-  两项会指定 task 执行的依赖关系
+- runAfter 两项会指定 task 执行的依赖关系
 
 For example see this Pipeline spec:
 
@@ -294,7 +314,8 @@ spec:
         default: /workspace/docker-source/Dockerfile
       - name: pathToContext
         type: string
-        description: The build context used by Kaniko
+        description:
+          The build context used by Kaniko
           (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)
         default: /workspace/docker-source
   outputs:
@@ -338,7 +359,8 @@ spec:
         default: /workspace/docker-source/Dockerfile
       - name: pathToContext
         type: string
-        description: The build context used by Kaniko
+        description:
+          The build context used by Kaniko
           (https://github.com/GoogleContainerTools/kaniko#kaniko-build-contexts)
         default: /workspace/docker-source
   outputs:

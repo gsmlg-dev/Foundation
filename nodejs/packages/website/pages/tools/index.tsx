@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -15,9 +15,9 @@ import Typography from '@material-ui/core/Typography';
 
 import Layout from 'components/Layout';
 
-interface Props { }
+interface Props {}
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: '1em',
   },

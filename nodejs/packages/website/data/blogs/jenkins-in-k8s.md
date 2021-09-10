@@ -2,30 +2,27 @@
 
 ### 简介
 
-在 kubernetes 中安装 Jenkins
-Jenkins 会以 master 方式运行，当有 build 任务时，会在 kubernetes 中启动一个 pod 来运行对应的构建任务
-需要配置对应的 pod 来解决常规的构建问题
+在 kubernetes 中安装 Jenkins Jenkins 会以 master 方式运行，当有 build 任务时，会
+在 kubernetes 中启动一个 pod 来运行对应的构建任务需要配置对应的 pod 来解决常规的
+构建问题
 
 ### 安装 Jeknis 到 Kubernetes：
 
     使用仓库 https://github.com/gsmlg/jenkins 中的配置
 
-1. 配置 Deployment
-   使用 deployment.yaml
+1. 配置 Deployment 使用 deployment.yaml
 
 ```
 kubectl create -f deployment.yaml
 ```
 
-2. 配置 service.yaml
-   使用 service.yaml
+2. 配置 service.yaml 使用 service.yaml
 
 ```
 kubectl create -f service.yaml
 ```
 
-3. 手动添加 ingress 配置
-   使用`rancher`配置 ingress 服务
+3. 手动添加 ingress 配置使用`rancher`配置 ingress 服务
 
 ### 对 jenkins 进行配置
 
@@ -77,4 +74,5 @@ kubectl create -f service.yaml
 
 ## Comment
 
-- jnlp - Java Network Launch Protocol [Link](https://docs.oracle.com/javase/tutorial/deployment/deploymentInDepth/jnlp.html)
+- jnlp - Java Network Launch Protocol
+  [Link](https://docs.oracle.com/javase/tutorial/deployment/deploymentInDepth/jnlp.html)

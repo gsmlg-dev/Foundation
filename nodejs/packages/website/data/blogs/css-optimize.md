@@ -24,8 +24,8 @@
 }
 ```
 
-- css-clean 与 cssnano 优化结果基本一致
-  只在压缩级别上控制会优化 background 的 position 属性
+- css-clean 与 cssnano 优化结果基本一致只在压缩级别上控制会优化 background 的
+  position 属性
 
 ```css
 .btnShrink {
@@ -134,5 +134,5 @@
 }
 ```
 
-结论：
-明显属性分离后可以更好的优化重复属性，尤其是在使用了 inline-image 后优化效果更加明显
+结论：明显属性分离后可以更好的优化重复属性，尤其是在使用了 inline-image 后优化效
+果更加明显

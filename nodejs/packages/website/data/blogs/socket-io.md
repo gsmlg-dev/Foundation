@@ -1,7 +1,7 @@
 ### 简介
 
-`Socket.io`曾经是 websocket 持久连接的唯一选择，具有最好的浏览器兼容性。
-随着时间的推移，浏览器都已经支持 websocket 技术，这种持久连接库渐渐的淡出了。
+`Socket.io`曾经是 websocket 持久连接的唯一选择，具有最好的浏览器兼容性。随着时间
+的推移，浏览器都已经支持 websocket 技术，这种持久连接库渐渐的淡出了。
 
 ### 依赖模块
 
@@ -16,17 +16,15 @@
 
 #### 模块功能说明
 
-- engine.io
-  Engine.IO 是 Socket.IO 实现基于传输的跨浏览器/跨设备双向通信层。
+- engine.io Engine.IO 是 Socket.IO 实现基于传输的跨浏览器/跨设备双向通信层。
 
-- socket.io-adapter
-  用户管理用户和连接的默认适配器，如果启动 socket.io cluster，可是使用 socket.io-redis
+- socket.io-adapter 用户管理用户和连接的默认适配器，如果启动 socket.io cluster，
+  可是使用 socket.io-redis
 
-- socket.io-client
-  socket.io 客户端
+- socket.io-client socket.io 客户端
 
-- socket.io-parser
-  用 JavaScript 编写的符合 socket.io-protocol 版本 4 的 socket.io 编码器和解码器。 由 socket.io 和 socket.io-client 使用。
+- socket.io-parser 用 JavaScript 编写的符合 socket.io-protocol 版本 4 的
+  socket.io 编码器和解码器。 由 socket.io 和 socket.io-client 使用。
 
 ### 功能开发
 
@@ -37,7 +35,7 @@
 ```js
 const authorization = (request, cb) => {
   console.log('==== athorization ====');
-  const { headers } = request;
+  const {headers} = request;
   const clientRequest = http
     .get(
       {
@@ -47,12 +45,12 @@ const authorization = (request, cb) => {
           cookie: headers.cookie,
         },
       },
-      res => {
+      (res) => {
         let buf = Buffer.from('');
-        res.on('data', b => {
+        res.on('data', (b) => {
           buf = Buffer.concat([buf, b]);
         });
-        res.on('end', b => {
+        res.on('end', (b) => {
           const s = buf.toString('utf-8');
           const d = JSON.parse(s);
           if (d.role) {
@@ -63,7 +61,7 @@ const authorization = (request, cb) => {
         });
       },
     )
-    .on('error', e => cb(e));
+    .on('error', (e) => cb(e));
 };
 
 io.set('authorization', authorization);
@@ -73,7 +71,7 @@ io.set('authorization', authorization);
 
 ```js
 io.use((socket, next) => {
-  const { headers } = socket.request;
+  const {headers} = socket.request;
   // do some check
   checkHeaderInfo(headers)
     .then(() => next())
@@ -105,7 +103,7 @@ namespace 可以在 client 控制
 client 控制方式：
 
 ```js
-const socket = io('http://server.address', { path: 'socket' });
+const socket = io('http://server.address', {path: 'socket'});
 const nsSocket = socket.socket('/someNamespace');
 ```
 
@@ -116,8 +114,8 @@ const nsSocket = socket.socket('/someNamespace');
 只能够在 server 加入 room，加入方式为:
 
 ```js
-io.on('connection', socket => {
-  socket.join('soom room', room => {
+io.on('connection', (socket) => {
+  socket.join('soom room', (room) => {
     console.log('join room success');
   });
 });
@@ -127,4 +125,5 @@ io.on('connection', socket => {
 
 Socket.io [地址](https://github.com/socketio/socket.io/blob/master/docs/API.md)
 
-Socket.io-client [地址](https://github.com/socketio/socket.io-client/blob/master/docs/API.md)
+Socket.io-client
+[地址](https://github.com/socketio/socket.io-client/blob/master/docs/API.md)

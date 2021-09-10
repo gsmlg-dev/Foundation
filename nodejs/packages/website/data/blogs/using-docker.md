@@ -2,9 +2,8 @@
 
 ## 什么是 Docker
 
-Docker 利用现有的 Linux 容器技术，以不同方式将其封装及扩展
---主要是通过提供可以值的镜像，以及一个用户友好的接口
---来创建一套完整的容器创建及发布方案
+Docker 利用现有的 Linux 容器技术，以不同方式将其封装及扩展 --主要是通过提供可以
+值的镜像，以及一个用户友好的接口 --来创建一套完整的容器创建及发布方案
 
 Docker 平台拥有两个不同部分
 
@@ -105,8 +104,7 @@ docker run --rm -it gsmlg/phoenix
 # --rm remove after run
 ```
 
-当 docker 运行后会生成一个 container
-可以通过
+当 docker 运行后会生成一个 container 可以通过
 
 ```
 docker ps -a

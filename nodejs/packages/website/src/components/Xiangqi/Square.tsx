@@ -1,6 +1,6 @@
 import React from 'react';
-import { DropTarget } from 'react-dnd';
-import { PieceShape } from 'types/xiangqi';
+import {DropTarget} from 'react-dnd';
+import {PieceShape} from 'types/xiangqi';
 
 /**
  * Specifies the drop target contract.
@@ -10,8 +10,8 @@ const chessSquareTarget = {
   canDrop(props, monitor) {
     // You can disallow drop based on props or item
     const item = monitor.getItem();
-    const { x, y, pieces } = props;
-    return props.canDrop(item, { x, y }, pieces);
+    const {x, y, pieces} = props;
+    return props.canDrop(item, {x, y}, pieces);
   },
 
   hover(props, monitor, component) {
@@ -25,7 +25,7 @@ const chessSquareTarget = {
     // const componentRect = findDOMNode(component).getBoundingClientRect();
 
     // You can check whether we're over a nested drop target
-    const isJustOverThisOne = monitor.isOver({ shallow: true }); // eslint-disable-line
+    const isJustOverThisOne = monitor.isOver({shallow: true}); // eslint-disable-line
 
     // You will receive hover() even for items for which canDrop() is false
     const canDrop = monitor.canDrop(); // eslint-disable-line
@@ -40,16 +40,16 @@ const chessSquareTarget = {
 
     // Obtain the dragged item
     const item = monitor.getItem();
-    const { x, y } = props;
+    const {x, y} = props;
 
     // You can do something with it
-    props.movePiece({ item, position: { x, y } });
+    props.movePiece({item, position: {x, y}});
     props.kill();
 
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
     // in the drag source's endDrag() method
-    return { moved: true };
+    return {moved: true};
   },
 };
 
@@ -63,7 +63,7 @@ function collect(connect, monitor) {
     connectDropTarget: connect.dropTarget(),
     // You can ask the monitor about the current drag state:
     isOver: monitor.isOver(),
-    isOverCurrent: monitor.isOver({ shallow: true }),
+    isOverCurrent: monitor.isOver({shallow: true}),
     isDropable: monitor.canDrop(),
     itemType: monitor.getItemType(),
   };
@@ -116,8 +116,9 @@ const Square = ({
               : '100%',
           width: '1px',
           backgroundColor: 'black',
-          transform: `translate(30px, ${y === 0 || (y === 5 && ![0, 8].includes(x)) ? '30px' : 0
-            })`,
+          transform: `translate(30px, ${
+            y === 0 || (y === 5 && ![0, 8].includes(x)) ? '30px' : 0
+          })`,
         }}
       />
       {children}

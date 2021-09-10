@@ -28,8 +28,7 @@ Tern 被设计成为编辑器插件，用来强化编辑器的智能编辑。
 
 [在线文档](http://ternjs.net/doc/manual.html)
 
-配置文件，需要在项目下添加`.tern-project`文件
-格式为 JSON 格式，示例如下：
+配置文件，需要在项目下添加`.tern-project`文件格式为 JSON 格式，示例如下：
 
 ```json
 {
@@ -47,7 +46,8 @@ Tern 被设计成为编辑器插件，用来强化编辑器的智能编辑。
 
 #### libs
 
-整个项目中包含的库，由[JSON type descriptions](http://ternjs.net/doc/manual.html#typedef)格式指定
+整个项目中包含的库，
+由[JSON type descriptions](http://ternjs.net/doc/manual.html#typedef)格式指定
 
 使用 JSON 格式定义的库文档，全局有效
 

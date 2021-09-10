@@ -1,8 +1,7 @@
-
 // next.config.js
 module.exports = {
   serverRuntimeConfig: {
-    PROJECT_ROOT: __dirname
+    PROJECT_ROOT: __dirname,
   },
-  assetPrefix: '/'
-}
+  assetPrefix: '/',
+};

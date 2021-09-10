@@ -16,7 +16,8 @@
 
 添加 babel 插件`babel-plugin-module-resolver`,并将原先的 webpack 别名修改过来
 
-删除了 webpack 的 alias，添加了如下内容到 babel.config.js，由于路径会和 webpack 相互交互，为了方便处理，所以使用了绝对路径
+删除了 webpack 的 alias，添加了如下内容到 babel.config.js，由于路径会和 webpack
+相互交互，为了方便处理，所以使用了绝对路径
 
 ```js
 plugins: [
@@ -49,8 +50,9 @@ plugins: [
 ];
 ```
 
-修改完成后发现问题，原先的 define plugin 的导入出了错误。
-原因是由于 template loader 没有用 babel 处理导致的，为了方便，我改了 provide plugin 的引入点，做了路径指向
+修改完成后发现问题，原先的 define plugin 的导入出了错误。原因是由于 template
+loader 没有用 babel 处理导致的，为了方便，我改了 provide plugin 的引入点，做了路
+径指向
 
 提交时发现问题，eslint 无法通过
 

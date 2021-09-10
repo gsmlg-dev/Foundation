@@ -1,16 +1,25 @@
 ### 简介
 
-OpenSSL是一款自由开源的加密库, 提供了一些命令行工具来处理数字证书. 其中的一些工具可以作为证书权威机构来使用.
+OpenSSL 是一款自由开源的加密库, 提供了一些命令行工具来处理数字证书. 其中的一些工
+具可以作为证书权威机构来使用.
 
-证书权威(CA)是一个认证证书实体的证书机构. 许多Web站点需要让他们的客户清楚他们的连接是安全的, 他们通过向一些国际性的可信CA(eg. VeriSign, DigiCert)为他们的站点去购买一个证书.
+证书权威(CA)是一个认证证书实体的证书机构. 许多 Web 站点需要让他们的客户清楚他们
+的连接是安全的, 他们通过向一些国际性的可信 CA(eg. VeriSign, DigiCert)为他们的站
+点去购买一个证书.
 
-在一些时候, 相比于去购买一个证书,更需要去实现一自己的CA. 通常是需要内部网络使用的安全连接, 或者是需要向客户发布一个证书来让他们通过服务器的认证(eg, Apache, OpenVPN)
+在一些时候, 相比于去购买一个证书,更需要去实现一自己的 CA. 通常是需要内部网络使用
+的安全连接, 或者是需要向客户发布一个证书来让他们通过服务器的认证(eg, Apache,
+OpenVPN)
 
-### 创建root pair
+### 创建 root pair
 
-成为一个CA意味着需要处理加密密钥对, 私钥和证书. 首先需要第一步创建的是root pair. 它包含root key(ca.key.pem)和root certificate(ca.cert.pem). 这对迷药就是CA的身份认证.
+成为一个 CA 意味着需要处理加密密钥对, 私钥和证书. 首先需要第一步创建的是 root
+pair. 它包含 root key(ca.key.pem)和 root certificate(ca.cert.pem). 这对迷药就是
+CA 的身份认证.
 
-通常, root CA 不会给任何服务器或客户端签名. root CA只被用来创建更多的二级CA, 二级CA被root CA签名, 作为root CA的代表. 这是最佳实践, 可以让root key保持离线和尽量少的被使用, 以保证root key有最小的泄漏风险.
+通常, root CA 不会给任何服务器或客户端签名. root CA 只被用来创建更多的二级 CA,
+二级 CA 被 root CA 签名, 作为 root CA 的代表. 这是最佳实践, 可以让 root key 保持
+离线和尽量少的被使用, 以保证 root key 有最小的泄漏风险.
 
 ```
 ⚠️注意
@@ -19,13 +28,14 @@ OpenSSL是一款自由开源的加密库, 提供了一些命令行工具来处�
 
 #### 准备目录
 
-选择目录来保存所有的keys和certificates
+选择目录来保存所有的 keys 和 certificates
 
 ```
 # mkdir /root/ca
 ```
 
-创建目录结构. 其中 `index.txt` 和 `serial` 文件是用来保存已经签名证书的记录的文件数据库.
+创建目录结构. 其中 `index.txt` 和 `serial` 文件是用来保存已经签名证书的记录的文
+件数据库.
 
 ```
 # cd /root/ca
@@ -37,7 +47,8 @@ OpenSSL是一款自由开源的加密库, 提供了一些命令行工具来处�
 
 #### 准备配置文件
 
-我们需要创建一个OpenSSL配置文件来使用. 复制root CA的配置文件到 `/root/ca/openssl.cnf`.
+我们需要创建一个 OpenSSL 配置文件来使用. 复制 root CA 的配置文件到
+`/root/ca/openssl.cnf`.
 
 root CA 配置文件
 
@@ -176,7 +187,7 @@ keyUsage = critical, digitalSignature
 extendedKeyUsage = critical, OCSPSigning
 ```
 
-其中 `[ca]` 部分是必须的. 这里我们告诉OpenSSL使用选项 `[CA_default]` 部分
+其中 `[ca]` 部分是必须的. 这里我们告诉 OpenSSL 使用选项 `[CA_default]` 部分
 
 ```
 [ ca ]
@@ -217,7 +228,7 @@ preserve          = no
 policy            = policy_strict
 ```
 
-我们应用 `policy_strict` 到所有的root CA签名, 使root CA仅被用来创建二级CA.
+我们应用 `policy_strict` 到所有的 root CA 签名, 使 root CA 仅被用来创建二级 CA.
 
 ```
 [ policy_strict ]
@@ -231,7 +242,8 @@ commonName              = supplied
 emailAddress            = optional
 ```
 
-我们应用 `policy_loose` 到所有二级CA签名, 二级CA会给所有的Server和Client签名, 它们会有很多的种类变化.
+我们应用 `policy_loose` 到所有二级 CA 签名, 二级 CA 会给所有的 Server 和 Client
+签名, 它们会有很多的种类变化.
 
 ```
 [ policy_loose ]
@@ -262,7 +274,8 @@ default_md          = sha256
 x509_extensions     = v3_ca
 ```
 
-`[req_distinguished_name]` 部分包含了一般证书请求签名信息. 可以手动添加一些默认值来配置.
+`[req_distinguished_name]` 部分包含了一般证书请求签名信息. 可以手动添加一些默认
+值来配置.
 
 ```
 [ req_distinguished_name ]
@@ -284,7 +297,8 @@ localityName_default            =
 #emailAddress_default           =
 ```
 
-之后的几个部分是一些扩展, 这些扩展可以在证书签名的时候使用. 例如: 使用 `-extensions v3_ca` 命令行参数会应用在 `[v3_ca]` 下的选项.
+之后的几个部分是一些扩展, 这些扩展可以在证书签名的时候使用. 例如: 使用
+`-extensions v3_ca` 命令行参数会应用在 `[v3_ca]` 下的选项.
 
 在创建根证书的时候, 我们使用 `v3_ca`
 
@@ -297,7 +311,8 @@ basicConstraints = critical, CA:true
 keyUsage = critical, digitalSignature, cRLSign, keyCertSign
 ```
 
-在创建二级CA时, 使用 `v3_intermediate_ca`, 其中额外增加了 `pathlen:0` 来确保二级CA下可以再创建CA
+在创建二级 CA 时, 使用 `v3_intermediate_ca`, 其中额外增加了 `pathlen:0` 来确保二
+级 CA 下可以再创建 CA
 
 ```
 [ v3_intermediate_ca ]
@@ -322,7 +337,7 @@ keyUsage = critical, nonRepudiation, digitalSignature, keyEncipherment
 extendedKeyUsage = clientAuth, emailProtection
 ```
 
-在创建服务器证书时, 使用 `server_cert` 选项, 这些被用于Web服务器.
+在创建服务器证书时, 使用 `server_cert` 选项, 这些被用于 Web 服务器.
 
 ```
 [ server_cert ]
@@ -344,7 +359,8 @@ extendedKeyUsage = serverAuth
 authorityKeyIdentifier=keyid:always
 ```
 
-在签名在线证书状态协议(Online Certificate Status Protocol (OCSP))证书时, 使用选项 `ocsp`
+在签名在线证书状态协议(Online Certificate Status Protocol (OCSP))证书时, 使用选
+项 `ocsp`
 
 ```
 [ ocsp ]
@@ -356,9 +372,10 @@ keyUsage = critical, digitalSignature
 extendedKeyUsage = critical, OCSPSigning
 ```
 
-#### 创建root key
+#### 创建 root key
 
-创建root key( `ca.key.pem` )并保证它的绝对安全. 任何拥有root key的人都可以创建受信任的证书. 使用AES 256-bit来加密root key, 并创建一个健壮的密码.
+创建 root key( `ca.key.pem` )并保证它的绝对安全. 任何拥有 root key 的人都可以创
+建受信任的证书. 使用 AES 256-bit 来加密 root key, 并创建一个健壮的密码.
 
 ```
 ⚠️注意
@@ -378,7 +395,8 @@ Verifying - Enter pass phrase for ca.key.pem: secretpassword
 
 #### 创建根证书(Root certificate)
 
-使用root key(ca.key.pem)来创建根证书(ca.cert.pem). 给根证书设置一个比较长的有效期, 比如20年. 一旦根证书失效, 所有被根证书签名的证书都会失效.
+使用 root key(ca.key.pem)来创建根证书(ca.cert.pem). 给根证书设置一个比较长的有效
+期, 比如 20 年. 一旦根证书失效, 所有被根证书签名的证书都会失效.
 
 ```
 ⚠️警告
@@ -415,11 +433,11 @@ Email Address []:
 
 输出会显示
 
-* `Signature Algorithm` 签名算法
-* `Validity` 证书的有效期
-* `Public-Key` 公钥长度
-* `Issuer`, 签发证书的实体
-* `Subject`, 指向证书自己
+- `Signature Algorithm` 签名算法
+- `Validity` 证书的有效期
+- `Public-Key` 公钥长度
+- `Issuer`, 签发证书的实体
+- `Subject`, 指向证书自己
 
 当 `Issuer` 和 `Subject` 相同时, 说明证书是自签名的. 明确所有根证书都是自签名的.
 
@@ -439,7 +457,8 @@ Signature Algorithm: sha256WithRSAEncryption
             Public-Key: (4096 bit)
 ```
 
-输出还会显示 *X509v3 extensions*. 我们创建证书时应用的选项 `v3_ca`, 所以 `[v3_ca]` 下的配置项会被反映出来.
+输出还会显示 _X509v3 extensions_. 我们创建证书时应用的选项 `v3_ca`, 所以
+`[v3_ca]` 下的配置项会被反映出来.
 
 ```
 X509v3 extensions:
@@ -454,21 +473,25 @@ X509v3 extensions:
         Digital Signature, Certificate Sign, CRL Sign
 ```
 
-### 创建二级CA, intermediate pair
+### 创建二级 CA, intermediate pair
 
-二级CA作为Root CA代表的实体. Root CA签署中间证书, 来达成一个信任链.
+二级 CA 作为 Root CA 代表的实体. Root CA 签署中间证书, 来达成一个信任链.
 
-使用二级CA的主要目的是为了安全. 这样root key可以被保存在一个离线环境, 并尽可能少的被使用. 如果二级CA的key泄漏, root CA可以废弃二级CA证书并创建一个新的二级密钥对.
+使用二级 CA 的主要目的是为了安全. 这样 root key 可以被保存在一个离线环境, 并尽可
+能少的被使用. 如果二级 CA 的 key 泄漏, root CA 可以废弃二级 CA 证书并创建一个新
+的二级密钥对.
 
 #### 准备目录
 
-Root CA文件保存在目录 `/root/ca` 下. 选择一个不同的目录( `/root/ca/intermediate` )来保存二级CA文件
+Root CA 文件保存在目录 `/root/ca` 下. 选择一个不同的目录(
+`/root/ca/intermediate` )来保存二级 CA 文件
 
 ```
 # mkdir /root/ca/intermediate
 ```
 
-创建和root CA相同的目录结构来保存文件. 增加了一个新的目录 `csr` 来保存证书签名请求
+创建和 root CA 相同的目录结构来保存文件. 增加了一个新的目录 `csr` 来保存证书签名
+请求
 
 ```
 # cd /root/ca/intermediate
@@ -478,15 +501,16 @@ Root CA文件保存在目录 `/root/ca` 下. 选择一个不同的目录( `/root
 # echo 1000 > serial
 ```
 
-添加一个 `crlnumber` 文件到二级CA目录树. 使用 `crlnumber` 来对证书废除列表(certificate revocation lists)进行追踪.
+添加一个 `crlnumber` 文件到二级 CA 目录树. 使用 `crlnumber` 来对证书废除列表
+(certificate revocation lists)进行追踪.
 
 ```
 # echo 1000 > /root/ca/intermediate/crlnumber
 ```
 
-复制二级CA配置文件到 `/root/ca/intermediate/openssl.cnf` 文件.
+复制二级 CA 配置文件到 `/root/ca/intermediate/openssl.cnf` 文件.
 
-二级CA配置文件内容:
+二级 CA 配置文件内容:
 
 ```
 # OpenSSL intermediate CA configuration file.
@@ -623,7 +647,7 @@ keyUsage = critical, digitalSignature
 extendedKeyUsage = critical, OCSPSigning
 ```
 
-相对于root CA, 有5个选项发生了变化
+相对于 root CA, 有 5 个选项发生了变化
 
 ```
 [ CA_default ]
@@ -634,9 +658,10 @@ crl             = $dir/crl/intermediate.crl.pem
 policy          = policy_loose
 ```
 
-#### 创建二级CA的Key
+#### 创建二级 CA 的 Key
 
-创建二级CA的key( `intermediate.key.pem` ) 使用AES 256-bit来加密并设置强密码.
+创建二级 CA 的 key( `intermediate.key.pem` ) 使用 AES 256-bit 来加密并设置强密码
+.
 
 ```
 # cd /root/ca
@@ -649,9 +674,10 @@ Verifying - Enter pass phrase for intermediate.key.pem: secretpassword
 # chmod 400 intermediate/private/intermediate.key.pem
 ```
 
-### 创建二级CA证书
+### 创建二级 CA 证书
 
-使用二级CA的key来创建证书签名请求(CSR). 详细信息和CA大致相同. 尽管如此, Common Name选项必须不同.
+使用二级 CA 的 key 来创建证书签名请求(CSR). 详细信息和 CA 大致相同. 尽管如此,
+Common Name 选项必须不同.
 
 ```
 ⚠️警告
@@ -677,7 +703,8 @@ Common Name []:Alice Ltd Intermediate CA
 Email Address []:
 ```
 
-创建二级CA证书, 使用root CA签名CSR并使用选项 `v3_intermediate_ca`. 二级证书需要设置一个比root CA证书更短的有效期. 10年是一个比较好的选项.
+创建二级 CA 证书, 使用 root CA 签名 CSR 并使用选项 `v3_intermediate_ca`. 二级证
+书需要设置一个比 root CA 证书更短的有效期. 10 年是一个比较好的选项.
 
 ```
 ⚠️警告
@@ -697,22 +724,23 @@ Sign the certificate? [y/n]: y
 # chmod 444 intermediate/certs/intermediate.cert.pem
 ```
 
-`index.txt` 文件是OpenSSL `ca` 工具用来保存证书的数据库. 不要删除或手动修改这个文件. 现在它应该包含了二级CA证书的信息
+`index.txt` 文件是 OpenSSL `ca` 工具用来保存证书的数据库. 不要删除或手动修改这个
+文件. 现在它应该包含了二级 CA 证书的信息
 
 ```
 V 250408122707Z 1000 unknown ... /CN=Alice Ltd Intermediate CA
 ```
 
-#### 验证二级CA证书
+#### 验证二级 CA 证书
 
-和验证根证书一样, 使用相同的方式来验证二级Ca证书的有效性.
+和验证根证书一样, 使用相同的方式来验证二级 Ca 证书的有效性.
 
 ```
 # openssl x509 -noout -text \
       -in intermediate/certs/intermediate.cert.pem
 ```
 
-验证二级CA证书紧靠着根证书. 返回 `OK` 指示这个信任链是正确的.
+验证二级 CA 证书紧靠着根证书. 返回 `OK` 指示这个信任链是正确的.
 
 ```
 # openssl verify -CAfile certs/ca.cert.pem \
@@ -723,9 +751,11 @@ intermediate.cert.pem: OK
 
 #### 创建证书链文件
 
-当应用(比如, web浏览器)尝试去对二级CA签名的证书做验证, 它必须也验证根证书和二级CA的信任链. 完成信任链, 就需要创建一个证书链来给应用.
+当应用(比如, web 浏览器)尝试去对二级 CA 签名的证书做验证, 它必须也验证根证书和二
+级 CA 的信任链. 完成信任链, 就需要创建一个证书链来给应用.
 
-创建证书链, 把二级CA证书和根证书连接起来, 我们随后会使用这个文件来演正被二级CA证书的签名.
+创建证书链, 把二级 CA 证书和根证书连接起来, 我们随后会使用这个文件来演正被二级
+CA 证书的签名.
 
 ```
 # cat intermediate/certs/intermediate.cert.pem \
@@ -738,25 +768,28 @@ intermediate.cert.pem: OK
 我们的证书链文件必须包含根证书, 因为当前所有的客户端应用都没雨配置这个根证书. 更好的选项是, 比如你是一个内网的管理者, 可以把根证书安装到所有需要验证的客户端. 用这种方式, 证书链文件只需要包含你的二级CA证书
 ```
 
-### 签名Server和Client证书
+### 签名 Server 和 Client 证书
 
-我们接下来使用我们的二级CA来签名. 你可以在多种情况时使用这些签名证书, 比如创建安全的浏览器连接, 或者客户端到server的认证.
+我们接下来使用我们的二级 CA 来签名. 你可以在多种情况时使用这些签名证书, 比如创建
+安全的浏览器连接, 或者客户端到 server 的认证.
 
 ```
 ⚠️注意
 接下来的步骤揭示你作为certificate authority(CA). 第三方, 尽管可以自己创建自己的私钥和证书请求(CSR), 不需要把它们的私钥(private key)显示给你. 他们只想你提供CSR, 然后你签署一个签名的证书给他们. 在这种情况下, 忽略`genrsa`和`req`命令.
 ```
 
-#### 创建key
+#### 创建 key
 
-我们的根CA和二级CA都是4096bit的. Server和Client证书通常在一年内失效, 所以我们安全的使用2048位密钥对.
+我们的根 CA 和二级 CA 都是 4096bit 的. Server 和 Client 证书通常在一年内失效, 所
+以我们安全的使用 2048 位密钥对.
 
 ```
 ⚠️注意
 尽管4096bits略微安全于2048bits, 它会减慢TLS握手并且显著的增加握手时的处理器负载. 基于这个原因, 大多数websites都适用2048bit密钥对
 ```
 
-如果你为一个web服务器(如: Apache)创建密钥对, 你需要在每次重启服务时都输入密码. 可以删除掉 `-aes256` 选项来创建一个没有密码的key.
+如果你为一个 web 服务器(如: Apache)创建密钥对, 你需要在每次重启服务时都输入密码.
+可以删除掉 `-aes256` 选项来创建一个没有密码的 key.
 
 ```
 # cd /root/ca
@@ -767,7 +800,10 @@ intermediate.cert.pem: OK
 
 #### 创建证书 certificate
 
-使用私钥(private key)来创建证书请求(CSR). CSR详情不需要匹配到二级CA. 对Server证书, 配置的Common Name必须是一个FQDN(full qualified domain name, 如www.example.com), 然而对Client证书它可以是任何唯一的识别码(如, 一个邮件地址). 记住Comman Name不能和你的根证书或二级CA证书相同.
+使用私钥(private key)来创建证书请求(CSR). CSR 详情不需要匹配到二级 CA. 对 Server
+证书, 配置的 Common Name 必须是一个 FQDN(full qualified domain name,
+如www.example.com), 然而对 Client 证书它可以是任何唯一的识别码(如, 一个邮件地址
+). 记住 Comman Name 不能和你的根证书或二级 CA 证书相同.
 
 ```
 # cd /root/ca
@@ -788,7 +824,9 @@ Common Name []:www.example.com
 Email Address []:
 ```
 
-使用二级CA去签名CSR来创建一个证书. 如果证书是被用于一个server, 那么使用 `server_cert` 扩展. 如果证书时给用户做用户认证, 使用 `user_cert` 扩展. 证书通常给予指定一年的有效期, 尽管通常CA会额外给于几天时间方便.
+使用二级 CA 去签名 CSR 来创建一个证书. 如果证书是被用于一个 server, 那么使用
+`server_cert` 扩展. 如果证书时给用户做用户认证, 使用 `user_cert` 扩展. 证书通常
+给予指定一年的有效期, 尽管通常 CA 会额外给于几天时间方便.
 
 ```
 # cd /root/ca
@@ -812,7 +850,7 @@ V 160420124233Z 1000 unknown ... /CN=www.example.com
       -in intermediate/certs/www.example.com.cert.pem
 ```
 
-*Issuer* 就是二级CA. *Subject* 就是证书自己
+_Issuer_ 就是二级 CA. _Subject_ 就是证书自己
 
 ```
 Signature Algorithm: sha256WithRSAEncryption
@@ -830,7 +868,8 @@ Signature Algorithm: sha256WithRSAEncryption
             Public-Key: (2048 bit)
 ```
 
-输出会显示 *X509v3 extensions*. 当创建证书, 选择的是 `server_cert` 或者 `usr_cert`. 这个选项的内容就会在这里被反射出来
+输出会显示 _X509v3 extensions_. 当创建证书, 选择的是 `server_cert` 或者
+`usr_cert`. 这个选项的内容就会在这里被反射出来
 
 ```
 X509v3 extensions:
@@ -853,7 +892,8 @@ X509v3 extensions:
         TLS Web Server Authentication
 ```
 
-使用之前创建的CA证书链文件(ca-chain.cert.pem), 我们可以验证新的证书在被信任链上是正确的
+使用之前创建的 CA 证书链文件(ca-chain.cert.pem), 我们可以验证新的证书在被信任链
+上是正确的
 
 ```
 # openssl verify -CAfile intermediate/certs/ca-chain.cert.pem \
@@ -864,19 +904,25 @@ www.example.com.cert.pem: OK
 
 #### 部署证书
 
-现在可以讲证书部署到server, 或者发布证书给客户. 当部署到服务器应用(如, Apache)时, 你需要确保下边的文件可用:
+现在可以讲证书部署到 server, 或者发布证书给客户. 当部署到服务器应用(如, Apache)
+时, 你需要确保下边的文件可用:
 
-* `ca-chain.cert.pem`
-* `www.example.com.key.pem`
-* `www.example.com.cert.perm`
+- `ca-chain.cert.pem`
+- `www.example.com.key.pem`
+- `www.example.com.cert.perm`
 
-如果你是给第三方的证书请求(CSR)做签名, 你不需要获取他们的私钥(private key), 所以你需要返回给他们证书链文件( `ca-chain.cert.pem` )和证书文件( `www.example.com.cert.pem` )
+如果你是给第三方的证书请求(CSR)做签名, 你不需要获取他们的私钥(private key), 所以
+你需要返回给他们证书链文件( `ca-chain.cert.pem` )和证书文件(
+`www.example.com.cert.pem` )
 
 #### 证书废除列表(Certificate revocation lists)
 
-证书废除列表(Certificate revocation lists(CRL))提供了一个证书的列表, 表明其中的证书都是被废除的. 客户端应用, 比如web浏览器, 可以使用CRL去检查服务器真实性. 服务器应用, 比如Apache和OpenVPN, 可以使用CRL来禁止不被信任的客户端的访问.
+证书废除列表(Certificate revocation lists(CRL))提供了一个证书的列表, 表明其中的
+证书都是被废除的. 客户端应用, 比如 web 浏览器, 可以使用 CRL 去检查服务器真实性.
+服务器应用, 比如 Apache 和 OpenVPN, 可以使用 CRL 来禁止不被信任的客户端的访问.
 
-发布CRL到一个可以公开访问的地方(如: http://example.com/intermediate.crl.pem). 第三方可以根据地址获取到CRL, 他们可以根据这个来检测他们依赖的证书是否被废除.
+发布 CRL 到一个可以公开访问的地方(如: http://example.com/intermediate.crl.pem).
+第三方可以根据地址获取到 CRL, 他们可以根据这个来检测他们依赖的证书是否被废除.
 
 ```
 ⚠️注意
@@ -885,7 +931,8 @@ www.example.com.cert.pem: OK
 
 #### 准备配置文件
 
-当一个CA签名证书, 他们通常会写入CRL地址到证书里. 添加 `crlDistributionPoints` 到对应的部分. 在这里, 我们添加到 `[server_cert]` 部分中
+当一个 CA 签名证书, 他们通常会写入 CRL 地址到证书里. 添加
+`crlDistributionPoints` 到对应的部分. 在这里, 我们添加到 `[server_cert]` 部分中
 
 ```
 [ server_cert ]
@@ -893,7 +940,7 @@ www.example.com.cert.pem: OK
 crlDistributionPoints = URI:http://example.com/intermediate.crl.pem
 ```
 
-#### 创建CRL
+#### 创建 CRL
 
 ```
 # cd /root/ca
@@ -906,7 +953,7 @@ crlDistributionPoints = URI:http://example.com/intermediate.crl.pem
 在ca man page中的`CRL OPTIONS`部分包含了更多关于如何创建CRLs的信息
 ```
 
-可以使用 `crl` 工具来检查CRL的内容
+可以使用 `crl` 工具来检查 CRL 的内容
 
 ```
 # openssl crl -in intermediate/crl/intermediate.crl.pem -noout -text
@@ -914,13 +961,15 @@ crlDistributionPoints = URI:http://example.com/intermediate.crl.pem
 
 现在没有被吊销的证书, 所以输出是 `No Revoked Certificates`.
 
-你应该定期的重新创建CRL. 在默认情况下, CRL在30天后失效. 这个值由 `[CA_default]` 部分中的 `default_crl_days` 选项控制.
+你应该定期的重新创建 CRL. 在默认情况下, CRL 在 30 天后失效. 这个值由
+`[CA_default]` 部分中的 `default_crl_days` 选项控制.
 
 #### 吊销证书
 
-通过一个例子来看看这个过程. Alice有一个web服务器和一个私有的目录存放一些暖心的可爱小猫图片. Alice想授权她的朋友Bob来访问这个集合.
+通过一个例子来看看这个过程. Alice 有一个 web 服务器和一个私有的目录存放一些暖心
+的可爱小猫图片. Alice 想授权她的朋友 Bob 来访问这个集合.
 
-Bob创建了一个私钥和证书请求文件CSR
+Bob 创建了一个私钥和证书请求文件 CSR
 
 ```
 $ cd /home/bob
@@ -940,7 +989,7 @@ Common Name []:bob@example.com
 Email Address []:
 ```
 
-Bob发送他的CSR给Alice, Alice给他签名.
+Bob 发送他的 CSR 给 Alice, Alice 给他签名.
 
 ```
 # cd /root/ca
@@ -953,7 +1002,7 @@ Sign the certificate? [y/n]: y
 1 out of 1 certificate requests certified, commit? [y/n]: y
 ```
 
-Alice验证证书有效
+Alice 验证证书有效
 
 ```
 # openssl verify -CAfile intermediate/certs/ca-chain.cert.pem \
@@ -962,15 +1011,16 @@ Alice验证证书有效
 bob@example.com.cert.pem: OK
 ```
 
-`index.txt`  文件包含一个新的连接
+`index.txt` 文件包含一个新的连接
 
 ```
 V 160420124740Z 1001 unknown ... /CN=bob@example.com
 ```
 
-Alice发送证书给Bob. Bob安装证书到浏览器, 现在可以访问到Alice的小猫图片.
+Alice 发送证书给 Bob. Bob 安装证书到浏览器, 现在可以访问到 Alice 的小猫图片.
 
-坏事, 随着Bob的不端行为而来. Bob把Alice的小猫图片发送到了Hack News, 说了他是这些的拥有者, 并获得了大量的赞. Alice发现了这事摒弃要立即吊销他的访问权限.
+坏事, 随着 Bob 的不端行为而来. Bob 把 Alice 的小猫图片发送到了 Hack News, 说了他
+是这些的拥有者, 并获得了大量的赞. Alice 发现了这事摒弃要立即吊销他的访问权限.
 
 ```
 # cd /root/ca
@@ -982,29 +1032,35 @@ Revoking Certificate 1001.
 Data Base Updated
 ```
 
-`index.txt` 中Bob的证书这行开始现在使用字符 `R` 标示, 这表示证书已经被吊销(Revoked).
+`index.txt` 中 Bob 的证书这行开始现在使用字符 `R` 标示, 这表示证书已经被吊销
+(Revoked).
 
 ```
 R 160420124740Z 150411125310Z 1001 unknown ... /CN=bob@example.com
 ```
 
-在吊销了Bob的证书后, Alice必须重新创建CRL
+在吊销了 Bob 的证书后, Alice 必须重新创建 CRL
 
-#### 服务端使用CRL
+#### 服务端使用 CRL
 
-对于客户端证书, 一般时候服务器应用(如, Apache)来进行验证. 服务应用需要可以访问CRL.
+对于客户端证书, 一般时候服务器应用(如, Apache)来进行验证. 服务应用需要可以访问
+CRL.
 
-在Alice的例子中, 他可以添加 `SSLCARevocationPath` 直接到她的Apache配置文件中并复制CRL到她的web服务器. 下次Bob再进行访问时, Apache会检查他的证书存在于CRL中并禁止访问.
+在 Alice 的例子中, 他可以添加 `SSLCARevocationPath` 直接到她的 Apache 配置文件中
+并复制 CRL 到她的 web 服务器. 下次 Bob 再进行访问时, Apache 会检查他的证书存在于
+CRL 中并禁止访问.
 
-相似的, OpenVPN也使用 `crl-verify` 指向了被禁用的客户端证书.
+相似的, OpenVPN 也使用 `crl-verify` 指向了被禁用的客户端证书.
 
-#### 客户端使用CRL
+#### 客户端使用 CRL
 
-对于服务器证书, 一般是由客户端应用(如,浏览器)来进行验证. 这时, 应用必须可以远程访问CRL.
+对于服务器证书, 一般是由客户端应用(如,浏览器)来进行验证. 这时, 应用必须可以远程
+访问 CRL.
 
-如果证书被签名的扩展中包含了 `crlDistributionPoints`, 客户端应用能够根据地址读取到CRL信息.
+如果证书被签名的扩展中包含了 `crlDistributionPoints`, 客户端应用能够根据地址读取
+到 CRL 信息.
 
-CRL地址信息可以在证书的x509v3详情中看到.
+CRL 地址信息可以在证书的 x509v3 详情中看到.
 
 ```
 # openssl x509 -in cute-kitten-pictures.example.com.cert.pem -noout -text
@@ -1017,11 +1073,15 @@ CRL地址信息可以在证书的x509v3详情中看到.
 
 ### 在线证书状态协议 (Online Certificate Status Protocol)
 
-在线证书状态协议 (Online Certificate Status Protocol)(OCSP) 被创建用于替代证书吊销列表(CRL). 和CRLs相似, OCSP运行访问查询出证书的吊销状态.
+在线证书状态协议 (Online Certificate Status Protocol)(OCSP) 被创建用于替代证书吊
+销列表(CRL). 和 CRLs 相似, OCSP 运行访问查询出证书的吊销状态.
 
-当服务器签名证书时, 他们一般会包含一个OSCP服务器地址(如, http://ocsp.example.com)在证书中. 这个功能和CRL的 `crlDistributionPoints` 功能作用相似.
+当服务器签名证书时, 他们一般会包含一个 OSCP 服务器地址(如,
+http://ocsp.example.com)在证书中. 这个功能和 CRL 的 `crlDistributionPoints` 功能
+作用相似.
 
-示例, 当web浏览器接受到一个服务器证书, 它立即想请求证书中的OSCP服务器地址. 在这个地址中, OCSP响应程序监听请求和响应证书的吊销状态.
+示例, 当 web 浏览器接受到一个服务器证书, 它立即想请求证书中的 OSCP 服务器地址.
+在这个地址中, OCSP 响应程序监听请求和响应证书的吊销状态.
 
 ```
 ⚠️注意
@@ -1030,7 +1090,8 @@ CRL地址信息可以在证书的x509v3详情中看到.
 
 #### 准备配置文件
 
-要使用OCSP, CA必须要编码OCSP服务器地址到签名的证书中. 使用 `authorityInfoAccess` 选项到合适的部分, 在这里应该是 `[server_cert]` 部分
+要使用 OCSP, CA 必须要编码 OCSP 服务器地址到签名的证书中. 使用
+`authorityInfoAccess` 选项到合适的部分, 在这里应该是 `[server_cert]` 部分
 
 ```
 [ server_cert ]
@@ -1038,11 +1099,12 @@ CRL地址信息可以在证书的x509v3详情中看到.
 authorityInfoAccess = OCSP;URI:http://ocsp.example.com
 ```
 
-#### 创建OCSP密钥对
+#### 创建 OCSP 密钥对
 
-OCSP响应程序必须要一个加密密钥对来签名发送给请求的响应内容. OSCP密钥对必须由和证书签名相同的CA签名.
+OCSP 响应程序必须要一个加密密钥对来签名发送给请求的响应内容. OSCP 密钥对必须由和
+证书签名相同的 CA 签名.
 
-创建私钥并使用AES-256加密
+创建私钥并使用 AES-256 加密
 
 ```
 # cd /root/ca
@@ -1050,7 +1112,7 @@ OCSP响应程序必须要一个加密密钥对来签名发送给请求的响应�
       -out intermediate/private/ocsp.example.com.key.pem 4096
 ```
 
-创建证书签名请求CSR. 详细信息默认需要和签名CA相同. Common Name, 需要是FQDN.
+创建证书签名请求 CSR. 详细信息默认需要和签名 CA 相同. Common Name, 需要是 FQDN.
 
 ```
 # cd /root/ca
@@ -1071,7 +1133,7 @@ Common Name []:ocsp.example.com
 Email Address []:
 ```
 
-使用CA签署CSR
+使用 CA 签署 CSR
 
 ```
 # openssl ca -config intermediate/openssl.cnf \
@@ -1080,7 +1142,7 @@ Email Address []:
       -out intermediate/certs/ocsp.example.com.cert.pem
 ```
 
-验证证书的 *x509v3 extensions* 正确性
+验证证书的 _x509v3 extensions_ 正确性
 
 ```
 # openssl x509 -noout -text \
@@ -1094,9 +1156,10 @@ Email Address []:
 
 #### 吊销证书
 
-OpenSSL的 `ocsp` 工具实现了一个OCSP responder, 但只为了做测试使用. 生产级别的OCSP responder也有, 但是超越了这个指引的范围.
+OpenSSL 的 `ocsp` 工具实现了一个 OCSP responder, 但只为了做测试使用. 生产级别的
+OCSP responder 也有, 但是超越了这个指引的范围.
 
-创建一个server证书测试.
+创建一个 server 证书测试.
 
 ```
 # cd /root/ca
@@ -1110,7 +1173,9 @@ OpenSSL的 `ocsp` 工具实现了一个OCSP responder, 但只为了做测试使�
       -out intermediate/certs/test.example.com.cert.pem
 ```
 
-在 `localhost` 上运行OCSP responder . 有别于CRL保存吊销状态于各个文件中, OCSP responder 直接读取 `index.txt` . 响应被OCSP密钥对签名(使用 `-rkey` 和 `-rsigner` 选项)
+在 `localhost` 上运行 OCSP responder . 有别于 CRL 保存吊销状态于各个文件中, OCSP
+responder 直接读取 `index.txt` . 响应被 OCSP 密钥对签名(使用 `-rkey` 和
+`-rsigner` 选项)
 
 ```
 # openssl ocsp -port 127.0.0.1:2560 -text -sha256 \
@@ -1123,7 +1188,8 @@ OpenSSL的 `ocsp` 工具实现了一个OCSP responder, 但只为了做测试使�
 Enter pass phrase for ocsp.example.com.key.pem: secretpassword
 ```
 
-在另一个终端中, 发送一个请求给OCSP responder. 指定的 `-cert` 选项指定了请求的证书.
+在另一个终端中, 发送一个请求给 OCSP responder. 指定的 `-cert` 选项指定了请求的证
+书.
 
 ```
 # openssl ocsp -CAfile intermediate/certs/ca-chain.cert.pem \
@@ -1134,9 +1200,9 @@ Enter pass phrase for ocsp.example.com.key.pem: secretpassword
 
 开始的输出显示如下:
 
-* 是否接收到成功的响应 (OCSP Response Status)
-* responder的身份 (Responder Id)
-* 证书的吊销状态 (Cert Status)
+- 是否接收到成功的响应 (OCSP Response Status)
+- responder 的身份 (Responder Id)
+- 证书的吊销状态 (Cert Status)
 
 ```
 OCSP Response Data:
@@ -1166,7 +1232,8 @@ Revoking Certificate 1003.
 Data Base Updated
 ```
 
-之后, 运行OCSP responder 并在另一个终端中发请求. 这次, 输出会显示 `Cert Status: revoked` 和 `Revocation Time` .
+之后, 运行 OCSP responder 并在另一个终端中发请求. 这次, 输出会显示
+`Cert Status: revoked` 和 `Revocation Time` .
 
 ```
 OCSP Response Data:
@@ -1185,4 +1252,3 @@ OCSP Response Data:
     Revocation Time: Apr 11 13:01:09 2015 GMT
     This Update: Apr 11 13:03:00 2015 GMT
 ```
-

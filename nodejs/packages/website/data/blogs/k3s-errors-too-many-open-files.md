@@ -1,10 +1,7 @@
 集群在运行几个任务后，突然无法启动
 
-排查过程
-`k3s` 发现无法启动
-手动启动`k3s`，发现`docker`没有启动
-启动 docker，启动`k3s`，发现无法启动，打印超长的错误栈
-排查发现报错，`too many open files`
+排查过程 `k3s` 发现无法启动手动启动`k3s`，发现`docker`没有启动启动 docker，启
+动`k3s`，发现无法启动，打印超长的错误栈排查发现报错，`too many open files`
 
 检查系统配置
 
@@ -17,8 +14,7 @@
 65535
 ```
 
-编辑系统文件 /etc/security/limits.conf ，以保证重启后生效
-增加
+编辑系统文件 /etc/security/limits.conf ，以保证重启后生效增加
 
 ```text
 *               soft    nofile            65535

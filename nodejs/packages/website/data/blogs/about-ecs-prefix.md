@@ -1,16 +1,21 @@
 ### 起因
 
-今天在搭建一个递归服务器, 想要测试一下递归结果, 根据ECS来判断相关的递归服务器结果
+今天在搭建一个递归服务器, 想要测试一下递归结果, 根据 ECS 来判断相关的递归服务器
+结果
 
-结果在进行递归查询的时候, 发现一个问题, 递归携带了subnet, 查询后再更换subnet,递归直接读取了缓存, 而不是带着新的subnet去递归.
+结果在进行递归查询的时候, 发现一个问题, 递归携带了 subnet, 查询后再更换 subnet,
+递归直接读取了缓存, 而不是带着新的 subnet 去递归.
 
 ### 排查
 
-为了对比这个问题,使用了不同的域名来进行递归,发现一个问题,两个域名在递归服务器有不同的结果. 域名z.gsmiot.com在第一次递归后会一直缓存, aws.amazon.com域名会根据子网变换每次都会递归.
+为了对比这个问题,使用了不同的域名来进行递归,发现一个问题,两个域名在递归服务器有
+不同的结果. 域名 z.gsmiot.com 在第一次递归后会一直缓存, aws.amazon.com 域名会根
+据子网变换每次都会递归.
 
 我对比里查询的结果, 发现了一个区别:
 
 z.gsmiot.com
+
 ```text
 [root@10-9-104-141 unbound]#  dig z.gsmiot.com @127.0.0.1 +subnet=178.24.161.99/16
 
@@ -36,6 +41,7 @@ z.gsmiot.com.		3600	IN	A	8.8.8.8
 ```
 
 aws.amazon.com
+
 ```text
 [root@10-9-104-141 unbound]# dig aws.amazon.com @127.0.0.1 +subnet=178.24.161.99/16
 
@@ -63,6 +69,7 @@ dr49lng3n1n2s.cloudfront.net. 300 IN	A	54.230.150.74
 ```
 
 对比发现了响应的结果有区别, 在`OPT PSEUDOSECTION`这个部分,有一个地方有区别:
+
 ```text
 AWS 权威
 ; CLIENT-SUBNET: 178.24.0.0/16/24
@@ -70,11 +77,14 @@ ZDNS 权威
 ; CLIENT-SUBNET: 178.24.0.0/16/0
 ```
 
-又测试了subnet生效的aws域名, 递归会根据发现子网这个地址`178.24.0.0/[A]/[B]`中的 A 和 B 两个prefix来做判断, 如果携带的A范围较大, 就是用A, 而B范围较大, 就使用B. 现在猜测这里的B可能是由权威返回的.
+又测试了 subnet 生效的 aws 域名, 递归会根据发现子网这个地
+址`178.24.0.0/[A]/[B]`中的 A 和 B 两个 prefix 来做判断, 如果携带的 A 范围较大,
+就是用 A, 而 B 范围较大, 就使用 B. 现在猜测这里的 B 可能是由权威返回的.
 
-查询了一下相关文档 [RFC7871 Client Subnet in DNS Queries](https://tools.ietf.org/html/rfc7871#section-7.2.1)
+查询了一下相关文档
+[RFC7871 Client Subnet in DNS Queries](https://tools.ietf.org/html/rfc7871#section-7.2.1)
 
-其中在7.2.1节中内容:
+其中在 7.2.1 节中内容:
 
 ```text
 7.2.1.  Authoritative Nameserver
@@ -98,10 +108,13 @@ ZDNS 权威
    sender, as described in [RFC6891], "Transport Considerations".
 ```
 
-其中一段 `In this protocol, that should be mostly harmless, as the SCOPE PREFIX-LENGTH should come back as 0, thus marking the response as covering all networks.` 这里`SCOPE PREFIX-LENGTH`如果为0的话, 响应就会应用到所有网络. 目前猜测ZDNS的权威可能属于这个问题的范围.
+其中一段
+`In this protocol, that should be mostly harmless, as the SCOPE PREFIX-LENGTH should come back as 0, thus marking the response as covering all networks.`
+这里`SCOPE PREFIX-LENGTH`如果为 0 的话, 响应就会应用到所有网络. 目前猜测 ZDNS 的
+权威可能属于这个问题的范围.
 
-查询了一下文档, 找到了IETF上有一个相关文档 [A Look at the ECS Behavior of
-DNS Resolvers](https://www.ietf.org/proceedings/106/slides/slides-106-maprg-a-look-at-the-ecs-behavior-of-dns-resolvers-kyle-schomp-01)
+查询了一下文档, 找到了 IETF 上有一个相关文档
+[A Look at the ECS Behavior of DNS Resolvers](https://www.ietf.org/proceedings/106/slides/slides-106-maprg-a-look-at-the-ecs-behavior-of-dns-resolvers-kyle-schomp-01)
 
 有如下一段内容:
 
@@ -115,24 +128,26 @@ ECS Purpose
 • Scope prefix length
 ```
 
-现在可以推断极大概率是因为这个scop prefix length的问题了
+现在可以推断极大概率是因为这个 scop prefix length 的问题了
 
 ### 验证
 
-使用tcpudump抓包两次递归服务的递归结果
+使用 tcpudump 抓包两次递归服务的递归结果
+
 ```shell
 tcpdump -i eth0 port 53 -w zcloud.cap
 tcpdump -i eth0 port 53 -w aws.cap
 ```
 
-在wireshark中打开看到结果
+在 wireshark 中打开看到结果
 
 在响应结果的记录中
-- 打开Domain Name System (response)
-- 打开Addional records
+
+- 打开 Domain Name System (response)
+- 打开 Addional records
 - 打开<Root>: type OPT
 - 打开<Option: CSUBNET - Client subnet
 
-对比看到Scope Netmask有区别, aws返回为24, zdns返回为0
+对比看到 Scope Netmask 有区别, aws 返回为 24, zdns 返回为 0
 
 问题确认, 是由于权威返回结果的问题导致的

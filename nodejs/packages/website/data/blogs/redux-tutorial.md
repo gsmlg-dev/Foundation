@@ -36,24 +36,24 @@ const ADD = 'ADD';
 const reducer = (state, action) => {
   switch (action.type) {
     case ADD:
-      return { value: state.value + action.value };
+      return {value: state.value + action.value};
     default:
       return state;
   }
 };
 
-const createStore = reducer => {
+const createStore = (reducer) => {
   let listeners = [];
-  let state = { value: 0 };
+  let state = {value: 0};
 
-  let dispatch = action => {
+  let dispatch = (action) => {
     state = reducer(state, action);
-    listeners.forEach(cb => cb());
+    listeners.forEach((cb) => cb());
   };
 
   return {
-    getState: _ => state,
-    subscribe: cb => listeners.push(cb),
+    getState: (_) => state,
+    subscribe: (cb) => listeners.push(cb),
     dispatch: dispatch,
   };
 };
@@ -62,9 +62,9 @@ const store = createStore(reducer);
 
 store.subscribe(() => console.log(store.getState()));
 
-store.dispatch({ type: ADD, value: 5 });
+store.dispatch({type: ADD, value: 5});
 
-store.dispatch({ type: ADD, value: 10 });
+store.dispatch({type: ADD, value: 10});
 ```
 
 ### 三大原则

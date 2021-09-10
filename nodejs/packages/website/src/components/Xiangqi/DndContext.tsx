@@ -4,13 +4,13 @@
  *
  */
 
-import React, { useState, useEffect } from 'react';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { TouchBackend } from 'react-dnd-touch-backend';
-import { DndProvider } from 'react-dnd';
+import React, {useState, useEffect} from 'react';
+import {HTML5Backend} from 'react-dnd-html5-backend';
+import {TouchBackend} from 'react-dnd-touch-backend';
+import {DndProvider} from 'react-dnd';
 
-import { PieceShape, ChessColor } from 'types/xiangqi';
-import { ChessBoard } from './ChessBoard';
+import {PieceShape, ChessColor} from 'types/xiangqi';
+import {ChessBoard} from './ChessBoard';
 import canDrop from './canDrop';
 
 interface Props {
@@ -33,7 +33,7 @@ const DragDropContext = (props: Props) => {
     }
     setTouchable(touchable);
   }, []);
-  const { redPieces, blackPieces, kill, movePiece, turn } = props;
+  const {redPieces, blackPieces, kill, movePiece, turn} = props;
 
   return (
     <>

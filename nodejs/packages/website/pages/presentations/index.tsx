@@ -4,9 +4,9 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 
-import { makeStyles } from '@material-ui/styles';
+import {makeStyles} from '@material-ui/styles';
 
 import Head from 'next/head';
 import Paper from '@material-ui/core/Paper';
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-interface Props { }
+interface Props {}
 
 const Presentation = memo((props: Props) => {
   const classes = useStyles();
@@ -60,7 +60,9 @@ const Presentation = memo((props: Props) => {
       author: 'gsmlg',
       link: 'https://gsmlg.github.io/Reveal/dynamic-import/dist/',
     },
-  ].slice().reverse();
+  ]
+    .slice()
+    .reverse();
 
   return (
     <Layout>
@@ -70,7 +72,7 @@ const Presentation = memo((props: Props) => {
       </Head>
       <Paper className={classes.root}>
         <List>
-          {noteList.map(note => (
+          {noteList.map((note) => (
             <ListItem
               key={note.name}
               component="a"

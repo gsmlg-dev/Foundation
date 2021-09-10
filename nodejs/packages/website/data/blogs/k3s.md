@@ -18,8 +18,7 @@ k3s 是微型的 kubernetes 发行版本
 
 轻量化
 
-相比 k8s
-移除
+相比 k8s 移除
 
 - 删除旧的和非必要的组件
 - alpha feature
@@ -42,7 +41,8 @@ k3s 是微型的 kubernetes 发行版本
 注意事项：
 
 - contaienrd 是独立进程，也可以使用 docker
-- Tunnel Proxy 负责维护 k3s server 和 k3s agent 之间的链接，采用 Basic Auth 的方式来进行认证
+- Tunnel Proxy 负责维护 k3s server 和 k3s agent 之间的链接，采用 Basic Auth 的方
+  式来进行认证
 
 ##### Demo
 
@@ -79,8 +79,7 @@ ps -T $pid
 - MySQL (v5.7)
 - etcd (v3.3.15)
 
-实现方式：
-rancher/kine
+实现方式： rancher/kine
 
 ![fb719eff62e7da623289c06cf66e9f2e.png](./k3s/fb719eff62e7da623289c06cf66e9f2e.png)
 
@@ -94,8 +93,7 @@ rancher/kine
 - 标准 SQL 支持
 - 单一磁盘文件
 
-k3s 默认使用
-`/var/lib/rancher/k3s/server/db/state.db`
+k3s 默认使用 `/var/lib/rancher/k3s/server/db/state.db`
 
 **Dqlite**
 
@@ -151,21 +149,21 @@ Docker 的历史
 **操作**
 
 | 镜像操作       | Docker         | ContainerD         |
-| :------------- | :------------- | :----------------- |
-| 本地镜像列表   | docker images  | crictl images      | ctr images list |
-| 下载镜像       | docker pull    | crictl pull        | ctr (images) pull |
-| 上传镜像       | docker push    |                    | ctr (images) push |
-| 删除本地镜像   | docker rmi     | crictl rmi         | ctr images remove |
-| 标记本地镜像   | docker tag     |                    | ctr (images) tag |
+| :------------- | :------------- | :----------------- | --------------------- |
+| 本地镜像列表   | docker images  | crictl images      | ctr images list       |
+| 下载镜像       | docker pull    | crictl pull        | ctr (images) pull     |
+| 上传镜像       | docker push    |                    | ctr (images) push     |
+| 删除本地镜像   | docker rmi     | crictl rmi         | ctr images remove     |
+| 标记本地镜像   | docker tag     |                    | ctr (images) tag      |
 | 镜像详情       | docker inspect | crictl inspecti    |
-| 容器列表       | docker ps      | crictl ps          | ctr containers list |
+| 容器列表       | docker ps      | crictl ps          | ctr containers list   |
 | 创建容器       | docker create  | crictl create      | ctr containers create |
-| 运行容器       | docker start   | crictl start       | ctr (tasks) start |
-| 停止容器       | docker stop    | crictl stop        | ctr (tasks) pause |
-| 删除容器       | docker rm      | crictl rm          | ctr (tasks) rm |
+| 运行容器       | docker start   | crictl start       | ctr (tasks) start     |
+| 停止容器       | docker stop    | crictl stop        | ctr (tasks) pause     |
+| 删除容器       | docker rm      | crictl rm          | ctr (tasks) rm        |
 | 容器详情       | docker inspect | crictl inspect     |
-| 连接容器       | docker attach  | crictl attach      | ctr (tasks) attach |
-| 容器内操作     | docker exec    | crictl exec        | ctr (tasks) exec |
+| 连接容器       | docker attach  | crictl attach      | ctr (tasks) attach    |
+| 容器内操作     | docker exec    | crictl exec        | ctr (tasks) exec      |
 | 容器日志       | docker logs    | crictl logs        |
 | 容器状态       | docker stats   | crictl stats       |
 | 显示 POD 列表  |                | crictl pods        |
@@ -180,11 +178,11 @@ k3s 内置 containerd
 - ctr : 单纯的容器管理
 - crictl : 从 Kubernetes 视角出发，对 POD、容器进行管理
 
-k3s 修改 containerd 配置
-修改`/var/lib/rancher/k3s/agent/etc/containerd/config.toml`同目录下`config.toml.tmpl`文件，重启 k3s
+k3s 修改 containerd 配置修
+改`/var/lib/rancher/k3s/agent/etc/containerd/config.toml`同目录
+下`config.toml.tmpl`文件，重启 k3s
 
-contaienrd 日志
-`/var/lib/rancher/k3s/agent/containerd/containerd.log`
+contaienrd 日志 `/var/lib/rancher/k3s/agent/containerd/containerd.log`
 
 ##### 参考链接
 
@@ -246,12 +244,14 @@ K3s 支持模块化的开启或关闭相关组件，例如 Traefik LB, Scheduler
 
 ##### Service LB Controller 设计原理
 
-Service LB 是 Rancher 针对 k3s 集群而设计的一种 service loadbalancer controller，
-用户可通过将 Service 的 type 类似配置为 LoadBalancer 来使用。
+Service LB 是 Rancher 针对 k3s 集群而设计的一种 service loadbalancer
+controller，用户可通过将 Service 的 type 类似配置为 LoadBalancer 来使用。
 
-1. svc-controller watch 到 service 类型为 LoadBalancer 时，自动创建一个 Daemonset;
-2. 默认 Daemonset 会部署到每个节点，如果任意 Node 设定了 label svccontroller.k3s.cattle.io/enablelb=true,
-   则只在拥有这个 label 的 node 上 创建 DS 的 pod;
+1. svc-controller watch 到 service 类型为 LoadBalancer 时，自动创建一个
+   Daemonset;
+2. 默认 Daemonset 会部署到每个节点，如果任意 Node 设定了 label
+   svccontroller.k3s.cattle.io/enablelb=true, 则只在拥有这个 label 的 node 上 创
+   建 DS 的 pod;
 3. 对于某个部署的节点，一个 LB port 只会对应一个 POD， 端口不能重复使 用;
 4. 若创建失败或无可用端口时，service 的状态为 Pending
 
@@ -259,7 +259,8 @@ Service LB 是 Rancher 针对 k3s 集群而设计的一种 service loadbalancer 
 
 - K3s 默认添加了 local path provisioner
 
-- Local path provisioner 是基于 Kubernetes Local Persistent Volume 功能实现的一个本地动态存储管理器
+- Local path provisioner 是基于 Kubernetes Local Persistent Volume 功能实现的一
+  个本地动态存储管理器
 
   - 默认 host path 路径为/var/lib/rancher/k3s/storage
   - 配置文件存放在 kube-system 下的 local-path-config configmap
@@ -274,21 +275,18 @@ Service LB 是 Rancher 针对 k3s 集群而设计的一种 service loadbalancer 
 
 - 最通用的计算
 - 算力要求高，实时性要求低
-- 执行复杂的认知计算和模型训练
-  通用操作系统/海量 GPU 卡
+- 执行复杂的认知计算和模型训练通用操作系统/海量 GPU 卡
 
 边缘计算
 
 - 连接云和端，针对端做特定 优化
-- 执行推理和数据融合处理
-  通用操作系统/数量有限的 GPU 卡/专业 AI 芯片
+- 执行推理和数据融合处理通用操作系统/数量有限的 GPU 卡/专业 AI 芯片
 
 端计算
 
 - 场景相关性强
 - 极致效率，实时性要求高
-- 主要面向推理
-  实时操作系统/专业 AI 芯片
+- 主要面向推理实时操作系统/专业 AI 芯片
 
 #### Kuberntes 正成为机器学习的主流基础设施平台
 
@@ -308,7 +306,8 @@ k3s 的优势
 1. 操作系统安装支持 Nvidia Driver
 2. 安装容器运行时，并切换 runtime 到 nvidia
 3. K8s 通过 gpu-device-plugin 来获取 GPU 资源并记录在 k8s 中
-4. Pod 通过在 k8s 内申请 gpu 资源，kubelet 驱 动 runtime 把一定额度的 GPU 卡分配给它
+4. Pod 通过在 k8s 内申请 gpu 资源，kubelet 驱 动 runtime 把一定额度的 GPU 卡分配
+   给它
 
 ```yaml
 resources:
@@ -340,15 +339,15 @@ resources:
 
 #### 什么是边缘计算?
 
-边缘计算是指在靠近智能设备或数据源头的一端，
-提供`网络`、 `存储`、`计算`、`应用`等能力，
-达到*更快的网络服务响应，更安 全的本地数据传输*。
+边缘计算是指在靠近智能设备或数据源头的一端，提供`网络`、
+`存储`、`计算`、`应用`等能力，达到*更快的网络服务响应，更安 全的本地数据传输*。
 
 #### 边缘场景的 k8s 用例正在不断涌现
 
 - 1106 个有效问卷
 - 15%的受访者表示，正在把 Kubernetes 应用在边缘计算场景中
-- Chick-fil-A [Link](https://medium.com/@cfatechblog/bare-metal-k8s-clustering-at-chick-fil-a-scale-7b0607bd3541)
+- Chick-fil-A
+  [Link](https://medium.com/@cfatechblog/bare-metal-k8s-clustering-at-chick-fil-a-scale-7b0607bd3541)
 
 #### 边缘计算的问题与挑战
 
@@ -388,8 +387,7 @@ resources:
 
 #### 实例化 k3s 集群的工具
 
-- K3sup(https://github.com/alexellis/k3sup) -
-  VM 实例中运行 k3s
+- K3sup(https://github.com/alexellis/k3sup) - VM 实例中运行 k3s
   - 具备隔离型，但依赖公有云服务
 - K3s-ansible(https://github.com/itwars/k3s-ansible)
   - 依赖用户对机器环境访问权限
@@ -440,7 +438,8 @@ Immutable Infrastructure
 
 更复杂更高级的云原生应用的更新，不仅仅依赖 RootFS 变更，更需要内核的同步更新。
 
-操作系统也应成为不可变基础设施的一部分，保证基础架构更高的一致性和可靠性，以及更加方便运维管理。
+操作系统也应成为不可变基础设施的一部分，保证基础架构更高的一致性和可靠性，以及更
+加方便运维管理。
 
 ![6fa8948e140aa39a937f4a508db479c4.png](./k3s/6fa8948e140aa39a937f4a508db479c4.png)
 

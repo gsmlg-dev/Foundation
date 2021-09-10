@@ -4,8 +4,8 @@
 
 Prow 是基于 Kubernetes 开发的 CI/CD 系统
 
-Jobs 可以由多种类型的事件出发，并且报告状态给不同的服务。
-除了 Job 执行外，Prow 还提供了 Github 自动化执行策略，`/foo`格式的命令的 chat-ops 和自动 PR 合并
+Jobs 可以由多种类型的事件出发，并且报告状态给不同的服务。除了 Job 执行外，Prow
+还提供了 Github 自动化执行策略，`/foo`格式的命令的 chat-ops 和自动 PR 合并
 
 ### Functions and Features
 
@@ -25,9 +25,18 @@ Jobs 可以由多种类型的事件出发，并且报告状态给不同的服务
 Prow is used by the following organizations and projects:
 
 - [Kubernetes](https://prow.k8s.io)
-  - This includes [kubernetes](https://github.com/kubernetes), [kubernetes-client](https://github.com/kubernetes-client), [kubernetes-csi](https://github.com/kubernetes-csi), [kubernetes-incubator](https://github.com/kubernetes-incubator), and [kubernetes-sigs](https://github.com/kubernetes-sigs).
+  - This includes [kubernetes](https://github.com/kubernetes),
+    [kubernetes-client](https://github.com/kubernetes-client),
+    [kubernetes-csi](https://github.com/kubernetes-csi),
+    [kubernetes-incubator](https://github.com/kubernetes-incubator), and
+    [kubernetes-sigs](https://github.com/kubernetes-sigs).
 - [OpenShift](https://prow.svc.ci.openshift.org/)
-  - This includes [openshift](https://github.com/openshift), [openshift-s2i](https://github.com/openshift-s2i), [operator-framework](https://github.com/operator-framework), and some repos in [kubernetes-incubator](https://github.com/kubernetes-incubator), [containers](https://github.com/containers) and [heketi](https://github.com/heketi).
+  - This includes [openshift](https://github.com/openshift),
+    [openshift-s2i](https://github.com/openshift-s2i),
+    [operator-framework](https://github.com/operator-framework), and some repos
+    in [kubernetes-incubator](https://github.com/kubernetes-incubator),
+    [containers](https://github.com/containers) and
+    [heketi](https://github.com/heketi).
 - [Istio](https://prow.istio.io/)
 - [Knative](https://prow.knative.dev/)
 - [Jetstack](https://prow.build-infra.jetstack.net/)
@@ -44,7 +53,8 @@ Prow is used by the following organizations and projects:
 - [Volcano (Kubernetes Native Batch System)](https://github.com/volcano-sh/volcano)
 - [Loodse](https://public-prow.loodse.com/)
 
-[Jenkins X](https://jenkins-x.io/) uses [Prow as part of Serverless Jenkins](https://medium.com/@jdrawlings/serverless-jenkins-with-jenkins-x-9134cbfe6870).
+[Jenkins X](https://jenkins-x.io/) uses
+[Prow as part of Serverless Jenkins](https://medium.com/@jdrawlings/serverless-jenkins-with-jenkins-x-9134cbfe6870).
 
 ### 部署 Prow
 
@@ -111,7 +121,8 @@ kubectl edit ingress ing
 
 设置好 ingress 域名
 
-打开 github repo 的 setting 页面设置 webook，URL 设置为 ingress-domain/hook, secret 为 webook 创建的 secret
+打开 github repo 的 setting 页面设置 webook，URL 设置为 ingress-domain/hook,
+secret 为 webook 创建的 secret
 
 这样一个 prow 集群配置完成
 

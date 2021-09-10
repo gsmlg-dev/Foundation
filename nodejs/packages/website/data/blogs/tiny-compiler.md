@@ -24,7 +24,7 @@
 将源代码转换为`token`流
 
 ```js
-const tokenizer = input => {
+const tokenizer = (input) => {
   let pos = 0;
   let tokens = [];
   while (pos < input.length) {
@@ -32,7 +32,7 @@ const tokenizer = input => {
 
     const PAREN_MATCH = /[\(\)]/;
     if (PAREN_MATCH.test(char)) {
-      tokens.push({ type: 'paren', value: char });
+      tokens.push({type: 'paren', value: char});
       pos++;
       continue;
     }
@@ -44,7 +44,7 @@ const tokenizer = input => {
       while (NAME_MATCH_.test(input[++pos])) {
         verb += input[pos];
       }
-      tokens.push({ type: 'name', value: verb });
+      tokens.push({type: 'name', value: verb});
       continue;
     }
 
@@ -54,7 +54,7 @@ const tokenizer = input => {
       while (NUM_MATCH.test(input[++pos])) {
         verb += input[pos];
       }
-      tokens.push({ type: 'number', value: verb });
+      tokens.push({type: 'number', value: verb});
       continue;
     }
 
@@ -76,7 +76,7 @@ module.exports = tokenizer;
 将`token`流转换为`AST`
 
 ```js
-const parser = tokens => {
+const parser = (tokens) => {
   let current = 0;
 
   const walk = () => {
@@ -143,7 +143,7 @@ module.exports = parser;
 ```js
 const traverser = (ast, visitor) => {
   const traverseArray = (array, parent) => {
-    array.forEach(child => {
+    array.forEach((child) => {
       traverseNode(child, parent);
     });
   };
@@ -187,7 +187,7 @@ module.exports = traverser;
 ```js
 const traverser = require('./traverser');
 
-const transformer = ast => {
+const transformer = (ast) => {
   let newAst = {
     type: 'Program',
     body: [],
@@ -240,7 +240,7 @@ module.exports = transformer;
 将`AST`重新生成为代码
 
 ```js
-const codeGenerator = node => {
+const codeGenerator = (node) => {
   switch (node.type) {
     case 'Program':
       return node.body.map(codeGenerator).join('\n');

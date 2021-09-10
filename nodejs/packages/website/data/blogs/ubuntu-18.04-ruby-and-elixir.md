@@ -1,6 +1,7 @@
 # Ubuntu 18.04 Ruby and Elixir Development Setup
 
-Guide to setting up a new Ubuntu 18.04 dev environment with Ruby and Elixir installed with the asdf version management tool.
+Guide to setting up a new Ubuntu 18.04 dev environment with Ruby and Elixir
+installed with the asdf version management tool.
 
 ## Update system and install prerequisite packages
 
@@ -14,7 +15,8 @@ sudo apt-get install mercurial make binutils bison gcc \
  libffi-dev redis-server imagemagick ntp ufw sudo dirmngr libxrender1
 ```
 
-Install postfix SMTP server (Choose internet site configuration and use the server's domain name)
+Install postfix SMTP server (Choose internet site configuration and use the
+server's domain name)
 
 ```bash
 sudo apt-get install postfix
@@ -38,7 +40,8 @@ Generate an SSH keypair used for deployments
 ssh-keygen -t rsa -C "YOUR@EMAIL.com"
 ```
 
-Copy the output of this command and paste into [github SSH key settings](https://github.com/settings/keys).
+Copy the output of this command and paste into
+[github SSH key settings](https://github.com/settings/keys).
 
 ```bash
 cat ~/.ssh/id_rsa.pub
@@ -152,9 +155,13 @@ mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_
 
 ### wkhtmltopdf
 
-The wkhtmltopdf packge available in debian repo is version with unpatched QT. You most likely want version with patched QT, so download the precompiled binaries for Linux from https://wkhtmltopdf.org/downloads.html, extract them and cp the binaries in bin folder to `/usr/bin/`
+The wkhtmltopdf packge available in debian repo is version with unpatched QT.
+You most likely want version with patched QT, so download the precompiled
+binaries for Linux from https://wkhtmltopdf.org/downloads.html, extract them and
+cp the binaries in bin folder to `/usr/bin/`
 
-At the time of writing, the latest version is 0.12.4 which has an issue fetching remote images over https, so you will need to install libssl1.0-dev
+At the time of writing, the latest version is 0.12.4 which has an issue fetching
+remote images over https, so you will need to install libssl1.0-dev
 
 ```bash
 sudo apt-get install libssl1.0-dev
