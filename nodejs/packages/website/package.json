@@ -1,5 +1,5 @@
 {
-  "name": "website",
+  "name": "@gsmlg/website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,19 +10,19 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "next": "11.1.0",
+    "next": "11.1.2",
     "react": "17.0.2",
     "react-dnd": "^14.0.3",
     "react-dnd-html5-backend": "^14.0.1",
     "react-dnd-touch-backend": "^14.1.0",
     "react-dom": "17.0.2",
-    "react-markdown": "^7.0.0",
+    "react-markdown": "^7.0.1",
     "remark-gfm": "^2.0.0",
     "rxjs": "^7.3.0"
   },
   "devDependencies": {
-    "@types/node": "^16.7.1",
-    "@types/react": "^17.0.19",
-    "typescript": "^4.3.5"
+    "@types/node": "^16.9.1",
+    "@types/react": "^17.0.20",
+    "typescript": "^4.4.2"
   }
 }
