@@ -9,6 +9,27 @@ on:
 
 jobs:
   build-image:
+    strategy:
+      matrix:
+        version:
+          - 1.20
+          - 1.20.1
+          - 1.20.2
+          - 1.20.3
+          - 1.20.4
+          - 1.20.5
+          - 1.20.6
+          - 1.20.7
+          - 1.20.8
+          - 1.20.9
+          - 1.20.10
+          - 1.21
+          - 1.21.1
+          - 1.21.2
+          - 1.21.3
+          - 1.21.4
+          - 1.22
+          - 1.22.1
     runs-on: ubuntu-latest
     steps:
       -
@@ -34,7 +55,8 @@ jobs:
           file: docker/kubectl//Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
+          build-args: |
+            KUBE_VERSION=${{ matrix.version }}
           tags: |
-            gsmlg/kubectl:latest
-            gsmlg/kubectl:v1.20.2
+            gsmlg/kubectl:v${{ matrix.version }}
 
