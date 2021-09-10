@@ -87,8 +87,7 @@ jobs:
         run: npm install semantic-release-monorepo semantic-release
 
       - name: 🚀 Release
-        with:
-          working-directory: 'nodejs/packages/scripts'
+        working-directory: 'nodejs/packages/scripts'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
