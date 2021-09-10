@@ -19,12 +19,12 @@ import NoteIcon from '@material-ui/icons/Note';
 import Layout from 'components/Layout';
 
 const useStyles = makeStyles((theme: any) => ({
-  root: theme.mixins.gutters({
+  root: {
     flex: 1,
-    paddingTop: 16,
-    paddingBottom: 16,
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
     margin: theme.spacing(3),
-  }),
+  },
   text: {
     fontSize: '3rem',
     transition: '3000ms all',

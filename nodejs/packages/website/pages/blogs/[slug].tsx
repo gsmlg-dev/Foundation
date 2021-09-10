@@ -16,12 +16,12 @@ import Layout from 'components/Layout';
 import blogList from 'blogList';
 
 const useStyles = makeStyles((theme: any) => ({
-  root: theme.mixins.gutters({
+  root: {
     flex: 1,
-    paddingTop: 16,
-    paddingBottom: 16,
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
     margin: theme.spacing(3),
-  }),
+  },
 }));
 
 interface BlogStruct {
