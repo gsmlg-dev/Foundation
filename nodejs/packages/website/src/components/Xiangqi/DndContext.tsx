@@ -28,7 +28,7 @@ const DragDropContext = (props: Props) => {
     if ('ontouchstart' in window.document.documentElement) {
       touchable = true;
     }
-    if (window.navigator.msPointerEnabled) {
+    if (window.navigator.pointerEnabled || window.navigator?.msPointerEnabled) {
       touchable = true;
     }
     setTouchable(touchable);
