@@ -82,12 +82,17 @@ jobs:
         working-directory: 'nodejs/packages/scripts'
         run: npm run build
 
+      - name: 🏗 Run install semantic-release
+        working-directory: 'nodejs/packages/scripts'
+        run: npm install semantic-release-monorepo semantic-release
+
       - name: 🚀 Release
-        uses: gsmlg/semantic-release-action@v2
         with:
           working-directory: 'nodejs/packages/scripts'
-          semantic_version: 17
-          branches: |
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          BRANCHES: |
             [
               '+([0-9])?(.{+([0-9]),x}).x',
               'main',
@@ -96,8 +101,4 @@ jobs:
               {name: 'beta', prerelease: true},
               {name: 'alpha', prerelease: true}
             ]
-          extends: |
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release --branches "${BRANCHES}" --extends semantic-release-monorepo
