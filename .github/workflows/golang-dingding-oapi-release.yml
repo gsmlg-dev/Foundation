@@ -22,7 +22,7 @@ jobs:
       - name: 🚀 Release
         uses: gsmlg/semantic-release-action@v3
         with:
-          name: dingding-oapi
+          release_name: dingding-oapi
           working-directory: 'golang/dingding-oapi'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
