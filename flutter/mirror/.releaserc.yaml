@@ -5,7 +5,7 @@ plugins:
   - '@semantic-release/release-notes-generator'
   - - "@semantic-release/exec"
     - "prepareCmd" : "echo ${nextRelease.version}"
-      "publishCmd" : "echo pubhlish editor server ${nextRelease.version}"
+      "publishCmd" : "echo pubhlish mirror ${nextRelease.version}"
   - '@semantic-release/github'
 branches:
   - +([0-9])?(.{+([0-9]),x}).x
