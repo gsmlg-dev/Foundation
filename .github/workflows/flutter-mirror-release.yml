@@ -24,7 +24,6 @@ jobs:
         with:
           release_name: mirror
           working-directory: 'flutter/mirror'
-          branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
