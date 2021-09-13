@@ -23,7 +23,7 @@ jobs:
         uses: gsmlg/semantic-release-action@v3
         with:
           name: dingding-oapi
-          working-directory: 'nodejs/packages/website'
+          working-directory: 'golang/dingding-oapi'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
