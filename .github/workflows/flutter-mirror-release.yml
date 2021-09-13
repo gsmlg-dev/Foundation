@@ -1,0 +1,30 @@
+name: flutter-mirror-release
+on:
+  push:
+    paths:
+      - "flutter/mirror/**"
+      - ".github/workflows/flutter-mirror-release.yml"
+    branches:
+      - "+([0-9])?(.{+([0-9]),x}).x"
+      - "main"
+      - "next"
+      - "next-major"
+      - "beta"
+      - "alpha"
+      - "!all-contributors/**"
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🚀 Release
+        uses: gsmlg/semantic-release-action@v3
+        with:
+          release_name: mirror
+          working-directory: 'flutter/mirror'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
