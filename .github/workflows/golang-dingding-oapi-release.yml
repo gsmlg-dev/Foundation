@@ -1,0 +1,30 @@
+name: golang-dingding-oapi-release
+on:
+  push:
+    paths:
+      - "golang/dingding-oapi/**"
+      - ".github/workflows/golang-dingding-oapi-release.yml"
+    branches:
+      - "+([0-9])?(.{+([0-9]),x}).x"
+      - "main"
+      - "next"
+      - "next-major"
+      - "beta"
+      - "alpha"
+      - "!all-contributors/**"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🚀 Release
+        uses: gsmlg/semantic-release-action@v3
+        with:
+          name: dingding-oapi
+          working-directory: 'nodejs/packages/website'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
