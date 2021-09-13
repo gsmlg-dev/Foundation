@@ -24,6 +24,7 @@ jobs:
         with:
           release_name: mirror
           working-directory: 'flutter/mirror'
+          branch: main
           branches: >-
             main
             next
