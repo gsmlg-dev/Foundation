@@ -15,14 +15,26 @@ fn main () {
             let mut resp = reqwest::get("http://[::]:12345/api/room/1").unwrap();
             let mut t = term::stdout().unwrap();
             if resp.status().is_success() {
-                resp.copy_to(&mut t);
+                let r = resp.copy_to(&mut t);
+                match r {
+                    Err(e) => println!("{:?}", e),
+                    _ => ()
+                }
             } else if resp.status().is_server_error() {
                 t.fg(term::color::RED).unwrap();
-                write!(t, "Server error! Status: {:?}", resp.status());
+                let r = write!(t, "Server error! Status: {:?}", resp.status());
+                match r {
+                    Err(e) => println!("{:?}", e),
+                    _ => ()
+                }
                 t.reset().unwrap();
             } else {
                 t.fg(term::color::CYAN).unwrap();
-                write!(t, "Something else happened. Status: {:?}", resp.status());
+                let r = write!(t, "Something else happened. Status: {:?}", resp.status());
+                match r {
+                    Err(e) => println!("{:?}", e),
+                    _ => ()
+                }
                 t.reset().unwrap();
             }
         }
@@ -40,7 +52,7 @@ fn main () {
                 let mut whom = String::from(name);
                 whom.push_str(": ");
                 whom.push_str(&line.clone());
-                client.post("http://localhost:8088/room/1")
+                client.post("http://localhost:12345/room/1")
                     .body(whom)
                     .send().unwrap();
             },
