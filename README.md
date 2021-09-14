@@ -67,7 +67,58 @@ My docker images
     - [antlr](docker/antlr)
     Another Tool for Language Recognition.
     [Repo Link](https://hub.docker.com/r/gsmlg/antlr/tags)
+- [rust](rust)
+    - [chat](rust/chat)
+    Rust Chat client use http comet technique. 
+    😄 ben-han-cn owe me dinner.
+- [elixir](elixir)
+    - [gsmlg](elixir/gsmlg)
+    My old web site, will be move to gsmlg_umbrella.
+    - [gsmlg_umbrella](elixir/gsmlg_umbrella)
+    My web site, it handles my daily affairs.
+- [flutter](flutter)
+    - [gsmlg](flutter/gsmlg)
+    My app, it handles my daily affairs.
+    - [mirror](flutter/mirror)
+    Mirror, phone app, a magic mirror.
 
+
+## Use sementic release
+
+If a dir is develop by me, can use @gsmlg/semantic-release-action, like so:
+
+```yaml
+  - name: 🚀 Release
+    uses: gsmlg/semantic-release-action@v3
+    with:
+        release_name: <Release name>
+        working-directory: <Project directory>
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+and also need to add a `.release.yaml` file in directory like so:
+
+```yaml
+extends: "semantic-release-monorepo"
+repositoryUrl: https://github.com/gsmlg/Foundation
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - '@semantic-release/release-notes-generator'
+  - '@semantic-release/github'
+  - - "@semantic-release/exec"
+    - "prepareCmd" : "echo ${nextRelease.version}"
+      "publishCmd" : "echo pubhlish <name> ${nextRelease.version}"
+branches:
+  - +([0-9])?(.{+([0-9]),x}).x
+  - main
+  - next
+  - next-major
+  - {name: 'beta', prerelease: true}
+  - {name: 'alpha', prerelease: true}
+
+```
 
 ## Commit Message Type
 
