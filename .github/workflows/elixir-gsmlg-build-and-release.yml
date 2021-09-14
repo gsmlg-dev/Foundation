@@ -1,0 +1,31 @@
+name: elixir-gsmlg-build-and-release
+on:
+  push:
+    paths:
+      - "elixir/gsmlg/**"
+      - "elixir/gsmlg_umbrella/**"
+      - ".github/workflows/elixir-gsmlg-build-and-release.yml"
+    branches:
+      - "+([0-9])?(.{+([0-9]),x}).x"
+      - "main"
+      - "next"
+      - "next-major"
+      - "beta"
+      - "alpha"
+      - "!all-contributors/**"
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🚀 Release
+        uses: gsmlg/semantic-release-action@v3
+        with:
+          release_name: gsmlg
+          working-directory: 'elixir/gsmlg_umbrella'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
