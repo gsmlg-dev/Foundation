@@ -40,6 +40,7 @@ defmodule GSMLG.MixProject do
       {:ecto_sql, "~> 3.6"},
       {:myxql, ">= 0.0.0"},
       {:jason, "~> 1.2"},
+      {:libcluster, "~> 3.0"},
       {:swoosh, "~> 1.3"}
     ]
   end
