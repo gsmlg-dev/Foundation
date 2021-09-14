@@ -5,7 +5,7 @@ config :gsmlg, GSMLG.Repo,
   username: "gsmlg_dev",
   password: "gsmlg_dev",
   database: "gsmlg_dev",
-  hostname: "202.173.9.93",
+  hostname: "mariadb-server.local",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
