@@ -26,7 +26,6 @@ class _CameraScreenState extends State<CameraScreen> {
   late Future<void>
       _initializeControllerFuture; //Future to wait until camera initializes
   int selectedCamera = 1;
-  List<File> capturedImages = [];
 
   initializeCamera(int cameraIndex) async {
     _controller = CameraController(
@@ -52,20 +51,26 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: Container(
-        alignment: Alignment.topCenter,
-        transform: Matrix4.rotationY(0),
-        color: Colors.black,
-        child: FutureBuilder<void>(
-          future: _initializeControllerFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              // If the Future is complete, display the preview.
-              return CameraPreview(_controller);
-            } else {
-              // Otherwise, display a loading indicator.
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+        child: Container(
+          alignment: Alignment.center,
+          // transform: Matrix4.rotationY(1),
+          color: Colors.black,
+          child: FutureBuilder<void>(
+            future: _initializeControllerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                // If the Future is complete, display the preview.
+                return Container(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationZ(0.5),
+                  child: CameraPreview(_controller),
+                );
+              } else {
+                // Otherwise, display a loading indicator.
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
       ),
     );
