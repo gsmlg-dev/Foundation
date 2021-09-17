@@ -24,12 +24,17 @@ defmodule GSMLG.Node.Self do
     end
   end
 
+  def host() do
+    hostname = System.get_env("HOSTNAME", "127.0.0.1")
+    host = System.get_env("POD_IP", hostname)
+    "#{host}"
+  end
+
   @doc """
   node name, used by Node.start
   """
   def name do
-    nodeName = System.get_env("POD_IP")
-    :"#{nodeName}"
+    :"gsmlg@#{host()}"
   end
 
   def init(_) do
@@ -56,7 +61,7 @@ defmodule GSMLG.Node.Self do
     newState = case {Map.fetch!(state, :restart?), Map.fetch!(state, :alive?)} do
                  {true, false} -> Self.node_start(state)
                  _ ->
-                  #  GSMLGWeb.Endpoint.broadcast "node:lobby", "node_info", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
+                   broadcast "node:lobby", "node_info", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
                    state
                end
     Process.send_after(__MODULE__, :keep_alive, 60000)
@@ -74,7 +79,7 @@ defmodule GSMLG.Node.Self do
     |> Map.put(:self, Node.self)
     |> Map.put(:pid, pid)
     |> Map.put(:restart?, true)
-    # GSMLGWeb.Endpoint.broadcast "node:lobby", "node_start", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
+    broadcast "node:lobby", "node_start", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
     newState
   end
 
@@ -85,7 +90,19 @@ defmodule GSMLG.Node.Self do
     |> Map.put(:self, Node.self)
     |> Map.put(:pid, nil)
     |> Map.put(:restart?, false)
-    # GSMLGWeb.Endpoint.broadcast "node:lobby", "node_stop", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
+    broadcast "node:lobby", "node_stop", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
     newState
+  end
+
+  def broadcast(room, event, opts) do
+    try do
+      GSMLGWeb.Endpoint.broadcast(room, event, opts)
+    rescue
+      _ -> 
+        IO.puts "Broadcask node events to node:lobby failed!"
+        IO.inspect room
+        IO.inspect event
+        IO.inspect opts
+    end  
   end
 end

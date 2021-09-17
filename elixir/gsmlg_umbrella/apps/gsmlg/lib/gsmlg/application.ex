@@ -7,21 +7,41 @@ defmodule GSMLG.Application do
 
   @impl true
   def start(_type, _args) do
-    import Supervisor.Spec
 
-    topologies = [
-      gsmlg: [
-        strategy: Cluster.Strategy.Kubernetes,
-        config: [
-          mode: :ip,
-          kubernetes_ip_lookup_mode: :pods,
-          kubernetes_node_basename: "#{GSMLG.name}",
-          kubernetes_selector: System.get_env("SELECTOR", "gsmlg.org/app=gsmlg"),
-          kubernetes_namespace: System.get_env("NAMESPACE", "#{GSMLG.name}"),
-          polling_interval: 10_000
+    topologies = case System.get_env("CLUSTER_MODE") do
+      "KUBERNETES" -> 
+        [
+          gsmlg: [
+            strategy: Cluster.Strategy.Kubernetes,
+            config: [
+              mode: :ip,
+              kubernetes_ip_lookup_mode: :pods,
+              kubernetes_node_basename: "#{GSMLG.name}",
+              kubernetes_selector: System.get_env("SELECTOR", "gsmlg.org/app=gsmlg"),
+              kubernetes_namespace: System.get_env("NAMESPACE", "#{GSMLG.name}"),
+              polling_interval: 10_000
+            ]
+          ]
         ]
-      ]
-    ]
+      _ -> 
+        [
+          gsmlg: [
+            # The selected clustering strategy. Required.
+            strategy: Cluster.Strategy.Epmd,
+            # Configuration for the provided strategy. Optional.
+            config: [hosts: [ GSMLG.Node.Self.name ]],
+            # The function to use for connecting nodes. The node
+            # name will be appended to the argument list. Optional
+            connect: {:net_kernel, :connect_node, []},
+            # The function to use for disconnecting nodes. The node
+            # name will be appended to the argument list. Optional
+            disconnect: {:erlang, :disconnect_node, []},
+            # The function to use for listing nodes.
+            # This function must return a list of node names. Optional
+            list_nodes: {:erlang, :nodes, [:connected]},
+          ]
+        ]
+    end
 
     children = [
       # Start the Ecto repository
@@ -30,7 +50,8 @@ defmodule GSMLG.Application do
       {Phoenix.PubSub, name: GSMLG.PubSub, adapter: Phoenix.PubSub.PG2},
       # Start a worker by calling: GSMLG.Worker.start_link(arg)
       # {GSMLG.Worker, arg}
-      supervisor(GSMLG.Node.Supervisor, []),
+      # Start distribute Node
+      {GSMLG.Node.Supervisor, name: GSMLG.Node.Supervisor},
       # supervisor(GSMLG.Chess.Supervisor, []),
       {Cluster.Supervisor, [topologies, [name: GSMLG.ClusterSupervisor]]},
     ]

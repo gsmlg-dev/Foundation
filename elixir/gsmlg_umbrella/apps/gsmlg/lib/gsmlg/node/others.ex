@@ -18,7 +18,7 @@ defmodule GSMLG.Node.Others do
   def get_nodes do
     case GenServer.call(__MODULE__, :get_state) do
       {:ok, %{nodes: nodes}} -> nodes
-      _ ->[]
+      _ -> []
     end
   end
 
@@ -36,7 +36,7 @@ defmodule GSMLG.Node.Others do
     newState = state
     |> Map.put(:nodes, nodes ++ [name])
     Node.connect(name)
-    # GSMLGWeb.Endpoint.broadcast "node:lobby", "list_add", %{add_node: name, nodes: newState.nodes, from: Self.name}
+    Self.broadcast("node:lobby", "list_add", %{add_node: name, nodes: newState.nodes, from: Self.name})
     {:reply, {:ok}, newState}
   end
 
@@ -44,7 +44,7 @@ defmodule GSMLG.Node.Others do
     newState = state
     |> Map.put(:nodes, List.delete(nodes, name))
     Node.disconnect(name)
-    # GSMLGWeb.Endpoint.broadcast "node:lobby", "list_remove", %{remove_node: name, nodes: newState.nodes, from: Self.name}
+    Self.broadcast("node:lobby", "list_remove", %{remove_node: name, nodes: newState.nodes, from: Self.name})
     {:reply, {:ok}, newState}
   end
 
@@ -56,7 +56,7 @@ defmodule GSMLG.Node.Others do
     Enum.each(nodes, fn(n) ->
       if Enum.member?(Node.list, n), do: Node.ping(n), else: Node.connect(n)
     end)
-    # GSMLGWeb.Endpoint.broadcast "node:lobby", "list_info", %{node_list: Node.list, nodes: nodes, from: Self.name}
+    Self.broadcast("node:lobby", "list_info", %{node_list: Node.list, nodes: nodes, from: Self.name})
 
     Process.send_after(__MODULE__, :keep_alive, 60000)
 
@@ -70,4 +70,5 @@ defmodule GSMLG.Node.Others do
 
     {:noreply, Map.put(state, :nodes, nodes ++ ext)}
   end
+
 end
