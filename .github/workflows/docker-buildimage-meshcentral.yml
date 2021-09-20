@@ -2,7 +2,7 @@ name: docker-buildimage-meshcentral
 
 on:
   push:
-    branches: main
+    branches: [ main ]
     paths:
       - 'docker/meshcentral/**'
       - '.github/workflows/docker-buildimage-meshcentral.yml'
@@ -35,8 +35,8 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            MESHCENTRAL2_VERSION=0.8.21
+            MESHCENTRAL2_VERSION=0.9.28
           tags: |
-            docker.io/gsmlg/meshcentral:0.8.21
+            docker.io/gsmlg/meshcentral:0.9.28
             docker.io/gsmlg/meshcentral:latest
 
