@@ -28,7 +28,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   bind9-dnsutils \
   locales \
   inotify-tools \
-  iputils-ping net-tools
+  iputils-ping net-tools \
+  apache2-utils
 
 # Gen locale
 RUN export LANG=en_US.UTF-8 \
