@@ -81,7 +81,8 @@ RUN apt-get install -y python3 python3-pip \
   && update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1 \
   && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
   && python get-pip.py \
-  && python -m pip install ansible
+  && python -m pip install ansible \
+  && python -m pip install awscli
 
 # install rust
 RUN export RUSTPATH=/opt/rust \
@@ -126,6 +127,11 @@ RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
 
 # install browser chromium
 RUN apt-get install -y -qq chromium-browser 
+
+# install cli53
+RUN export ARCH=`dpkg --print-architecture`; \
+  curl -sSfL https://github.com/barnybug/cli53/releases/download/0.8.18/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
+  && chmod +x /usr/local/bin/cli53
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
