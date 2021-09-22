@@ -1,9 +1,0 @@
-FROM alpine as downloader
-
-ENV LANG=C.UTF-8
-ENV ENABLE_SERVICE_WORKER=true
-
-WORKDIR /devdocs
-
-RUN apk --update add git \
-    && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs

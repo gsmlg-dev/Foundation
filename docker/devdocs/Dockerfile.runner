@@ -1,6 +1,0 @@
-FROM ruby:2.7.4-alpine
-
-WORKDIR /devdocs
-
-RUN apk --update add nodejs libstdc++ libcurl \
-    && gem install bundler
