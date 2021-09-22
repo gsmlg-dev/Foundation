@@ -1,21 +1,40 @@
-FROM ruby:2.7.4-alpine
+FROM alpine as downloader
 
 ENV LANG=C.UTF-8
 ENV ENABLE_SERVICE_WORKER=true
 
-LABEL DOWNLOAD_SCRIPT "thor docs:download --all && thor assets:compile"
+WORKDIR /devdocs
+
+RUN apk --update add git \
+    && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs
+
+FROM ruby:2.7.4-alpine as builder
+
+ENV LANG=C.UTF-8
+ENV ENABLE_SERVICE_WORKER=true
+
+COPY --from=downloader /devdocs /devdocs
 
 WORKDIR /devdocs
 
 RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl \
     && gem install bundler \
-    && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs \
-    && bundle install --system --without test \
+    && bundle install --without test \
     && thor docs:download --all \
     && thor assets:compile \
-    && apk del gzip build-base git zlib-dev \
-    && rm -rf /var/cache/apk/* /tmp ~/.gem /root/.bundle/cache \
-    /usr/local/bundle/cache /usr/lib/node_modules
+
+FROM ruby:2.7.4-alpine
+
+LABEL maintainer="GSMLG < me@gsmlg.org >"
+
+ENV LANG=C.UTF-8
+ENV ENABLE_SERVICE_WORKER=true
+
+COPY --from=builder /devdocs /devdocs
+WORKDIR /devdocs
+
+RUN apk --update add nodejs libstdc++ libcurl \
+    && gem install bundler
 
 EXPOSE 9292
-CMD rackup -o 0.0.0.0
+CMD bundle exec rackup -o 0.0.0.0
