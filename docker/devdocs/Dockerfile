@@ -1,18 +1,34 @@
-FROM ruby:2.7.4-alpine
+FROM alpine as downloader
 
 ENV LANG=C.UTF-8
 ENV ENABLE_SERVICE_WORKER=true
 
-LABEL DOWNLOAD_SCRIPT "thor docs:download --all && thor assets:compile"
+WORKDIR /devdocs
+
+RUN apk --update add git \
+    && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs
+
+FROM ruby:2.7.4
+
+LABEL maintainer="GSMLG < me@gsmlg.org >"
+
+ENV LANG=C.UTF-8
+ENV ENABLE_SERVICE_WORKER=true
 
 WORKDIR /devdocs
 
-RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl \
+RUN apt-get update \
+    && apt-get -y install git nodejs libcurl4 \
     && gem install bundler \
-    && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs \
-    && bundle install --system --without test \
-    && rm -rf /var/cache/apk/* /tmp ~/.gem /root/.bundle/cache \
-    /usr/local/bundle/cache /usr/lib/node_modules
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=downloader /devdocs/Gemfile /devdocs/Gemfile.lock /devdocs/Rakefile /devdocs/
+
+RUN bundle config set system 'true' \
+    && bundle install --system \
+    && rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
+
+COPY --from=downloader /devdocs /devdocs
 
 VOLUME [ "/devdocs/public/docs" ]
 
