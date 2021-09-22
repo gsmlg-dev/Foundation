@@ -30,7 +30,7 @@ RUN bundle config set system 'true' \
 
 COPY --from=downloader /devdocs /devdocs
 
-VOLUME [ "/devdocs/public/docs" ]
+VOLUME [ "/devdocs/public/docs", "/devdocs/public/assets" ]
 
 EXPOSE 9292
 CMD rackup -o 0.0.0.0
