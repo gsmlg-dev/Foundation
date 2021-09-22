@@ -1,40 +1,24 @@
-FROM alpine as downloader
+FROM gsmlg/devdocs:builder as builder
 
-ENV LANG=C.UTF-8
-ENV ENABLE_SERVICE_WORKER=true
+RuN bundle exec thor docs:download --all \
+    && bundle exec thor assets:compile
 
-WORKDIR /devdocs
+FROM gsmlg/devdocs:runner
 
-RUN apk --update add git \
-    && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs
+COPY --from=builder /devdocs /devdocs
 
-FROM ruby:2.7.4-alpine as builder
+EXPOSE 9292
+CMD bundle exec rackup -o 0.0.0.0
+FROM gsmlg/devdocs:builder as builder
 
-ENV LANG=C.UTF-8
-ENV ENABLE_SERVICE_WORKER=true
+RuN bundle exec thor docs:download --all \
+    && bundle exec thor assets:compile
 
-COPY --from=downloader /devdocs /devdocs
-
-WORKDIR /devdocs
-
-RUN apk --update add nodejs build-base libstdc++ gzip git zlib-dev libcurl \
-    && gem install bundler \
-    && bundle install --without test \
-    && thor docs:download --all \
-    && thor assets:compile \
-
-FROM ruby:2.7.4-alpine
+FROM gsmlg/devdocs:runner
 
 LABEL maintainer="GSMLG < me@gsmlg.org >"
 
-ENV LANG=C.UTF-8
-ENV ENABLE_SERVICE_WORKER=true
-
 COPY --from=builder /devdocs /devdocs
-WORKDIR /devdocs
-
-RUN apk --update add nodejs libstdc++ libcurl \
-    && gem install bundler
 
 EXPOSE 9292
 CMD bundle exec rackup -o 0.0.0.0
