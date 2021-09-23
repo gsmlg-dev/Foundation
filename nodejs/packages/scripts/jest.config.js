@@ -1,5 +1,5 @@
-const {jest: jestConfig} = require('./src/config')
+import  {jest as jestConfig} from './src/config/index.js';
 
-module.exports = Object.assign(jestConfig, {
+export default Object.assign(jestConfig, {
   coverageThreshold: null,
 })

@@ -1,17 +1,20 @@
-const path = require('path')
-const {DEFAULT_EXTENSIONS} = require('@babel/core')
-const spawn = require('cross-spawn')
-const yargsParser = require('yargs-parser')
-const rimraf = require('rimraf')
-const glob = require('glob')
-const {
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
+import spawn from 'cross-spawn';
+import yargsParser from 'yargs-parser';
+import rimraf from 'rimraf';
+import glob from 'glob';
+import {
   hasPkgProp,
   fromRoot,
   resolveBin,
   hasFile,
   hasTypescript,
   generateTypeDefs,
-} = require('../../utils')
+} from '../../utils.js'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let args = process.argv.slice(2)
 const here = p => path.join(__dirname, p)
@@ -93,4 +96,4 @@ function go() {
   return result.status
 }
 
-process.exit(go())
+export const runBabel = () => process.exit(go());

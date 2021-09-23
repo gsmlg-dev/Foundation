@@ -1,5 +1,10 @@
-const path = require('path');
-const {ifAnyDep, hasFile, hasPkgProp, fromRoot} = require('../utils');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
+import {ifAnyDep, hasFile, hasPkgProp, fromRoot} from '../utils.js';
+
+const require = createRequire(import.meta.url);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const here = (p) => path.join(__dirname, p);
 
@@ -64,4 +69,4 @@ if (useBuiltInBabelConfig) {
   jestConfig.transform = {'^.+\\.(js|jsx|ts|tsx)$': here('./babel-transform')};
 }
 
-module.exports = jestConfig;
+export default jestConfig;

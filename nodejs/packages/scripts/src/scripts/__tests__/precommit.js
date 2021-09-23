@@ -1,5 +1,8 @@
 import cases from 'jest-in-case'
-import {unquoteSerializer, winPathSerializer} from './helpers/serializers'
+import {unquoteSerializer, winPathSerializer} from './helpers/serializers.js'
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 expect.addSnapshotSerializer(unquoteSerializer)
 expect.addSnapshotSerializer(winPathSerializer)

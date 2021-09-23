@@ -1,14 +1,17 @@
-const browserslist = require('browserslist')
-const semver = require('semver')
+import browserslist from 'browserslist';
+import semver from 'semver';
+import { createRequire } from 'module';
 
-const {
+import {
   ifDep,
   ifAnyDep,
   ifTypescript,
   parseEnv,
   appDirectory,
   pkg,
-} = require('../utils')
+} from '../utils.js';
+
+const require = createRequire(import.meta.url);
 
 const {BABEL_ENV, NODE_ENV, BUILD_FORMAT} = process.env
 const isTest = (BABEL_ENV || NODE_ENV) === 'test'
@@ -49,7 +52,7 @@ const envTargets = isTest
   : {node: getNodeVersion(pkg)}
 const envOptions = {modules: false, loose: true, targets: envTargets}
 
-module.exports = () => ({
+export default () => ({
   presets: [
     [require.resolve('@babel/preset-env'), envOptions],
     ifAnyDep(
@@ -88,7 +91,7 @@ module.exports = () => ({
   ].filter(Boolean),
 })
 
-function getNodeVersion({engines: {node: nodeVersion = '10.13'} = {}}) {
+function getNodeVersion({engines: {node: nodeVersion = '15.3'} = {}}) {
   const oldestVersion = semver
     .validRange(nodeVersion)
     .replace(/[>=<|]/g, ' ')

@@ -1,8 +1,8 @@
-const {resolveGsmlgScripts} = require('../utils');
+import {resolveGsmlgScripts} from '../utils.js';
 
 const gsmlgScripts = resolveGsmlgScripts();
 
-module.exports = {
+export default {
   hooks: {
     'pre-commit': `"${gsmlgScripts}" pre-commit`,
   },

@@ -1,1 +1,3 @@
-module.exports = require('./src/config/prettierrc')
+import prettierrc from './src/config/prettierrc.js';
+
+export default prettierrc;

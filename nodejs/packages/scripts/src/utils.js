@@ -1,15 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const spawn = require('cross-spawn');
-const rimraf = require('rimraf');
-const mkdirp = require('mkdirp');
-const arrify = require('arrify');
-const has = require('lodash.has');
-const readPkgUp = require('read-pkg-up');
-const which = require('which');
-const {cosmiconfigSync} = require('cosmiconfig');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import spawn from 'cross-spawn';
+import rimraf from 'rimraf';
+import mkdirp from 'mkdirp';
+import arrify from 'arrify';
+import has from 'lodash.has';
+import { readPackageUpSync } from 'read-pkg-up';
+import which from 'which';
+import {cosmiconfigSync} from 'cosmiconfig';
+import { createRequire } from 'module';
 
-const {packageJson: pkg, path: pkgPath} = readPkgUp.sync({
+const require = createRequire(import.meta.url);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const {packageJson: pkg, path: pkgPath} = readPackageUpSync({
   cwd: fs.realpathSync(process.cwd()),
 });
 const appDirectory = path.dirname(pkgPath);
@@ -183,7 +188,7 @@ function generateTypeDefs(outputDir) {
   );
 }
 
-module.exports = {
+export {
   appDirectory,
   fromRoot,
   getConcurrentlyArgs,

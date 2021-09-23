@@ -1,5 +1,8 @@
 import cases from 'jest-in-case'
-import {unquoteSerializer} from './helpers/serializers'
+import {unquoteSerializer} from './helpers/serializers.js'
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 jest.mock('jest', () => ({run: jest.fn()}))
 jest.mock('../../config/jest.config', () => ({builtInConfig: true}))

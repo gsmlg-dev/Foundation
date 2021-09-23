@@ -1,10 +1,10 @@
-const spawn = require('cross-spawn')
-const {
+import spawn from 'cross-spawn';
+import {
   parseEnv,
   resolveBin,
   ifScript,
   getConcurrentlyArgs,
-} = require('../utils')
+} from '../utils.js';
 
 // pre-commit runs linting and tests on the relevant files
 // so those scripts don't need to be run if we're running

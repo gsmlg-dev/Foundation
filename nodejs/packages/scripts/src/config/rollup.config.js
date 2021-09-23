@@ -1,21 +1,22 @@
-const path = require('path')
-const builtInModules = require('builtin-modules')
-const {babel: rollupBabel} = require('@rollup/plugin-babel')
-const commonjs = require('@rollup/plugin-commonjs')
-const json = require('@rollup/plugin-json')
-const {
-  DEFAULTS: nodeResolveDefaults,
+import path from 'path';
+import { fileURLToPath } from 'url';
+import builtInModules from 'builtin-modules';
+import {babel as rollupBabel} from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import {
+  DEFAULTS as nodeResolveDefaults,
   nodeResolve,
-} = require('@rollup/plugin-node-resolve')
-const replace = require('@rollup/plugin-replace')
-const glob = require('glob')
-const camelcase = require('lodash.camelcase')
-const {terser} = require('rollup-plugin-terser')
-const nodeBuiltIns = require('rollup-plugin-node-builtins')
-const nodeGlobals = require('rollup-plugin-node-globals')
-const {sizeSnapshot} = require('rollup-plugin-size-snapshot')
-const omit = require('lodash.omit')
-const {
+} from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import glob from 'glob';
+import camelcase from 'lodash.camelcase';
+import {terser} from 'rollup-plugin-terser';
+import nodeBuiltIns from 'rollup-plugin-node-builtins';
+import nodeGlobals from 'rollup-plugin-node-globals';
+import {sizeSnapshot} from 'rollup-plugin-size-snapshot';
+import omit from 'lodash.omit';
+import {
   pkg,
   hasFile,
   hasPkgProp,
@@ -25,8 +26,9 @@ const {
   fromRoot,
   uniq,
   writeExtraEntry,
-} = require('../utils')
+} from '../utils.js';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const here = p => path.join(__dirname, p)
 const capitalize = s => s[0].toUpperCase() + s.slice(1)
 
@@ -153,7 +155,7 @@ const extensions = hasTypescript
   ? [...nodeResolveDefaults.extensions, '.ts', '.tsx']
   : nodeResolveDefaults.extensions
 
-module.exports = {
+export const rollupConfig = {
   input: codeSplitting ? input : input[0],
   output,
   external: externalPredicate,

@@ -3,7 +3,10 @@ import {
   unquoteSerializer,
   winPathSerializer,
   relativePathSerializer,
-} from './helpers/serializers'
+} from './helpers/serializers.js'
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 expect.addSnapshotSerializer(unquoteSerializer)
 expect.addSnapshotSerializer(winPathSerializer)

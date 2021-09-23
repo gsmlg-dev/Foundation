@@ -1,39 +1,48 @@
-const path = require('path')
-const spawn = require('cross-spawn')
-const glob = require('glob')
+import path, { dirname } from 'path';
+import spawn from 'cross-spawn';
+import glob from 'glob';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
-const [executor, ignoredBin, script] = process.argv
+const require = createRequire(import.meta.url);
 
-if (script && script !== '--help' && script !== 'help') {
-  spawnScript()
-} else {
-  const scriptsPath = path.join(__dirname, 'scripts/')
-  const scriptsAvailable = glob.sync(path.join(__dirname, 'scripts', '*'))
-  // `glob.sync` returns paths with unix style path separators even on Windows.
-  // So we normalize it before attempting to strip out the scripts path.
-  const scriptsAvailableMessage = scriptsAvailable
-    .map(path.normalize)
-    .map(s =>
-      s
-        .replace(scriptsPath, '')
-        .replace(/__tests__/, '')
-        .replace(/\.js$/, ''),
-    )
-    .filter(Boolean)
-    .join('\n  ')
-    .trim()
-  const fullMessage = `
-Usage: ${ignoredBin} [script] [--flags]
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-Available Scripts:
-  ${scriptsAvailableMessage}
+const [executor, ignoredBin, script] = process.argv;
 
-Options:
-  All options depend on the script. Docs will be improved eventually, but for most scripts you can assume that the args you pass will be forwarded to the respective tool that's being run under the hood.
+export const main = () => {
 
-May the force be with you.
-  `.trim()
-  console.log(`\n${fullMessage}\n`)
+  if (script && script !== '--help' && script !== 'help') {
+    spawnScript()
+  } else {
+    const scriptsPath = path.join(__dirname, 'scripts/')
+    const scriptsAvailable = glob.sync(path.join(__dirname, 'scripts', '*'))
+    // `glob.sync` returns paths with unix style path separators even on Windows.
+    // So we normalize it before attempting to strip out the scripts path.
+    const scriptsAvailableMessage = scriptsAvailable
+      .map(path.normalize)
+      .map(s =>
+        s
+          .replace(scriptsPath, '')
+          .replace(/__tests__/, '')
+          .replace(/\.js$/, ''),
+      )
+      .filter(Boolean)
+      .join('\n  ')
+      .trim()
+    const fullMessage = `
+  Usage: ${ignoredBin} [script] [--flags]
+
+  Available Scripts:
+    ${scriptsAvailableMessage}
+
+  Options:
+    All options depend on the script. Docs will be improved eventually, but for most scripts you can assume that the args you pass will be forwarded to the respective tool that's being run under the hood.
+
+  May the force be with you.
+    `.trim()
+    console.log(`\n${fullMessage}\n`)
+  }
 }
 
 function getEnv() {
@@ -70,7 +79,7 @@ function spawnScript() {
   // Extract the node arguments so we can pass them to node later on
   const buildCommand = scriptIndex === -1 ? args[0] : args[scriptIndex]
   const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : []
-
+    console.log(buildCommand, nodeArgs)
   if (!buildCommand) {
     throw new Error(`Unknown script "${script}".`)
   }
@@ -122,3 +131,4 @@ function attemptResolve(...resolveArgs) {
     return null
   }
 }
+

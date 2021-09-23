@@ -1,10 +1,11 @@
-const path = require('path')
-const fs = require('fs')
-const spawn = require('cross-spawn')
-const glob = require('glob')
-const rimraf = require('rimraf')
-const yargsParser = require('yargs-parser')
-const {
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+import spawn from 'cross-spawn';
+import glob from 'glob';
+import rimraf from 'rimraf';
+import yargsParser from 'yargs-parser';
+import {
   hasFile,
   resolveBin,
   fromRoot,
@@ -12,7 +13,9 @@ const {
   writeExtraEntry,
   hasTypescript,
   generateTypeDefs,
-} = require('../../utils')
+} from '../../utils.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const crossEnv = resolveBin('cross-env')
 const rollup = resolveBin('rollup')
@@ -145,4 +148,4 @@ function getCommands({preact = false} = {}) {
   }, {})
 }
 
-process.exit(go())
+export const runRollup = () => process.exit(go());

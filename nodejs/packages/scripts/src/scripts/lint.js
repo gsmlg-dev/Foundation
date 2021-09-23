@@ -1,7 +1,7 @@
-const path = require('path')
-const spawn = require('cross-spawn')
-const yargsParser = require('yargs-parser')
-const {hasPkgProp, resolveBin, hasFile, fromRoot} = require('../utils')
+import path from 'path';
+import spawn from 'cross-spawn';
+import yargsParser from 'yargs-parser';
+import {hasPkgProp, resolveBin, hasFile, fromRoot} from '../utils.js';
 
 let args = process.argv.slice(2)
 const here = p => path.join(__dirname, p)

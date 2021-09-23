@@ -1,6 +1,9 @@
-const path = require('path')
-const spawn = require('cross-spawn')
-const {hasPkgProp, hasFile, resolveBin} = require('../utils')
+import path from 'path';
+import { fileURLToPath } from 'url';
+import spawn from 'cross-spawn';
+import {hasPkgProp, hasFile, resolveBin} from '../utils.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const here = p => path.join(__dirname, p)
 const hereRelative = p => here(p).replace(process.cwd(), '.')

@@ -1,6 +1,9 @@
-const {ifAnyDep} = require('../utils')
+import  {ifAnyDep} from '../utils.js';
+import { createRequire } from 'module';
 
-module.exports = {
+const require = createRequire(import.meta.url);
+
+export default {
   extends: [
     require.resolve('eslint-config-kentcdodds'),
     require.resolve('eslint-config-kentcdodds/jest'),

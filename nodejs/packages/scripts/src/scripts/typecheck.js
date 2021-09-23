@@ -1,6 +1,6 @@
-const spawn = require('cross-spawn')
-const yargsParser = require('yargs-parser')
-const {hasAnyDep, resolveBin, hasFile} = require('../utils')
+import spawn from 'cross-spawn';
+import yargsParser from 'yargs-parser';
+import {hasAnyDep, resolveBin, hasFile} from '../utils.js';
 
 let args = process.argv.slice(2)
 const parsedArgs = yargsParser(args)
