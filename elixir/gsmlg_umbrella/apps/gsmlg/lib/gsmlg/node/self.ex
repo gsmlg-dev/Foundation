@@ -34,10 +34,11 @@ defmodule GSMLG.Node.Self do
   node name, used by Node.start
   """
   def name do
-    :"gsmlg@#{host()}"
+    :"#{GSMLG.name()}@#{host()}"
   end
 
-  def init(_) do
+  def init(init) do
+    IO.inspect init
     state = node_start(%{alive?: Node.alive?, self: Node.self, pid: nil, restart?: true})
     Process.send_after(__MODULE__, :keep_alive, 60000)
     {:ok, state}

@@ -44,6 +44,17 @@ defmodule GSMLG.Application do
     end
 
     children = [
+      {Horde.Registry,
+       [name: GSMLG.GSMLGRegistry, keys: :unique, members: registry_members()]},
+      {Horde.DynamicSupervisor,
+       [
+         name: GSMLG.GSMLGSupervisor,
+         strategy: :one_for_one,
+         distribution_strategy: Horde.UniformQuorumDistribution,
+         max_restarts: 100_000,
+         max_seconds: 1,
+         members: supervisor_members()
+       ]},
       # Start the Ecto repository
       GSMLG.Repo,
       # Start the PubSub system
@@ -54,8 +65,42 @@ defmodule GSMLG.Application do
       {GSMLG.Node.Supervisor, name: GSMLG.Node.Supervisor},
       # supervisor(GSMLG.Chess.Supervisor, []),
       {Cluster.Supervisor, [topologies, [name: GSMLG.ClusterSupervisor]]},
+      %{
+        id: GSMLG.ClusterConnector,
+        restart: :transient,
+        start:
+          {Task, :start_link,
+           [
+             fn ->
+               Horde.DynamicSupervisor.wait_for_quorum(GSMLG.GSMLGSupervisor, 30_000)
+               Horde.DynamicSupervisor.start_child(GSMLG.GSMLGSupervisor, GSMLG.Node.Others)
+             end
+           ]}
+      }
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: GSMLG.Supervisor)
+  end
+
+  def how_many?() do
+    Horde.Registry.meta(GSMLG.GSMLGRegistry, "count")
+  end
+
+  defp registry_members do
+    [
+      {GSMLG.GSMLGRegistry, GSMLG.Node.Self.name()},
+    ] ++ other_menbers()
+  end
+
+  defp supervisor_members do
+    [
+      {GSMLG.GSMLGSupervisor, GSMLG.Node.Self.name()},
+    ] ++ other_menbers()
+  end
+
+  defp other_menbers do
+    GSMLG.Node.Others.list() |> Enum.map(fn(node) ->
+      {GSMLG.GSMLGSupervisor, node}
+    end)
   end
 end

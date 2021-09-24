@@ -13,7 +13,8 @@ defmodule GSMLG.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      xref: [exclude: [GSMLGWeb.Endpoint]],
     ]
   end
 
@@ -41,6 +42,7 @@ defmodule GSMLG.MixProject do
       {:myxql, ">= 0.0.0"},
       {:jason, "~> 1.2"},
       {:libcluster, "~> 3.0"},
+      {:horde, github: "fmbraga/horde", tag: "585b1a57d195f3c3b0fec5992b5eedee8bc1b7e8"}, # temperally fix, wait for replace by production release
       {:swoosh, "~> 1.3"}
     ]
   end

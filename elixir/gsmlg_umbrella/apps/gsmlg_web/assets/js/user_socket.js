@@ -59,6 +59,14 @@ socket.connect()
 const channel = socket.channel("node:lobby", {});
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+  .receive("error", resp => { console.log("Unable to join", resp) });
+
+channel.on('node_info', (info) => {
+  console.log('node info: ', info);
+});
+channel.on('list_info', (info) => {
+  console.log('list info: ', info);
+});
+
 
 export default socket

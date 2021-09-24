@@ -1,6 +1,6 @@
 defmodule GSMLG.Node.Supervisor do
   use Supervisor
-  alias GSMLG.Node.Distributed
+  # alias GSMLG.Node.Distributed
   alias GSMLG.Node.Self
   alias GSMLG.Node.Others
 
