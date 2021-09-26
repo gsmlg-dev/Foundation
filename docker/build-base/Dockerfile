@@ -26,6 +26,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   python \
   bash \
   genisoimage \
+  protobuf-compiler protobuf-c-compiler \
   build-essential ccache ecj fastjar file g++ gawk \
   gettext git java-propose-classpath libelf-dev libncurses5-dev \
   libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget \
