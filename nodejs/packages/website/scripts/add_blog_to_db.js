@@ -15,7 +15,9 @@ const sleep = (n) => {
 const main = async () => {
     console.table(data);
 
-    for (let b of data) {
+    const blogs = data.reverse();
+
+    for (let b of blogs) {s
         try {
             console.log(`Begin add blog: ${b.id} ${b.title}`);
             const p = path.join(process.cwd(), 'data/blogs', `${b.name}.md`);
