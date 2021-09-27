@@ -37,8 +37,8 @@ end
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"WVj)`H20>Q;Ge%EwLnD.329.mcx^oLkCnd|QbAW&!6F^>D*&9:YPSDtC%Cm}!A:$"
   set vm_args: "rel/vm.args"
+  set pre_configure_hooks: "rel/hooks/pre_configure"
 end
 
 # You may define one or more releases in this file.
@@ -47,7 +47,7 @@ end
 # will be used by default
 
 release :gsmlg_umbrella do
-  set version: "0.1.0"
+  set version: current_version(:gsmlg_umbrella)
   set applications: [
     :runtime_tools,
     gsmlg: :permanent,
