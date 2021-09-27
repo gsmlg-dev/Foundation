@@ -3,3 +3,34 @@
   <p>Peace of mind from prototype to production</p>
 </section>
 
+<section>
+  <h3>
+    当前节点：
+  </h3>
+  <div>
+    <%= GSMLG.Node.Self.name() %>
+  </div>
+</section>
+
+<section>
+  <h3>
+    已连接节点：
+  </h3>
+  <%= if Enum.count(GSMLG.Node.Others.list()) > 0 do %>
+    <%= for node <- GSMLG.Node.Others.list() do %>
+      <div>
+        <%= node.name %>
+      </div>
+    <%= end %>
+  <%= else %>
+    <div>
+      无连接的节点
+    </div>
+  <%= end %>
+
+  <div>
+    <div>添加节点</div>
+    <input type="text" name="new_name" />
+    <button >添加</button>
+  </div>
+</section>
