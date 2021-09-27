@@ -1,5 +1,7 @@
 <h1>Listing Blogs</h1>
 
+<span><%= live_patch "New Blog", to: Routes.blog_index_path(@socket, :new) %></span>
+
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal GSMLGWeb.BlogLive.FormComponent,
     id: @blog.id || :new,
@@ -37,5 +39,3 @@
     <% end %>
   </tbody>
 </table>
-
-<span><%= live_patch "New Blog", to: Routes.blog_index_path(@socket, :new) %></span>

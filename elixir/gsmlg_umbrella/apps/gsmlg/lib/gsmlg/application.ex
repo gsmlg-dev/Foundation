@@ -29,7 +29,7 @@ defmodule GSMLG.Application do
             # The selected clustering strategy. Required.
             strategy: Cluster.Strategy.Epmd,
             # Configuration for the provided strategy. Optional.
-            config: [hosts: [ GSMLG.Node.Self.name ]],
+            config: [hosts: []],
             # The function to use for connecting nodes. The node
             # name will be appended to the argument list. Optional
             connect: {:net_kernel, :connect_node, []},
@@ -88,13 +88,13 @@ defmodule GSMLG.Application do
 
   defp registry_members do
     [
-      {GSMLG.GSMLGRegistry, GSMLG.Node.Self.name()},
+      # {GSMLG.GSMLGRegistry, GSMLG.Node.Self.name()},
     ] ++ other_menbers()
   end
 
   defp supervisor_members do
     [
-      {GSMLG.GSMLGSupervisor, GSMLG.Node.Self.name()},
+      # {GSMLG.GSMLGSupervisor, GSMLG.Node.Self.name()},
     ] ++ other_menbers()
   end
 

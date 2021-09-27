@@ -6,6 +6,8 @@ defmodule GSMLGWeb.BlogLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    Process.send_after(__MODULE__, :refresh_list, 15_000)
+
     {:ok, assign(socket, :blogs, list_blogs())}
   end
 
@@ -37,6 +39,11 @@ defmodule GSMLGWeb.BlogLive.Index do
     blog = Content.get_blog!(id)
     {:ok, _} = Content.delete_blog(blog)
 
+    {:noreply, assign(socket, :blogs, list_blogs())}
+  end
+
+  def handle_info(:refresh_list, socket) do
+    Process.send_after(__MODULE__, :refresh_list, 15_000)
     {:noreply, assign(socket, :blogs, list_blogs())}
   end
 

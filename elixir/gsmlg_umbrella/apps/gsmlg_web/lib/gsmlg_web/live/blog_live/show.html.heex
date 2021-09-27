@@ -34,7 +34,7 @@
   <li>
     <strong>Content:</strong>
     <br/>
-    <%= @blog.content %>
+    <%= @blog.content |> Earmark.as_html!() |> raw %>
   </li>
 
 </ul>
