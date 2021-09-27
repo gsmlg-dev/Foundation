@@ -204,7 +204,7 @@ blogs.push({
   id: 26,
   name: 'serverless',
   title: 'Serverless',
-  date: '2019-09-4',
+  date: '2019-09-04',
   author: 'Gao',
 });
 

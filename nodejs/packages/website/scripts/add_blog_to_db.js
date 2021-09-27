@@ -17,6 +17,7 @@ const main = async () => {
 
     for (let b of data) {
         try {
+            console.log(`Begin add blog: ${b.id} ${b.title}`);
             const p = path.join(process.cwd(), 'data/blogs', `${b.name}.md`);
             const c = await fs.readFile(p, { encoding: 'utf8' });
             const d = {
@@ -31,9 +32,9 @@ const main = async () => {
                 data: { blog: d },
             });
 
-            console.log(`Add blog: ${b.title}`);
+            console.log(`Add blog done: ${b.id} ${b.title}`);
 
-            await sleep(500);
+            await sleep(1000);
         } catch(e) {
             console.error(e);
             process.exit(1);
