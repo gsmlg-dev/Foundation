@@ -1,0 +1,42 @@
+<h1>Show Blog</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal GSMLGWeb.BlogLive.FormComponent,
+    id: @blog.id,
+    title: @page_title,
+    action: @live_action,
+    blog: @blog,
+    return_to: Routes.blog_show_path(@socket, :show, @blog) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @blog.slug %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @blog.title %>
+  </li>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @blog.date %>
+  </li>
+
+  <li>
+    <strong>Author:</strong>
+    <%= @blog.author %>
+  </li>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @blog.content %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.blog_show_path(@socket, :edit, @blog), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.blog_index_path(@socket, :index) %></span>

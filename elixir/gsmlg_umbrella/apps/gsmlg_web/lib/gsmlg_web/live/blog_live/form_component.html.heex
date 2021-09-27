@@ -1,0 +1,36 @@
+<div>
+  <h2><%= @title %></h2>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="blog-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <%= label f, :slug %>
+    <%= text_input f, :slug %>
+    <%= error_tag f, :slug %>
+  
+    <%= label f, :title %>
+    <%= text_input f, :title %>
+    <%= error_tag f, :title %>
+  
+    <%= label f, :date %>
+    <%= date_select f, :date %>
+    <%= error_tag f, :date %>
+  
+    <%= label f, :author %>
+    <%= text_input f, :author %>
+    <%= error_tag f, :author %>
+  
+    <%= label f, :content %>
+    <%= textarea f, :content %>
+    <%= error_tag f, :content %>
+  
+    <div>
+      <%= submit "Save", phx_disable_with: "Saving..." %>
+    </div>
+  </.form>
+</div>

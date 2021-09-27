@@ -17,6 +17,7 @@
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
             <% end %>
+            <li><%= link "Blog", to: Routes.blog_index_path(@conn, :index) %></li>
           </ul>
         </nav>
         <a href="https://gsmlg.github.io/" class="phx-logo">

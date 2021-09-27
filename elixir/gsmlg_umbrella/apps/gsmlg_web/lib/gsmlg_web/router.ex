@@ -18,6 +18,14 @@ defmodule GSMLGWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/blogs", BlogLive.Index, :index
+    live "/blogs/new", BlogLive.Index, :new
+    live "/blogs/:id/edit", BlogLive.Index, :edit
+
+    live "/blogs/:id", BlogLive.Show, :show
+    live "/blogs/:id/show/edit", BlogLive.Show, :edit
+
   end
 
   # Other scopes may use custom stacks.
