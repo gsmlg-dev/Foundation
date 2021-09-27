@@ -17,7 +17,7 @@ const main = async () => {
 
     const blogs = data.reverse();
 
-    for (let b of blogs) {s
+    for (let b of blogs) {
         try {
             console.log(`Begin add blog: ${b.id} ${b.title}`);
             const p = path.join(process.cwd(), 'data/blogs', `${b.name}.md`);
