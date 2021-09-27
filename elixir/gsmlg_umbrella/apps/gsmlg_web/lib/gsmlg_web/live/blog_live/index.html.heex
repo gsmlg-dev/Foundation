@@ -16,7 +16,6 @@
       <th>Title</th>
       <th>Date</th>
       <th>Author</th>
-      <th>Content</th>
 
       <th></th>
     </tr>
@@ -28,7 +27,6 @@
         <td><%= blog.title %></td>
         <td><%= blog.date %></td>
         <td><%= blog.author %></td>
-        <td><%= blog.content %></td>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.blog_show_path(@socket, :show, blog) %></span>
