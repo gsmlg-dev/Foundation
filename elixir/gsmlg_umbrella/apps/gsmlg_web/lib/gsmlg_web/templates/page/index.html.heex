@@ -8,7 +8,8 @@
     当前节点：
   </h3>
   <div>
-    <%= GSMLG.Node.Self.name() %>
+    <%= Node.self() %>
+    (<%= if Node.alive?, do: "started", else: "stopped" %>)
   </div>
 </section>
 

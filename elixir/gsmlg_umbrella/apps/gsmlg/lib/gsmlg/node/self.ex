@@ -38,7 +38,6 @@ defmodule GSMLG.Node.Self do
   end
 
   def init(init) do
-    IO.inspect init
     state = node_start(%{alive?: Node.alive?, self: Node.self, pid: nil, restart?: true})
     Process.send_after(__MODULE__, :keep_alive, 60000)
     {:ok, state}
@@ -73,7 +72,7 @@ defmodule GSMLG.Node.Self do
     pid = case Node.start(Self.name) do
             {:ok, pid} -> pid
             {:error, {:already_started, pid}} -> pid
-            _ -> nil
+            e -> IO.inspect(e)
           end
     newState = state
     |> Map.put(:alive?, Node.alive?)
