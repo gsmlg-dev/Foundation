@@ -19,6 +19,8 @@ defmodule GSMLGWeb.Router do
 
     get "/", PageController, :index
 
+    get "/node_management", NodeManagementController, :index
+
     live "/blogs", BlogLive.Index, :index
     live "/blogs/new", BlogLive.Index, :new
     live "/blogs/:id/edit", BlogLive.Index, :edit
