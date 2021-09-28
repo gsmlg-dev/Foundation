@@ -1,5 +1,8 @@
 <h1>Show Blog</h1>
 
+<span><%= live_patch "Edit", to: Routes.blog_show_path(@socket, :edit, @blog), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.blog_index_path(@socket, :index) %></span>
+
 <%= if @live_action in [:edit] do %>
   <%= live_modal GSMLGWeb.BlogLive.FormComponent,
     id: @blog.id,
@@ -38,6 +41,3 @@
   </li>
 
 </ul>
-
-<span><%= live_patch "Edit", to: Routes.blog_show_path(@socket, :edit, @blog), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.blog_index_path(@socket, :index) %></span>

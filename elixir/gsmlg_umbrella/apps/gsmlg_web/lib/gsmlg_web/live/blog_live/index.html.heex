@@ -14,7 +14,6 @@
 <table>
   <thead>
     <tr>
-      <th>Slug</th>
       <th>Title</th>
       <th>Date</th>
       <th>Author</th>
@@ -25,13 +24,11 @@
   <tbody id="blogs">
     <%= for blog <- @blogs do %>
       <tr id={"blog-#{blog.id}"}>
-        <td><%= blog.slug %></td>
-        <td><%= blog.title %></td>
+        <td><%= live_redirect "#{blog.title}", to: Routes.blog_show_path(@socket, :show, blog) %></td>
         <td><%= blog.date %></td>
         <td><%= blog.author %></td>
 
         <td>
-          <span><%= live_redirect "Show", to: Routes.blog_show_path(@socket, :show, blog) %></span>
           <span><%= live_patch "Edit", to: Routes.blog_index_path(@socket, :edit, blog) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: blog.id, data: [confirm: "Are you sure?"] %></span>
         </td>
