@@ -43,7 +43,8 @@ defmodule GSMLG.MixProject do
       {:jason, "~> 1.2"},
       {:libcluster, "~> 3.0"},
       {:horde, github: "fmbraga/horde", tag: "585b1a57d195f3c3b0fec5992b5eedee8bc1b7e8"}, # temperally fix, wait for replace by production release
-      {:swoosh, "~> 1.3"}
+      {:swoosh, "~> 1.3"},
+      {:absinthe, "~> 1.6"},
     ]
   end
 
