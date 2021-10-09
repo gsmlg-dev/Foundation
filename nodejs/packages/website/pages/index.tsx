@@ -10,13 +10,17 @@ import Layout from 'components/Layout';
 const useStyles = makeStyles((theme: any) => ({
   root: {
     flex: 1,
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    padding: theme.spacing(3),
     margin: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     fontSize: '3rem',
     transition: '3000ms all',
+    display: 'inline-flex',
   },
 }));
 

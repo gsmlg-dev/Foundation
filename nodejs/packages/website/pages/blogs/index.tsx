@@ -16,8 +16,7 @@ import blogList from 'blogList';
 const useStyles = makeStyles((theme: any) => ({
   root: {
     flex: 1,
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    padding: theme.spacing(3),
     margin: theme.spacing(3),
   },
   text: {
