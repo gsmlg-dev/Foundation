@@ -416,4 +416,12 @@ blogs.push({
   author: 'Gao',
 });
 
+blogs.push({
+  id: 53,
+  name: 'matrix-math',
+  title: 'Web中的矩阵变换计算',
+  date: '2021-10-09',
+  author: 'Gao',
+});
+
 export default blogs.slice().reverse();
