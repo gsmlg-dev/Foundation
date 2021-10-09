@@ -25,15 +25,25 @@ class SetNodeCookie extends LitElement {
   async clickMe(evt) {
     this.loading = true;
     try {
-      await new Promise((f) => setTimeout(f, 3000));
-      const resp = await fetch('/api/node_management', {
+      await new Promise((f) => setTimeout(f, 1000));
+      
+      const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+      const resp = await fetch('/node_management', {
         method: 'POST',
+        headers: {
+          'x-csrf-token': csrfToken,
+          'content-type': 'application/json',
+        },
         body: JSON.stringify({
           action: 'set-node-cookie',
-        })
+          cookie: this.cookie,
+        }),
       });
       const data = await resp.json();
-
+      const { cookie } = data;
+      const el = document.getElementById('node-cookie-value');
+      el.innerText = cookie;
       this.loading = false;
     } catch(e) {
       this.loading = false;
