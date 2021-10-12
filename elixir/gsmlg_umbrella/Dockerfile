@@ -8,7 +8,7 @@ COPY . /build
 
 WORKDIR /build
 
-RUN apk update && apk add curl jq git \
+RUN apk update && apk add curl jq git npm \
     && mix do deps.get, compile \
     && cd apps/gsmlg_web && npm install --prefix assets && mix assets.deploy && cd ../.. \
     && curl -Lf $(npm info --json @gsmlg/website | jq -r .dist.tarball) -o website.tgz \
