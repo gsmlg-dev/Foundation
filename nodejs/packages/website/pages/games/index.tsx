@@ -5,7 +5,7 @@
  */
 
 import React, {memo} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -14,25 +14,39 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'Game';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  paper: `${PREFIX}-paper`,
+  text: `${PREFIX}-text`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     marginTop: '1em',
   },
-  paper: {
+
+  [`& .${classes.paper}`]: {
     padding: '1em',
   },
-  text: {
+
+  [`& .${classes.text}`]: {
     fontSize: '1.44em',
-  },
+  }
 }));
 
 interface Props {}
 
 const Game = memo((props: Props) => {
-  const classes = useStyles();
+
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>Games</title>
         <meta name="description" content="Description of Games" />
@@ -54,7 +68,7 @@ const Game = memo((props: Props) => {
           </Grid>
         </Grid>
       </Grid>
-    </Layout>
+    </StyledLayout>
   );
 });
 

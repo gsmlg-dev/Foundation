@@ -1,14 +1,25 @@
 import {useState, useEffect} from 'react';
+import { styled } from '@mui/material/styles';
 import Head from 'next/head';
-import {makeStyles} from '@material-ui/styles';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import Layout from 'components/Layout';
 
-const useStyles = makeStyles((theme: any) => ({
-  root: {
+const PREFIX = 'index';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  text: `${PREFIX}-text`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme: any
+  }
+) => ({
+  [`& .${classes.root}`]: {
     flex: 1,
     padding: theme.spacing(3),
     margin: theme.spacing(3),
@@ -17,15 +28,16 @@ const useStyles = makeStyles((theme: any) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {
+
+  [`& .${classes.text}`]: {
     fontSize: '3rem',
     transition: '3000ms all',
     display: 'inline-flex',
-  },
+  }
 }));
 
 export default function Home() {
-  const classes = useStyles();
+
   const [colors, setColors] = useState(['#000', '#000', '#000', '#000']);
   useEffect(() => {
     const randomRGB = () => {
@@ -42,7 +54,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
@@ -77,6 +89,6 @@ export default function Home() {
           传不习乎
         </Typography>
       </Paper>
-    </Layout>
+    </StyledLayout>
   );
 }

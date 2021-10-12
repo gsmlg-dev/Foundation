@@ -1,8 +1,8 @@
 import fs from 'fs';
+import { styled } from '@mui/material/styles';
 import path from 'path';
 
 import Head from 'next/head';
-import {makeStyles} from '@material-ui/styles';
 
 import ReactMarkdown from 'react-markdown';
 import Paper from '@material-ui/core/Paper';
@@ -15,12 +15,22 @@ import Layout from 'components/Layout';
 
 import blogList from 'blogList';
 
-const useStyles = makeStyles((theme: any) => ({
-  root: {
+const PREFIX = '[slug]';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme: any
+  }
+) => ({
+  [`& .${classes.root}`]: {
     flex: 1,
     padding: theme.spacing(3),
     margin: theme.spacing(3),
-  },
+  }
 }));
 
 interface BlogStruct {
@@ -33,10 +43,10 @@ interface BlogStruct {
 }
 
 export default function Blog({blog}) {
-  const classes = useStyles();
+
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>{blog && blog.title}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -58,7 +68,7 @@ export default function Blog({blog}) {
           <ReactMarkdown plugins={[gfm]}>{blog.content}</ReactMarkdown>
         </Typography>
       </Paper>
-    </Layout>
+    </StyledLayout>
   );
 }
 

@@ -9,23 +9,25 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "axios": "^0.21.4",
+    "@mui/material": "^5.0.3",
+    "@mui/styles": "^5.0.1",
+    "axios": "^0.22.0",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dnd": "^14.0.3",
-    "react-dnd-html5-backend": "^14.0.1",
-    "react-dnd-touch-backend": "^14.1.0",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
+    "react-dnd-touch-backend": "^14.1.1",
     "react-dom": "17.0.2",
     "react-markdown": "^7.0.1",
-    "remark-gfm": "^2.0.0",
-    "rxjs": "^7.3.0"
+    "remark-gfm": "^3.0.0",
+    "rxjs": "^7.4.0"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "@types/node": "^16.9.1",
-    "@types/react": "^17.0.20",
-    "typescript": "^4.4.2"
+    "@types/node": "^16.10.3",
+    "@types/react": "^17.0.27",
+    "typescript": "^4.4.3"
   }
 }

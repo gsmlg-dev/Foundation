@@ -5,7 +5,7 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
 
 import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
@@ -15,16 +15,26 @@ import Card from 'components/Vultr/NodeCard';
 
 import hosts from 'vultrHosts';
 
-interface Props {}
+const PREFIX = 'VultrNetworks';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     marginTop: '1em',
-  },
+  }
 }));
 
+interface Props {}
+
 function VultrNetworks(props: Props) {
-  const classes = useStyles();
+
 
   const [networks, setNetworks] = useState(hosts);
 
@@ -95,7 +105,7 @@ function VultrNetworks(props: Props) {
   }, []);
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>VultrNetworks</title>
         <meta name="description" content="Description of VultrNetworks" />
@@ -111,7 +121,7 @@ function VultrNetworks(props: Props) {
           </Grid>
         </Grid>
       </Grid>
-    </Layout>
+    </StyledLayout>
   );
 }
 

@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import {makeStyles} from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -15,30 +15,46 @@ import Typography from '@material-ui/core/Typography';
 
 import Layout from 'components/Layout';
 
-interface Props {}
+const PREFIX = 'Tools';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const classes = {
+  root: `${PREFIX}-root`,
+  paper: `${PREFIX}-paper`,
+  link: `${PREFIX}-link`,
+  text: `${PREFIX}-text`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     margin: '1em',
   },
-  paper: {
+
+  [`& .${classes.paper}`]: {
     margin: '1rem',
     padding: '1rem',
   },
-  link: {
+
+  [`& .${classes.link}`]: {
     textDecoration: 'none',
   },
-  text: {
+
+  [`& .${classes.text}`]: {
     fontSize: '1.44em',
-  },
+  }
 }));
+
+interface Props {}
 
 function Tools(props: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const classes = useStyles();
+
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>Tools</title>
         <meta name="description" content="Description of Tools" />
@@ -69,7 +85,7 @@ function Tools(props: Props) {
           </Grid>
         </Grid>
       </Grid>
-    </Layout>
+    </StyledLayout>
   );
 }
 

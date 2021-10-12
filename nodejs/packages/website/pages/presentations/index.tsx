@@ -6,7 +6,7 @@
 
 import React, {memo} from 'react';
 
-import {makeStyles} from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
 import Paper from '@material-ui/core/Paper';
@@ -18,22 +18,34 @@ import NoteIcon from '@material-ui/icons/Note';
 
 import Layout from 'components/Layout';
 
-const useStyles = makeStyles((theme: any) => ({
-  root: {
+const PREFIX = 'Presentation';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  text: `${PREFIX}-text`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme: any
+  }
+) => ({
+  [`& .${classes.root}`]: {
     flex: 1,
     padding: theme.spacing(3),
     margin: theme.spacing(3),
   },
-  text: {
+
+  [`& .${classes.text}`]: {
     fontSize: '3rem',
     transition: '3000ms all',
-  },
+  }
 }));
 
 interface Props {}
 
 const Presentation = memo((props: Props) => {
-  const classes = useStyles();
+
   const noteList = [
     {
       id: 1,
@@ -64,7 +76,7 @@ const Presentation = memo((props: Props) => {
     .reverse();
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>Presentation</title>
         <meta name="description" content="Description of Presentation" />
@@ -87,7 +99,7 @@ const Presentation = memo((props: Props) => {
           ))}
         </List>
       </Paper>
-    </Layout>
+    </StyledLayout>
   );
 });
 

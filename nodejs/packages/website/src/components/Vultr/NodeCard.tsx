@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
@@ -9,16 +9,27 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
-const useStyles = makeStyles((theme) => ({
-  card: {},
-  avatar: {},
+const PREFIX = 'NetworkCard';
+
+const classes = {
+  card: `${PREFIX}-card`,
+  avatar: `${PREFIX}-avatar`
+};
+
+const StyledPaper = styled(Paper)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.card}`]: {},
+  [`& .${classes.avatar}`]: {}
 }));
 
 function NetworkCard({host}) {
-  const classes = useStyles();
+
 
   return (
-    <Paper>
+    <StyledPaper>
       <Card className={classes.card}>
         <CardHeader
           avatar={
@@ -52,7 +63,7 @@ function NetworkCard({host}) {
           </Typography>
         </CardContent>
       </Card>
-    </Paper>
+    </StyledPaper>
   );
 }
 

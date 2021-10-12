@@ -1,27 +1,37 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Layout from './index';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'loading';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     display: 'flex',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 }));
 
 function LayoutLoading(props, ref) {
-  const classes = useStyles();
+
 
   return (
-    <Layout ref={ref}>
+    <StyledLayout ref={ref}>
       <div className={classes.root}>
         <CircularProgress />
       </div>
-    </Layout>
+    </StyledLayout>
   );
 }
 

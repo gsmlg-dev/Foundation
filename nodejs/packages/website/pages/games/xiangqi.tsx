@@ -5,7 +5,7 @@
  */
 
 import React, {useEffect, useMemo} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
 
 import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
@@ -16,31 +16,47 @@ import GameBoard from 'components/Xiangqi/DndContext';
 
 import {ChessColor} from 'types/xiangqi';
 
-const useStyles = makeStyles((theme) => ({
-  grid: {
+const PREFIX = 'Xiangqi';
+
+const classes = {
+  grid: `${PREFIX}-grid`,
+  boardPaper: `${PREFIX}-boardPaper`,
+  paper: `${PREFIX}-paper`,
+  button: `${PREFIX}-button`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.grid}`]: {
     display: 'flex',
     justifyContent: 'center',
   },
-  boardPaper: {
+
+  [`& .${classes.boardPaper}`]: {
     width: '540px',
     height: '600px',
   },
-  paper: {
+
+  [`& .${classes.paper}`]: {
     width: '320px',
     height: '600px',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
   },
-  button: {
+
+  [`& .${classes.button}`]: {
     margin: theme.spacing(1),
-  },
+  }
 }));
 
 interface Props {}
 
 function Xiangqi(props: Props) {
-  const classes = useStyles();
+
 
   const xiangqi = {
     turn: ChessColor.Red,
@@ -56,7 +72,7 @@ function Xiangqi(props: Props) {
   }, []);
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>Xiangqi</title>
         <meta name="description" content="Description of Xiangqi" />
@@ -91,7 +107,7 @@ function Xiangqi(props: Props) {
           </Paper>
         </Grid>
       </Grid>
-    </Layout>
+    </StyledLayout>
   );
 }
 

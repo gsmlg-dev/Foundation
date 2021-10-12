@@ -5,7 +5,7 @@
  */
 
 import React, {useEffect, useCallback} from 'react';
-import {makeStyles} from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
@@ -21,29 +21,47 @@ import CloudIcon from '@material-ui/icons/Cloud';
 import CloudOffIcon from '@material-ui/icons/CloudOff';
 import Layout from 'components/Layout';
 
-interface Props {}
+const PREFIX = 'ElixirNodes';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const classes = {
+  root: `${PREFIX}-root`,
+  card: `${PREFIX}-card`,
+  details: `${PREFIX}-details`,
+  chip: `${PREFIX}-chip`,
+  avatar: `${PREFIX}-avatar`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     marginTop: '1em',
   },
-  card: {
+
+  [`& .${classes.card}`]: {
     display: 'flex',
   },
-  details: {
+
+  [`& .${classes.details}`]: {
     display: 'flex',
     flexDirection: 'column',
   },
-  chip: {
+
+  [`& .${classes.chip}`]: {
     margin: '0.618em',
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     display: 'flex',
-  },
+  }
 }));
 
+interface Props {}
+
 function ElixirNodes(props: Props) {
-  const classes = useStyles();
+
 
   const elixirNodes = {
     name: 'self',
@@ -86,7 +104,7 @@ function ElixirNodes(props: Props) {
   );
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>ElixirNodes</title>
         <meta name="description" content="Description of ElixirNodes" />
@@ -136,7 +154,7 @@ function ElixirNodes(props: Props) {
           </Grid>
         </Grid>
       </Grid>
-    </Layout>
+    </StyledLayout>
   );
 }
 

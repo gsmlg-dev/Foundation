@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import {makeStyles} from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 
 import Link from 'next/link';
 import Paper from '@material-ui/core/Paper';
@@ -13,23 +13,35 @@ import Layout from 'components/Layout';
 
 import blogList from 'blogList';
 
-const useStyles = makeStyles((theme: any) => ({
-  root: {
+const PREFIX = 'index';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  text: `${PREFIX}-text`
+};
+
+const StyledLayout = styled(Layout)((
+  {
+    theme: any
+  }
+) => ({
+  [`& .${classes.root}`]: {
     flex: 1,
     padding: theme.spacing(3),
     margin: theme.spacing(3),
   },
-  text: {
+
+  [`& .${classes.text}`]: {
     fontSize: '3rem',
     transition: '3000ms all',
-  },
+  }
 }));
 
 export default function BlogList({blogs = [], ...props}) {
-  const classes = useStyles();
+
 
   return (
-    <Layout>
+    <StyledLayout>
       <Head>
         <title>Blog List</title>
         <link rel="icon" href="/favicon.ico" />
@@ -53,7 +65,7 @@ export default function BlogList({blogs = [], ...props}) {
           )}
         </List>
       </Paper>
-    </Layout>
+    </StyledLayout>
   );
 }
 
