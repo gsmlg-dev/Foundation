@@ -10,7 +10,7 @@ WORKDIR /build
 
 RUN apk update && apk add curl jq git \
     && mix do deps.get, compile \
-    && cd apps/gsmlg_web && mix assets.deploy && cd ../.. \
+    && cd apps/gsmlg_web && npm install --prefix assets && mix assets.deploy && cd ../.. \
     && curl -Lf $(npm info --json @gsmlg/website | jq -r .dist.tarball) -o website.tgz \
     && tar xzf website.tgz --strip-components=2 -C apps/gsmlg_web/priv/static \
     && mix distillery.release --env=prod \
