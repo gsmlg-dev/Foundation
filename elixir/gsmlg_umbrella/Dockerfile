@@ -42,4 +42,4 @@ COPY --from=builder /app /app
 
 EXPOSE 80 4369
 
-ENTRYPOINT ["/app/bin/gsmlg", "foreground"]
+ENTRYPOINT ["/app/bin/gsmlg_umbrella", "foreground"]
