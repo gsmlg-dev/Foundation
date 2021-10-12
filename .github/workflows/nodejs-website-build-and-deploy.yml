@@ -36,7 +36,7 @@ jobs:
 
       - name: 🏗 Run install semantic-release
         working-directory: 'nodejs/packages/website'
-        run: npm install semantic-release-monorepo semantic-release
+        run: npm install --save-dev semantic-release-monorepo semantic-release
 
       - name: 🚀 Release
         working-directory: 'nodejs/packages/website'
