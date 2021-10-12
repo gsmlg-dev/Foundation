@@ -22,16 +22,16 @@ const PagePaper = styled(Paper)(({
   margin: theme.spacing(3),
 }));
 const StyledTypography = styled(Typography)(({
-  theme
+  theme,
 }) => ({
   fontSize: '1.44rem',
+  fontWeight: 400,
 }));
 
 interface Props {}
 
 function Tools(props: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
 
   return (
     <Layout>
@@ -46,7 +46,7 @@ function Tools(props: Props) {
               <PagePaper>
                 <Link href="/tools/vultr-latency">
                   <a>
-                    <StyledTypography component="h3">
+                    <StyledTypography>
                       Vultr Networks Latency
                     </StyledTypography>
                   </a>
@@ -55,7 +55,7 @@ function Tools(props: Props) {
               <PagePaper>
                 <Link href="/tools/elixir-nodes">
                   <a>
-                    <StyledTypography component="h3">
+                    <StyledTypography>
                       Elixir Nodes
                     </StyledTypography>
                   </a>
