@@ -8,6 +8,7 @@
 tsconfig.json
 next.config.js
 next-env.d.ts
+.releaserc.yaml
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
