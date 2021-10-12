@@ -1,7 +1,6 @@
 {
   "name": "@gsmlg/website",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export -o build && touch build/.nojekyll",
@@ -20,6 +19,9 @@
     "react-markdown": "^7.0.1",
     "remark-gfm": "^2.0.0",
     "rxjs": "^7.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/node": "^16.9.1",
