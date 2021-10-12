@@ -35,7 +35,7 @@ ENV PORT=80 \
     SECRET_KEY_BASE=gsmlg_umbrella
 
 RUN apk update \
-    && apk add openssl bash \
+    && apk add openssl bash libstdc++ \
     && rm -rf /var/cache/apk/*
 
 COPY --from=builder /app /app
