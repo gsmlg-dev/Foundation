@@ -20,9 +20,16 @@ const PagePaper = styled(Paper)(({
   padding: theme.spacing(3),
   margin: theme.spacing(3),
 }));
+const StyledListItem = styled(ListItem)(({
+  theme
+}) => ({
+  transition: 'all 1s',
+  '&:hover': {
+    boxShadow: `0 0 4px 4px ${theme.palette.primary.main}`,
+  },
+}));
 
 export default function BlogList({blogs = [], ...props}) {
-
 
   return (
     <Layout>
@@ -34,7 +41,7 @@ export default function BlogList({blogs = [], ...props}) {
         <List>
           {blogs.map(
             (blog): JSX.Element => (
-              <ListItem key={blog.name}>
+              <StyledListItem key={blog.name}>
                 <ListItemIcon>
                   <WebIcon />
                 </ListItemIcon>
@@ -44,7 +51,7 @@ export default function BlogList({blogs = [], ...props}) {
                   }
                 />
                 <ListItemText secondary={blog.date} />
-              </ListItem>
+              </StyledListItem>
             )
           )}
         </List>
