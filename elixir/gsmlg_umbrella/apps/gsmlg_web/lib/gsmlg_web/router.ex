@@ -14,7 +14,7 @@ defmodule GSMLGWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", GSMLGWeb do
+  scope "/admin", GSMLGWeb do
     pipe_through :browser
 
     get "/", PageController, :index
