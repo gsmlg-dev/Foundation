@@ -47,7 +47,7 @@ end
 # will be used by default
 
 release :gsmlg_umbrella do
-  set version: current_version(:gsmlg_umbrella)
+  set version: System.get_env("RELEASE_VERSION", current_version(:gsmlg_web))
   set applications: [
     :runtime_tools,
     gsmlg: :permanent,
