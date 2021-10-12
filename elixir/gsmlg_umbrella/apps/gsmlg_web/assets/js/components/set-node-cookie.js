@@ -25,8 +25,6 @@ class SetNodeCookie extends LitElement {
   async clickMe(evt) {
     this.loading = true;
     try {
-      await new Promise((f) => setTimeout(f, 1000));
-      
       const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
       const resp = await fetch('/node_management', {
