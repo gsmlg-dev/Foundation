@@ -9,37 +9,21 @@ import React, {memo} from 'react';
 import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import NoteIcon from '@material-ui/icons/Note';
+import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import NoteIcon from '@mui/icons-material/Note';
 
 import Layout from 'components/Layout';
 
-const PREFIX = 'Presentation';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  text: `${PREFIX}-text`
-};
-
-const StyledLayout = styled(Layout)((
-  {
-    theme: any
-  }
-) => ({
-  [`& .${classes.root}`]: {
-    flex: 1,
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
-  },
-
-  [`& .${classes.text}`]: {
-    fontSize: '3rem',
-    transition: '3000ms all',
-  }
+const PagePaper = styled(Paper)(({
+  theme
+}) => ({
+  flex: 1,
+  padding: theme.spacing(3),
+  margin: theme.spacing(3),
 }));
 
 interface Props {}
@@ -76,12 +60,12 @@ const Presentation = memo((props: Props) => {
     .reverse();
 
   return (
-    <StyledLayout>
+    <Layout>
       <Head>
         <title>Presentation</title>
         <meta name="description" content="Description of Presentation" />
       </Head>
-      <Paper className={classes.root}>
+      <PagePaper>
         <List>
           {noteList.map((note) => (
             <ListItem
@@ -98,8 +82,8 @@ const Presentation = memo((props: Props) => {
             </ListItem>
           ))}
         </List>
-      </Paper>
-    </StyledLayout>
+      </PagePaper>
+    </Layout>
   );
 });
 

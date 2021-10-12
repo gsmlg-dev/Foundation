@@ -1,39 +1,28 @@
 import {useState, useEffect} from 'react';
-import { styled } from '@mui/material/styles';
 import Head from 'next/head';
-
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 import Layout from 'components/Layout';
 
-const PREFIX = 'index';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  text: `${PREFIX}-text`
-};
-
-const StyledLayout = styled(Layout)((
-  {
-    theme: any
-  }
-) => ({
-  [`& .${classes.root}`]: {
-    flex: 1,
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  [`& .${classes.text}`]: {
-    fontSize: '3rem',
-    transition: '3000ms all',
-    display: 'inline-flex',
-  }
+const PagePaper = styled(Paper)(({
+  theme
+}) => ({
+  flex: 1,
+  padding: theme.spacing(3),
+  margin: theme.spacing(3),
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
+const TitleTypography = styled(Typography)(({
+  theme
+}) => ({
+  fontSize: '3rem',
+  transition: '3000ms all',
+  display: 'inline-flex',
 }));
 
 export default function Home() {
@@ -54,41 +43,32 @@ export default function Home() {
   }, []);
 
   return (
-    <StyledLayout>
+    <Layout>
       <Head>
         <title>Home</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Paper className={classes.root} elevation={4}>
-        <Typography
-          component="h3"
-          className={classes.text}
+      <PagePaper elevation={4}>
+        <TitleTypography
           style={{color: colors[0]}}
         >
           吾日三省吾身
-        </Typography>
-        <Typography
-          component="h3"
-          className={classes.text}
+        </TitleTypography>
+        <TitleTypography
           style={{color: colors[1]}}
         >
           为人谋而不忠乎
-        </Typography>
-        <Typography
-          component="h3"
-          className={classes.text}
+        </TitleTypography>
+        <TitleTypography
           style={{color: colors[2]}}
         >
           与朋友交而不信乎
-        </Typography>
-        <Typography
-          component="h3"
-          className={classes.text}
+        </TitleTypography>
+        <TitleTypography
           style={{color: colors[3]}}
         >
           传不习乎
-        </Typography>
-      </Paper>
-    </StyledLayout>
+        </TitleTypography>
+      </PagePaper>
+    </Layout>
   );
 }

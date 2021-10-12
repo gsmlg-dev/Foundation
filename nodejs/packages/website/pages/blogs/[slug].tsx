@@ -5,9 +5,9 @@ import path from 'path';
 import Head from 'next/head';
 
 import ReactMarkdown from 'react-markdown';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
 import gfm from 'remark-gfm';
 
@@ -15,22 +15,12 @@ import Layout from 'components/Layout';
 
 import blogList from 'blogList';
 
-const PREFIX = '[slug]';
-
-const classes = {
-  root: `${PREFIX}-root`
-};
-
-const StyledLayout = styled(Layout)((
-  {
-    theme: any
-  }
-) => ({
-  [`& .${classes.root}`]: {
-    flex: 1,
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
-  }
+const PagePaper = styled(Paper)(({
+  theme
+}) => ({
+  flex: 1,
+  padding: theme.spacing(3),
+  margin: theme.spacing(3),
 }));
 
 interface BlogStruct {
@@ -44,14 +34,13 @@ interface BlogStruct {
 
 export default function Blog({blog}) {
 
-
   return (
-    <StyledLayout>
+    <Layout>
       <Head>
         <title>{blog && blog.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Paper className={classes.root} elevation={4}>
+      <PagePaper elevation={4}>
         <header>
           <Typography component="h1">{blog.title}</Typography>
           <Typography component="div">
@@ -67,8 +56,8 @@ export default function Blog({blog}) {
         <Typography className="blog-content" component="section">
           <ReactMarkdown plugins={[gfm]}>{blog.content}</ReactMarkdown>
         </Typography>
-      </Paper>
-    </StyledLayout>
+      </PagePaper>
+    </Layout>
   );
 }
 

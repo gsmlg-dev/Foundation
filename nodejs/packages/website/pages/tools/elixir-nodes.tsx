@@ -8,60 +8,29 @@ import React, {useEffect, useCallback} from 'react';
 import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import Chip from '@material-ui/core/Chip';
-import ComputerIcon from '@material-ui/icons/Computer';
-import CloudIcon from '@material-ui/icons/Cloud';
-import CloudOffIcon from '@material-ui/icons/CloudOff';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
+import ComputerIcon from '@mui/icons-material/Computer';
+import CloudIcon from '@mui/icons-material/Cloud';
+import CloudOffIcon from '@mui/icons-material/CloudOff';
 import Layout from 'components/Layout';
 
-const PREFIX = 'ElixirNodes';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  card: `${PREFIX}-card`,
-  details: `${PREFIX}-details`,
-  chip: `${PREFIX}-chip`,
-  avatar: `${PREFIX}-avatar`
-};
-
-const StyledLayout = styled(Layout)((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.root}`]: {
-    marginTop: '1em',
-  },
-
-  [`& .${classes.card}`]: {
-    display: 'flex',
-  },
-
-  [`& .${classes.details}`]: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-
-  [`& .${classes.chip}`]: {
-    margin: '0.618em',
-  },
-
-  [`& .${classes.avatar}`]: {
-    display: 'flex',
-  }
+const StyledGrid = styled(Grid)(({
+  theme
+}) => ({
+  padding: theme.spacing(3),
+  margin: theme.spacing(3),
 }));
 
 interface Props {}
 
 function ElixirNodes(props: Props) {
-
 
   const elixirNodes = {
     name: 'self',
@@ -84,7 +53,6 @@ function ElixirNodes(props: Props) {
           {state.nodes.map((n) => (
             <Chip
               key={n}
-              className={classes.chip}
               label={n}
               avatar={
                 <Avatar>
@@ -100,24 +68,24 @@ function ElixirNodes(props: Props) {
         </CardContent>
       );
     },
-    [classes.chip],
+    [],
   );
 
   return (
-    <StyledLayout>
+    <Layout>
       <Head>
         <title>ElixirNodes</title>
         <meta name="description" content="Description of ElixirNodes" />
       </Head>
-      <Grid container justify="center" className={classes.root}>
+      <StyledGrid container justifyContent="center">
         <Grid item md={11} sm={10}>
-          <Grid container spacing={6} justify="center">
+          <Grid container spacing={6} justifyContent="center">
             <Grid key={elixirNodes.name} item md={3} sm={4}>
               <Paper>
                 <Card>
                   <CardHeader
                     avatar={
-                      <Avatar aria-label="Recipe" className={classes.avatar}>
+                      <Avatar aria-label="Recipe">
                         <ComputerIcon />
                       </Avatar>
                     }
@@ -128,14 +96,14 @@ function ElixirNodes(props: Props) {
               </Paper>
             </Grid>
           </Grid>
-          <Grid container spacing={6} justify="center">
+          <Grid container spacing={6} justifyContent="center">
             {elixirNodes.nodes.map((name) => (
               <Grid key={name} item md={3} sm={4}>
                 <Paper>
                   <Card>
                     <CardHeader
                       avatar={
-                        <Avatar aria-label="Recipe" className={classes.avatar}>
+                        <Avatar aria-label="Recipe">
                           {elixirNodes.node_list.includes(name) ? (
                             <CloudIcon />
                           ) : (
@@ -153,8 +121,8 @@ function ElixirNodes(props: Props) {
             ))}
           </Grid>
         </Grid>
-      </Grid>
-    </StyledLayout>
+      </StyledGrid>
+    </Layout>
   );
 }
 

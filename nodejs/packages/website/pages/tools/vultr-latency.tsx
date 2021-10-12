@@ -5,30 +5,20 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import { makeStyles, styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 
 import Layout from 'components/Layout';
 import Card from 'components/Vultr/NodeCard';
 
 import hosts from 'vultrHosts';
 
-const PREFIX = 'VultrNetworks';
-
-const classes = {
-  root: `${PREFIX}-root`
-};
-
-const StyledLayout = styled(Layout)((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.root}`]: {
-    marginTop: '1em',
-  }
+const StyledGrid = styled(Grid)(({
+  theme
+}) => ({
+  padding: theme.spacing(3),
 }));
 
 interface Props {}
@@ -105,14 +95,14 @@ function VultrNetworks(props: Props) {
   }, []);
 
   return (
-    <StyledLayout>
+    <Layout>
       <Head>
         <title>VultrNetworks</title>
         <meta name="description" content="Description of VultrNetworks" />
       </Head>
-      <Grid container justify="center" spacing={6} className={classes.root}>
+      <StyledGrid container justifyContent="center" spacing={6}>
         <Grid item md={11} sm={2}>
-          <Grid container spacing={6} justify="center">
+          <Grid container spacing={6} justifyContent="center">
             {networks.map((host) => (
               <Grid key={host.host} item md={3} sm={4}>
                 <Card host={host} />
@@ -120,8 +110,8 @@ function VultrNetworks(props: Props) {
             ))}
           </Grid>
         </Grid>
-      </Grid>
-    </StyledLayout>
+      </StyledGrid>
+    </Layout>
   );
 }
 

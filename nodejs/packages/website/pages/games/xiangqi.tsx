@@ -5,58 +5,48 @@
  */
 
 import React, {useEffect, useMemo} from 'react';
-import { makeStyles, styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 import Layout from 'components/Layout';
 import GameBoard from 'components/Xiangqi/DndContext';
 
 import {ChessColor} from 'types/xiangqi';
 
-const PREFIX = 'Xiangqi';
-
-const classes = {
-  grid: `${PREFIX}-grid`,
-  boardPaper: `${PREFIX}-boardPaper`,
-  paper: `${PREFIX}-paper`,
-  button: `${PREFIX}-button`
-};
-
-const StyledLayout = styled(Layout)((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.grid}`]: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-
-  [`& .${classes.boardPaper}`]: {
-    width: '540px',
-    height: '600px',
-  },
-
-  [`& .${classes.paper}`]: {
-    width: '320px',
-    height: '600px',
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-
-  [`& .${classes.button}`]: {
-    margin: theme.spacing(1),
-  }
+const StyledGrid = styled(Grid)(({
+  theme
+}) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
+const BoardPaper = styled(Paper)(({
+  theme
+}) => ({
+  width: '540px',
+  height: '600px',
+}));
+const ActionPaper = styled(Paper)(({
+  theme
+}) => ({
+  width: '320px',
+  height: '600px',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+}));
+const ActionButton = styled(Button)(({
+  theme
+}) => ({
+  margin: theme.spacing(1),
 }));
 
 interface Props {}
 
 function Xiangqi(props: Props) {
-
 
   const xiangqi = {
     turn: ChessColor.Red,
@@ -72,14 +62,14 @@ function Xiangqi(props: Props) {
   }, []);
 
   return (
-    <StyledLayout>
+    <Layout>
       <Head>
         <title>Xiangqi</title>
         <meta name="description" content="Description of Xiangqi" />
       </Head>
       <Grid container>
-        <Grid item xs={12} sm={12} className={classes.grid}>
-          <Paper className={classes.boardPaper}>
+        <StyledGrid item xs={12} sm={12}>
+          <BoardPaper>
             <GameBoard
               redPieces={xiangqi.redPieces}
               blackPieces={xiangqi.blackPieces}
@@ -87,27 +77,25 @@ function Xiangqi(props: Props) {
               kill={kill}
               movePiece={movePiece}
             />
-          </Paper>
-          <Paper className={classes.paper}>
-            <Button
+          </BoardPaper>
+          <ActionPaper>
+            <ActionButton
               variant="contained"
               color="primary"
-              className={classes.button}
             >
               回合： {xiangqi.turn}
-            </Button>
-            <Button
+            </ActionButton>
+            <ActionButton
               variant="contained"
               color="primary"
-              className={classes.button}
               onClick={start}
             >
               Start Game
-            </Button>
-          </Paper>
-        </Grid>
+            </ActionButton>
+          </ActionPaper>
+        </StyledGrid>
       </Grid>
-    </StyledLayout>
+    </Layout>
   );
 }
 

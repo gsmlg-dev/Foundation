@@ -1,39 +1,22 @@
 import React from 'react';
-import { makeStyles, styled } from '@material-ui/core/styles';
 
-import Paper from '@material-ui/core/Paper';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
-const PREFIX = 'NetworkCard';
-
-const classes = {
-  card: `${PREFIX}-card`,
-  avatar: `${PREFIX}-avatar`
-};
-
-const StyledPaper = styled(Paper)((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.card}`]: {},
-  [`& .${classes.avatar}`]: {}
-}));
 
 function NetworkCard({host}) {
 
-
   return (
-    <StyledPaper>
-      <Card className={classes.card}>
+    <Paper>
+      <Card>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
+            <Avatar aria-label="Recipe">
               {host.name[0]}
             </Avatar>
           }
@@ -63,7 +46,7 @@ function NetworkCard({host}) {
           </Typography>
         </CardContent>
       </Card>
-    </StyledPaper>
+    </Paper>
   );
 }
 

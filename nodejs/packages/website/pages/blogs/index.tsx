@@ -2,51 +2,35 @@ import Head from 'next/head';
 import { styled } from '@mui/material/styles';
 
 import Link from 'next/link';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import WebIcon from '@material-ui/icons/Web';
+import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import WebIcon from '@mui/icons-material/Web';
 
 import Layout from 'components/Layout';
 
 import blogList from 'blogList';
 
-const PREFIX = 'index';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  text: `${PREFIX}-text`
-};
-
-const StyledLayout = styled(Layout)((
-  {
-    theme: any
-  }
-) => ({
-  [`& .${classes.root}`]: {
-    flex: 1,
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
-  },
-
-  [`& .${classes.text}`]: {
-    fontSize: '3rem',
-    transition: '3000ms all',
-  }
+const PagePaper = styled(Paper)(({
+  theme
+}) => ({
+  flex: 1,
+  padding: theme.spacing(3),
+  margin: theme.spacing(3),
 }));
 
 export default function BlogList({blogs = [], ...props}) {
 
 
   return (
-    <StyledLayout>
+    <Layout>
       <Head>
         <title>Blog List</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Paper className={classes.root} elevation={4}>
+      <PagePaper elevation={4}>
         <List>
           {blogs.map(
             (blog): JSX.Element => (
@@ -61,11 +45,11 @@ export default function BlogList({blogs = [], ...props}) {
                 />
                 <ListItemText secondary={blog.date} />
               </ListItem>
-            ),
+            )
           )}
         </List>
-      </Paper>
-    </StyledLayout>
+      </PagePaper>
+    </Layout>
   );
 }
 
