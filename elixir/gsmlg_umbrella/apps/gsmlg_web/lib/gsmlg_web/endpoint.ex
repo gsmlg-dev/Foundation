@@ -47,9 +47,9 @@ defmodule GSMLGWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 
-  plug Guardian.Plug.Pipeline, module: GSMLG.Guardian, error_handler: Guardian.Plug.ErrorHandler
-  plug Guardian.Plug.VerifyHeader, key: :impersonate
-  plug Guardian.Plug.EnsureAuthenticated, key: :impersonate
+  # plug Guardian.Plug.Pipeline, module: GSMLG.Guardian, error_handler: Guardian.Plug.ErrorHandler
+  # plug Guardian.Plug.VerifyHeader, key: :impersonate
+  # plug Guardian.Plug.EnsureAuthenticated, key: :impersonate
 
   plug Plug.MethodOverride
   plug Plug.Head
