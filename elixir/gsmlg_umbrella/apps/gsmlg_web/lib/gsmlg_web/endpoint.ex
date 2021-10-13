@@ -24,7 +24,7 @@ defmodule GSMLGWeb.Endpoint do
     at: "/",
     from: :gsmlg_web,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: ~w(assets fonts images favicon.ico robots.txt blogs blogs.html favicon.ico games games.html index.html _next presentations.html tools tools.html vercel.svg 404.html)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
