@@ -5,7 +5,11 @@ plugins:
   - '@semantic-release/release-notes-generator'
   - '@semantic-release/github'
   - - "@semantic-release/exec"
-    - "prepareCmd" : "echo ${nextRelease.version}"
+    - "prepareCmd" : |-
+        echo ${nextRelease.version} \
+          && sed -i 's%version: "0.1.0",%version: "${nextRelease.version}",%' mix.exs \
+          && sed -i 's%version: "0.1.0",%version: "${nextRelease.version}",%' apps/gsmlg/mix.exs \
+          && sed -i 's%version: "0.1.0",%version: "${nextRelease.version}",%' apps/gsmlg_web/mix.exs
       "publishCmd" : "echo pubhlish gsmlg ${nextRelease.version}"
 branches:
   - +([0-9])?(.{+([0-9]),x}).x
