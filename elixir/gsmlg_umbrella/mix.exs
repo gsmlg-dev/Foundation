@@ -7,7 +7,21 @@ defmodule GSMLG.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      releases: [
+        gsmlg_umbrella: [
+          applications: [
+            gsmlg: :permanent,
+            gsmlg_web: :permanent
+          ]
+        ],
+        gsmlg_web_only: [
+          applications: [gsmlg_web: :permanent]
+        ],
+        gsmlg_only: [
+          applications: [gsmlg: :permanent]
+        ]
+      ]
     ]
   end
 
@@ -24,9 +38,7 @@ defmodule GSMLG.Umbrella.MixProject do
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps/ folder.
   defp deps do
-    [
-      {:distillery, "~> 2.0", runtime: false},
-    ]
+    []
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

@@ -13,10 +13,9 @@ RUN apk update && apk add curl jq git npm \
     && cd apps/gsmlg_web && npm install --prefix assets && mix assets.deploy && cd ../.. \
     && curl -Lf $(npm info --json @gsmlg/website | jq -r .dist.tarball) -o website.tgz \
     && tar xzf website.tgz --strip-components=2 -C apps/gsmlg_web/priv/static \
-    && mix distillery.release --env=prod \
-    && mkdir /app \
-    && tar zxvf "$(find _build/prod/rel -name gsmlg_umbrella.tar.gz)" -C /app \
-    && rm -rf /var/cache/apk/*
+    && mix release gsmlg_umbrella \
+    && cp -r _build/prod/rel/gsmlg_umbrella /app
+
 
 FROM alpine:3.14
 
@@ -42,4 +41,4 @@ COPY --from=builder /app /app
 
 EXPOSE 80 4369
 
-ENTRYPOINT ["/app/bin/gsmlg_umbrella", "foreground"]
+CMD ["/app/bin/gsmlg_umbrella", "start"]
