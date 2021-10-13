@@ -9,8 +9,8 @@ defmodule GSMLGWeb.FallbackController do
   # This clause is an example of how to handle resources that cannot be found.
   def call(conn, {:error, :not_found}) do
     conn
-      |> put_status(:not_found)
-      |> put_view(GSMLGWeb.ErrorView)
-      |> render(:"404")
+    |> put_status(:not_found)
+    |> put_view(GSMLGWeb.ErrorView)
+    |> render(:"404")
   end
 end

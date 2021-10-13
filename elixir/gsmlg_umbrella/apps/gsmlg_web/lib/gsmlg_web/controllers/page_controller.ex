@@ -6,8 +6,6 @@ defmodule GSMLGWeb.PageController do
   end
 
   def not_found(conn, _params) do
-    IO.inspect(conn)
-
     case handle_path(conn.request_path) do
       {:html, file} ->
         conn
@@ -28,14 +26,15 @@ defmodule GSMLGWeb.PageController do
   end
 
   defp handle_path(path) do
-    IO.puts(path)
     path = if path == "/", do: "/index", else: path
 
     cond do
       File.exists?(file_path = Path.join(:code.priv_dir(:gsmlg_web), "static" <> path <> ".html")) ->
         {:html, file_path}
-    
-      File.exists?(file_path = Path.join(:code.priv_dir(:gsmlg_web), "static" <> path <> "/index.html")) ->
+
+      File.exists?(
+        file_path = Path.join(:code.priv_dir(:gsmlg_web), "static" <> path <> "/index.html")
+      ) ->
         {:html, file_path}
 
       File.exists?(file_path = Path.join(:code.priv_dir(:gsmlg_web), "static/404.html")) ->
