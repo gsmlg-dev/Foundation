@@ -50,7 +50,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            ELIXIR_VERSION=${{ steps.semantic.outputs.new_release_version }}
+            RELEASE_VERSION=${{ steps.semantic.outputs.new_release_version }}
           tags: |
             docker.io/gsmlg/gsmlg.org:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/gsmlg.org:latest
