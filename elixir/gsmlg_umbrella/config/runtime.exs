@@ -43,6 +43,12 @@ if config_env() == :prod do
   #
   config :gsmlg_web, GSMLGWeb.Endpoint, server: true
   
+  if System.get_env("HOST") do
+    host = System.get_env("HOST")
+    port = System.get_env("HOST_PORT", "80") |> String.to_integer
+    config :gsmlg_web, GSMLGWeb.Endpoint,
+      url: [host: host, port: port]
+  end
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
 
