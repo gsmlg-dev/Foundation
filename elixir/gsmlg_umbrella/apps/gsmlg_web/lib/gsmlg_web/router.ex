@@ -66,4 +66,11 @@ defmodule GSMLGWeb.Router do
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end
+
+  # fallback not_found
+  scope "/", GSMLGWeb do
+    pipe_through :browser
+
+    get "/*request_path", PageController, :not_found
+  end
 end
