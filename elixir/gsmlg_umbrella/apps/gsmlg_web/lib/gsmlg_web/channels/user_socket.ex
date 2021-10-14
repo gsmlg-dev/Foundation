@@ -8,7 +8,8 @@ defmodule GSMLGWeb.UserSocket do
 
   ## Channels
 
-  channel "node:*", GSMLGWeb.NodeChannel
+  channel "node:lobby", GSMLGWeb.NodeChannel
+  channel "room:chess", GSMLGWeb.ChessChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -22,7 +23,13 @@ defmodule GSMLGWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   @impl true
-  def connect(_params, socket, _connect_info) do
+  def connect(params, socket, connect_info) do
+    IO.puts "Params: "
+    IO.inspect params
+    IO.puts "Socket: "
+    IO.inspect socket
+    IO.puts "Connect Info: "
+    IO.inspect connect_info
     {:ok, socket}
   end
 
