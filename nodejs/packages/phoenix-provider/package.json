@@ -14,7 +14,7 @@
     "build": "gsmlg-scripts build",
     "lint": "gsmlg-scripts lint",
     "format": "gsmlg-scripts format",
-    "validate": "gsmlg-scripts validate"
+    "validate": "gsmlg-scripts validate --passWithNoTests"
   },
   "files": [
     "dist"
