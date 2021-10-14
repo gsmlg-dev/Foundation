@@ -28,11 +28,12 @@ function VultrNetworks(props: Props) {
   const [networks, setNetworks] = useState(hosts);
 
   useEffect(() => {
-    let reject;
-    let timer;
+    let isStopped: boolean = false;
     const run = async () => {
+      out:
       while (true) {
         for (let h of hosts) {
+          if (isStopped) break out;
           const {host, id} = h;
           let newNetworks;
           try {
@@ -83,21 +84,15 @@ function VultrNetworks(props: Props) {
             return m > n ? 1 : -1;
           });
           setNetworks(computed);
-          try {
-            await new Promise((resolve, r) => {
-              reject = r;
-              timer = setTimeout(resolve, 1000);
-            });
-          } catch(e) {
-            return;
-          }
+          await new Promise((resolve, r) => {
+            setTimeout(resolve, 1000);
+          });
         }
       }
     };
     run();
     return () => {
-      reject?.();
-      clearTimeout(timer);
+      isStopped = true;
     };
   }, []);
 
