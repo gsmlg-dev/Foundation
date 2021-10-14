@@ -1,0 +1,64 @@
+{
+  "name": "phoenix-provider",
+  "version": "0.0.0-semantically-released",
+  "description": "Provide phoenix socket and channel by React Context.",
+  "engines": {
+    "node": ">=12",
+    "npm": ">=6",
+    "yarn": ">=1"
+  },
+  "scripts": {
+    "test": "gsmlg-scripts test",
+    "test:update": "gsmlg-scripts test --updateSnapshot",
+    "build": "gsmlg-scripts build",
+    "lint": "gsmlg-scripts lint",
+    "format": "gsmlg-scripts format",
+    "validate": "gsmlg-scripts validate"
+  },
+  "files": [],
+  "keywords": [
+    "phoenix",
+    "react"
+  ],
+  "author": "Jonathan Gao <me@gsmlg.org> (https://gsmlg.com)",
+  "license": "MIT",
+  "dependencies": {
+    "phoenix": "^1.6.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "kentcdodds",
+      "kentcdodds/jest"
+    ],
+    "rules": {
+      "no-process-exit": "off",
+      "import/no-dynamic-require": "off",
+      "import/no-unassigned-import": "off",
+      "no-console": "off",
+      "no-nested-ternary": "off",
+      "no-useless-catch": "off"
+    }
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gsmlg/Foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/gsmlg/Foundation/issues"
+  },
+  "homepage": "https://github.com/gsmlg/Foundation/tree/master/nodejs/packages/phoenix-provider#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@gsmlg/scripts": "^1.0.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2"
+  }
+}
