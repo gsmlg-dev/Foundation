@@ -7,6 +7,7 @@
     "npm": ">=6",
     "yarn": ">=1"
   },
+  "main": "./dist/index.js",
   "scripts": {
     "test": "gsmlg-scripts test",
     "test:update": "gsmlg-scripts test --updateSnapshot",
@@ -15,7 +16,7 @@
     "format": "gsmlg-scripts format",
     "validate": "gsmlg-scripts validate"
   },
-  "files": [],
+  "files": ["dist"],
   "keywords": [
     "phoenix",
     "react"
@@ -23,6 +24,7 @@
   "author": "Jonathan Gao <me@gsmlg.org> (https://gsmlg.com)",
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "^7.15.4",
     "phoenix": "^1.6.2"
   },
   "eslintConfig": {
