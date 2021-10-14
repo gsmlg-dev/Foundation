@@ -29,15 +29,15 @@ defmodule GSMLGWeb.PageController do
     path = if path == "/", do: "/index", else: path
 
     cond do
-      File.exists?(file_path = Path.join(:code.priv_dir(:gsmlg_web), "static", path <> ".html")) ->
+      File.exists?(file_path = Path.join([Application.app_dir(:gsmlg_web), "priv", "static", path <> ".html"])) ->
         {:html, file_path}
 
       File.exists?(
-        file_path = Path.join(:code.priv_dir(:gsmlg_web), "static", path, "/index.html")
+        file_path = Path.join([Application.app_dir(:gsmlg_web), "priv", "static", path, "/index.html"])
       ) ->
         {:html, file_path}
 
-      File.exists?(file_path = Path.join(:code.priv_dir(:gsmlg_web), "static/404.html")) ->
+      File.exists?(file_path = Path.join([Application.app_dir(:gsmlg_web), "priv", "static", "404.html"])) ->
         {:not_found_page, file_path}
 
       true ->
