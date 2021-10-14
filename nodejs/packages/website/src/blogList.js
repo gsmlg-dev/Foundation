@@ -424,4 +424,12 @@ blogs.push({
   author: 'Gao',
 });
 
+blogs.push({
+  id: 54,
+  name: 'mix-release',
+  title: '使用Mix.release代替distillery',
+  date: '2021-10-14',
+  author: 'Gao',
+});
+
 export default blogs.slice().reverse();
