@@ -46,10 +46,10 @@ jobs:
         working-directory: 'nodejs/packages/phoenix-provider'
         run: npm run validate
 
-      - name: ⬆️ Upload coverage report
-        uses: codecov/codecov-action@v1
-        with:
-          directory: 'nodejs/packages/phoenix-provider/coverage/'
+      # - name: ⬆️ Upload coverage report
+      #   uses: codecov/codecov-action@v1
+      #   with:
+      #     directory: 'nodejs/packages/phoenix-provider/coverage/'
 
   release:
     needs: main
