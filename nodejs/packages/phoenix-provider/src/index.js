@@ -5,10 +5,10 @@ const PhoenixContext = React.createContext({});
 
 PhoenixContext.displayName = 'Phoenix';
 
-export const Provider = ({socketPath = '/socket', params = {}, children}) => {
+export const Provider = ({url = '/socket', params = {}, children}) => {
   const [socket, setSocket] = React.useState({});
   React.useEffect(() => {
-    const socket = new Socket(socketPath, {params});
+    const socket = new Socket(url, {params});
     socket.connect();
     setSocket(socket);
   }, []);
@@ -43,4 +43,4 @@ export const usePresence = (topic) => {
   }, [topic]);
 
   return presence;
-}
+};

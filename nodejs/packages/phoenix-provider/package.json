@@ -16,7 +16,9 @@
     "format": "gsmlg-scripts format",
     "validate": "gsmlg-scripts validate"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "phoenix",
     "react"
