@@ -15,7 +15,6 @@ on:
   pull_request: {}
 jobs:
   release:
-    needs: main
     runs-on: ubuntu-latest
     if:
       ${{ github.repository == 'gsmlg/Foundation' &&
