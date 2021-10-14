@@ -25,11 +25,11 @@ interface Props {}
 
 function VultrNetworks(props: Props) {
 
-
   const [networks, setNetworks] = useState(hosts);
 
   useEffect(() => {
     let reject;
+    let timer;
     const run = async () => {
       while (true) {
         for (let h of hosts) {
@@ -83,15 +83,22 @@ function VultrNetworks(props: Props) {
             return m > n ? 1 : -1;
           });
           setNetworks(computed);
-          await new Promise((resolve, r) => {
-            reject = r;
-            setTimeout(resolve, 1000);
-          });
+          try {
+            await new Promise((resolve, r) => {
+              reject = r;
+              timer = setTimeout(resolve, 1000);
+            });
+          } catch(e) {
+            return;
+          }
         }
       }
     };
     run();
-    return () => reject && reject();
+    return () => {
+      reject?.();
+      clearTimeout(timer);
+    };
   }, []);
 
   return (
