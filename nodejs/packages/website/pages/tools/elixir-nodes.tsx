@@ -98,6 +98,7 @@ function ElixirNodes(props: Props) {
         listInfo(data);
       });
       return () => {
+        channel.off();
         channel.leave();
         socket.remove(channel);
       };

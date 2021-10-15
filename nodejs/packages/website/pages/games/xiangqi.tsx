@@ -4,7 +4,7 @@
  *
  */
 
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useState} from 'react';
 import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
@@ -15,6 +15,8 @@ import Layout from 'components/Layout';
 import GameBoard from 'components/Xiangqi/DndContext';
 
 import {ChessColor} from 'types/xiangqi';
+
+import { useChannel } from 'phoenix-provider';
 
 const StyledGrid = styled(Grid)(({
   theme
@@ -47,18 +49,67 @@ const ActionButton = styled(Button)(({
 interface Props {}
 
 function Xiangqi(props: Props) {
+  const channel = useChannel('room:chess');
 
-  const xiangqi = {
+  const _xiangqi = {
     turn: ChessColor.Red,
     redPieces: [],
     blackPieces: [],
   };
-  const start = () => {};
+  const [xiangqi, setXiangqi] = useState(_xiangqi);
+  const start = () => {
+    channel?.push('start');
+  };
   const kill = () => {};
-  const movePiece = () => {};
+  const movePiece = (payload) => {
+    channel?.push('move_chess', payload);
+  };
+
+  const setPieces = ({ redPieces, blackPieces }) => {
+    setXiangqi({
+      ...xiangqi,
+      redPieces,
+      blackPieces,
+    });
+  };
+  const changeTurn = (turn) => {
+    setXiangqi({
+      ...xiangqi,
+      turn,
+    });
+  };
+  const movePieceRemote = (item, position) => {
+    const turn = item.color === ChessColor.Red ? ChessColor.Black : ChessColor.Red;
+    const chessColor = item.color === ChessColor.Red ? 'redPieces' : 'blackPieces';
+    const index = Number(item.id.slice(1));
+    const chesses = xiangqi[chessColor].slice();
+    chesses[index].position = position;
+    setXiangqi({
+      ...xiangqi,
+      turn,
+      [chessColor]: chesses,
+    });
+  };
 
   useEffect(() => {
-    return () => {};
+    if (channel) {
+      if (!channel.isJoined()) {
+        channel.join();
+      }
+      channel.on('init_pieces', ({ pieces , turn}) => {
+        setPieces(pieces);
+        changeTurn(turn);
+      });
+      channel.on('move_chess_remote', ({ item, position, pieces }) => {
+        movePieceRemote(item, position);
+        setPieces(pieces);
+      });
+      return () => {
+        channel.off();
+        channel.leave();
+        // socket.remove(channel);
+      };
+    }
   }, []);
 
   return (
