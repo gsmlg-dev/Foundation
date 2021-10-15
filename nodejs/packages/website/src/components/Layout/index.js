@@ -70,10 +70,9 @@ const Layout = ({children}, ref) => {
   const socket = useSocket();
   const [socketStatus, setSocketStatus] = React.useState({ color: 'transperant' });
   React.useEffect(() => {
-    if (socket.vsn) {
+    if (socket?.vsn) {
       const updateState = () => {
-        console.log(socket);
-        const state = '';//socket.connectionState();
+        const state = socket.connectionState();
         switch(state) {
           case "connecting":
             setSocketStatus({ color: 'blue' });
