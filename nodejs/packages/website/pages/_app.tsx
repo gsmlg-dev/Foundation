@@ -4,6 +4,7 @@ import Head from 'next/head';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { Provider as PhoenixProvider } from 'phoenix-provider';
 import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 
@@ -28,12 +29,14 @@ export default function MyApp(props: MyAppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <PhoenixProvider url={'/socket'} params={{ token: 'anonymous' }}>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </PhoenixProvider>
     </CacheProvider>
   );
 }

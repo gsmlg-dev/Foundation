@@ -16,6 +16,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import Link from 'next/link';
 
+import { useSocket } from 'phoenix-provider';
+
 const RootSection = styled('section')((
   {
     theme
@@ -37,7 +39,7 @@ const ContainerSection = styled('section')((
 }));
 const Footer = styled('footer')((
   {
-    theme
+    theme,
   }
 ) => ({
   // height: '2em',
@@ -46,6 +48,14 @@ const Footer = styled('footer')((
   marginTop: '0.5em',
   color: theme.palette.getContrastText(theme.palette.primary.main),
   backgroundColor: theme.palette.primary.main,
+}));
+const SocketStatus = styled('div')(({ theme, status }) => ({
+  display: 'inline-block',
+  width: 16,
+  height: 16,
+  borderRadius: 8,
+  margin: '0 8px',
+  backgroundColor: status.color,
 }));
 
 const menus = [
@@ -57,6 +67,40 @@ const menus = [
 ];
 
 const Layout = ({children}, ref) => {
+  const socket = useSocket();
+  const [socketStatus, setSocketStatus] = React.useState({ color: 'transperant' });
+  React.useEffect(() => {
+    if (socket.vsn) {
+      const updateState = () => {
+        console.log(socket);
+        const state = '';//socket.connectionState();
+        switch(state) {
+          case "connecting":
+            setSocketStatus({ color: 'blue' });
+            break;
+          case "open":
+            setSocketStatus({ color: 'green' });
+            break;
+          case "closing":
+            setSocketStatus({ color: 'orange' });
+            break;
+          default:
+            // "closed"
+            setSocketStatus({ color: 'gray' });
+        }
+      };
+      updateState();
+      const list = [
+        socket.onOpen(updateState),
+        socket.onClose(updateState),
+        socket.onError(updateState),
+        socket.onMessage(updateState),
+      ];
+      return () => {
+        socket.off(list);
+      };
+    }
+  }, [socket]);
 
   const requestPerm = React.useCallback(() => {
     Notification.requestPermission();
@@ -66,6 +110,7 @@ const Layout = ({children}, ref) => {
     <RootSection ref={ref}>
       <AppBar position="static">
         <Toolbar>
+          <SocketStatus status={socketStatus} />
           <IconButton
             onClick={requestPerm}
             color="inherit"
