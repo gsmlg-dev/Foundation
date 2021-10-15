@@ -32,7 +32,8 @@ export const useSocket = () => {
 export const useChannel = (topic, params = {}) => {
   const socket = useSocket();
   if (!socket) return null;
-  const channel = socket?.channel(topic, params);
+  const c = socket.channels.find((c) => c.topic === topic);
+  const channel = c ? c : socket.channel(topic, params);
 
   return channel;
 };
