@@ -4,7 +4,7 @@
  *
  */
 
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback, useState} from 'react';
 import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
@@ -21,6 +21,8 @@ import CloudIcon from '@mui/icons-material/Cloud';
 import CloudOffIcon from '@mui/icons-material/CloudOff';
 import Layout from 'components/Layout';
 
+import { useSocket, useChannel } from 'phoenix-provider';
+
 const StyledGrid = styled(Grid)(({
   theme
 }) => ({
@@ -32,16 +34,74 @@ interface Props {}
 
 function ElixirNodes(props: Props) {
 
-  const elixirNodes = {
+  const [elixirNodes, setElixirNodes] = useState({
     name: 'self',
     nodes: [],
     node_list: [],
     from: {},
     isAlive: false,
+  });
+  const nodeState = (data) => {
+    setElixirNodes({
+      ...elixirNodes,
+      ...data,
+    });
+  };
+  const nodeInfo = ({ from, ...info }) => {
+    let state = { 
+      ...elixirNodes,
+      from: {
+        ...elixirNodes.from,
+        [from]: {
+          ...elixirNodes.from[from],
+          ...info,
+        },
+      }
+    };
+    if (from === elixirNodes.name) {
+      state = { ...state, ...info };
+    }
+    setElixirNodes(state);
+  };
+  const listInfo = ({ from, ...info }) => {
+    let state = { 
+      ...elixirNodes,
+      from: {
+        ...elixirNodes.from,
+        [from]: {
+          ...elixirNodes.from[from],
+          ...info,
+        },
+      }
+    };
+    if (from === elixirNodes.name) {
+      state = { ...state, ...info };
+    }
+    setElixirNodes(state);
   };
 
+  const socket = useSocket();
+  const channel = useChannel('node:lobby');
+
   useEffect(() => {
-    return () => {};
+    if (socket && channel) {
+      if (!channel.isJoined()) {
+        channel.join();
+      }
+      channel.on('node_state', (data) => {
+        nodeState(data);
+      });
+      channel.on('node_info', (data) => {
+        nodeInfo(data);
+      });
+      channel.on('list_info', (data) => {
+        listInfo(data);
+      });
+      return () => {
+        channel.leave();
+        socket.remove(channel);
+      };
+    }
   }, []);
 
   const content = useCallback(
