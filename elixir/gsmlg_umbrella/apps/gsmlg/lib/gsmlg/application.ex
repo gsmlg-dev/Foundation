@@ -63,6 +63,7 @@ defmodule GSMLG.Application do
       # {GSMLG.Worker, arg}
       # Start distribute Node
       {GSMLG.Node.Supervisor, name: GSMLG.Node.Supervisor},
+      {GSMLG.Chess.Supervisor, name: GSMLG.Chess.Supervisor},
       # supervisor(GSMLG.Chess.Supervisor, []),
       {Cluster.Supervisor, [topologies, [name: GSMLG.ClusterSupervisor]]},
       %{

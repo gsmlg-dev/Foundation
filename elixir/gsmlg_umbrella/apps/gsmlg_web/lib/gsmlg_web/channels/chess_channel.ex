@@ -1,6 +1,6 @@
 defmodule GSMLGWeb.ChessChannel do
   use Phoenix.Channel
-  alias Guardian.Phoenix.Socket
+  # alias Guardian.Phoenix.Socket
   alias Phoenix.Socket.Broadcast
   alias GSMLG.Chess.Room
 
@@ -21,7 +21,7 @@ defmodule GSMLGWeb.ChessChannel do
   end
 
   def terminate(_reason, socket) do
-    Socket.current_resource(socket)
+    # Socket.current_resource(socket)
     :ok
   end
 
