@@ -4,7 +4,7 @@
  *
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
@@ -16,7 +16,7 @@ import GameBoard from 'components/Xiangqi/DndContext';
 
 import {ChessColor} from 'types/xiangqi';
 
-import { useChannel } from 'phoenix-provider';
+import { useSocket, useChannel } from 'phoenix-provider';
 
 const StyledGrid = styled(Grid)(({
   theme
@@ -49,6 +49,7 @@ const ActionButton = styled(Button)(({
 interface Props {}
 
 function Xiangqi(props: Props) {
+  const socket = useSocket();
   const channel = useChannel('room:chess');
 
   const _xiangqi = {
@@ -57,13 +58,13 @@ function Xiangqi(props: Props) {
     blackPieces: [],
   };
   const [xiangqi, setXiangqi] = useState(_xiangqi);
-  const start = () => {
+  const start = useCallback(() => {
     channel?.push('start');
-  };
+  }, [channel]);
   const kill = () => {};
-  const movePiece = (payload) => {
+  const movePiece = useCallback((payload) => {
     channel?.push('move_chess', payload);
-  };
+  }, [channel]);
 
   const setPieces = ({ redPieces, blackPieces }) => {
     setXiangqi({
@@ -96,8 +97,12 @@ function Xiangqi(props: Props) {
       if (!channel.isJoined()) {
         channel.join();
       }
+      console.log(channel);
       channel.on('init_pieces', ({ pieces , turn}) => {
-        setPieces(pieces);
+        setPieces({
+          redPieces: pieces.filter((p) => p.color === ChessColor.Red),
+          blackPieces: pieces.filter((p) => p.color === ChessColor.Black),
+        });
         changeTurn(turn);
       });
       channel.on('move_chess_remote', ({ item, position, pieces }) => {
@@ -107,10 +112,10 @@ function Xiangqi(props: Props) {
       return () => {
         channel.off();
         channel.leave();
-        // socket.remove(channel);
+        socket.remove(channel);
       };
     }
-  }, []);
+  }, [channel?.topic]);
 
   return (
     <Layout>
