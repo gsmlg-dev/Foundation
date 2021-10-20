@@ -1,5 +1,5 @@
 const find = (pieces, {position: p}) => {
-  return pieces.find(({position: {x, y}}) => p.x === x && p.y === y);
+  return pieces.find(({position: {x, y}}) => (p?.x === x && p?.y === y));
 };
 
 const canDrop = (item, pos, pieces) => {

@@ -53,11 +53,11 @@ function Xiangqi(props: Props) {
   const channel = useChannel('room:chess');
 
   const _xiangqi = {
-    turn: ChessColor.Red,
     redPieces: [],
     blackPieces: [],
   };
   const [xiangqi, setXiangqi] = useState(_xiangqi);
+  const [turn, setTurn] = useState(ChessColor.Red);
   const start = useCallback(() => {
     channel?.push('start');
   }, [channel]);
@@ -66,20 +66,15 @@ function Xiangqi(props: Props) {
     channel?.push('move_chess', payload);
   }, [channel]);
 
-  const setPieces = ({ redPieces, blackPieces }) => {
+  const setPieces = useCallback(({ redPieces, blackPieces }) => {
     setXiangqi({
       ...xiangqi,
       redPieces,
       blackPieces,
     });
-  };
-  const changeTurn = (turn) => {
-    setXiangqi({
-      ...xiangqi,
-      turn,
-    });
-  };
-  const movePieceRemote = (item, position) => {
+  }, [xiangqi]);
+
+  const movePieceRemote = useCallback((item, position) => {
     const turn = item.color === ChessColor.Red ? ChessColor.Black : ChessColor.Red;
     const chessColor = item.color === ChessColor.Red ? 'redPieces' : 'blackPieces';
     const index = Number(item.id.slice(1));
@@ -87,23 +82,24 @@ function Xiangqi(props: Props) {
     chesses[index].position = position;
     setXiangqi({
       ...xiangqi,
-      turn,
       [chessColor]: chesses,
     });
-  };
+    setTurn(turn);
+  }, [xiangqi]);
 
   useEffect(() => {
     if (channel) {
       if (!channel.isJoined()) {
         channel.join();
       }
+      console.log(socket);
       console.log(channel);
       channel.on('init_pieces', ({ pieces , turn}) => {
         setPieces({
           redPieces: pieces.filter((p) => p.color === ChessColor.Red),
           blackPieces: pieces.filter((p) => p.color === ChessColor.Black),
         });
-        changeTurn(turn);
+        setTurn(turn);
       });
       channel.on('move_chess_remote', ({ item, position, pieces }) => {
         movePieceRemote(item, position);
@@ -115,7 +111,7 @@ function Xiangqi(props: Props) {
         socket.remove(channel);
       };
     }
-  }, [channel?.topic]);
+  }, [channel]);
 
   return (
     <Layout>
@@ -129,7 +125,7 @@ function Xiangqi(props: Props) {
             <GameBoard
               redPieces={xiangqi.redPieces}
               blackPieces={xiangqi.blackPieces}
-              turn={xiangqi.turn}
+              turn={turn}
               kill={kill}
               movePiece={movePiece}
             />
@@ -139,7 +135,7 @@ function Xiangqi(props: Props) {
               variant="contained"
               color="primary"
             >
-              回合： {xiangqi.turn}
+              回合： {turn}
             </ActionButton>
             <ActionButton
               variant="contained"
