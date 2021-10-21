@@ -1,10 +1,12 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import Head from 'next/head';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 import Layout from 'components/Layout';
+
+import WobblingSphere from 'components/ThreeFiber/WobblingSphere';
 
 const PagePaper = styled(Paper)(({
   theme
@@ -27,47 +29,34 @@ const TitleTypography = styled(Typography)(({
 
 export default function Home() {
 
-  const [colors, setColors] = useState(['#000', '#000', '#000', '#000']);
+  const ref = useRef();
+  const [size, setSize] = useState({ width: 800, height: 480 });
   useEffect(() => {
-    const randomRGB = () => {
-      const r = ((Math.random() * 10e16) % 0xff).toString(16);
-      const g = ((Math.random() * 10e16) % 0xff).toString(16);
-      const b = ((Math.random() * 10e16) % 0xff).toString(16);
-      return `#${r}${g}${b}`;
-    };
-    setColors([randomRGB(), randomRGB(), randomRGB(), randomRGB()]);
-    const t = setInterval(() => {
-      setColors([randomRGB(), randomRGB(), randomRGB(), randomRGB()]);
-    }, 3000);
-    return () => clearInterval(t);
-  }, []);
+    if (ref.current) {
+      const resize = () => {
+        const { innerWidth, innerHeight } = window;
+        const width = innerWidth - 24 * 4;
+        const height = innerHeight - 64 - 32 - 24 * 4;
+        console.log( width, height );
+        setSize({ width, height });
+      }
+      window.addEventListener('resize', resize);
+
+      resize();
+
+      return () => {
+        window.removeEventListener('resize', resize);
+      };
+    }
+  }, [ref.current]);
 
   return (
     <Layout>
       <Head>
         <title>Home</title>
       </Head>
-      <PagePaper elevation={4}>
-        <TitleTypography
-          style={{color: colors[0]}}
-        >
-          吾日三省吾身
-        </TitleTypography>
-        <TitleTypography
-          style={{color: colors[1]}}
-        >
-          为人谋而不忠乎
-        </TitleTypography>
-        <TitleTypography
-          style={{color: colors[2]}}
-        >
-          与朋友交而不信乎
-        </TitleTypography>
-        <TitleTypography
-          style={{color: colors[3]}}
-        >
-          传不习乎
-        </TitleTypography>
+      <PagePaper elevation={4} ref={ref}>
+        <WobblingSphere size={size} />
       </PagePaper>
     </Layout>
   );
