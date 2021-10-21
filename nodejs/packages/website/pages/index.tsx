@@ -36,8 +36,8 @@ export default function Home() {
       const resize = () => {
         const { innerWidth, innerHeight } = window;
         const width = innerWidth - 24 * 4;
-        const height = innerHeight - 64 - 32 - 24 * 4;
-        console.log( width, height );
+        const height = innerHeight - 64 - 32 - 24 * 4 - 20;
+        // console.log( width, height );
         setSize({ width, height });
       }
       window.addEventListener('resize', resize);
