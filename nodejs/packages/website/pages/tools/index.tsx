@@ -61,6 +61,15 @@ function Tools(props: Props) {
                   </a>
                 </Link>
               </PagePaper>
+              <PagePaper>
+                <Link href="/tools/three-fiber">
+                  <a>
+                    <StyledTypography>
+                      Three Filber
+                    </StyledTypography>
+                  </a>
+                </Link>
+              </PagePaper>
             </Grid>
           </Grid>
         </Grid>
