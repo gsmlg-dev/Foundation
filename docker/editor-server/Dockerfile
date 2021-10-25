@@ -1,4 +1,4 @@
-FROM docker.io/gsmlg/code-server:v3.11.1
+FROM docker.io/gsmlg/code-server:v3.12.0
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
