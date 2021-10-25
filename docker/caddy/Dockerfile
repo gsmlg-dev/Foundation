@@ -11,4 +11,6 @@ FROM caddy:${CADDY_VERSION}
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
-VOLUME ["/data", "/config"]
+WORKDIR "/srv"
+
+VOLUME ["/data", "/config", "/srv", "/etc/caddy/Caddyfile"]
