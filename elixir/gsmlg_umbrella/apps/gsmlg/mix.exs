@@ -46,6 +46,7 @@ defmodule GSMLG.MixProject do
       {:swoosh, "~> 1.3"},
       {:absinthe, "~> 1.6"},
       {:guardian, "~> 2.0"},
+      {:absinthe, "~> 1.6.0"},
     ]
   end
 
