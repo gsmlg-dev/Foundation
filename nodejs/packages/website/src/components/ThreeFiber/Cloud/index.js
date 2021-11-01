@@ -1,12 +1,12 @@
-import React, { Suspense, useRef, useMemo } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Billboard, Sky, OrbitControls, useTexture } from "@react-three/drei"
+import { Suspense, useRef, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Billboard, Sky, OrbitControls, useTexture } from "@react-three/drei";
 
-import cloudTexture from './cloud.png'
+// import cloudTexture from './cloud.png'
 
 function Cloud({ size = 1, opacity = 0.5, speed = 0.4, spread = 10, length = 1.5, segments = 20, dir = 1, ...props }) {
   const group = useRef()
-  const texture = useTexture(cloudTexture);
+  const texture = useTexture('/images/cloud.png');
   const clouds = useMemo(
     () =>
       [...new Array(segments)].map((_, index) => ({
@@ -42,6 +42,7 @@ function Clouds() {
 }
 
 export default function App() {
+
   return (
     <Canvas camera={{ position: [0, -75, 0] }}>
       <ambientLight intensity={0.8} />

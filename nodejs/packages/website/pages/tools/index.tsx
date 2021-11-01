@@ -65,7 +65,7 @@ function Tools(props: Props) {
                 <Link href="/tools/three-fiber">
                   <a>
                     <StyledTypography>
-                      Three Filber
+                      Three Fiber
                     </StyledTypography>
                   </a>
                 </Link>

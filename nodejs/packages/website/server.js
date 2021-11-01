@@ -9,7 +9,7 @@ const handle = app.getRequestHandler()
 
 const apiPaths = {
     '/socket': {
-        target: 'http://localhost:4001', 
+        target: 'http://localhost:4000', 
         ws: true,
         changeOrigin: true
     }
