@@ -52,6 +52,15 @@
                    </a>
                  </Link>
                </PagePaper>
+               <PagePaper>
+                 <Link href="/tools/three-fiber/bottles">
+                   <a>
+                     <StyledTypography>
+                       Bottles
+                     </StyledTypography>
+                   </a>
+                 </Link>
+               </PagePaper>
              </Grid>
            </Grid>
          </Grid>
