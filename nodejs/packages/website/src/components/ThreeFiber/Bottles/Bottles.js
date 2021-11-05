@@ -13,7 +13,7 @@ const bottleMaterial = new THREE.MeshPhysicalMaterial({
 
 function Bottle({ glas, cap, children, ...props }) {
   const ref = useRef()
-  const { nodes } = useGLTF('/draco.glb')
+  const { nodes } = useGLTF('/webgl/draco.glb')
   const [hovered, set] = useState(false)
   useCursor(hovered)
   return (
