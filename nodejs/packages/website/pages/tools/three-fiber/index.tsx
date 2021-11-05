@@ -61,6 +61,15 @@
                    </a>
                  </Link>
                </PagePaper>
+               <PagePaper>
+                 <Link href="/tools/three-fiber/lambo">
+                   <a>
+                     <StyledTypography>
+                       Lambo
+                     </StyledTypography>
+                   </a>
+                 </Link>
+               </PagePaper>
              </Grid>
            </Grid>
          </Grid>
