@@ -29,6 +29,7 @@ const RootSection = styled('section')((
   flexDirection: 'column',
   flex: '1 1 auto',
 }));
+
 const ContainerSection = styled('section')((
   {
     theme
@@ -129,7 +130,7 @@ const Layout = ({children}, ref) => {
       <ContainerSection>
         {children}
       </ContainerSection>
-      <Footer>
+      <Footer style={{ marginTop: 0 }}>
         <div className="container">
           <span>
             Copyright © 2017-2021 GSMLG - Powered by GSMLG Web.
