@@ -1,5 +1,6 @@
 defmodule GSMLGWeb.Schema do
   use Absinthe.Schema
+  import_types Absinthe.Plug.Types
   import_types GSMLGWeb.Schema.ContentTypes
 
   alias GSMLGWeb.Resolvers

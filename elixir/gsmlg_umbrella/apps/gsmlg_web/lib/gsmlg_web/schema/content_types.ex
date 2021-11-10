@@ -5,7 +5,7 @@ defmodule GSMLGWeb.Schema.ContentTypes do
     field :id, :id
     field :author, :string
     field :content, :string
-    # field :date, :date
+    field :date, :string
     field :slug, :string
     field :title, :string
   end

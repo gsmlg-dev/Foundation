@@ -37,11 +37,11 @@ defmodule GSMLGWeb.Router do
 
     resources "/blogs", BlogController, except: [:new, :edit]
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: GSMLGWeb.Schema
-
-    forward "/", Absinthe.Plug, schema: GSMLGWeb.Schema
-
   end
+
+  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: GSMLGWeb.Schema
+
+  forward "/graphql", Absinthe.Plug, schema: GSMLGWeb.Schema
 
   # Enables LiveDashboard only for development
   #

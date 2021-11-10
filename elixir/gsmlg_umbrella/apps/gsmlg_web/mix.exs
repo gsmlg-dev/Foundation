@@ -52,6 +52,8 @@ defmodule GSMLGWeb.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:earmark, ">= 1.4.15" },
+      {:absinthe, "~> 1.6.0"},
+      {:absinthe_plug, "~> 1.5"},
     ]
   end
 

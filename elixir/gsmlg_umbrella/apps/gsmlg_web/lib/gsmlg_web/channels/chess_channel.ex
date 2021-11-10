@@ -21,7 +21,7 @@ defmodule GSMLGWeb.ChessChannel do
   end
 
   def terminate(_reason, socket) do
-    # Socket.current_resource(socket)
+    Socket.current_resource(socket)
     :ok
   end
 
