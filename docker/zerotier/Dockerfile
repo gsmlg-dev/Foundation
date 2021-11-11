@@ -30,6 +30,8 @@ RUN apk add --no-cache --purge --clean-protected --update libc6-compat libstdc++
 
 EXPOSE 9993/udp
 
+VOLUME ["/var/lib/zerotier-one"]
+
 ENTRYPOINT ["/usr/sbin/zerotier-one"]
 
 CMD ["-U"]
