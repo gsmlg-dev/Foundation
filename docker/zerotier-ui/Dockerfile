@@ -16,13 +16,12 @@ ENV GENERATE_SOURCEMAP=false
 
 RUN yarn set version berry
 
-WORKDIR /app/frontend
-COPY --from=source /src/frontend/package*.json /app/frontend
-COPY --from=source /src/frontend/yarn.lock /app/frontend
-RUN yarn install
-
 COPY --from=source /src/frontend /app/frontend
-RUN yarn build
+
+WORKDIR /app/frontend
+
+RUN yarn install \
+    && yarn run build
 
 
 FROM node:16-alpine
@@ -35,15 +34,12 @@ LABEL org.opencontainers.image.title="ZeroTier UI" \
       org.opencontainers.image.licenses="GPL" \
       org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/tree/main/docker/zerotier-ui"
 
-WORKDIR /app/frontend/build
 COPY --from=build-stage /app/frontend/build /app/frontend/build/
+COPY --from=source /src/backend /app/backend
 
 WORKDIR /app/backend
-COPY --from=source /src/backend/package*.json /app/backend
-COPY --from=source /src/backend/yarn.lock /app/backend
-RUN yarn install
 
-COPY --from=source /src/backend /app/backend
+RUN yarn install
 
 EXPOSE 4000
 ENV NODE_ENV=production
