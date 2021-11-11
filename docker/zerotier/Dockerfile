@@ -6,7 +6,8 @@ ARG ZT_VERSION=1.8.1
 FROM ${ALPINE_IMAGE}:${ALPINE_VERSION} as builder
 
 RUN apk add --update alpine-sdk linux-headers \
-  && git clone --origin ${ZT_COMMIT} --depth 1 https://github.com/zerotier/ZeroTierOne.git /src \
+  && git clone https://github.com/zerotier/ZeroTierOne.git /src \
+  && git -C /src checkout -f ${ZT_COMMIT} \
   && cd /src \
   && make -f make-linux.mk
 
