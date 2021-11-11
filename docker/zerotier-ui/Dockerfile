@@ -4,9 +4,9 @@ ARG ZT_UI_VERSION=1.0.21
 
 FROM alpine:3.14 AS source
 
-RUN apk add git \
+RUN apk add --update git \
     && git clone https://github.com/dec0dOS/zero-ui.git /src \
-    && git checkout -f ${ZT_UI_COMMIT}
+    && git -C /src checkout -f ${ZT_UI_COMMIT}
 
 
 FROM node:16-alpine as build-stage
