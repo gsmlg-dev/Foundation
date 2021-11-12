@@ -117,10 +117,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && mv skaffold /usr/local/bin/skaffold
 
 # install helm
-RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.8.0-linux-${ARCH}.tar.gz" \
-  && tar zxf /tmp/helm.tar.gz --strip=1 -C /tmp \
-  && mv /tmp/helm /usr/local/bin/helm
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 # install flutter
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
