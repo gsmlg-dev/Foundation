@@ -122,9 +122,6 @@ RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | b
 # install flutter
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
 
-# install browser chromium
-RUN apt-get install -y -qq chromium-browser 
-
 # install cli53
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfL https://github.com/barnybug/cli53/releases/download/0.8.18/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
