@@ -49,14 +49,14 @@ RUN apt-get install -y default-jdk \
   && chmod +x /usr/local/bin/grun
 
 # install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install -y -qq nodejs \
   && npm install -g npm \
   && npm install -g yarn
 
 # install golang
 RUN export ARCH=`dpkg --print-architecture`; \
-  export GO_VERSION="1.17"; \
+  export GO_VERSION="1.17.3"; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && tar -C /usr/local -xzf "/tmp/${GOPKG}" \
@@ -106,7 +106,7 @@ RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.de
 
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.4/bin/linux/${ARCH}/kubectl" \
+  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.5/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
   && mv kubectl /usr/local/bin/kubectl
 
@@ -118,7 +118,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install helm
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.6.3-linux-${ARCH}.tar.gz" \
+  curl -sSfLo /tmp/helm.tar.gz "https://get.helm.sh/helm-v3.8.0-linux-${ARCH}.tar.gz" \
   && tar zxf /tmp/helm.tar.gz --strip=1 -C /tmp \
   && mv /tmp/helm /usr/local/bin/helm
 
