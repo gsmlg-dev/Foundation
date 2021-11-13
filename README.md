@@ -20,17 +20,20 @@ I've manage too many repositories, that I have to combine them to one so that I 
     gsmlg-scripts(@gsmlg/scripts) Support open source project build, format, lint, pre-commit, validate and typecheck.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-scripts-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-scripts-validate-and-release.yml)
+    [![npm version](https://badgen.net/npm/v/@gsmlg/scripts)](https://www.npmjs.com/package/@gsmlg/scripts)
 
     - [website](nodejs/packages/website)
     My website, now at gsmlg.github.io
     TODO: Start my backend service.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-website-build-and-deploy.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-website-build-and-deploy.yml)
+    [![npm version](https://badgen.net/npm/v/@gsmlg/website)](https://www.npmjs.com/package/@gsmlg/website)
 
     - [phoenix-provider](nodejs/packages/phoenix-provider)
     React Context Provider that provide a Phoenix socket.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-phoenix-provider-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-phoenix-provider-validate-and-release.yml)
+    [![npm version](https://badgen.net/npm/v/phoenix-provider)](https://www.npmjs.com/package/phoenix-provider)
 
 - [golang](golang)
 
