@@ -1,6 +1,11 @@
 # Foundation
 
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/gsmlg/Foundation)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/gsmlg-dev/Foundation)
+[![commits](https://badgen.net/github/commits/gsmlg-dev/Foundation)](https://github.com/gsmlg-dev/Foundation)
+[![last commit](https://badgen.net/github/last-commit/gsmlg-dev/Foundation)](https://github.com/gsmlg-dev/Foundation)
+[![tags](https://badgen.net/github/tags/gsmlg-dev/Foundation)](https://github.com/gsmlg-dev/Foundation)
+[![license](https://badgen.net/github/license/gsmlg-dev/Foundation)](https://github.com/gsmlg-dev/Foundation)
+
 
 My software foundation.
 
