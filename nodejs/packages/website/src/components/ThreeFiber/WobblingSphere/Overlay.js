@@ -1,4 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
+/* eslint-disable react/react-in-jsx-scope, react/no-children-prop -- Unaware of jsxImportSource */
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { a } from '@react-spring/web'

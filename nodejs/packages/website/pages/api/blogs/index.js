@@ -1,8 +1,10 @@
-export default (req, res) => {
+const blogsHandler = (req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(blogs.slice().reverse()));
 };
+
+export default blogsHandler;
 
 export const blogs = [];
 

@@ -94,7 +94,7 @@ function VultrNetworks(props: Props) {
     return () => {
       isStopped = true;
     };
-  }, []);
+  }, []); // eslint-disable-line
 
   return (
     <Layout>

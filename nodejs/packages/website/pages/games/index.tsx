@@ -4,10 +4,8 @@
  *
  */
 
-import React, {memo} from 'react';
+import * as React from 'react';
 import { styled } from '@mui/material/styles';
-
-import makeStyles from '@mui/styles/makeStyles';
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -25,7 +23,7 @@ const PagePaper = styled(Paper)(({
 
 interface Props {}
 
-const Game = memo((props: Props) => {
+const Game = (props: Props) => {
 
   return (
     <Layout>
@@ -52,6 +50,6 @@ const Game = memo((props: Props) => {
       </Grid>
     </Layout>
   );
-});
+};
 
 export default Game;

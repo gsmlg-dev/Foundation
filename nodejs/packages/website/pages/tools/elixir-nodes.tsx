@@ -103,7 +103,7 @@ function ElixirNodes(props: Props) {
         socket.remove(channel);
       };
     }
-  }, []);
+  }, [socket, channel]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const content = useCallback(
     (state) => {

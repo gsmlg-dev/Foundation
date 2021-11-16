@@ -4,7 +4,7 @@ import getConfig from 'next/config';
 
 import {blogs} from './index';
 
-export default (req, res) => {
+const blogContentHandler = (req, res) => {
   const {serverRuntimeConfig} = getConfig();
   const dir = path.join(serverRuntimeConfig.PROJECT_ROOT, './data/blogs');
 
@@ -36,3 +36,5 @@ const notFound = (res) => {
   res.setHeader('Content-Type', 'application/json');
   res.end(null);
 };
+
+export default blogContentHandler;

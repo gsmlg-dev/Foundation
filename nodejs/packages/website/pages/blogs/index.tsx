@@ -29,7 +29,7 @@ const StyledListItem = styled(ListItem)(({
   },
 }));
 
-export default function BlogList({blogs = [], ...props}) {
+function BlogList({blogs = [], ...props}) {
 
   return (
     <Layout>
@@ -67,3 +67,5 @@ export async function getStaticProps(context) {
     }, // will be passed to the page component as props
   };
 }
+
+export default BlogList;

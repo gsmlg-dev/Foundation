@@ -32,7 +32,7 @@ interface BlogStruct {
   content: string | null;
 }
 
-export default function Blog({blog}) {
+function Blog({blog}) {
 
   return (
     <Layout>
@@ -89,3 +89,5 @@ export async function getStaticProps({params}) {
     },
   };
 }
+
+export default Blog;

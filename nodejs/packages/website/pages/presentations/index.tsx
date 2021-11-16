@@ -28,7 +28,7 @@ const PagePaper = styled(Paper)(({
 
 interface Props {}
 
-const Presentation = memo((props: Props) => {
+const Presentation = (props: Props) => {
 
   const noteList = [
     {
@@ -85,6 +85,6 @@ const Presentation = memo((props: Props) => {
       </PagePaper>
     </Layout>
   );
-});
+};
 
 export default Presentation;

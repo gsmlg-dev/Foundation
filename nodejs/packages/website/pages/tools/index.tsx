@@ -31,7 +31,6 @@ const StyledTypography = styled(Typography)(({
 interface Props {}
 
 function Tools(props: Props) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   return (
     <Layout>

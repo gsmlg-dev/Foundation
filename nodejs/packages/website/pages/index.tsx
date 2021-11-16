@@ -48,7 +48,7 @@ export default function Home() {
         window.removeEventListener('resize', resize);
       };
     }
-  }, [ref.current]);
+  }, []);
 
   return (
     <Layout>

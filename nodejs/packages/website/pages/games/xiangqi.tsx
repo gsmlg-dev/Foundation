@@ -111,7 +111,7 @@ function Xiangqi(props: Props) {
         socket.remove(channel);
       };
     }
-  }, [channel]);
+  }, [channel, socket, setPieces, movePieceRemote]);
 
   return (
     <Layout>

@@ -31,7 +31,6 @@
  interface Props {}
  
  function ThreeFiber(props: Props) {
-   // eslint-disable-next-line @typescript-eslint/no-unused-vars
  
    return (
      <Layout>
