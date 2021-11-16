@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/gsmlg/Foundation/golang/dingding-oapi/pkg/ding"
+	"github.com/gsmlg-dev/Foundation/golang/dingding-oapi/pkg/ding"
 )
 
 func main() {

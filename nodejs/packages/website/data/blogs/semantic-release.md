@@ -159,7 +159,7 @@ jobs:
     needs: main
     runs-on: ubuntu-latest
     if:
-      ${{ github.repository == 'gsmlg/Foundation' &&
+      ${{ github.repository == 'gsmlg-dev/Foundation' &&
       contains('refs/heads/master,refs/heads/beta,refs/heads/next,refs/heads/alpha',
       github.ref) && github.event_name == 'push' }}
     steps:
