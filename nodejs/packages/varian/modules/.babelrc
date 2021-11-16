@@ -1,5 +1,0 @@
-{
-  "presets": [
-    "../tools/babel-preset"
-  ]
-}

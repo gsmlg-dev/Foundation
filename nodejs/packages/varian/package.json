@@ -64,22 +64,6 @@
       "loose-envify"
     ]
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "coffee",
-      "litcoffee",
-      "coffee.md"
-    ],
-    "transform": {
-      ".*": "<rootDir>/tools/test-preprocessor.js"
-    },
-    "testRegex": "modules/.*\\.(coffee|litcoffee|coffee.md)$",
-    "setupFiles": [
-      "raf/polyfill"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gsmlg/Foundation"
