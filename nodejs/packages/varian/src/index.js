@@ -2,6 +2,12 @@
  * Basic
  */
 
+/**
+ *  DNS
+ */
+
+import punycode from 'punycode';
+
 export function byteLength(str) {
   // returns the byte length of an utf8 string
   let s = str.length;
@@ -76,7 +82,7 @@ export function isSNMPCom(str) {
 }
 
 export function isInteger(str) {
-  str = '' + str;
+  str = `${  str}`;
   const reg = /^[0-9]+$/;
   const nReg = /^-[0-9]+$/;
   return reg.test(str) || nReg.test(str);
@@ -118,56 +124,50 @@ export function exclude(str, exc) {
 }
 
 export function beginWith(str, char) {
-  str = '' + str;
+  str = `${  str}`;
   return str.indexOf(char) === 0;
 }
 
 export function endWith(str, char) {
-  str = '' + str;
+  str = `${  str}`;
   const len = str.length;
   return str.lastIndexOf(char) === len - char.length;
 }
 
 export function isStartWithNumber(str) {
-  str = '' + str;
+  str = `${  str}`;
   return /^\d/.test(str);
 }
 
 export function isStartWithLetter(str) {
-  str = '' + str;
+  str = `${  str}`;
   return /^[a-zA-Z]/.test(str);
 }
 
 export function groupOf(arr, checker) {
   for (let i = 0, j = arr.length; i < j; i++) {
-    let val = arr[i];
+    const val = arr[i];
     if (!checker(val)) return false;
   }
   return true;
 }
-
-/**
- *  DNS
- */
-
-import punycode from 'punycode';
 
 export function punycodeToASCII(domain) {
   return punycode.toASCII(domain);
 }
 
 export function minDomainLen(str, min) {
-  str = '' + str;
+  str = `${  str}`;
   return punycodeToASCII(str).length >= min;
 }
 
 export function maxDomainLen(str, max) {
-  str = '' + str;
+  str = `${  str}`;
   return punycodeToASCII(str).length <= max;
 }
 
 export function isViewName(str) {
-  str = str + '';
+  str = `${str  }`;
   if (!maxLen(str, 32)) return false;
   if (beginWith(str, '-')) return false;
   if (endWith(str, '-')) return false;
@@ -178,7 +178,7 @@ export function isViewName(str) {
 }
 
 export function isZoneName(str) {
-  str = str + '';
+  str = `${str  }`;
   if (str === '@') return true;
   if (!maxDomainLen(str, 191)) return false;
   if (beginWith(str, '-')) return false;
@@ -191,7 +191,7 @@ export function isZoneName(str) {
 }
 
 export function isRRName(str) {
-  str = str + '';
+  str = `${str  }`;
   if (['*', '.', '*.'].includes(str)) return true;
   if (include(str, '..')) return false;
   if (!maxDomainLen(str, 63)) return false;
@@ -200,7 +200,7 @@ export function isRRName(str) {
 }
 
 export function isDomainName(str) {
-  str = str + '';
+  str = `${str  }`;
   if (str === '.') return true;
   if (!maxDomainLen(str, 254)) return false;
   if (beginWith(str, '-')) return false;
@@ -223,8 +223,8 @@ export function isMAC(mac) {
 }
 
 export function isDUID(duid) {
-  var reg = /^[0-9a-f]{1,2}([:-])[0-9a-f]{1,2}(\1[0-9a-f]{1,2}){4,18}$/i;
-  var reg4 = /^[0-9a-f]{3,4}([:-])[0-9a-f]{3,4}(\1[0-9a-f]{3,4}){1,8}$/i;
+  const reg = /^[0-9a-f]{1,2}([:-])[0-9a-f]{1,2}(\1[0-9a-f]{1,2}){4,18}$/i;
+  const reg4 = /^[0-9a-f]{3,4}([:-])[0-9a-f]{3,4}(\1[0-9a-f]{3,4}){1,8}$/i;
   return reg.test(duid) || reg4.test(duid);
 }
 
@@ -240,16 +240,16 @@ export function isIPv4(ip) {
   );
 }
 
-export function isIPv6(ip) {
+export function isIPv6(ip) { // eslint-disable-line
   if (/[^0-9A-Fa-f:]/.test(ip)) return false;
   if (include(ip, ':::')) return false;
   if (include(ip, '::')) {
-    let [p1, p2, ...rest] = ip.split('::');
+    const [p1, p2, ...rest] = ip.split('::');
     if (rest.length > 0) return false;
-    let p1p = p1.split(':');
-    let p2p = p2.split(':');
+    const p1p = p1.split(':');
+    const p2p = p2.split(':');
     if (p1p.length + p2p.length > 7) return false;
-    let parts = p1p.concat(p2p);
+    const parts = p1p.concat(p2p);
     if (p2p.length > 1 && p2p[p2p.length - 1] === '') return false;
     for (let i = 0, j = parts.length - 1; i <= j; i++) {
       let val = parts[i];
@@ -259,7 +259,7 @@ export function isIPv6(ip) {
       if (val > 0xffff || val < 0) return false;
     }
   } else {
-    let parts = ip.split(':');
+    const parts = ip.split(':');
     if (parts.length !== 8) return false;
     for (let i = 0, j = parts.length - 1; i <= j; i++) {
       let val = parts[i];
