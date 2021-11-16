@@ -1,1 +1,43 @@
 # Varian
+
+Data validate functions focus on DDI.
+
+```txt
+      byteLength,
+      minLen,
+      maxLen,
+      minByteLen,
+      maxByteLen,
+      hasChinese,
+      isPureChinese,
+      isCommonName,
+      isName,
+      isAlpha,
+      isEmail,
+      isPhone,
+      isSNMPCom,
+      isInteger,
+      isRange,
+      isIntRange,
+      minInt,
+      maxInt,
+      strongPassword,
+      include,
+      exclude,
+      beginWith,
+      endWith,
+      groupOf,
+      punycodeToASCII,
+      minDomainLen,
+      maxDomainLen,
+      isViewName,
+      isZoneName,
+      isRRName,
+      isDomainName,
+      isMAC,
+      isDUID,
+      isIPv4,
+      isIPv6,
+      isPort,
+      isURL
+```
