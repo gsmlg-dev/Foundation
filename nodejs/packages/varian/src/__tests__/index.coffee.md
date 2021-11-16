@@ -1,4 +1,3 @@
-
 ### import functions
 
     import {
@@ -41,14 +40,11 @@
       isURL
     } from '../index'
 
-
-
 ### 验证基础函数库
 
     describe 'Validation tools', =>
 
-
-- byteLength 返回字符串utf8字节数
+- byteLength 返回字符串 utf8 字节数
 
       it 'should get utf8 byteLength of string', =>
 
@@ -58,8 +54,7 @@
         expect byteLength('13狗')
           .toEqual 5
 
-
-- 返回字符串的punycode编码
+- 返回字符串的 punycode 编码
 
       it 'should return punycode encode string', =>
 
@@ -97,13 +92,11 @@
         expect groupOf(list, (n) => n > 0)
           .toBeTruthy()
 
-
 ### 常规验证规则
 
     describe 'Basic Validators', =>
 
-
-- 验证超过长度时返回true
+- 验证超过长度时返回 true
 
       it 'should match maxLength', =>
 
@@ -113,9 +106,7 @@
         expect maxLen('Jonathan', 7)
           .toBeFalsy()
 
-
-
-- 验证长度不足时返回true
+- 验证长度不足时返回 true
 
       it 'should match minLength', =>
 
@@ -125,9 +116,7 @@
         expect minLen('citizen', 8)
           .toBeFalsy()
 
-
-
-- 验证字符串占用utf8字节长度是否超过限定范围
+- 验证字符串占用 utf8 字节长度是否超过限定范围
 
       it 'should be in byte length', =>
 
@@ -143,7 +132,6 @@
         expect maxByteLen('>梅西<', 7)
           .toBeFalsy()
 
-
 - 验证是否包含有中文字符
 
       it 'should include chinese character', =>
@@ -153,7 +141,6 @@
 
         expect hasChinese('芥末')
           .toBeTruthy()
-
 
 - 验证字符全部为中文
 
@@ -209,7 +196,7 @@
         expect isName 'Life Coach'
           .toBeFalsy()
 
-- alphanumeric, 同name，不能以数字开头
+- alphanumeric, 同 name，不能以数字开头
 
       it 'should be alphanumeric, can not start with number', =>
 
@@ -218,7 +205,6 @@
 
         expect isAlpha '53dns'
           .toBeFalsy()
-
 
 - 是否是合法的电子邮件名称
 
@@ -238,12 +224,9 @@
         expect isEmail '555@-666'
           .toBeFalsy()
 
-
 - 电话号码
 
-电话号码为
-2-4位区号加 - 可选
-6-11位号码
+电话号码为 2-4 位区号加 - 可选 6-11 位号码
 
       it 'should be a valid phone number', =>
 
@@ -265,10 +248,9 @@
         expect isPhone '0860121605073100'
           .toBeFalsy()
 
+- snmp 只读团体名称
 
-- snmp只读团体名称
-
-长度不超过255字节
+长度不超过 255 字节
 
       it 'should be snmp read community', =>
 
@@ -283,12 +265,9 @@
         expect isSNMPCom s
           .toBeFalsy()
 
-
 - 密码验证
 
-密码要足够健壮
-长度需要在8字节以上
-必须包含一个大些字母，一个小写字母，一个数字
+密码要足够健壮长度需要在 8 字节以上必须包含一个大些字母，一个小写字母，一个数字
 
       it 'should be a strong password', =>
 
@@ -307,15 +286,13 @@
         expect strongPassword 'ABCD1234'
           .toBeFalsy()
 
-
-### DNS相关验证
+### DNS 相关验证
 
     describe 'DNS Validators', =>
 
 - 域名长度验证
 
-域名长度，记录的长度
-如果饱含`IDN`，长度为转为`ascii`之后的长度
+域名长度，记录的长度如果饱含`IDN`，长度为转为`ascii`之后的长度
 
       it 'should be valid domain name length', =>
 
@@ -334,13 +311,9 @@
         expect maxDomainLen('互联网能够链接各个地区和不同的人们加快了信息交流', 63)
           .toBeFalsy()
 
-
 - 视图名称验证
 
-包含 字母 数字 _ - 中文
-长度不超过32字符
-不能以-开头结尾
-不能饱含`*`, `__`
+包含 字母 数字 \_ - 中文长度不超过 32 字符不能以-开头结尾不能饱含`*`, `__`
 
       it 'should be valid view name', =>
 
@@ -365,14 +338,10 @@
         expect isViewName 'abcdefghijkomnopqrstuvwxyz0123456789'
           .toBeFalsy()
 
-
 - 区名称验证
 
-区名称punycode长度不超过191
-可以是'@'
-不能以-开头
-不能饱含 `*`, `__`, `..`, `xn--`
-以.分割，每段都需要满足记录名称
+区名称 punycode 长度不超过 191 可以是'@' 不能以-开头不能饱含 `*`, `__`, `..`,
+`xn--` 以.分割，每段都需要满足记录名称
 
       it 'should be a zone name', =>
 
@@ -412,13 +381,10 @@
         expect isZoneName('soso--soso.com')
           .toBeTruthy()
 
-
 - 记录名称验证
 
-记录名称 可以是 * . *.
-不能饱含..
-punycode长度不超过63
-字符只能是 数字 字母 下划线 连接线 中文
+记录名称 可以是 _ . _. 不能饱含.. punycode 长度不超过 63 字符只能是 数字 字母 下
+划线 连接线 中文
 
       it 'should be a rr name', =>
 
@@ -440,13 +406,10 @@ punycode长度不超过63
         expect isRRName 'c..cc'
           .toBeFalsy()
 
-
 - 域名验证
 
-域名名称 punycode长度不超过254
-可以 - 开头
-不能饱含 * __ .. xn--
-以 . 分割，每段都需要符合rr规则
+域名名称 punycode 长度不超过 254 可以 - 开头不能饱含 \* \_\_ .. xn-- 以 . 分割，
+每段都需要符合 rr 规则
 
       it 'should be a domain name', =>
 
@@ -477,14 +440,13 @@ punycode长度不超过63
         expect isDomainName 'ac..joe'
           .toBeFalsy()
 
-
-### DHCP相关验证
+### DHCP 相关验证
 
     describe 'DHCP Validators', =>
 
-验证MAC地址
+验证 MAC 地址
 
-6段1-2位16进制字符，以`:`或`-`分割
+6 段 1-2 位 16 进制字符，以`:`或`-`分割
 
       it 'should be MAC', =>
 
@@ -509,10 +471,9 @@ punycode长度不超过63
         expect isMAC('3:2f:c:17:06')
           .toBeFalsy()
 
+验证 DUID
 
-验证DUID
-
-同MAC，分段位6-17段变长
+同 MAC，分段位 6-17 段变长
 
       it 'should be DUID', =>
 
@@ -540,8 +501,7 @@ punycode长度不超过63
         expect isDUID '0:1:2:3:4:5:6:7:8:9:a:b:c:d:e:f:17:18:19:20:21'
           .toBeFalsy()
 
-
-验证IPv4地址
+验证 IPv4 地址
 
       it 'should be IPv4 address', =>
 
@@ -557,8 +517,7 @@ punycode长度不超过63
         expect isIPv4 '256.1.2.3'
           .toBeFalsy()
 
-
-验证IPv6地址
+验证 IPv6 地址
 
       it 'should be IPv6 address', =>
 
@@ -583,7 +542,6 @@ punycode长度不超过63
         expect isIPv6 'fe80::1:'
           .toBeFalsy()
 
-
 ### 公共验证规则
 
     describe 'Common Validators', =>
@@ -591,7 +549,7 @@ punycode长度不超过63
 端口验证
 
       it 'should be port, range in 1-65535', =>
-        
+
         expect isPort '1'
           .toBeTruthy()
 
@@ -613,9 +571,9 @@ punycode长度不超过63
         expect isPort '0x20'
           .toBeFalsy()
 
-URL验证
+URL 验证
 
-url验证支持http，https，ftp协议开头的页面
+url 验证支持 http，https，ftp 协议开头的页面
 
       it 'should be valid url, protocal can be `http`, `https`, `ftp`, host can be `ip or domain`', =>
 
@@ -636,4 +594,3 @@ url验证支持http，https，ftp协议开头的页面
 
         expect isURL 'http://[2f::3x]'
           .toBeFalsy()
-

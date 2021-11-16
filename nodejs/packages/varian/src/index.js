@@ -5,11 +5,11 @@
 export function byteLength(str) {
   // returns the byte length of an utf8 string
   let s = str.length;
-  for(let i = str.length - 1; i >= 0; i -= 1) {
+  for (let i = str.length - 1; i >= 0; i -= 1) {
     const code = str.charCodeAt(i);
     if (code > 0x7f && code <= 0x7ff) s += 1;
     else if (code > 0x7ff && code <= 0xffff) s += 2; // like chinese in utf8
-    if (code >= 0xDC00 && code <= 0xDFFF) i -= 1; // like ' 😀' is two characters in js, but a four byte character in utf-8
+    if (code >= 0xdc00 && code <= 0xdfff) i -= 1; // like ' 😀' is two characters in js, but a four byte character in utf-8
   }
   return s;
 }
@@ -61,14 +61,14 @@ export function isAlpha(str) {
 }
 
 export function isEmail(email) {
-  const [ name, domain, ...rest ] = email.split('@');
+  const [name, domain, ...rest] = email.split('@');
   if (rest.length > 0) return false;
   return name && domain && isDomainName(domain);
 }
 
 export function isPhone(value) {
-    const reg = /^(\d{2,4}-?)?\d{6,11}$/;
-    return reg.test(value);
+  const reg = /^(\d{2,4}-?)?\d{6,11}$/;
+  return reg.test(value);
 }
 
 export function isSNMPCom(str) {
@@ -79,7 +79,7 @@ export function isInteger(str) {
   str = '' + str;
   const reg = /^[0-9]+$/;
   const nReg = /^-[0-9]+$/;
-  return (reg.test(str)) || (nReg.test(str));
+  return reg.test(str) || nReg.test(str);
 }
 
 export function isRange(str, min, max) {
@@ -228,14 +228,16 @@ export function isDUID(duid) {
   return reg.test(duid) || reg4.test(duid);
 }
 
-export function isIPv4 (ip) {
+export function isIPv4(ip) {
   if (ip === '0.0.0.0') return true;
   const ipList = ip.split('.');
-  return isIntRange(ipList[0], 1, 255) &&
+  return (
+    isIntRange(ipList[0], 1, 255) &&
     isIntRange(ipList[1], 0, 255) &&
     isIntRange(ipList[2], 0, 255) &&
     isIntRange(ipList[3], 0, 255) &&
-    ipList.length === 4;
+    ipList.length === 4
+  );
 }
 
 export function isIPv6(ip) {
@@ -248,7 +250,7 @@ export function isIPv6(ip) {
     let p2p = p2.split(':');
     if (p1p.length + p2p.length > 7) return false;
     let parts = p1p.concat(p2p);
-    if(p2p.length > 1 && p2p[p2p.length - 1] === '') return false;
+    if (p2p.length > 1 && p2p[p2p.length - 1] === '') return false;
     for (let i = 0, j = parts.length - 1; i <= j; i++) {
       let val = parts[i];
       if ((i === 0 || i === j) && val === '') continue;
@@ -270,7 +272,6 @@ export function isIPv6(ip) {
   return true;
 }
 
-
 /**
  *  common
  */
@@ -280,7 +281,8 @@ export function isPort(port) {
 }
 
 export function isURL(url) {
-  const reg = /(?:(?:http(?:s)?)|(?:ftp)):\/\/((?:[^:/]+)|(?:\[[a-fA-F0-9:]+\]))(?::(\d{1,5}))?(?:\/|$)/;
+  const reg =
+    /(?:(?:http(?:s)?)|(?:ftp)):\/\/((?:[^:/]+)|(?:\[[a-fA-F0-9:]+\]))(?::(\d{1,5}))?(?:\/|$)/;
   const match = reg.exec(url);
   const domain = match ? `${match[1]}` : '';
   let v6;
@@ -288,6 +290,12 @@ export function isURL(url) {
     v6 = domain.slice(1, -1);
   }
   let port = match ? +match[2] : '';
-  if (!port) { port = 80; }
-  return /^(?:http(?:s)?)|(?:ftp):\/\//.test(url) && (isDomainName(domain) || isIPv6(v6)) && isPort(port);
+  if (!port) {
+    port = 80;
+  }
+  return (
+    /^(?:http(?:s)?)|(?:ftp):\/\//.test(url) &&
+    (isDomainName(domain) || isIPv6(v6)) &&
+    isPort(port)
+  );
 }
