@@ -40,6 +40,19 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-phoenix-provider-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-phoenix-provider-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/phoenix-provider)](https://www.npmjs.com/package/phoenix-provider)
 
+    - [varian](nodejs/packages/varian)
+    Data format validator.
+
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-varian-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-varian-validate-and-release.yml)
+    [![npm version](https://badgen.net/npm/v/@gsmlg/varian)](https://www.npmjs.com/package/@gsmlg/varian)
+
+    - [react](nodejs/packages/react)
+    My react components and hooks.
+
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-react-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-react-validate-and-release.yml)
+    [![npm version](https://badgen.net/npm/v/@gsmlg/react)](https://www.npmjs.com/package/@gsmlg/react)
+
+
 - [golang](golang)
 
     - [dingding-oapi](golang/dingding-oapi)
