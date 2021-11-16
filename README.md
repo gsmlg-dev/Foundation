@@ -242,7 +242,7 @@ and also need to add a `.release.yaml` file in directory like so:
 
 ```yaml
 extends: "semantic-release-monorepo"
-repositoryUrl: https://github.com/gsmlg/Foundation
+repositoryUrl: https://github.com/gsmlg-dev/Foundation
 plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'

@@ -3,7 +3,7 @@
   "version": "0.0.0-semantically-released",
   "description": "My packages base.",
   "main": "main.js",
-  "repository": "https://github.com/gsmlg/Foundation",
+  "repository": "https://github.com/gsmlg-dev/Foundation",
   "author": "Jonathan Gao",
   "license": "GPLv3",
   "private": true,
