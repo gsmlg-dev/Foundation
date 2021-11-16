@@ -26,7 +26,7 @@
   "author": "Jonathan Gao <me@gsmlg.org> (https://gsmlg.com)",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.16.3",
     "phoenix": "^1.6.2"
   },
   "eslintConfig": {
