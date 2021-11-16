@@ -121,6 +121,6 @@
   },
   "devDependencies": {
     "jest-in-case": "^1.0.2",
-    "slash": "^4.0.0"
+    "slash": "^3.0.0"
   }
 }
