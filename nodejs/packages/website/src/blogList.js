@@ -432,4 +432,12 @@ blogs.push({
   author: 'Gao',
 });
 
+blogs.push({
+  id: 55,
+  name: 'using-caddy-and-hug-http3',
+  title: '使用Caddy，拥抱HTTP3',
+  date: '2021-11-16',
+  author: 'Gao',
+});
+
 export default blogs.slice().reverse();
