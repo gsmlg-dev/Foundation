@@ -4,20 +4,18 @@ const building = BABEL_ENV != undefined && BABEL_ENV !== "cjs";
 const plugins = [];
 
 if (process.env.NODE_ENV === "production") {
-  plugins.push("dev-expression", "transform-react-remove-prop-types");
+  plugins.push("dev-expression");
 }
 
 module.exports = {
   presets: [
     [
-      "es2015",
+      "env",
       {
         loose: true,
         modules: building ? false : "commonjs"
       }
     ],
-    "stage-1",
-    "react"
   ],
   plugins: plugins
 };

@@ -11,7 +11,7 @@ module.exports = {
         inlineMap: true,
         bare: true,
         transpile: {
-          presets: ['jest', 'es2015', 'stage-1']
+          presets: ['jest', '@babel/env']
         }
       });
     }
