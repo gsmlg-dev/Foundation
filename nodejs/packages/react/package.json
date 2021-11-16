@@ -1,0 +1,41 @@
+{
+  "name": "@gsmlg/react",
+  "version": "0.1.0",
+  "description": "React components that just works.",
+  "main": "dist/index.js",
+  "repository": "https://github.com/gsmlg-dev/Foundation.git",
+  "author": "Jonathan Gao",
+  "license": "GPLv3",
+  "private": false,
+  "scripts": {
+    "test": "gsmlg-scripts test",
+    "build": "gsmlg-scripts build",
+    "lint": "gsmlg-scripts lint",
+    "format": "gsmlg-scripts format",
+    "validate": "gsmlg-scripts validate"
+  },
+  "devDependencies": {
+    "@gsmlg/scripts": "^1.0.0",
+    "@types/node": "^16.11.7",
+    "@types/react": "^17.0.35"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "ui"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.16.3",
+    "react": "^17.0.2",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
+    "react-dnd-touch-backend": "^14.1.1",
+    "react-dom": "^17.0.2"
+  }
+}
