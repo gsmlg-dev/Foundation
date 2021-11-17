@@ -7,7 +7,7 @@ PhoenixContext.displayName = 'Phoenix';
 
 export interface ProviderArgs {
     url: string;
-    params: object;
+    params?: object;
     children: JSX.Element
 };
 
@@ -17,7 +17,7 @@ export const Consumer: PhoenixContext.Consumer;
 
 export function useSocket() : Socket | null;
 
-export function useChannel(topic: string, params: object) : Channel | null;
+export function useChannel(topic: string, params?: object) : Channel | null;
 
 export function usePresence(topic: string) : Presence | null;
 
