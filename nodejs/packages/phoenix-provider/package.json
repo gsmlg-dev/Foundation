@@ -11,7 +11,7 @@
   "scripts": {
     "test": "gsmlg-scripts test",
     "test:update": "gsmlg-scripts test --updateSnapshot",
-    "build": "gsmlg-scripts build",
+    "build": "gsmlg-scripts build && mv index.d.ts dist/index.d.ts",
     "lint": "gsmlg-scripts lint",
     "format": "gsmlg-scripts format",
     "validate": "gsmlg-scripts validate --passWithNoTests"
