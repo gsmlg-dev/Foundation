@@ -117,6 +117,7 @@
   },
   "homepage": "https://github.com/gsmlg-dev/Foundation/tree/master/nodejs/packages/scripts#readme",
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "devDependencies": {
