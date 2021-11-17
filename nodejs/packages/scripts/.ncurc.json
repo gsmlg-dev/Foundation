@@ -1,0 +1,7 @@
+{
+  "reject": [
+    "arrify",
+    "read-pkg-up",
+    "slash"
+  ]
+}
