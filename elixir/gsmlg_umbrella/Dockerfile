@@ -3,6 +3,7 @@ FROM gsmlg/phoenix:alpine AS builder
 ARG MIX_ENV=prod
 ARG NAME=gsmlg
 ARG RELEASE_VERSION=0.1.0
+ARG WEB_VERSION=1.15.1
 
 COPY . /build
 
@@ -11,7 +12,7 @@ WORKDIR /build
 RUN apk update && apk add curl jq git npm \
     && mix do deps.get, compile \
     && cd apps/gsmlg_web && npm install --prefix assets && mix assets.deploy && cd ../.. \
-    && curl -Lf $(npm info --json @gsmlg/website | jq -r .dist.tarball) -o website.tgz \
+    && curl -Lf "https://registry.npmjs.org/@gsmlg/website/-/website-${WEB_VERSION}.tgz" -o website.tgz \
     && tar xzf website.tgz --strip-components=2 -C apps/gsmlg_web/priv/static \
     && mix release gsmlg_umbrella \
     && cp -r _build/prod/rel/gsmlg_umbrella /app
