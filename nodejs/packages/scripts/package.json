@@ -91,8 +91,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "kentcdodds",
-      "kentcdodds/jest"
+      "gsmlg",
+      "gsmlg/jest"
     ],
     "rules": {
       "no-process-exit": "off",
