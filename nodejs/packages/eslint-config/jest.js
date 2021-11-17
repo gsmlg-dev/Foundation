@@ -74,6 +74,13 @@ const rules = {
   'jest/valid-expect-in-promise': 'error',
   'jest/valid-title': 'warn',
 
+  'jest/prefer-expect-resolves': 'off',
+  'jest/prefer-lowercase-title': 'off',
+  'jest/prefer-to-be': 'off',
+  'jest/require-hook': 'off',
+  'jest/valid-describe-callback': 'off',
+  'no-unused-private-class-members': 'off',
+
   ...(hasJestDom
     ? {
         'jest-dom/prefer-checked': 'error',
@@ -118,6 +125,7 @@ const rules = {
         'testing-library/prefer-user-event': 'error',
         'testing-library/prefer-wait-for': 'error',
         'testing-library/render-result-naming-convention': 'error',
+        'testing-library/no-debugging-utils': 'off',
       }
     : null),
 }

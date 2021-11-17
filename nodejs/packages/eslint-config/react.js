@@ -122,6 +122,11 @@ module.exports = {
 
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
+    'no-unused-private-class-members': 'off',
+    'react/no-arrow-function-lifecycle': 'off',
+    'react/no-invalid-html-attribute': 'off',
+    'react/no-namespace': 'off',
+    'react/no-unused-class-component-methods': 'off',
   },
   overrides: [
     {
