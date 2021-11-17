@@ -77,10 +77,6 @@ jobs:
           useLockFile: false
           working-directory: 'nodejs/packages/eslint-config'
 
-      - name: 🏗 Run build script
-        working-directory: 'nodejs/packages/eslint-config'
-        run: npm run build
-
       - name: 🏗 Run install semantic-release
         working-directory: 'nodejs/packages/eslint-config'
         run: npm install --save-dev semantic-release-monorepo semantic-release
