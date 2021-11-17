@@ -26,6 +26,7 @@ defmodule GSMLGWeb.Endpoint do
     gzip: false,
     only: ~w(
       404.html
+      assets
       blogs
       blogs.html
       favicon.ico
