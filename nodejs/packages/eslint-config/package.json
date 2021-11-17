@@ -81,7 +81,7 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "http://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/"
   },
   "engines": {
     "node": "^10.12.0 || >=12.0.0",
