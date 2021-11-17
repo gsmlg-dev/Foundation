@@ -36,10 +36,8 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-          working-directory: 'nodejs/packages/eslint-config'
+        working-directory: 'nodejs/packages/eslint-config'
+        run: npm install
 
       - name: ▶️ Run validate script
         working-directory: 'nodejs/packages/eslint-config'
@@ -72,10 +70,8 @@ jobs:
           node-version: 16
 
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-          working-directory: 'nodejs/packages/eslint-config'
+        working-directory: 'nodejs/packages/eslint-config'
+        run: npm install
 
       - name: 🏗 Run install semantic-release
         working-directory: 'nodejs/packages/eslint-config'
