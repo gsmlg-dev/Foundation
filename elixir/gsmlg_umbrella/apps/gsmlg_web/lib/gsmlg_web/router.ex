@@ -29,6 +29,12 @@ defmodule GSMLGWeb.Router do
     live "/blogs/:id", BlogLive.Show, :show
     live "/blogs/:id/show/edit", BlogLive.Show, :edit
 
+    if Mix.env() in [:prod] do
+      import Phoenix.LiveDashboard.Router
+
+      live_dashboard "/dashboard", metrics: GSMLGWeb.Telemetry
+    end
+
   end
 
   # Other scopes may use custom stacks.
