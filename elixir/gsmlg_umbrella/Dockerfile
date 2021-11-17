@@ -38,6 +38,7 @@ ENV PORT=80 \
 
 RUN apk update \
     && apk add openssl bash libstdc++ \
+    && ln -s /app/bin/gsmlg_umbrella /usr/local/bin/gsmlg \
     && rm -rf /var/cache/apk/*
 
 COPY --from=builder /app /app
