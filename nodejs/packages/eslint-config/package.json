@@ -1,0 +1,88 @@
+{
+  "name": "eslint-config-gsmlg",
+  "version": "0.0.0-semantically-released",
+  "description": "ESLint rules according to gsmlg' personal preference",
+  "main": "index.js",
+  "scripts": {
+    "find-new-rules": "npm-run-all --parallel find-new-rules:*",
+    "find-new-rules:jest": "eslint-find-rules --unused ./other/test/jest/index.js",
+    "find-new-rules:jsx-a11y": "eslint-find-rules --unused ./other/test/jsx-a11y/index.js",
+    "find-new-rules:main": "eslint-find-rules --unused ./index.js",
+    "find-new-rules:react": "eslint-find-rules --unused ./other/test/react/index.js",
+    "lint": "eslint --config index.js .",
+    "prepare": "husky install .config/husky",
+    "test": "npm-run-all --parallel lint find-new-rules",
+    "validate": "npm-run-all --parallel lint test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gsmlg-dev/Foundation"
+  },
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "config",
+    "gsmlg",
+    "javascript",
+    "styleguide"
+  ],
+  "author": "Jonathan GSMLG Gao <gsmlg.com@gmail.com> (https://gsmlg.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gsmlg-dev/Foundation/issues"
+  },
+  "homepage": "https://github.com/gsmlg-dev/Foundation/tree/main/nodejs/packages/eslint-config#readme",
+  "dependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.4",
+    "@babel/eslint-plugin": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-jest-dom": "^3.9.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.25.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^4.12.0",
+    "read-pkg-up": "^7.0.1",
+    "semver": "^7.3.5"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^7.31.2",
+    "@testing-library/jest-dom": "^5.14.1",
+    "eslint": "^7.32.0",
+    "eslint-find-rules": "^3.6.1",
+    "husky": "^6.0.0",
+    "jest": "^27.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.2",
+    "pretty-quick": "^3.1.1",
+    "react": "^17.0.2",
+    "typescript": "^4.4.2"
+  },
+  "peerDependencies": {
+    "eslint": "^7.5.0",
+    "typescript": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "eslintConfig": {
+    "extends": "./index.js"
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist"
+  ],
+  "engines": {
+    "node": "^10.12.0 || >=12.0.0",
+    "npm": ">=6",
+    "yarn": ">=1"
+  }
+}
