@@ -148,28 +148,3 @@ This is forked from [kcd-scripts](https://github.com/kentcdodds/kcd-scripts).
 ## LICENSE
 
 MIT
-
-<!-- prettier-ignore-start -->
-[npm]: https://www.npmjs.com
-[node]: https://nodejs.org
-[build-badge]: https://img.shields.io/github/workflow/status/kentcdodds/kcd-scripts/validate?logo=github&style=flat-square
-[build]: https://github.com/kentcdodds/kcd-scripts/actions?query=workflow%3Avalidate
-[coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/kcd-scripts.svg?style=flat-square
-[coverage]: https://codecov.io/github/kentcdodds/kcd-scripts
-[version-badge]: https://img.shields.io/npm/v/kcd-scripts.svg?style=flat-square
-[package]: https://www.npmjs.com/package/kcd-scripts
-[downloads-badge]: https://img.shields.io/npm/dm/kcd-scripts.svg?style=flat-square
-[npmtrends]: http://www.npmtrends.com/kcd-scripts
-[license-badge]: https://img.shields.io/npm/l/kcd-scripts.svg?style=flat-square
-[license]: https://github.com/kentcdodds/kcd-scripts/blob/master/LICENSE
-[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[prs]: http://makeapullrequest.com
-[coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/kcd-scripts/blob/master/other/CODE_OF_CONDUCT.md
-[emojis]: https://github.com/all-contributors/all-contributors#emoji-key
-[all-contributors]: https://github.com/all-contributors/all-contributors
-[all-contributors-badge]: https://img.shields.io/github/all-contributors/kentcdodds/kcd-scripts?color=orange&style=flat-square
-[bugs]: https://github.com/kentcdodds/kcd-scripts/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Acreated-desc+label%3Abug
-[requests]: https://github.com/kentcdodds/kcd-scripts/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement
-[good-first-issue]: https://github.com/kentcdodds/kcd-scripts/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement+label%3A%22good+first+issue%22
-<!-- prettier-ignore-end -->
