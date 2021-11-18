@@ -58,7 +58,7 @@ function Xiangqi(props: Props) {
   const [xiangqi, setXiangqi] = useState(_xiangqi);
   const [turn, setTurn] = useState(ChessColor.Red);
   const start = useCallback(() => {
-    if (channel && channel.isConnected()) {
+    if (channel && channel.isJoined()) {
       channel.push('start');
     }
   }, [channel]);
