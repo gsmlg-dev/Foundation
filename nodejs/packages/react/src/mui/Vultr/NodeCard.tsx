@@ -11,12 +11,12 @@ import Divider from '@mui/material/Divider';
 type Host = {
   name: string
   host: string
-  delay: number
-  minDelay: number
-  maxDelay: number
-  averageDelay: number
-  lost: number
-  times: number
+  delay?: number
+  minDelay?: number
+  maxDelay?: number
+  averageDelay?: number
+  lost?: number
+  times?: number
 }
 
 interface Props {
