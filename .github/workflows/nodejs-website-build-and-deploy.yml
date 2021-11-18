@@ -70,6 +70,7 @@ jobs:
           WEB_VERSION: ${{ steps.semantic.outputs.new_release_version }}
         run: |
           [[ -z "$WEB_VERSION" ]] && exit 252
+          cd ../.. && git clean -ffdx && git reset --hard HEAD && cd elixir/gsmlg_umbrella
           sed "s;WEB_VERSION=[0-9]\+.[0-9]\+.[0-9]\+;WEB_VERSION=${WEB_VERSION};g" Dockerfile
           sed -i "s;WEB_VERSION=[0-9]\+.[0-9]\+.[0-9]\+;WEB_VERSION=${WEB_VERSION};g" Dockerfile
 
