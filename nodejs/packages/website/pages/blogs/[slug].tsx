@@ -1,6 +1,5 @@
-import fs from 'fs';
+import axios from 'axios';
 import { styled } from '@mui/material/styles';
-import path from 'path';
 
 import Head from 'next/head';
 
@@ -27,7 +26,7 @@ interface BlogStruct {
   id: number;
   author: string;
   title: string;
-  name: string;
+  slug: string;
   date: string;
   content: string | null;
 }
@@ -74,18 +73,15 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({params}) {
   const {slug} = params;
-  const blog = blogList.find((b) => b.name === slug);
-  const blogDir = path.join(process.cwd(), 'data/blogs');
-  const blogPath = `${blogDir}/${slug}.md`;
-  const content = fs.readFileSync(blogPath, {encoding: 'utf-8', flag: 'r'});
+
+  const response = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
+  const blogList = response.data;
+  const blog = blogList.find((b) => b.slug === slug);
 
   return {
     props: {
       slug,
-      blog: {
-        ...blog,
-        content,
-      },
+      blog,
     },
   };
 }

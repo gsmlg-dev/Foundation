@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import Head from 'next/head';
 import { styled } from '@mui/material/styles';
 
@@ -10,8 +12,6 @@ import ListItemText from '@mui/material/ListItemText';
 import WebIcon from '@mui/icons-material/Web';
 
 import Layout from 'components/Layout';
-
-import blogList from 'blogList';
 
 const PagePaper = styled(Paper)(({
   theme
@@ -29,7 +29,7 @@ const StyledListItem = styled(ListItem)(({
   },
 }));
 
-function BlogList({blogs = [], ...props}) {
+function BlogList({blogs = []}) {
 
   return (
     <Layout>
@@ -41,13 +41,13 @@ function BlogList({blogs = [], ...props}) {
         <List>
           {blogs.map(
             (blog): JSX.Element => (
-              <StyledListItem key={blog.name}>
+              <StyledListItem key={blog.slag}>
                 <ListItemIcon>
                   <WebIcon />
                 </ListItemIcon>
                 <ListItemText
                   primary={
-                    <Link href={`/blogs/${blog.name}`}>{blog.title}</Link>
+                    <Link href={`/blogs/${blog.slag}`}>{blog.title}</Link>
                   }
                 />
                 <ListItemText secondary={blog.date} />
@@ -61,9 +61,11 @@ function BlogList({blogs = [], ...props}) {
 }
 
 export async function getStaticProps(context) {
+  const reponse = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
+  
   return {
     props: {
-      blogs: blogList,
+      blogs: reponse.data,
     }, // will be passed to the page component as props
   };
 }
