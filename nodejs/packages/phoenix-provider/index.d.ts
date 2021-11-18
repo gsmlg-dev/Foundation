@@ -1,19 +1,15 @@
 import * as React from 'react';
 import {Socket, Presence, Channel} from 'phoenix';
 
-const PhoenixContext = React.createContext({});
-
-PhoenixContext.displayName = 'Phoenix';
-
 export interface ProviderArgs {
     url: string;
     params?: object;
     children: JSX.Element
-};
+}
 
 export function Provider(arg : ProviderArgs) : JSX.Element;
 
-export const Consumer: PhoenixContext.Consumer;
+export const Consumer: React.Context.Consumer;
 
 export function useSocket() : Socket | null;
 
