@@ -28,7 +28,10 @@ const DragDropContext = (props: Props) => {
     if ('ontouchstart' in window.document.documentElement) {
       touchable = true;
     }
-    if (window.navigator.pointerEnabled) {
+    if (
+        window.navigator.hasOwnProperty('pointerEnabled') 
+        || window.navigator.hasOwnProperty('msPointerEnabled')
+      ) {
       touchable = true;
     }
     setTouchable(touchable);
@@ -36,18 +39,16 @@ const DragDropContext = (props: Props) => {
   const {redPieces, blackPieces, kill, movePiece, turn} = props;
 
   return (
-    <>
-      <DndProvider backend={hasTouch ? TouchBackend : HTML5Backend}>
-        <ChessBoard
-          redPieces={redPieces}
-          blackPieces={blackPieces}
-          kill={kill}
-          movePiece={movePiece}
-          canDrop={canDrop}
-          turn={turn}
-        />
-      </DndProvider>
-    </>
+    <DndProvider backend={hasTouch ? TouchBackend : HTML5Backend}>
+      <ChessBoard
+        redPieces={redPieces}
+        blackPieces={blackPieces}
+        kill={kill}
+        movePiece={movePiece}
+        canDrop={canDrop}
+        turn={turn}
+      />
+    </DndProvider>
   );
 };
 
