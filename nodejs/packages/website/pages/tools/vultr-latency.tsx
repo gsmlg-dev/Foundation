@@ -11,7 +11,7 @@ import Head from 'next/head';
 import Grid from '@mui/material/Grid';
 
 import Layout from 'components/Layout';
-import Card from 'components/Vultr/NodeCard';
+import NodeCard from '@gsmlg/react/dist/mui/Vultr/NodeCard';
 
 import hosts from 'vultrHosts';
 
@@ -107,7 +107,7 @@ function VultrNetworks(props: Props) {
           <Grid container spacing={6} justifyContent="center">
             {networks.map((host) => (
               <Grid key={host.host} item md={3} sm={4}>
-                <Card host={host} />
+                <NodeCard host={host} />
               </Grid>
             ))}
           </Grid>
