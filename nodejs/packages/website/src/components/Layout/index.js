@@ -3,9 +3,11 @@
  * Layout
  *
  */
-
+/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
+/** @jsxImportSource @emotion/react */
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
+import { css } from '@emotion/react';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -50,6 +52,7 @@ const Footer = styled('footer')((
   color: theme.palette.getContrastText(theme.palette.primary.main),
   backgroundColor: theme.palette.primary.main,
 }));
+
 const SocketStatus = styled('div')(({ theme, status }) => ({
   display: 'inline-block',
   width: 16,
@@ -68,6 +71,10 @@ const menus = [
 ];
 
 const Layout = ({children}, ref) => {
+  const [isCN, setIsCN] = React.useState(true);
+  React.useEffect(() => {
+    setIsCN(window.location.hostname === 'www.gsmlg.cn');
+  }, []);
   const socket = useSocket();
   const [socketStatus, setSocketStatus] = React.useState({ color: 'transperant' });
   React.useEffect(() => {
@@ -132,6 +139,15 @@ const Layout = ({children}, ref) => {
       </ContainerSection>
       <Footer style={{ marginTop: 0 }}>
         <div className="container">
+          <span
+            id={'icp-info'}
+            css={css`
+              margin: 0 2em;
+              display: ${isCN ? 'inline' : 'none'}
+            `}
+          >
+            京ICP备20014476号-2
+          </span>
           <span>
             Copyright © 2017-2021 GSMLG - Powered by GSMLG Web.
           </span>
