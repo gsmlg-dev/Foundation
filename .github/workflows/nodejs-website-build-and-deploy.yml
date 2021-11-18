@@ -62,6 +62,9 @@ jobs:
           repository-name: "gsmlg/gsmlg.github.io"
           token: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
       - name: Update WEB_VERSION in elixir docker image 🐳
         working-directory: 'elixir/gsmlg_umbrella'
         env:
