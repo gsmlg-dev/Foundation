@@ -89,11 +89,6 @@ function Xiangqi(props: Props) {
 
   useEffect(() => {
     if (channel) {
-      if (!channel.isJoined()) {
-        channel.join();
-      }
-      console.log(socket);
-      console.log(channel);
       channel.on('init_pieces', ({ pieces , turn}) => {
         setPieces({
           redPieces: pieces.filter((p) => p.color === ChessColor.Red),
