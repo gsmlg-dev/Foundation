@@ -62,10 +62,12 @@ function BlogList({blogs = []}) {
 
 export async function getStaticProps(context) {
   const reponse = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
+  const data = reponse.data.data;
+  const blogs = data.sort((a, b) => a.id > b.id ? -1 : 1)
   
   return {
     props: {
-      blogs: reponse.data.data,
+      blogs,
     }, // will be passed to the page component as props
   };
 }
