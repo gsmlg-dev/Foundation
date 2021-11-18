@@ -1,10 +1,3 @@
-interface Host {
-  id: string;
-  host: string;
-  name: string;
-  ping: Array<number>;
-  pending?: Boolean;
-}
 
 const Hosts = [
   {
@@ -70,12 +63,18 @@ const Hosts = [
 ];
 
 const vultrHosts = Hosts.map(
-  ({name, host}): Host => ({
+  ({name, host}) => ({
     id: host.replace('-ping.vultr.com', ''),
     ping: [],
     pending: false,
     name,
     host,
+    times: 0,
+    lost: 0,
+    delay: -1,
+    minDelay: -1,
+    maxDelay: -1,
+    averageDelay: -1,
   }),
 );
 

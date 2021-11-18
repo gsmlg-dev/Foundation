@@ -21,9 +21,8 @@ const StyledGrid = styled(Grid)(({
   padding: theme.spacing(3),
 }));
 
-interface Props {}
 
-function VultrNetworks(props: Props) {
+function VultrNetworks() {
 
   const [networks, setNetworks] = useState(hosts);
 

@@ -20,14 +20,14 @@
     "@react-three/fiber": "^7.0.19",
     "next": "12.0.1",
     "next-transpile-modules": "^9.0.0",
-    "phoenix-provider": "^1.1.1",
+    "phoenix-provider": "^1.1.2",
     "react": "17.0.2",
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "^14.0.2",
     "react-dnd-touch-backend": "^14.1.1",
     "react-dom": "17.0.2",
     "react-markdown": "^7.1.0",
-    "react-spring": "^9.3.0",
+    "react-spring": "^9.3.1",
     "remark-gfm": "^3.0.1",
     "rxjs": "^7.4.0",
     "three": "^0.134.0"
@@ -36,13 +36,13 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.0.0",
+    "@gsmlg/scripts": "^1.6.0",
     "@types/node": "^16.11.7",
     "@types/react": "^17.0.35",
     "axios": "^0.24.0",
     "eslint-config-next": "12.0.4",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.1",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.2"
   }
 }
