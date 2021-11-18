@@ -2,7 +2,7 @@ name: docker-buildimage-editor-server
 
 on:
   push:
-    branches: main
+    branches: [ main ]
     paths:
       - "docker/editor-server/**"
       - ".github/workflows/docker-buildimage-editor-server.yml"
@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: docker/editor-server/
-          file: docker/editor-server//Dockerfile
+          file: docker/editor-server/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |

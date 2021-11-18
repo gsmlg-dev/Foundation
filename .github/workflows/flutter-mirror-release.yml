@@ -5,13 +5,7 @@ on:
       - "flutter/mirror/**"
       - ".github/workflows/flutter-mirror-release.yml"
     branches:
-      - "+([0-9])?(.{+([0-9]),x}).x"
       - "main"
-      - "next"
-      - "next-major"
-      - "beta"
-      - "alpha"
-      - "!all-contributors/**"
 jobs:
   build-and-release:
     runs-on: ubuntu-latest

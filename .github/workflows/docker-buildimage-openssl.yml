@@ -2,7 +2,7 @@ name: docker-buildimage-openssl
 
 on:
   push:
-    branches: main
+    branches: [ main ]
     paths:
       - 'docker/openssl/**'
       - '.github/workflows/docker-buildimage-openssl.yml'
@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: docker/openssl/
-          file: docker/openssl//Dockerfile
+          file: docker/openssl/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: gsmlg/openssl:latest

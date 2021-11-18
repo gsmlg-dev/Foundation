@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: docker/openwrt/
-          file: docker/openwrt//Dockerfile
+          file: docker/openwrt/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
