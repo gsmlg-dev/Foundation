@@ -69,6 +69,10 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           WEB_VERSION: ${{ steps.semantic.outputs.new_release_version }}
         run: |
+          pwd
+          git clean -ffdx
+          git reset --hard HEAD
+          pwd
           [[ -z "$WEB_VERSION" ]] && exit 252
           cd ../.. && git clean -ffdx && git reset --hard HEAD && cd elixir/gsmlg_umbrella
           sed "s;WEB_VERSION=[0-9]\+.[0-9]\+.[0-9]\+;WEB_VERSION=${WEB_VERSION};g" Dockerfile
