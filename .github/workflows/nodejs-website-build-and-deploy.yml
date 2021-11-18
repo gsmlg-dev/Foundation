@@ -73,6 +73,7 @@ jobs:
           git status
           git clean -ffdx
           git reset --hard HEAD
+          git status
           pwd
           [[ -z "$WEB_VERSION" ]] && exit 252
           cd ../.. && git clean -ffdx && git reset --hard HEAD && cd elixir/gsmlg_umbrella
