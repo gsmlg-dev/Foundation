@@ -1,20 +1,20 @@
 import React from 'react';
-import {DropTarget} from 'react-dnd';
-import {PieceShape} from './types';
+import { DropTarget, DropTargetSpec, DropTargetCollector } from 'react-dnd';
+import { PieceShape, SquareProps, DropTargetCollectedProps } from './types';
 
 /**
  * Specifies the drop target contract.
  * All methods are optional.
  */
-const chessSquareTarget = {
+const chessSquareTarget: DropTargetSpec<SquareProps, PieceShape, object> = {
   canDrop(props, monitor) {
     // You can disallow drop based on props or item
     const item = monitor.getItem();
-    const {x, y, pieces} = props;
-    return props.canDrop(item, {x, y}, pieces);
+    const { x, y, pieces } = props;
+    return props.canDrop(item, { x, y }, pieces);
   },
 
-  hover(props, monitor, component) {
+  hover(_props, monitor, _component) {
     // This is fired very often and lets you perform side effects
     // in response to the hover. You can't handle enter and leave
     // here—if you need them, put monitor.isOver() into collect() so you
@@ -25,13 +25,13 @@ const chessSquareTarget = {
     // const componentRect = findDOMNode(component).getBoundingClientRect();
 
     // You can check whether we're over a nested drop target
-    const isJustOverThisOne = monitor.isOver({shallow: true}); // eslint-disable-line
+    const isJustOverThisOne = monitor.isOver({ shallow: true }); // eslint-disable-line
 
     // You will receive hover() even for items for which canDrop() is false
     const canDrop = monitor.canDrop(); // eslint-disable-line
   },
 
-  drop(props, monitor, component) {
+  drop(props, monitor, _component) {
     if (monitor.didDrop()) {
       // If you want, you can check whether some nested
       // target already handled drop
@@ -40,46 +40,33 @@ const chessSquareTarget = {
 
     // Obtain the dragged item
     const item = monitor.getItem();
-    const {x, y} = props;
+    const { x, y } = props;
 
     // You can do something with it
-    props.movePiece({item, position: {x, y}});
+    props.movePiece(item, { x, y });
     props.kill();
 
     // You can also do nothing and return a drop result,
     // which will be available as monitor.getDropResult()
     // in the drag source's endDrag() method
-    return {moved: true};
+    return { moved: true };
   },
 };
 
 /**
  * Specifies which props to inject into your component.
  */
-function collect(connect, monitor) {
+const collect: DropTargetCollector<DropTargetCollectedProps, object> = function collect(connect, monitor) {
   return {
     // Call this function inside render()
     // to let React DnD handle the drag events:
     connectDropTarget: connect.dropTarget(),
     // You can ask the monitor about the current drag state:
     isOver: monitor.isOver(),
-    isOverCurrent: monitor.isOver({shallow: true}),
+    isOverCurrent: monitor.isOver({ shallow: true }),
     isDropable: monitor.canDrop(),
     itemType: monitor.getItemType(),
   };
-}
-
-interface Props {
-  x: number;
-  y: number;
-  canDrop: (item: object, pos: object, pieces: object) => Boolean;
-  connectDropTarget: any;
-  piece: PieceShape | null;
-  pieces: PieceShape[];
-  movePiece: (item, object) => any;
-  kill: () => any;
-  isDropable: Boolean;
-  children: any;
 }
 
 const Square = ({
@@ -89,7 +76,7 @@ const Square = ({
   connectDropTarget,
   piece,
   children,
-}: Props) => {
+}: SquareProps) => {
   const bgColor = isDropable ? (piece ? 'red' : 'green') : 'transparent';
 
   return connectDropTarget(
@@ -126,6 +113,4 @@ const Square = ({
   );
 };
 
-const ConnectedSquare = DropTarget('Piece', chessSquareTarget, collect)(Square);
-
-export default ConnectedSquare;
+export default DropTarget('Piece', chessSquareTarget, collect)(Square);

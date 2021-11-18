@@ -1,11 +1,13 @@
 import React from 'react';
-import {DragSource} from 'react-dnd';
+import { DragSource, DragSourceSpec, DragSourceCollector } from 'react-dnd';
+
+import { PieceShape, DragSourceProps, DropResult, DragSourceCollectedProps, PieceProps } from './types';
 
 /**
  * Specifies the drag source contract.
  * Only `beginDrag` function is required.
  */
-const cardSource = {
+const cardSource: DragSourceSpec<DragSourceProps, PieceShape, DropResult> = {
   canDrag(props) {
     return props.item.color === props.turn;
   },
@@ -18,13 +20,13 @@ const cardSource = {
     return monitor.getItem().id === props.item.id;
   },
 
-  beginDrag(props, monitor, component) {
+  beginDrag(props, _monitor, _component) {
     // Return the data describing the dragged item
     const item = props.item;
     return item;
   },
 
-  endDrag(props, monitor, component) {
+  endDrag(props, monitor, _component) {
     if (!monitor.didDrop()) {
       // You can check whether the drop was successful
       // or if the drag ended but nobody handled the drop
@@ -48,7 +50,7 @@ const cardSource = {
 /**
  * Specifies which props to inject into your component.
  */
-function collect(connect, monitor) {
+const collect: DragSourceCollector<DragSourceCollectedProps, object> = function collect(connect, monitor) {
   return {
     // Call this function inside render()
     // to let React DnD handle the drag events:
@@ -58,7 +60,7 @@ function collect(connect, monitor) {
   };
 }
 
-const Piece = ({connectDragSource, item, turn}) => {
+const Piece = ({ connectDragSource, item }: PieceProps) => {
   return connectDragSource(
     <div
       style={{

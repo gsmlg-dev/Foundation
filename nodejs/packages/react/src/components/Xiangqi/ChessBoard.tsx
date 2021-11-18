@@ -9,16 +9,7 @@ import React from 'react';
 import Square from './Square';
 import Piece from './Piece';
 
-import {PieceShape, ChessColor} from './types';
-
-interface Props {
-  redPieces: PieceShape[];
-  blackPieces: PieceShape[];
-  kill: (item: object) => any;
-  movePiece: (item: PieceShape, pos: object) => any;
-  canDrop: (item: object, pos: object, pieces: object) => Boolean;
-  turn: ChessColor;
-}
+import { ChessBoardProps } from './types';
 
 export const ChessBoard = ({
   blackPieces,
@@ -27,7 +18,7 @@ export const ChessBoard = ({
   turn,
   kill,
   canDrop,
-}: Props) => {
+}: ChessBoardProps) => {
   const allPieces = redPieces.concat(blackPieces);
 
   const renderSquare = (i): JSX.Element => {
@@ -35,16 +26,16 @@ export const ChessBoard = ({
     const y = Math.floor(i / 9);
     const pieces = allPieces.filter((p) => p.live === true);
     const item = pieces.find(
-      ({position: {x: px, y: py}}) => px === x && py === y,
+      ({ position: { x: px, y: py } }) => px === x && py === y,
     );
-    const key = item != null ? <Piece item={item} turn={turn} /> : null;
+    const key = item ? <Piece item={item} turn={turn} /> : null;
     const killPiece = () => {
-      item && kill(item);
+      if (item) kill(item);
     };
 
     return (
       <div
-        key={i}
+        key={`key-${i}`}
         style={{
           width: '60px',
           height: '60px',

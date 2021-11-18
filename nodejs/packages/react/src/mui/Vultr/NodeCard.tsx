@@ -8,7 +8,22 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
-function NetworkCard({host}) {
+type Host = {
+  name: string
+  host: string
+  delay: number
+  minDelay: number
+  maxDelay: number
+  averageDelay: number
+  lost: number
+  times: number
+}
+
+interface Props {
+  host: Host
+}
+
+function NetworkCard({ host }: Props) {
   return (
     <Paper>
       <Card>
