@@ -20,7 +20,7 @@
     "validate": "gsmlg-scripts validate"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.0.0",
+    "@gsmlg/scripts": "^1.6.0",
     "coffeescript": "^2.6.1"
   },
   "browserify": {
@@ -30,8 +30,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "kentcdodds",
-      "kentcdodds/jest"
+      "gsmlg",
+      "gsmlg/jest"
     ],
     "rules": {
       "no-process-exit": "off",
