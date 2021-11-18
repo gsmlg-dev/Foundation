@@ -29,7 +29,7 @@ export type PieceShape = {
   type: PieceType;
   color: ChessColor;
   position: PositionShape;
-  live: Boolean;
+  live: boolean;
 };
 
 export interface XiangqiState {
