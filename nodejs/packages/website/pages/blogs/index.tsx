@@ -65,7 +65,7 @@ export async function getStaticProps(context) {
   
   return {
     props: {
-      blogs: reponse.data,
+      blogs: reponse.data.data,
     }, // will be passed to the page component as props
   };
 }

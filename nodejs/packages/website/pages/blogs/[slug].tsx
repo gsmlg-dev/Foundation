@@ -75,7 +75,7 @@ export async function getStaticProps({params}) {
   const {slug} = params;
 
   const response = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
-  const blogList = response.data;
+  const blogList = response.data.data;
   const blog = blogList.find((b) => b.slug === slug);
 
   return {
