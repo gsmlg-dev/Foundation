@@ -70,6 +70,7 @@ jobs:
           WEB_VERSION: ${{ steps.semantic.outputs.new_release_version }}
         run: |
           pwd
+          git status
           git clean -ffdx
           git reset --hard HEAD
           pwd
