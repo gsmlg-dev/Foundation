@@ -31,8 +31,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "kentcdodds",
-      "kentcdodds/jest"
+      "gsmlg",
+      "gsmlg/jest"
     ],
     "rules": {
       "no-process-exit": "off",
@@ -60,7 +60,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.0.0"
+    "@gsmlg/scripts": "^1.6.0"
   },
   "peerDependencies": {
     "react": "^17.0.2"
