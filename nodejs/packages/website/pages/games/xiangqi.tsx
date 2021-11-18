@@ -12,9 +12,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Layout from 'components/Layout';
-import GameBoard from 'components/Xiangqi/DndContext';
-
-import {ChessColor} from 'types/xiangqi';
+import GameBoard from '@gsmlg/react/dist/components/Xiangqi/DndContext';
+import {PieceShape, ChessColor} from '@gsmlg/react/dist/components/Xiangqi/types';
 
 import { useSocket, useChannel } from 'phoenix-provider';
 
@@ -59,11 +58,17 @@ function Xiangqi(props: Props) {
   const [xiangqi, setXiangqi] = useState(_xiangqi);
   const [turn, setTurn] = useState(ChessColor.Red);
   const start = useCallback(() => {
-    channel?.push('start');
+    if (channel && channel.isConnected()) {
+      channel.push('start');
+    }
   }, [channel]);
-  const kill = () => {};
-  const movePiece = useCallback((payload) => {
-    channel?.push('move_chess', payload);
+  const kill = (piece) => {
+    piece.live = false;
+    return piece;
+  };
+  const movePiece = useCallback((piece: PieceShape) => {
+    channel?.push('move_chess', piece);
+    return piece;
   }, [channel]);
 
   const setPieces = useCallback(({ redPieces, blackPieces }) => {
