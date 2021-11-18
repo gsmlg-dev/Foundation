@@ -80,4 +80,5 @@ jobs:
         with:
           commit_message: "feat(elixir:gsmlg): Update website to version ${{ steps.semantic.outputs.new_release_version }}."
           file_pattern: "elixir/gsmlg_umbrella/Dockerfile"
+          branch: "next"
 
