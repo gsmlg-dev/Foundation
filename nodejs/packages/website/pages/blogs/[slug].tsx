@@ -12,7 +12,6 @@ import gfm from 'remark-gfm';
 
 import Layout from 'components/Layout';
 
-import blogList from 'blogList';
 
 const PagePaper = styled(Paper)(({
   theme
@@ -61,8 +60,11 @@ function Blog({blog}) {
 }
 
 export async function getStaticPaths() {
-  const paramsList = blogList.map(({name}) => ({
-    params: {slug: name},
+  const response = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
+  const blogList = response.data.data;
+
+  const paramsList = blogList.map(({ slug }) => ({
+    params: { slug },
   }));
 
   return {
