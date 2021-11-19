@@ -68,7 +68,6 @@ function Xiangqi(props: Props) {
   };
   const movePiece = (piece: PieceShape, pos: PositionShape) => {
     channel?.push('move_chess', { item: piece, position: pos });
-    return piece;
   };
 
   const setPieces = useCallback(({ redPieces, blackPieces }) => {
