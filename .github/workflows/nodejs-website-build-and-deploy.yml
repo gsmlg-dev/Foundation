@@ -74,5 +74,5 @@ jobs:
           git config --global user.name "Action Bot"
           git add Dockerfile
           git commit -m "feat(elixir:gsmlg): Update website to version ${WEB_VERSION}."
-          git push origin main:next
+          git push -f origin main:next
 
