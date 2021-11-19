@@ -72,24 +72,15 @@ function Xiangqi(props: Props) {
 
   const setPieces = useCallback(({ redPieces, blackPieces }) => {
     setXiangqi({
-      ...xiangqi,
       redPieces,
       blackPieces,
     });
-  }, [xiangqi]);
+  }, []);
 
   const movePieceRemote = useCallback((item, position) => {
     const turn = item.color === ChessColor.Red ? ChessColor.Black : ChessColor.Red;
-    const chessColor = item.color === ChessColor.Red ? 'redPieces' : 'blackPieces';
-    const index = Number(item.id.slice(1));
-    const chesses = xiangqi[chessColor].slice();
-    chesses[index].position = position;
-    setXiangqi({
-      ...xiangqi,
-      [chessColor]: chesses,
-    });
     setTurn(turn);
-  }, [xiangqi]);
+  }, []);
 
   useEffect(() => {
     if (channel) {
@@ -115,7 +106,10 @@ function Xiangqi(props: Props) {
       });
       channel.on('move_chess_remote', ({ item, position, pieces }) => {
         movePieceRemote(item, position);
-        setPieces(pieces);
+        setPieces({
+          redPieces: pieces.filter((p) => p.color === ChessColor.Red),
+          blackPieces: pieces.filter((p) => p.color === ChessColor.Black),
+        });
       });
       return () => {
         channel.off();
