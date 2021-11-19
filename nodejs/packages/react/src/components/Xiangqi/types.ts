@@ -44,17 +44,17 @@ export type ContainerState = XiangqiState;
 export interface DragDropContextProps {
   redPieces: PieceShape[];
   blackPieces: PieceShape[];
-  kill: (item: object) => PieceShape;
-  movePiece: (item: PieceShape, pos: object) => void;
+  kill: (item: PieceShape) => PieceShape;
+  movePiece: (item: PieceShape, pos: PositionShape) => void;
   turn: ChessColor;
 }
 
 export interface ChessBoardProps {
   redPieces: PieceShape[];
   blackPieces: PieceShape[];
-  kill: (item: object) => PieceShape;
-  movePiece: (item: PieceShape, pos: object) => void;
-  canDrop: (item: object, pos: object, pieces: object) => boolean;
+  kill: (item: PieceShape) => PieceShape;
+  movePiece: (item: PieceShape, pos: PositionShape) => void;
+  canDrop: (item: PieceShape, pos: PositionShape, pieces: PieceShape[]) => boolean;
   turn: ChessColor;
 }
 
