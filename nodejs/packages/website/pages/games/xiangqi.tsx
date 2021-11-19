@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Layout from 'components/Layout';
 import GameBoard from '@gsmlg/react/dist/components/Xiangqi/DndContext';
-import {PieceShape, ChessColor} from '@gsmlg/react/dist/components/Xiangqi/types';
+import {PieceShape, PositionShape, ChessColor} from '@gsmlg/react/dist/components/Xiangqi/types';
 
 import { useSocket, useChannel } from 'phoenix-provider';
 
@@ -66,20 +66,20 @@ function Xiangqi(props: Props) {
     piece.live = false;
     return piece;
   };
-  const movePiece = useCallback((piece: PieceShape) => {
-    channel?.push('move_chess', piece);
+  const movePiece = (piece: PieceShape, pos: PositionShape) => {
+    channel?.push('move_chess', { item: piece, position: pos });
     return piece;
-  }, [channel]);
+  };
 
-  const setPieces = ({ redPieces, blackPieces }) => {
+  const setPieces = useCallback(({ redPieces, blackPieces }) => {
     setXiangqi({
       ...xiangqi,
       redPieces,
       blackPieces,
     });
-  };
+  }, [xiangqi]);
 
-  const movePieceRemote = (item, position) => {
+  const movePieceRemote = useCallback((item, position) => {
     const turn = item.color === ChessColor.Red ? ChessColor.Black : ChessColor.Red;
     const chessColor = item.color === ChessColor.Red ? 'redPieces' : 'blackPieces';
     const index = Number(item.id.slice(1));
@@ -90,13 +90,23 @@ function Xiangqi(props: Props) {
       [chessColor]: chesses,
     });
     setTurn(turn);
-  };
+  }, [xiangqi]);
 
   useEffect(() => {
     if (channel) {
       if (!channel.isJoined()) {
         channel.join();
       }
+      
+      return () => {
+        channel.leave();
+        socket.remove(channel);
+      };
+    }
+  }, [channel, socket]); // eslint-disable-line
+
+  useEffect(() => {
+    if (channel) {
       channel.on('init_pieces', ({ pieces , turn}) => {
         setPieces({
           redPieces: pieces.filter((p) => p.color === ChessColor.Red),
@@ -110,11 +120,9 @@ function Xiangqi(props: Props) {
       });
       return () => {
         channel.off();
-        channel.leave();
-        socket.remove(channel);
       };
     }
-  }, [channel, socket]); // eslint-disable-line
+  }, [channel, xiangqi, movePieceRemote, setPieces]); // eslint-disable-line
 
   return (
     <Layout>

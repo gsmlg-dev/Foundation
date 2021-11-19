@@ -70,10 +70,7 @@ jobs:
           [[ -z "$WEB_VERSION" ]] && exit 252
           sed "s;WEB_VERSION=[0-9]\+.[0-9]\+.[0-9]\+;WEB_VERSION=${WEB_VERSION};g" Dockerfile
           sed -i "s;WEB_VERSION=[0-9]\+.[0-9]\+.[0-9]\+;WEB_VERSION=${WEB_VERSION};g" Dockerfile
-
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "feat(elixir:gsmlg): Update website to version ${{ steps.semantic.outputs.new_release_version }}."
-          file_pattern: "elixir/gsmlg_umbrella/Dockerfile"
-          branch: "next"
+          git add Dockerfile
+          git commit -m "feat(elixir:gsmlg): Update website to version ${WEB_VERSION}."
+          git push origin main:next
 
