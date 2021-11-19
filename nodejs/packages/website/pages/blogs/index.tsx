@@ -41,13 +41,13 @@ function BlogList({blogs = []}) {
         <List>
           {blogs.map(
             (blog): JSX.Element => (
-              <StyledListItem key={blog.slag}>
+              <StyledListItem key={blog.slug}>
                 <ListItemIcon>
                   <WebIcon />
                 </ListItemIcon>
                 <ListItemText
                   primary={
-                    <Link href={`/blogs/${blog.slag}`}>{blog.title}</Link>
+                    <Link href={`/blogs/${blog.slug}`}>{blog.title}</Link>
                   }
                 />
                 <ListItemText secondary={blog.date} />
