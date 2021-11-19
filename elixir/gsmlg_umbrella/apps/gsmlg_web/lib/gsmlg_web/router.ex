@@ -23,11 +23,9 @@ defmodule GSMLGWeb.Router do
     post "/node_management", NodeManagementController, :update
 
     live "/blogs", BlogLive.Index, :index
-    live "/blogs/new", BlogLive.Index, :new
-    live "/blogs/:id/edit", BlogLive.Index, :edit
-
+    live "/blogs/new", BlogLive.Modify, :new
     live "/blogs/:id", BlogLive.Show, :show
-    live "/blogs/:id/show/edit", BlogLive.Show, :edit
+    live "/blogs/:id/edit", BlogLive.Modify, :edit
 
     if Mix.env() in [:prod] do
       import Phoenix.LiveDashboard.Router

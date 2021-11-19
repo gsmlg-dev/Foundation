@@ -18,7 +18,9 @@ defmodule GSMLG.Content do
 
   """
   def list_blogs do
-    Repo.all(Blog)
+    query = from p in Blog,
+          order_by: [desc: p.id]
+    Repo.all(query)
   end
 
   @doc """

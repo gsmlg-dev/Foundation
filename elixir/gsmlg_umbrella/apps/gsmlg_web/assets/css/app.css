@@ -87,3 +87,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.blog-content {
+  min-height: 800px;
+}

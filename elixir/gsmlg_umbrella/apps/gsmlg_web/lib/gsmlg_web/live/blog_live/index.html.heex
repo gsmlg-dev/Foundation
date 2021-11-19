@@ -1,15 +1,6 @@
 <h1>Listing Blogs</h1>
 
-<span><%= live_patch "New Blog", to: Routes.blog_index_path(@socket, :new) %></span>
-
-<%= if @live_action in [:new, :edit] do %>
-  <%= live_modal GSMLGWeb.BlogLive.FormComponent,
-    id: @blog.id || :new,
-    title: @page_title,
-    action: @live_action,
-    blog: @blog,
-    return_to: Routes.blog_index_path(@socket, :index) %>
-<% end %>
+<span><%= live_patch "New Blog", to: Routes.blog_modify_path(@socket, :new) %></span>
 
 <table>
   <thead>
@@ -29,7 +20,7 @@
         <td><%= blog.author %></td>
 
         <td>
-          <span><%= live_patch "Edit", to: Routes.blog_index_path(@socket, :edit, blog) %></span>
+          <span><%= live_redirect "Edit", to: Routes.blog_modify_path(@socket, :edit, blog) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: blog.id, data: [confirm: "Are you sure?"] %></span>
         </td>
       </tr>
