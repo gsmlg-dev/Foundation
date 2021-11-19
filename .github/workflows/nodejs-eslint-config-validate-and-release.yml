@@ -6,7 +6,6 @@ on:
       - '.github/workflows/nodejs-eslint-config-validate-and-release.yml'
     branches:
       - 'main'
-  pull_request: {}
 jobs:
   main:
     # ignore all-contributors PRs
