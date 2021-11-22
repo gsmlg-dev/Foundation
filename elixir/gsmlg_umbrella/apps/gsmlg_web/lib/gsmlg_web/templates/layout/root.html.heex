@@ -10,7 +10,7 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
-    <bx-header style="z-index: 9999" aria-label="GSMLG Admin" role="banner">
+    <bx-header aria-label="GSMLG Admin" role="banner">
       <bx-header-menu-button button-label-active="Close menu" button-label-inactive="Open menu" active="" collapse-mode="responsive" usage-mode=""></bx-header-menu-button>
       <bx-header-name href="javascript:void 0" prefix="GSMLG">[Platform]</bx-header-name>
       <bx-header-nav menu-bar-label="GSMLG Admin" role="navigation">
@@ -26,7 +26,7 @@
         </bx-header-menu>
       </bx-header-nav>
     </bx-header>
-    <bx-side-nav style="margin-top: 30px" aria-label="Side navigation" expanded="" role="navigation" collapse-mode="responsive" usage-mode="">
+    <bx-side-nav class="side-nav" aria-label="Side navigation" expanded="" role="navigation" collapse-mode="responsive" usage-mode="">
       <bx-side-nav-items role="list">
         <bx-side-nav-menu title="Blog" role="listitem" expanded>
           <bx-side-nav-menu-item href={Routes.blog_index_path(@conn, :index)} tabindex="-1" parent-has-icon="">

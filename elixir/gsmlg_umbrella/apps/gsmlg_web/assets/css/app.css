@@ -1,5 +1,5 @@
 /* This file is for your main application CSS */
-@import "./phoenix.css";
+@import './phoenix.css';
 
 /* Alerts and form errors used by phx.new */
 .alert {
@@ -46,15 +46,15 @@
   transition: opacity 1s ease-out;
 }
 
-.phx-disconnected{
+.phx-disconnected {
   cursor: wait;
 }
-.phx-disconnected *{
+.phx-disconnected * {
   pointer-events: none;
 }
 
 .phx-modal {
-  opacity: 1!important;
+  opacity: 1 !important;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -62,8 +62,8 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .phx-modal-content {
@@ -89,10 +89,11 @@
 }
 
 .main-container {
-  margin-top: 30px;
-  min-height: calc(100vh - 30px);
+  margin-top: 3rem;
+  min-height: calc(100vh - 3rem);
 }
 
-.blog-content {
-  min-height: 800px;
+.side-nav {
+  margin-top: 3rem;
+  min-height: calc(100vh - 3rem);
 }
