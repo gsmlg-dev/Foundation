@@ -49,4 +49,29 @@ jobs:
             docker.io/gsmlg/gsmlg.org:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/gsmlg.org:latest
 
+      - name: Setup Elixir
+        uses: erlef/setup-beam@v1
 
+      - name: Run build
+        run: |
+          cd elixir/gsmlg_umbrella
+          mix do deps.get, compile
+          cd apps/gsmlg_web
+          npm install --prefix assets
+          mix assets.deploy
+          cd ../..
+          curl -Lf $(npm info --json @gsmlg/website | jq -r .dist.tarball) -o website.tgz
+          tar xzf website.tgz --strip-components=2 -C apps/gsmlg_web/priv/static
+          mix release gsmlg_umbrella
+          cp -r _build/prod/rel/gsmlg_umbrella gsmlg
+          tar zcf gsmlg.tar.gz gsmlg
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: elixir/gsmlg_umbrella/gsmlg.tar.gz
+          asset_name: gsmlg_umbrella
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "GSMLG Elixir Phoenix APP"
