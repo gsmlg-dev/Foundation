@@ -57,7 +57,7 @@ jobs:
       - name: 🕸 Build Web
         run: |
           cd flutter/mirror
-          flutter build web --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
+          flutter build web --build-name=${{ needs.release.outputs.build_name }}
 
   build-apk:
     runs-on: ubuntu-latest
@@ -87,7 +87,7 @@ jobs:
       - name: 🕸 Build APK
         run: |
           cd flutter/mirror
-          flutter build apk --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
+          flutter build apk --build-name=${{ needs.release.outputs.build_name }}
 
   build-ios:
     runs-on: macos-latest
@@ -117,7 +117,7 @@ jobs:
       - name: 🕸 Build iOS
         run:
           cd flutter/mirror
-          flutter build ios --no-codesign --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
+          flutter build ios --no-codesign --build-name=${{ needs.release.outputs.build_name }}
 
   build-windows:
     runs-on: windows-latest
@@ -150,5 +150,5 @@ jobs:
       - name: 🕸 Build Windows
         run: |
           cd flutter/mirror
-          flutter build windows --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
+          flutter build windows --build-name=${{ needs.release.outputs.build_name }}
 
