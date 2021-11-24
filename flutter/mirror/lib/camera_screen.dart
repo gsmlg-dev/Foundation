@@ -51,7 +51,6 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       body: Container(
-        child: Container(
           alignment: Alignment.center,
           // transform: Matrix4.rotationY(1),
           color: Colors.black,
@@ -71,7 +70,6 @@ class _CameraScreenState extends State<CameraScreen> {
               }
             },
           ),
-        ),
       ),
     );
   }
