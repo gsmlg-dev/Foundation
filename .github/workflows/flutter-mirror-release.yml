@@ -7,18 +7,149 @@ on:
     branches:
       - "main"
 jobs:
-  build-and-release:
+  release:
+    name: Create semantic release
     runs-on: ubuntu-latest
+    outputs:
+      build_name: com.gsmlg.mirror
+      version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2
 
       - name: 🚀 Release
         uses: gsmlg/semantic-release-action@v3
+        id: semantic
         with:
           release_name: mirror
           working-directory: 'flutter/mirror'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
+
+  build-web:
+    runs-on: ubuntu-latest
+    name: Build web
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.3'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter pub get
+
+      - name: 🕸 Build Web
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter build web --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
+
+  build-apk:
+    runs-on: ubuntu-latest
+    name: Build apk
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.3'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter pub get
+
+      - name: 🕸 Build APK
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter build apk --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
+
+  build-ios:
+    runs-on: macos-latest
+    name: Build ios
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.3'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter pub get
+
+      - name: 🕸 Build iOS
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter build ios --no-codesign --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
+
+  build-windows:
+    runs-on: windows-latest
+    name: Build windows
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.3'
+          channel: 'stable'
+
+      - name: Enable windows
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter config --enable-windows-desktop
+
+      - name: 🐳 Install dependencies
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter pub get
+
+      - name: 🕸 Build Windows
+        with:
+          working-directory: 'flutter/mirror'
+        run: flutter build windows --build-number ${{ needs.release.outputs.version }} --build-name=${{ needs.release.outputs.build_name }}
 
