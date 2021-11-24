@@ -61,7 +61,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 // If the Future is complete, display the preview.
                 return Container(
                   alignment: Alignment.center,
-                  transform: Matrix4.rotationZ(0.5),
+                  // transform: Matrix4.rotationZ(0.5),
                   child: CameraPreview(_controller),
                 );
               } else {
