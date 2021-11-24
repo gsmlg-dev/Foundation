@@ -15,12 +15,13 @@ COPY mariadb_repo_setup.sh /tmp/mariadb_repo_setup.sh
 RUN bash /tmp/mariadb_repo_setup.sh --mariadb-server-version="mariadb-${MARIADB_VERSION}"
 
 # install mariadb
-RUN apt-get install -y \
+RUN export ARCH=`dpkg --print-architecture`; \
+    apt-get install -y \
     mariadb-server \
     mariadb-client \
     mariadb-backup \
     mariadb-common \
-    && test [[ "$(dpkg --print-architecture)" == "amd64" ]] \
+    && test "$ARCH" "==" "amd64" \
     && apt-get install -y maxscale
 
 # TODO: Create initialilize file entrypoint file
