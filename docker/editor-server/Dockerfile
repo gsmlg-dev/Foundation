@@ -2,8 +2,11 @@ FROM docker.io/gsmlg/code-server:v3.12.0
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 ENV container=docker
 ENV LC_ALL=en_US.UTF-8
+ENV TZ=Asia/Shanghai
 
 USER root
 
@@ -11,7 +14,7 @@ USER root
 RUN apt-get update && apt-get upgrade -y
 
 # install useful packages
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
+RUN apt-get install -y -qq \
   git \
   gnupg \
   lsb-release \
@@ -74,7 +77,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/minio/mc@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct \
-  && chown -R coder:coder "${GOPATH}" 
+  && chown -R coder:coder "${GOPATH}"
 
 # install python
 RUN apt-get install -y python3 python3-pip \
@@ -104,6 +107,8 @@ RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.de
   && apt-get install -y -qq esl-erlang \
   && apt-get install -y -qq elixir
 
+# TODO: Add ruby installation2
+
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.5/bin/linux/${ARCH}/kubectl" \
@@ -117,7 +122,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && mv skaffold /usr/local/bin/skaffold
 
 # install helm
-RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+RUN curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 # install flutter
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
