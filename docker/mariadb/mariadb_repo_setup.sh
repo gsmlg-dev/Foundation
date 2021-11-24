@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # shellcheck disable=2016 disable=1091 disable=2059
 
-version="2021-08-02"
+version="2021-11-08"
 
 # Notes:
+#   2021-11-08 - Add support for 10.7
 #   2021-08-02 - Add Debian 11 Bullseye & aarch64/arm64 MaxScale repositories
 #   2021-07-30 - Remove Ubuntu 16.04 Xenial
 #   2021-07-06 - Update MariaDB to 10.6
@@ -529,7 +530,7 @@ esac
 fi
 
 case ${mariadb_server_version} in
-  *10.6*)
+  *10.6*|*10.7*)
     url_mariadb_repo="https://dlm.mariadb.com/repo/mariadb-server"
     mariadb_server_version_real=$mariadb_server_version_num
     ;;
