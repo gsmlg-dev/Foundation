@@ -7,7 +7,7 @@ ARG TZ="Asia/Shanghai"
 ARG MARIADB_VERSION="mariadb-10.7"
 
 # Install prerequisites
-RUN apt update && apt-get -y curl ca-certificates
+RUN apt update && apt-get install -y curl ca-certificates
 
 # setup repo
 # file from : https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
