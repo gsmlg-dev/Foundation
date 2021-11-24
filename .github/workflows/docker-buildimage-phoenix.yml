@@ -39,6 +39,6 @@ jobs:
           push: true
           build-args: |
             ELIXIR_VERSION=1.12.3
-            PHOENIX_VERSION=1.5.12
+            PHOENIX_VERSION=1.6.2
           tags: |
             docker.io/gsmlg/phoenix:${{ matrix.type }}
