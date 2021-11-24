@@ -6,6 +6,9 @@ ARG DEBIAN_FRONTEND="noninteractive"
 ARG TZ="Asia/Shanghai"
 ARG MARIADB_VERSION="mariadb-10.7"
 
+# Install prerequisites
+RUN apt update && apt-get -y curl ca-certificates
+
 # setup repo
 # file from : https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
 COPY mariadb_repo_setup.sh /tmp/mariadb_repo_setup.sh
