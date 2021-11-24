@@ -1,4 +1,4 @@
-package com.example.mirror
+package com.gsmlg.mirror
 
 import io.flutter.embedding.android.FlutterActivity
 

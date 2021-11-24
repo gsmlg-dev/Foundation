@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mirror">
+    package="com.gsmlg.mirror">
    <application
         android:label="mirror"
         android:icon="@mipmap/ic_launcher">
