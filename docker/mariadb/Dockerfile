@@ -22,7 +22,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
     mariadb-backup \
     mariadb-common \
     && test "$ARCH" "==" "amd64" \
-    && apt-get install -y maxscale
+    && apt-get install -y maxscale || echo "Skip install maxscale"
 
 # TODO: Create initialilize file entrypoint file
 
