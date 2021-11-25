@@ -56,6 +56,10 @@ jobs:
           elixir-version: '1.12.3'
 
       - name: Run build
+        env:
+          MIX_ENV: prod
+          RELEASE_NAME: gsmlg_umbrella
+          RELEASE_VSN: ${{ steps.semantic.outputs.new_release_version }}
         run: |
           cd elixir/gsmlg_umbrella
           mix do deps.get, compile
@@ -65,7 +69,7 @@ jobs:
           cd ../..
           curl -Lf $(npm info --json @gsmlg/website | jq -r .dist.tarball) -o website.tgz
           tar xzf website.tgz --strip-components=2 -C apps/gsmlg_web/priv/static
-          mix release gsmlg_umbrella
+          mix release gsmlg_umbrella --version ${RELEASE_VSN}
           cp -r _build/prod/rel/gsmlg_umbrella gsmlg
           tar zcf gsmlg.tar.gz gsmlg
 
