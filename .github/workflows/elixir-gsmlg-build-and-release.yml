@@ -25,7 +25,18 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Stop if NO NEW release
-        run: test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
+        run: |
+          cat <<EOF
+          Published: ${{ steps.semantic.outputs.new_release_published }}
+          New Release Version: ${{ steps.semantic.outputs.new_release_version }}
+          New Release Major Version: ${{ steps.semantic.outputs.new_release_major_version }}
+          New Release Minor Version: ${{ steps.semantic.outputs.new_release_minor_version }}
+          New Release Patch Version: ${{ steps.semantic.outputs.new_release_patch_version }}
+          New Release Channel: ${{ steps.semantic.outputs.new_release_channel }}
+          New Release Notes: 
+          ${{ steps.semantic.outputs.new_release_notes }}
+          EOF
+          test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
 
       -
         name: Set up QEMU
@@ -83,6 +94,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: elixir/gsmlg_umbrella/gsmlg.tar.gz
           asset_name: gsmlg_umbrella
-          tag: ${{ github.ref }}
+          tag: ${{ steps.semantic.outputs.new_release_channel }}
           overwrite: true
           body: "GSMLG Elixir Phoenix APP"
