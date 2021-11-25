@@ -51,6 +51,9 @@ jobs:
 
       - name: Setup Elixir
         uses: erlef/setup-beam@v1
+        with:
+          otp-version: '24'
+          elixir-version: '1.12.3'
 
       - name: Run build
         run: |
