@@ -14,7 +14,7 @@ RUN apk update && apk add curl jq git npm \
     && cd apps/gsmlg_web && npm install --prefix assets && mix assets.deploy && cd ../.. \
     && curl -Lf "https://registry.npmjs.org/@gsmlg/website/-/website-${WEB_VERSION}.tgz" -o website.tgz \
     && tar xzf website.tgz --strip-components=2 -C apps/gsmlg_web/priv/static \
-    && mix release gsmlg_umbrella --version ${RELEASE_VERSION} \
+    && mix release gsmlg_umbrella --version "${RELEASE_VERSION}" \
     && cp -r _build/prod/rel/gsmlg_umbrella /app
 
 

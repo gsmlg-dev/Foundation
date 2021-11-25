@@ -23,6 +23,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Stop if NO NEW release
+        run: test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
+
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
