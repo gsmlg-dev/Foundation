@@ -16,7 +16,16 @@ defmodule GSMLGWeb.NodeManagementController do
         send_resp(conn, :forbidden, ~s({"error": "error"}))
     end
   end
+  def update(conn, %{"action" => "connect-node", "target_node" => target_node} = _params) do
+    case target_node |> String.to_atom() |> Node.connect() do
+      true ->
+        send_resp(conn, :created, ~s({"target_node": "#{target_node}"}))
 
+      error ->
+        IO.inspect(error)
+        send_resp(conn, :forbidden, ~s({"error": "error"}))
+    end
+  end
   def update(conn, _params) do
     send_resp(conn, :no_content, "")
   end

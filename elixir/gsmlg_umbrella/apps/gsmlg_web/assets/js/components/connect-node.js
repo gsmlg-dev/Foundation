@@ -2,14 +2,14 @@ import {LitElement, html} from 'lit';
 import {ref, createRef} from 'lit/directives/ref.js';
 
 
-class SetNodeCookie extends LitElement {
+class ConnectNode extends LitElement {
 
   inputRef = createRef();
 
   constructor() {
     super();
     
-    this.cookie = '';
+    this.target_node = '';
     this._loading = false;
   }
 
@@ -34,14 +34,14 @@ class SetNodeCookie extends LitElement {
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          action: 'set-node-cookie',
-          cookie: this.cookie,
+          action: 'connect-node',
+          target_node: this.target_node,
         }),
       });
       const data = await resp.json();
-      const { cookie } = data;
-      const el = document.getElementById('node-cookie-value');
-      el.innerText = cookie;
+      const { target_node } = data;
+      const el = document.getElementById('node-target_node-value');
+      el.innerText = target_node;
       this.loading = false;
     } catch(e) {
       this.loading = false;
@@ -51,13 +51,13 @@ class SetNodeCookie extends LitElement {
   render() {
     return html`
       <div class="form-group">
-          <input type="text" @change=${(evt) => this.cookie = evt.target.value} .value=${this.cookie} ?disabled=${this.loading} />
+          <input type="text" @change=${(evt) => this.target_node = evt.target.value} .value=${this.target_node} ?disabled=${this.loading} />
           <button @click=${this.clickMe} ?disabled=${this.loading}>
-              ${this.loading ? 'Updating ...' : 'Set Cookie'}
+              ${this.loading ? 'Connecting ...' : 'Connect Node'}
           </button>
       </div>
     `;
   }
 }
 
-customElements.define('set-node-cookie', SetNodeCookie);
+customElements.define('connect-node', ConnectNode);

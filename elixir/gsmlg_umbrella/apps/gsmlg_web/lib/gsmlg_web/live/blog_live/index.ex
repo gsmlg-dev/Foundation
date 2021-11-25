@@ -42,6 +42,7 @@ defmodule GSMLGWeb.BlogLive.Index do
     {:noreply, assign(socket, :blogs, list_blogs())}
   end
 
+  @impl true
   def handle_info(:refresh_list, socket) do
     Process.send_after(__MODULE__, :refresh_list, 15_000)
     {:noreply, assign(socket, :blogs, list_blogs())}

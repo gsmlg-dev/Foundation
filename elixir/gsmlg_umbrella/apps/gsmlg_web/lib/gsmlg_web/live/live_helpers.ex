@@ -41,7 +41,7 @@ defmodule GSMLGWeb.LiveHelpers do
       |> Keyword.put_new(:id, input_id(form, field))
       |> Keyword.put_new(:name, input_name(form, field))
       |> Keyword.put_new(:"label-text", humanize(field))
-      |> Keyword.put_new(:value, input_value(form, field))
+      |> Keyword.put_new(:value, value)
 
     inner = content_tag(:"bx-date-picker-input", "", innerOpts)
     content_tag(:"bx-date-picker", inner, opts)

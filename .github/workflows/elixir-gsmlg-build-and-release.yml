@@ -96,4 +96,3 @@ jobs:
           asset_name: gsmlg_umbrella.tar.gz
           tag: gsmlg-v${{ steps.semantic.outputs.new_release_version }}
           overwrite: true
-          body: "GSMLG Elixir Phoenix APP"
