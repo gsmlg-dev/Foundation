@@ -93,7 +93,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: elixir/gsmlg_umbrella/gsmlg.tar.gz
-          asset_name: gsmlg_umbrella
-          tag: ${{ steps.semantic.outputs.new_release_channel }}
+          asset_name: gsmlg_umbrella.tar.gz
+          tag: gsmlg-v${{ steps.semantic.outputs.new_release_version }}
           overwrite: true
           body: "GSMLG Elixir Phoenix APP"
