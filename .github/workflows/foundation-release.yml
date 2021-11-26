@@ -1,0 +1,28 @@
+name: foundation-release
+on:
+  push:
+    paths:
+      - "**"
+    branches:
+      - +([0-9])?(.{+([0-9]),x}).x
+      - main
+      - next
+      - next-major
+      - beta
+      - alpha
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🚀 Release
+        uses: gsmlg/semantic-release-action@v3
+        with:
+          release_name: Foundation
+          working-directory: '.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
