@@ -4,9 +4,27 @@ defmodule GSMLGWeb.BlogLiveTest do
   import Phoenix.LiveViewTest
   import GSMLG.ContentFixtures
 
-  @create_attrs %{author: "some author", content: "some content", date: %{day: 26, month: 9, year: 2021}, slug: "some slug", title: "some title"}
-  @update_attrs %{author: "some updated author", content: "some updated content", date: %{day: 27, month: 9, year: 2021}, slug: "some updated slug", title: "some updated title"}
-  @invalid_attrs %{author: nil, content: nil, date: %{day: 30, month: 2, year: 2021}, slug: nil, title: nil}
+  @create_attrs %{
+    author: "some author",
+    content: "some content",
+    date: %{day: 26, month: 9, year: 2021},
+    slug: "some slug",
+    title: "some title"
+  }
+  @update_attrs %{
+    author: "some updated author",
+    content: "some updated content",
+    date: %{day: 27, month: 9, year: 2021},
+    slug: "some updated slug",
+    title: "some updated title"
+  }
+  @invalid_attrs %{
+    author: nil,
+    content: nil,
+    date: %{day: 30, month: 2, year: 2021},
+    slug: nil,
+    title: nil
+  }
 
   defp create_blog(_) do
     blog = blog_fixture()

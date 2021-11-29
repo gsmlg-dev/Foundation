@@ -14,7 +14,7 @@ defmodule GSMLG.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      xref: [exclude: [GSMLGWeb.Endpoint]],
+      xref: [exclude: [GSMLGWeb.Endpoint]]
     ]
   end
 
@@ -45,7 +45,7 @@ defmodule GSMLG.MixProject do
       {:horde, "~> 0.8.5"},
       {:swoosh, "~> 1.3"},
       {:absinthe, "~> 1.6"},
-      {:guardian, "~> 2.0"},
+      {:guardian, "~> 2.0"}
       # {:absinthe, "~> 1.6.0"},
     ]
   end

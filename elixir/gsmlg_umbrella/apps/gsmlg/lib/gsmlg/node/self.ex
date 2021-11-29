@@ -3,7 +3,7 @@ defmodule GSMLG.Node.Self do
   alias GSMLG.Node.Self
 
   def start_link() do
-    GenServer.start_link(__MODULE__, nil, name: __MODULE__);
+    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
   def start do
@@ -38,7 +38,7 @@ defmodule GSMLG.Node.Self do
   end
 
   def init(init) do
-    state = node_start(%{alive?: Node.alive?, self: Node.self, pid: nil, restart?: true})
+    state = node_start(%{alive?: Node.alive?(), self: Node.self(), pid: nil, restart?: true})
     Process.send_after(__MODULE__, :keep_alive, 60000)
     {:ok, state}
   end
@@ -58,39 +58,65 @@ defmodule GSMLG.Node.Self do
   end
 
   def handle_info(:keep_alive, state) do
-    newState = case {Map.fetch!(state, :restart?), Map.fetch!(state, :alive?)} do
-                 {true, false} -> Self.node_start(state)
-                 _ ->
-                   broadcast "node:lobby", "node_info", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
-                   state
-               end
+    newState =
+      case {Map.fetch!(state, :restart?), Map.fetch!(state, :alive?)} do
+        {true, false} ->
+          Self.node_start(state)
+
+        _ ->
+          broadcast("node:lobby", "node_info", %{
+            name: Node.self(),
+            isAlive: Node.alive?(),
+            from: Self.name()
+          })
+
+          state
+      end
+
     Process.send_after(__MODULE__, :keep_alive, 60000)
     {:noreply, newState}
   end
 
   def node_start(state) do
-    pid = case Node.start(Self.name) do
-            {:ok, pid} -> pid
-            {:error, {:already_started, pid}} -> pid
-            e -> IO.inspect(e)
-          end
-    newState = state
-    |> Map.put(:alive?, Node.alive?)
-    |> Map.put(:self, Node.self)
-    |> Map.put(:pid, pid)
-    |> Map.put(:restart?, true)
-    broadcast "node:lobby", "node_start", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
+    pid =
+      case Node.start(Self.name()) do
+        {:ok, pid} -> pid
+        {:error, {:already_started, pid}} -> pid
+        e -> IO.inspect(e)
+      end
+
+    newState =
+      state
+      |> Map.put(:alive?, Node.alive?())
+      |> Map.put(:self, Node.self())
+      |> Map.put(:pid, pid)
+      |> Map.put(:restart?, true)
+
+    broadcast("node:lobby", "node_start", %{
+      name: Node.self(),
+      isAlive: Node.alive?(),
+      from: Self.name()
+    })
+
     newState
   end
 
   def node_stop(state) do
-    Node.stop
-    newState = state
-    |> Map.put(:alive?, Node.alive?)
-    |> Map.put(:self, Node.self)
-    |> Map.put(:pid, nil)
-    |> Map.put(:restart?, false)
-    broadcast "node:lobby", "node_stop", %{name: Node.self, isAlive: Node.alive?, from: Self.name}
+    Node.stop()
+
+    newState =
+      state
+      |> Map.put(:alive?, Node.alive?())
+      |> Map.put(:self, Node.self())
+      |> Map.put(:pid, nil)
+      |> Map.put(:restart?, false)
+
+    broadcast("node:lobby", "node_stop", %{
+      name: Node.self(),
+      isAlive: Node.alive?(),
+      from: Self.name()
+    })
+
     newState
   end
 
@@ -98,11 +124,11 @@ defmodule GSMLG.Node.Self do
     try do
       GSMLGWeb.Endpoint.broadcast(room, event, opts)
     rescue
-      _ -> 
-        IO.puts "Broadcask node events to node:lobby failed!"
-        IO.inspect room
-        IO.inspect event
-        IO.inspect opts
-    end  
+      _ ->
+        IO.puts("Broadcask node events to node:lobby failed!")
+        IO.inspect(room)
+        IO.inspect(event)
+        IO.inspect(opts)
+    end
   end
 end

@@ -35,7 +35,7 @@ defmodule GSMLGWeb.LiveHelpers do
     opts =
       opts
       |> Keyword.put_new(:"date-format", "Y-m-d")
-    
+
     innerOpts =
       innerOpts
       |> Keyword.put_new(:id, input_id(form, field))
@@ -74,5 +74,4 @@ defmodule GSMLGWeb.LiveHelpers do
 
   defp maybe_html_escape(nil), do: nil
   defp maybe_html_escape(value), do: html_escape(value)
-
 end

@@ -24,12 +24,12 @@ defmodule GSMLGWeb.UserSocket do
   # performing token verification on connect.
   @impl true
   def connect(params, socket, connect_info) do
-    IO.puts "Params: "
-    IO.inspect params
-    IO.puts "Socket: "
-    IO.inspect socket
-    IO.puts "Connect Info: "
-    IO.inspect connect_info
+    IO.puts("Params: ")
+    IO.inspect(params)
+    IO.puts("Socket: ")
+    IO.inspect(socket)
+    IO.puts("Connect Info: ")
+    IO.inspect(connect_info)
     {:ok, socket}
   end
 

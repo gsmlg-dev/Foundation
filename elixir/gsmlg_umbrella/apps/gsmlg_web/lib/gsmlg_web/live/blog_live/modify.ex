@@ -20,9 +20,10 @@ defmodule GSMLGWeb.BlogLive.Modify do
      |> assign(:changeset, changeset)
      |> assign(:blog, blog)}
   end
+
   @impl true
   def handle_params(_, _, socket) do
-    changeset = Content.change_blog(%Blog{date: Date.utc_today})
+    changeset = Content.change_blog(%Blog{date: Date.utc_today()})
 
     {:noreply,
      socket
@@ -33,7 +34,6 @@ defmodule GSMLGWeb.BlogLive.Modify do
 
   defp page_title(:new), do: "New Blog"
   defp page_title(:edit), do: "Edit Blog"
-
 
   @impl true
   def update(%{blog: blog} = assigns, socket) do
@@ -56,7 +56,7 @@ defmodule GSMLGWeb.BlogLive.Modify do
   end
 
   def handle_event("save", %{"blog" => blog_params}, socket) do
-    IO.inspect blog_params
+    IO.inspect(blog_params)
     save_blog(socket, socket.assigns.live_action, blog_params)
   end
 

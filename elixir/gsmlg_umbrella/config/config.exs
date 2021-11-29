@@ -24,8 +24,8 @@ config :gsmlg,
 config :gsmlg, GSMLG.Mailer, adapter: Swoosh.Adapters.Local
 
 config :gsmlg, GSMLG.Guardian,
-       issuer: "gsmlg",
-       secret_key: "Secret key. You can use `mix guardian.gen.secret` to get one"
+  issuer: "gsmlg",
+  secret_key: "Secret key. You can use `mix guardian.gen.secret` to get one"
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false

@@ -13,5 +13,4 @@ defmodule GSMLGWeb.NodeControllerTest do
       assert html_response(conn, 200) =~ "Listing Nodes"
     end
   end
-
 end

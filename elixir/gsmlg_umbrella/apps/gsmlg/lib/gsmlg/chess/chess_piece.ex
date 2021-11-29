@@ -1,14 +1,20 @@
 defmodule GSMLG.Chess.ChessPieces do
-
   def types() do
     [
-      0, # 帅
-      1, # 士
-      2, # 相
-      3, # 马
-      4, # 车
-      5, # 炮
-      6, # 兵
+      # 帅
+      0,
+      # 士
+      1,
+      # 相
+      2,
+      # 马
+      3,
+      # 车
+      4,
+      # 炮
+      5,
+      # 兵
+      6
     ]
   end
 
@@ -93,7 +99,7 @@ defmodule GSMLG.Chess.ChessPieces do
         name: "兵",
         type: 6,
         position: %{x: 8, y: 3}
-      },
+      }
     ]
   end
 
@@ -178,14 +184,25 @@ defmodule GSMLG.Chess.ChessPieces do
         name: "卒",
         type: 6,
         position: %{x: 8, y: 6}
-      },
+      }
     ]
   end
 
   def init_pieces() do
-    red = redPieces() |> Enum.with_index |> Enum.map(fn({v, k}) -> v |> Map.put(:id, "r#{k}") |> Map.put(:color, "red") |> Map.put(:live, true) end)
-    black = blackPieces() |> Enum.with_index |> Enum.map(fn({v, k}) -> v |> Map.put(:id, "b#{k}") |> Map.put(:color, "black") |> Map.put(:live, true) end)
+    red =
+      redPieces()
+      |> Enum.with_index()
+      |> Enum.map(fn {v, k} ->
+        v |> Map.put(:id, "r#{k}") |> Map.put(:color, "red") |> Map.put(:live, true)
+      end)
+
+    black =
+      blackPieces()
+      |> Enum.with_index()
+      |> Enum.map(fn {v, k} ->
+        v |> Map.put(:id, "b#{k}") |> Map.put(:color, "black") |> Map.put(:live, true)
+      end)
+
     red ++ black
   end
-
 end

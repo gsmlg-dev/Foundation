@@ -32,7 +32,6 @@ defmodule GSMLGWeb.Router do
 
       live_dashboard "/dashboard", metrics: GSMLGWeb.Telemetry
     end
-
   end
 
   # Other scopes may use custom stacks.
@@ -40,7 +39,6 @@ defmodule GSMLGWeb.Router do
     pipe_through :api
 
     resources "/blogs", BlogController, except: [:new, :edit]
-
   end
 
   forward "/graphiql", Absinthe.Plug.GraphiQL, schema: GSMLGWeb.Schema

@@ -21,7 +21,13 @@ defmodule GSMLG.ContentTest do
     end
 
     test "create_blog/1 with valid data creates a blog" do
-      valid_attrs = %{author: "some author", content: "some content", date: ~D[2021-09-26], slug: "some slug", title: "some title"}
+      valid_attrs = %{
+        author: "some author",
+        content: "some content",
+        date: ~D[2021-09-26],
+        slug: "some slug",
+        title: "some title"
+      }
 
       assert {:ok, %Blog{} = blog} = Content.create_blog(valid_attrs)
       assert blog.author == "some author"
@@ -37,7 +43,14 @@ defmodule GSMLG.ContentTest do
 
     test "update_blog/2 with valid data updates the blog" do
       blog = blog_fixture()
-      update_attrs = %{author: "some updated author", content: "some updated content", date: ~D[2021-09-27], slug: "some updated slug", title: "some updated title"}
+
+      update_attrs = %{
+        author: "some updated author",
+        content: "some updated content",
+        date: ~D[2021-09-27],
+        slug: "some updated slug",
+        title: "some updated title"
+      }
 
       assert {:ok, %Blog{} = blog} = Content.update_blog(blog, update_attrs)
       assert blog.author == "some updated author"
