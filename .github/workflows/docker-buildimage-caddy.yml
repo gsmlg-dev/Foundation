@@ -44,7 +44,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            CADDY_VERSION=2.4.5
+            CADDY_VERSION=2.4.6
           tags: |
             docker.io/gsmlg/caddy:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/caddy:latest
