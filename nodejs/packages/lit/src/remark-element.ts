@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { until } from 'lit/directives/until.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -29,12 +29,12 @@ export class RemarkElement extends LitElement {
     li > ul {
       display: block;
     }
-    ${oceanic.toString()}
+    ${unsafeCSS(oceanic.toString())}
     @media (prefers-color-scheme: dark) {
-      ${dark.toString()}
+      ${unsafeCSS(dark.toString())}
     }
     @media (prefers-color-scheme: light) {
-      ${light.toString()}
+      ${unsafeCSS(light.toString())}
     }
   `;
 
