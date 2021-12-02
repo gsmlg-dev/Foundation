@@ -17,6 +17,7 @@ export class RemarkElement extends LitElement {
     }
     li > * {
       display: inline-flex;
+      align-items: center;
     }
   `;
 
