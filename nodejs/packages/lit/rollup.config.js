@@ -1,9 +1,11 @@
 const conf = require('@gsmlg/scripts/dist/config/rollup.config');
-const style = require('rollup-plugin-styles');
+const { string } = require("rollup-plugin-string");
 
 module.exports = {
   ...conf,
   plugins: conf.plugins.concat([
-    style(),
+    string({
+      include: "**/*.css",
+    }),
   ]),
 }

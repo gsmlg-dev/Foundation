@@ -7,14 +7,12 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
-// import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
 import rehypePrism from '@mapbox/rehype-prism';
 
-import {VFile} from 'vfile';
-const oceanic = new VFile({ path: 'prism-themes/themes/prism-material-oceanic.css' });
-const light = new VFile({ path: 'prism-themes/themes/prism-material-light.css' });
-const dark = new VFile({ path: 'prism-themes/themes/prism-material-dark.css' });
+import oceanic from './prism-material-oceanic.css';
+import light from './prism-material-light.css';
+import dark from './prism-material-dark.css';
 
 @customElement('remark-element')
 export class RemarkElement extends LitElement {
@@ -29,12 +27,12 @@ export class RemarkElement extends LitElement {
     li > ul {
       display: block;
     }
-    ${unsafeCSS(oceanic.toString())}
+    ${unsafeCSS(String(oceanic))}
     @media (prefers-color-scheme: dark) {
-      ${unsafeCSS(dark.toString())}
+      ${unsafeCSS(String(dark))}
     }
     @media (prefers-color-scheme: light) {
-      ${unsafeCSS(light.toString())}
+      ${unsafeCSS(String(light))}
     }
   `;
 
