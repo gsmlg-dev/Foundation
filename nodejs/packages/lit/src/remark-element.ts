@@ -32,7 +32,7 @@ export class RemarkElement extends LitElement {
     return unified()
       .use(remarkParse)
       .use(remarkGfm)
-      .use(remarkPrism)
+      .use(remarkPrism) // eslint-disable-line @typescript-eslint/no-unsafe-argument
       .use(remarkHtml)
       .process(content)
       .then((vFile) => {
