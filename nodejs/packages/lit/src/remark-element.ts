@@ -7,6 +7,7 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
 
+@customElement('remark-element')
 export class RemarkElement extends LitElement {
   static override styles = css`
     :host {
@@ -34,8 +35,6 @@ export class RemarkElement extends LitElement {
     return html` ${until(md)} `;
   }
 }
-
-customElement('remark-element', RemarkElement);
 
 declare global {
   interface HTMLElementTagNameMap {
