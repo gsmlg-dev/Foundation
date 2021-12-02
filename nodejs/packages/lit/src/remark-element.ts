@@ -11,6 +11,11 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import rehypePrism from '@mapbox/rehype-prism';
 
+import {VFile} from 'vfile';
+const oceanic = new VFile({ path: 'prism-themes/themes/prism-material-oceanic.css' });
+const light = new VFile({ path: 'prism-themes/themes/prism-material-light.css' });
+const dark = new VFile({ path: 'prism-themes/themes/prism-material-dark.css' });
+
 @customElement('remark-element')
 export class RemarkElement extends LitElement {
   static override styles = css`
@@ -23,6 +28,13 @@ export class RemarkElement extends LitElement {
     }
     li > ul {
       display: block;
+    }
+    ${oceanic.toString()}
+    @media (prefers-color-scheme: dark) {
+      ${dark.toString()}
+    }
+    @media (prefers-color-scheme: light) {
+      ${light.toString()}
     }
   `;
 
