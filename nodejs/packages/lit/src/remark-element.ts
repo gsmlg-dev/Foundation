@@ -12,6 +12,10 @@ export class RemarkElement extends LitElement {
   static override styles = css`
     :host {
       display: flex;
+      flex-direction: column;
+    }
+    li > * {
+      display: inline-flex;
     }
   `;
 
