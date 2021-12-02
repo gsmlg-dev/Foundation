@@ -28,7 +28,10 @@
   <li>
     <strong>Content:</strong>
     <br/>
-    <%= @blog.content |> Earmark.as_html!() |> raw %>
+    <hr />
+    <remark-element>
+<%= @blog.content %>
+    </remark-element>
   </li>
 
 </ul>

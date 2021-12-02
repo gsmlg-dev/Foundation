@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "carbon-web-components": "^1.19.0",
-    "lit": "^2.0.0"
+    "lit": "^2.0.0",
+    "remark-html": "^15.0.1",
+    "remark-parse": "^10.0.1",
+    "unified": "^10.1.1"
   }
 }

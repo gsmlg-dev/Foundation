@@ -80,7 +80,7 @@ module.exports = () => ({
     isUMD
       ? require.resolve('babel-plugin-transform-inline-environment-variables')
       : null,
-    [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true, decoratorsBeforeExport: true }],
+    [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
     [require.resolve('@babel/plugin-proposal-class-properties'), {loose: true}],
     require.resolve('babel-plugin-minify-dead-code-elimination'),
     treeshake

@@ -27,7 +27,7 @@ interface BlogStruct {
   title: string;
   slug: string;
   date: string;
-  content: string | null;
+  content?: string | null;
 }
 
 function Blog({blog}) {
