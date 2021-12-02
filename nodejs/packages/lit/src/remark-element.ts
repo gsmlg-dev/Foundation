@@ -19,6 +19,10 @@ export class RemarkElement extends LitElement {
       display: inline-flex;
       align-items: center;
     }
+    li > ul {
+      display: flex;
+      flex-direction: column;
+    }
   `;
 
   @property()
