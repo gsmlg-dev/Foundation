@@ -6,6 +6,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
+import remarkGfm from 'remark-gfm';
 
 @customElement('remark-element')
 export class RemarkElement extends LitElement {
@@ -26,6 +27,7 @@ export class RemarkElement extends LitElement {
     const content = this.content || this.innerHTML;
     return unified()
       .use(remarkParse)
+      .use(remarkGfm)
       .use(remarkHtml)
       .process(content)
       .then((vFile) => {

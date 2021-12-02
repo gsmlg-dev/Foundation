@@ -39,6 +39,7 @@
     "lit-element": "^3.0.2",
     "lit-html": "^2.0.2",
     "remark": "^14.0.2",
+    "remark-gfm": "^3.0.1",
     "remark-html": "^15.0.1",
     "remark-parse": "^10.0.1",
     "unified": "^10.1.1"
