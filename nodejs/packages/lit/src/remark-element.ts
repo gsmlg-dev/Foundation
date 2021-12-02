@@ -5,9 +5,10 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
-import remarkHtml from 'remark-html';
 import remarkGfm from 'remark-gfm';
-import remarkPrism from 'remark-prism';
+import remarkRehype from 'remark-rehype';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeStringify from 'rehype-stringify';
 
 @customElement('remark-element')
 export class RemarkElement extends LitElement {
@@ -32,8 +33,9 @@ export class RemarkElement extends LitElement {
     return unified()
       .use(remarkParse)
       .use(remarkGfm)
-      .use(remarkPrism) // eslint-disable-line @typescript-eslint/no-unsafe-argument
-      .use(remarkHtml)
+      .use(remarkRehype)
+      .use(rehypeHighlight)
+      .use(rehypeStringify)
       .process(content)
       .then((vFile) => {
         return unsafeHTML(String(vFile));
