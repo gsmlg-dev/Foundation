@@ -7,8 +7,9 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
-import rehypeHighlight from 'rehype-highlight';
+// import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
+import rehypePrism from '@mapbox/rehype-prism';
 
 @customElement('remark-element')
 export class RemarkElement extends LitElement {
@@ -34,7 +35,7 @@ export class RemarkElement extends LitElement {
       .use(remarkParse)
       .use(remarkGfm)
       .use(remarkRehype)
-      .use(rehypeHighlight)
+      .use(rehypePrism) // eslint-disable-line @typescript-eslint/no-unsafe-argument
       .use(rehypeStringify)
       .process(content)
       .then((vFile) => {
