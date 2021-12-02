@@ -106,7 +106,7 @@ function externalPredicate(id) {
 }
 
 const filename = [
-  pkg.name,
+  name,
   filenameSuffix,
   `.${format}`,
   minify ? '.min' : null,
