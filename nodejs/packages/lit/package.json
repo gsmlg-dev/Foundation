@@ -9,14 +9,14 @@
   "private": false,
   "scripts": {
     "test": "gsmlg-scripts test",
-    "build": "gsmlg-scripts build",
+    "build": "BUILD_NAME=lit gsmlg-scripts build --bundle esm,cjs",
     "lint": "gsmlg-scripts lint",
     "format": "gsmlg-scripts format",
     "validate": "gsmlg-scripts validate"
   },
   "devDependencies": {
     "@babel/plugin-syntax-decorators": "^7.16.0",
-    "@gsmlg/scripts": "^1.7.0",
+    "@gsmlg/scripts": "^1.7.1",
     "@types/node": "^16.11.11",
     "typescript": "^4.5.2"
   },
