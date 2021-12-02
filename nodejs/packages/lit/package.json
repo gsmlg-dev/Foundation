@@ -1,0 +1,46 @@
+{
+  "name": "@gsmlg/lit",
+  "version": "0.0.0-semantically-released",
+  "description": "Lit components that just works.",
+  "main": "dist/index.js",
+  "repository": "https://github.com/gsmlg-dev/Foundation.git",
+  "author": "Jonathan Gao",
+  "license": "GPLv3",
+  "private": false,
+  "scripts": {
+    "test": "gsmlg-scripts test",
+    "build": "gsmlg-scripts build",
+    "lint": "gsmlg-scripts lint",
+    "format": "gsmlg-scripts format",
+    "validate": "gsmlg-scripts validate"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-decorators": "^7.16.0",
+    "@gsmlg/scripts": "^1.6.0",
+    "@types/node": "^16.11.7",
+    "typescript": "^4.5.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "lit",
+    "lit-element",
+    "lit-html",
+    "component",
+    "ui"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.16.3",
+    "lit": "^2.0.2",
+    "lit-element": "^3.0.2",
+    "lit-html": "^2.0.2",
+    "remark": "^14.0.2",
+    "remark-html": "^15.0.1",
+    "remark-parse": "^10.0.1",
+    "unified": "^10.1.1"
+  }
+}
