@@ -7,6 +7,7 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
 import remarkGfm from 'remark-gfm';
+import remarkPrism from 'remark-prism';
 
 @customElement('remark-element')
 export class RemarkElement extends LitElement {
@@ -31,6 +32,7 @@ export class RemarkElement extends LitElement {
     return unified()
       .use(remarkParse)
       .use(remarkGfm)
+      .use(remarkPrism)
       .use(remarkHtml)
       .process(content)
       .then((vFile) => {
