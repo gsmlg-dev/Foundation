@@ -35,7 +35,6 @@ defmodule GSMLGWeb.BlogLive.Modify do
   defp page_title(:new), do: "New Blog"
   defp page_title(:edit), do: "Edit Blog"
 
-  @impl true
   def update(%{blog: blog} = assigns, socket) do
     changeset = Content.change_blog(blog)
 
