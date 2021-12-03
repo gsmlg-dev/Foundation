@@ -2,7 +2,7 @@
 
 const api = (req, res) => {
   res.statusCode = 200;
-  res.json({name: 'John Doe'});
+  res.json({name: 'Jonathan Gao'});
 };
 
 export default api;

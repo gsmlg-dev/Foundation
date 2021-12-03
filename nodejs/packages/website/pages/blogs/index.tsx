@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import Head from 'next/head';
 import { styled } from '@mui/material/styles';
 
@@ -61,9 +59,9 @@ function BlogList({blogs = []}) {
 }
 
 export async function getStaticProps(context) {
-  const reponse = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
-  const data = reponse.data.data;
-  const blogs = data.sort((a, b) => a.id > b.id ? -1 : 1)
+  const { default: blogList } = await import('../../data/blogs.json');
+
+  const blogs = blogList.sort((a, b) => a.id > b.id ? -1 : 1)
   
   return {
     props: {

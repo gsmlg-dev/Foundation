@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
@@ -69,8 +68,7 @@ function Blog({blog}) {
 }
 
 export async function getStaticPaths() {
-  const response = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
-  const blogList = response.data.data;
+  const { default: blogList } = await import('../../data/blogs.json');
 
   const paramsList = blogList.map(({ slug }) => ({
     params: { slug },
@@ -85,8 +83,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({params}) {
   const {slug} = params;
 
-  const response = await axios.get('https://gsmlg.org/api/blogs', { responseType: 'json' });
-  const blogList = response.data.data;
+  const { default: blogList } = await import('../../data/blogs.json');
   const blog = blogList.find((b) => b.slug === slug);
 
   return {
