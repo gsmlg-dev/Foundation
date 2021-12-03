@@ -24,7 +24,7 @@ export const ChessBoard = ({
   const renderSquare = (i): JSX.Element => {
     const x = i % 9;
     const y = Math.floor(i / 9);
-    const pieces = allPieces.filter((p) => p.live === true);
+    const pieces = allPieces.filter((p) => p.live);
     const item = pieces.find(
       ({ position: { x: px, y: py } }) => px === x && py === y,
     );

@@ -9,7 +9,7 @@ export enum ColorScheme {
 export const usePrefersColorScheme = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>(ColorScheme.none);
   useEffect(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       // dark mode
       setColorScheme(ColorScheme.dark);
       const listener = (e: MediaQueryListEvent) => {
@@ -20,7 +20,7 @@ export const usePrefersColorScheme = () => {
       return () => {
         window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', listener);
       };
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
       // light mode
       setColorScheme(ColorScheme.light);
       const listener = (e: MediaQueryListEvent) => {
