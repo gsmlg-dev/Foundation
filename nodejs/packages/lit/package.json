@@ -34,19 +34,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.16.3",
-    "@mapbox/rehype-prism": "^0.8.0",
     "lit": "^2.0.2",
     "lit-element": "^3.0.2",
     "lit-html": "^2.0.2",
-    "prism-themes": "^1.9.0",
-    "rehype-highlight": "^5.0.0",
+    "rehype-highlight": "^5.0.1",
     "rehype-stringify": "^9.0.2",
     "remark": "^14.0.2",
     "remark-gfm": "^3.0.1",
     "remark-parse": "^10.0.1",
-    "remark-rehype": "^10.0.1",
+    "remark-rehype": "^10.1.0",
     "rollup-plugin-string": "^3.0.0",
-    "unified": "^10.1.1",
-    "vfile": "^5.2.0"
+    "unified": "^10.1.1"
   }
 }

@@ -8,7 +8,7 @@ import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
-import rehypePrism from '@mapbox/rehype-prism';
+import rehypeHighlight from 'rehype-highlight';
 
 import oceanic from './prism-material-oceanic.css';
 import light from './prism-material-light.css';
@@ -36,8 +36,11 @@ export class RemarkElement extends LitElement {
     }
   `;
 
+  @property({ type: Boolean })
+  decode : boolean = false;
+
   @property()
-  content = '';
+  content : string = '';
 
   private _generate() {
     const content = this.content || this.innerHTML;
@@ -45,7 +48,7 @@ export class RemarkElement extends LitElement {
       .use(remarkParse)
       .use(remarkGfm)
       .use(remarkRehype)
-      .use(rehypePrism) // eslint-disable-line @typescript-eslint/no-unsafe-argument
+      .use(rehypeHighlight, { ignoreMissing: true })
       .use(rehypeStringify)
       .process(content)
       .then((vFile) => {
