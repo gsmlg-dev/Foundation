@@ -2,13 +2,15 @@ import axios from 'axios';
 import { styled } from '@mui/material/styles';
 
 import Head from 'next/head';
+import dynamic from 'next/dynamic'
 
-import ReactMarkdown from 'react-markdown';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
-import gfm from 'remark-gfm';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
 
 import Layout from 'components/Layout';
 
@@ -29,6 +31,8 @@ interface BlogStruct {
   date: string;
   content?: string | null;
 }
+
+import 'highlight.js/styles/github.css';
 
 function Blog({blog}) {
 
@@ -52,7 +56,12 @@ function Blog({blog}) {
         </header>
         <Divider />
         <Typography className="blog-content" component="section">
-          <ReactMarkdown plugins={[gfm]}>{blog.content}</ReactMarkdown>
+          <ReactMarkdown 
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[[rehypeHighlight, { ignoreMissing: true }]]}
+          >
+            {blog.content}
+          </ReactMarkdown>
         </Typography>
       </PagePaper>
     </Layout>
