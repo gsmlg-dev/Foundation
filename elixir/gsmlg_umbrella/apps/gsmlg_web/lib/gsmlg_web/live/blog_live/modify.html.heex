@@ -19,6 +19,16 @@
 
     <%= bx_textarea f, :content, [rows: 50] %>
     <%= error_tag f, :content %>
+
+    <remark-element id="content-preview"><%= @blog.content |> raw %></remark-element>
+    <script>
+    const ipt = document.getElementById('blog_content');
+    const pre = document.getElementById('content-preview');
+    ipt.addEventListener('input', () => {
+      pre.innerHTML = ipt.value;
+      pre.requestUpdate();
+    });
+    </script>
   
     <div>
       <%= submit "Save", phx_disable_with: "Saving..." %>
