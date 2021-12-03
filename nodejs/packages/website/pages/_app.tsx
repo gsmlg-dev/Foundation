@@ -5,7 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { Provider as PhoenixProvider } from 'phoenix-provider';
-import theme from '../src/theme';
+import { usePrefersColorScheme } from '@gsmlg/react/dist/hooks/usePrefersColorScheme';
+
+import getTheme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 
 import '../styles/globals.css';
@@ -19,6 +21,8 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const colorScheme = usePrefersColorScheme();
+  const theme = getTheme(colorScheme);
 
   return (
     <CacheProvider value={emotionCache}>
@@ -28,6 +32,7 @@ export default function MyApp(props: MyAppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <meta name="theme-color" content={theme.palette.primary.main} />
       </Head>
       <PhoenixProvider url={'/socket'} params={{ token: 'anonymous' }}>
         <StyledEngineProvider injectFirst>

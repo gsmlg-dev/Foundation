@@ -5,6 +5,8 @@ const withTM = require('next-transpile-modules')([
   'react-markdown',
   'remark-gfm',
   'rehype-highlight',
+  'remark-mermaidjs',
+  'puppeteer',
 ]);
 
 module.exports = {
@@ -13,4 +15,15 @@ module.exports = {
   },
   assetPrefix: '/',
   ...withTM(),
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `fs` module
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+      config.resolve.fallback.net = false;
+      config.resolve.fallback.tls = false;
+      config.resolve.fallback.child_process = false;
+    }
+
+    return config
+  },
 };
