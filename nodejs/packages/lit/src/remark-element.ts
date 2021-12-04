@@ -108,8 +108,8 @@ export class RemarkElement extends LitElement {
 
   private _decodeEntities(txt: string) : string {
     return txt
-      .replace('&gt;', '>')
-      .replace('&lt;', '<');
+      .replaceAll('&gt;', '>')
+      .replaceAll('&lt;', '<');
   }
 }
 
