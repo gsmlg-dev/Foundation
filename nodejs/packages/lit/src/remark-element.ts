@@ -119,12 +119,6 @@ export class RemarkElement extends LitElement {
       .replace(/&gt;/ig, '>')
       .replace(/&lt;/ig, '<');
   }
-  private _remove(id : string) {
-    const els = document.querySelectorAll(`#${id}`);
-    els.forEach((el) => {
-      el.parentElement?.removeChild(el);
-    });
-  }
 }
 
 declare global {
