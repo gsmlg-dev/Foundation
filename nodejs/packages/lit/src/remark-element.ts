@@ -10,6 +10,8 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import rehypeHighlight from 'rehype-highlight';
 
+import mermaid from 'mermaid';
+
 import oceanic from './prism-material-oceanic.css';
 import light from './prism-material-light.css';
 import dark from './prism-material-dark.css';
@@ -42,6 +44,10 @@ export class RemarkElement extends LitElement {
   @property()
   content : string = '';
 
+  constructor() {
+    super();
+  }
+
   private _generate() {
     const content = this.content || this.innerHTML;
     return unified()
@@ -54,6 +60,28 @@ export class RemarkElement extends LitElement {
       .then((vFile) => {
         return unsafeHTML(String(vFile));
       });
+  }
+
+  override updated() {
+    const els : NodeListOf<HTMLElement> = this.renderRoot.querySelectorAll('code.language-mermaid');
+    const wrap = document.createElement('div');
+    document.body.appendChild(wrap);
+    wrap.style.display='none';
+    wrap.id = 'mermaid-wrap';
+    for (let i = 0, len = els.length; i < len; i += 1) {
+      const box = document.createElement('div');
+      box.id = `mermaid-${i}`;
+      wrap.appendChild(box);
+      const el = els[i];
+      const txt = el.innerText;
+      console.log(txt)
+      const cb = function(svgGraph: string){
+        el.innerHTML = svgGraph;
+      };
+      mermaid.mermaidAPI.render(`mermaid-${i}`, txt, cb);
+      wrap.removeChild(box);
+    }
+    document.body.removeChild(wrap);
   }
 
   override render() {

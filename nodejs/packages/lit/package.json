@@ -34,9 +34,11 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.16.3",
+    "@types/mermaid": "^8.2.7",
     "lit": "^2.0.2",
     "lit-element": "^3.0.2",
     "lit-html": "^2.0.2",
+    "mermaid": "^8.13.4",
     "rehype-highlight": "^5.0.1",
     "rehype-stringify": "^9.0.2",
     "remark": "^14.0.2",
