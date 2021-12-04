@@ -39,10 +39,11 @@ export class RemarkElement extends LitElement {
   `;
 
   @property({ type: Boolean })
-  decode : boolean = false;
+  debug : boolean = false;
 
   @property()
   content : string = '';
+
 
   constructor() {
     super();
@@ -80,10 +81,20 @@ export class RemarkElement extends LitElement {
       wrap.appendChild(box);
       const el = els[i];
       const txt = el.innerText;
-      const cb = function cb(svgGraph: string){
+      if (this.debug) {
+        console.log(txt);
+      }
+      const cb = (svgGraph: string) => {
+        if (this.debug) {
+          console.log(svgGraph)
+        }
         el.innerHTML = svgGraph;
       };
-      mermaid.mermaidAPI.render(`mermaid-${i}`, txt, cb);
+      const decodedTxt = this._decodeEntities(txt);
+      if (this.debug) {
+        console.log(decodedTxt);
+      }
+      mermaid.mermaidAPI.render(`mermaid-${i}`, decodedTxt, cb);
       wrap.removeChild(box);
     }
     document.body.removeChild(wrap);
@@ -93,6 +104,12 @@ export class RemarkElement extends LitElement {
     const md = this._generate();
 
     return html` ${until(md)} `;
+  }
+
+  private _decodeEntities(txt: string) : string {
+    return txt
+      .replace('&gt;', '>')
+      .replace('&lt;', '<');
   }
 }
 
