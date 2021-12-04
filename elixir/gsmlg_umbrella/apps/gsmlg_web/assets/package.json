@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@gsmlg/lit": "^1.9.0",
+    "@gsmlg/lit": "^1.10.5",
     "carbon-web-components": "^1.19.0",
     "lit": "^2.0.2",
     "remark-html": "^15.0.1",
