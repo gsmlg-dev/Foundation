@@ -1,6 +1,14 @@
 [
   {
     "author": "Gao",
+    "content": "# 使用`mermaid.js`来绘制图表\n\n最近需要绘制一些流程图来做说明，大概检索了一下现在可以使用的东西。\n\n看到了`mermaid`这个图表绘制工具。\n这款软件曾经获得过OpenSource Reword 2019\n\n`mermaid`是一款使用标记语言来绘制图表的工具，可以快速的绘制出流程图来，让你的表达跟上你的思想。\n\n这款图表的实现原理是解析标记语言，再根据标记语言，使用d3来绘制图表。\n收到d3的限制，只能在dom中使用。\n\n图表可轻易嵌入markdown之中，如下：\n\n```\nflowchart LR\n  A[Jonathan]\n  B[Develop next app]\n  C[Develop phoenix app]\n  D[Develop mail server]\n  E[Develop notification server]\n  F[Develop cdn server]\n  G[Develop database]\n  Z[GSMLG Application]\n  A-->B\n  A-->C\n  A-->D\n  A-->E\n  A-->F\n  A-->G\n  B-->Z\n  C-->Z\n  D-->Z\n  E-->Z\n  F-->Z\n  G-->Z\n```\n生成的图表\n```mermaid\nflowchart LR\n  A[Jonathan]\n  B[Develop next app]\n  C[Develop phoenix app]\n  D[Develop mail server]\n  E[Develop notification server]\n  F[Develop cdn server]\n  G[Develop database]\n  Z[GSMLG Application]\n  A-->B\n  A-->C\n  A-->D\n  A-->E\n  A-->F\n  A-->G\n  B-->Z\n  C-->Z\n  D-->Z\n  E-->Z\n  F-->Z\n  G-->Z\n```\n\n\n### 支持的图表类型\n\n* Flowchart\n* Sequence diagram\n* Gantt diagram\n* Class diagram\n* State Diagram\n* Git graph\n* Entity Relationship Diagram - ! experimental\n* User Journey Diagram\n* Gantt\n* Requirement Diagram\n\n\n**配置文档**\n\n更详细的配置文档可以在 [这里](https://mermaid-js.github.io/mermaid/#/flowchart) 找到。\n\n\n### Demo\n\n```mermaid\nsequenceDiagram\n    actor A as Client\n    participant B as Front Server\n    participant C as Backen Servers\n    A ->>+ B: Get Page\n    B ->>+ C: Get Data\n    B ->>+ C: Get Resource\n    C -->>- B: Return Data\n    C -->>- B: Return Resource\n    B -->>- A: Rsponse Page\n```\n",
+    "date": "2021-12-04",
+    "id": 58,
+    "slug": "using-mermaid-js",
+    "title": "使用mermaid.js来绘制图表"
+  },
+  {
+    "author": "Gao",
     "content": "Chrome浏览器的代码块一只显示异常。\n\n出现的问题是CSS给代码块设置的颜色无效，代码的字体一直是显示为默认的颜色。\n\n尝试修改了颜色主题，用户信息，清空了插件，都没有作用。\n\n在更换了用户档案后，发现恢复正常显示。\n\n应该是用户档案配置的问题。\n\n经过逐一排查，发现定义了等宽字体为\"Source Code Pro\"，在修改CSS字体为不存在字体时，显示正常。\n\n目前确定原因时由于字体设置问题导致的颜色异常。\n\n将chrome默认字体灯管改为一个其他的等宽字体后后，显示一切正常。\n\n这里有个问题，原先字体是`custom`，现在字体不知道如何选择，目前只用了了`Andale Mono`来代替。",
     "date": "2021-12-03",
     "id": 57,
