@@ -12,9 +12,9 @@ import rehypeHighlight from 'rehype-highlight';
 
 import mermaid from 'mermaid';
 
-import oceanic from './prism-material-oceanic.css';
-import light from './prism-material-light.css';
-import dark from './prism-material-dark.css';
+import github from './github.css';
+import light from './atom-one-light.css';
+import dark from './atom-one-dark.css';
 
 @customElement('remark-element')
 export class RemarkElement extends LitElement {
@@ -29,12 +29,12 @@ export class RemarkElement extends LitElement {
     li > ul {
       display: block;
     }
-    ${unsafeCSS(String(oceanic))}
+    ${unsafeCSS(github)}
     @media (prefers-color-scheme: dark) {
-      ${unsafeCSS(String(dark))}
+      ${unsafeCSS(dark)}
     }
     @media (prefers-color-scheme: light) {
-      ${unsafeCSS(String(light))}
+      ${unsafeCSS(light)}
     }
   `;
 
