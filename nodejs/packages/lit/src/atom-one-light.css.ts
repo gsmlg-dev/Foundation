@@ -2,6 +2,7 @@ const light = `
 .hljs {
   color: #383a42;
   background: #fafafa;
+  display: block;
 }
 
 .hljs-comment,

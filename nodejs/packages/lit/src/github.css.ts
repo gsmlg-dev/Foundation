@@ -1,7 +1,8 @@
 const oceanic = `
 .hljs {
-color: #24292e;
-background: #ffffff;
+  color: #24292e;
+  background: #ffffff;
+  display: block;
 }
 
 .hljs-doctag,

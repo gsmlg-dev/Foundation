@@ -3,6 +3,7 @@ const dark = `
 .hljs {
   color: #abb2bf;
   background: #282c34;
+  display: block;
 }
 
 .hljs-comment,
