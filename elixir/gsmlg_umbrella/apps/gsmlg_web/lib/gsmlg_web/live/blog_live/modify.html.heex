@@ -22,12 +22,13 @@
 
     <remark-element id="content-preview"><%= @blog.content |> raw %></remark-element>
     <script>
-    const ipt = document.getElementById('blog_content');
-    const pre = document.getElementById('content-preview');
-    ipt.addEventListener('input', () => {
-      pre.innerHTML = ipt.value;
-      pre.requestUpdate();
-    });
+      const ipt = document.getElementById('blog_content');
+      const pre = document.getElementById('content-preview');
+      ipt.addEventListener('input', () => {
+        pre.innerHTML = ipt.value;
+        pre.requestUpdate();
+        // pre.updated();
+      });
     </script>
   
     <div>
