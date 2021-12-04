@@ -61,7 +61,13 @@ function BlogList({blogs = []}) {
 export async function getStaticProps(context) {
   const { default: blogList } = await import('../../data/blogs.json');
 
-  const blogs = blogList.sort((a, b) => a.id > b.id ? -1 : 1)
+  const blogs = blogList.slice().sort((a, b) => a.id > b.id ? -1 : 1).map((b) => ({
+    id: b.id,
+    slug: b.slug,
+    title: b.title,
+    date: b.date,
+    author: b.author,
+  }));
   
   return {
     props: {
