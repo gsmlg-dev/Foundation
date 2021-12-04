@@ -80,7 +80,6 @@ export class RemarkElement extends LitElement {
       wrap.appendChild(box);
       const el = els[i];
       const txt = el.innerText;
-      console.log(txt)
       const cb = function cb(svgGraph: string){
         el.innerHTML = svgGraph;
       };
