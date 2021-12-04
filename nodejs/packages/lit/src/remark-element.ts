@@ -76,9 +76,9 @@ export class RemarkElement extends LitElement {
 
   override updated() {
     const els : NodeListOf<HTMLElement> = this.renderRoot.querySelectorAll('code.language-mermaid');
-    const fragement = document.createDocumentFragment();
-    fragement.append(this._fragement);
-    const contentEl : NodeListOf<HTMLElement> = fragement.querySelectorAll('code.language-mermaid');
+    const fragement = document.createElement('div');
+    fragement.innerHTML = this._fragement;
+    const contentEls : NodeListOf<HTMLElement> = fragement.querySelectorAll('code.language-mermaid');
     const wrap = document.createElement('div');
     document.body.appendChild(wrap);
     wrap.style.display='none';
@@ -89,7 +89,7 @@ export class RemarkElement extends LitElement {
       wrap.append(box);
       box.style.display='none';
       const el = els[i];
-      const txt = contentEl[i].innerText;
+      const txt = contentEls[i].innerText;
       if (this.debug) {
         console.log(txt);
       }
