@@ -44,6 +44,8 @@ export class RemarkElement extends LitElement {
   @property()
   content : string = '';
 
+  private _mid: string;
+  private _fragement: string;
 
   constructor() {
     super();
@@ -52,7 +54,9 @@ export class RemarkElement extends LitElement {
     mermaid.initialize({
       startOnLoad: false,
       theme: isDark ? 'dark' : 'default',
-    })
+    });
+    this._mid = this.id || `t${+new Date()}`;
+    this._fragement = '';
   }
 
   private _generate() {
@@ -65,22 +69,27 @@ export class RemarkElement extends LitElement {
       .use(rehypeStringify)
       .process(content)
       .then((vFile) => {
+        this._fragement = String(vFile);
         return unsafeHTML(String(vFile));
       });
   }
 
   override updated() {
     const els : NodeListOf<HTMLElement> = this.renderRoot.querySelectorAll('code.language-mermaid');
+    const fragement = document.createDocumentFragment();
+    fragement.append(this._fragement);
+    const contentEl : NodeListOf<HTMLElement> = fragement.querySelectorAll('code.language-mermaid');
     const wrap = document.createElement('div');
     document.body.appendChild(wrap);
     wrap.style.display='none';
-    wrap.id = 'mermaid-wrap';
+    wrap.id = `mermaid-wrap-${this._mid}`;
     for (let i = 0, len = els.length; i < len; i += 1) {
       const box = document.createElement('div');
-      box.id = `mermaid-${i}`;
-      wrap.appendChild(box);
+      box.id = `mermaid-${this._mid}-${i}`;
+      wrap.append(box);
+      box.style.display='none';
       const el = els[i];
-      const txt = el.innerText;
+      const txt = contentEl[i].innerText;
       if (this.debug) {
         console.log(txt);
       }
@@ -94,9 +103,10 @@ export class RemarkElement extends LitElement {
       if (this.debug) {
         console.log(decodedTxt);
       }
-      mermaid.mermaidAPI.render(`mermaid-${i}`, decodedTxt, cb);
+      mermaid.mermaidAPI.render(box.id, decodedTxt, cb);
+      this._remove(box.id)
     }
-    document.body.removeChild(wrap);
+    this._remove(wrap.id);
   }
 
   override render() {
@@ -107,8 +117,14 @@ export class RemarkElement extends LitElement {
 
   private _decodeEntities(txt: string) : string {
     return txt
-      .replaceAll('&gt;', '>')
-      .replaceAll('&lt;', '<');
+      .replace(/&gt;/ig, '>')
+      .replace(/&lt;/ig, '<');
+  }
+  private _remove(id : string) {
+    const els = document.querySelectorAll(`#${id}`);
+    els.forEach((el) => {
+      el.parentElement?.removeChild(el);
+    });
   }
 }
 
