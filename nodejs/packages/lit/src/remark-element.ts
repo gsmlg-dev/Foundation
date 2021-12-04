@@ -79,15 +79,16 @@ export class RemarkElement extends LitElement {
     const fragement = document.createElement('div');
     fragement.innerHTML = this._fragement;
     const contentEls : NodeListOf<HTMLElement> = fragement.querySelectorAll('code.language-mermaid');
-    const wrap = document.createElement('div');
-    document.body.appendChild(wrap);
-    wrap.style.display='none';
-    wrap.id = `mermaid-wrap-${this._mid}`;
+
     for (let i = 0, len = els.length; i < len; i += 1) {
-      const box = document.createElement('div');
-      box.id = `mermaid-${this._mid}-${i}`;
-      wrap.append(box);
-      box.style.display='none';
+      const boxId = `mermaid-${this._mid}-${i}`;
+      let box = document.getElementById(boxId);
+      if (!box) {
+        box = document.createElement('div');
+        box.id = boxId;
+        document.body.append(box);
+        box.style.display='none';
+      }
       const el = els[i];
       const txt = contentEls[i].innerText;
       if (this.debug) {
@@ -104,9 +105,7 @@ export class RemarkElement extends LitElement {
         console.log(decodedTxt);
       }
       mermaid.mermaidAPI.render(box.id, decodedTxt, cb);
-      this._remove(box.id)
     }
-    this._remove(wrap.id);
   }
 
   override render() {
