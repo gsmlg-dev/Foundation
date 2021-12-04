@@ -95,7 +95,6 @@ export class RemarkElement extends LitElement {
         console.log(decodedTxt);
       }
       mermaid.mermaidAPI.render(`mermaid-${i}`, decodedTxt, cb);
-      wrap.removeChild(box);
     }
     document.body.removeChild(wrap);
   }
