@@ -31,6 +31,7 @@ interface BlogStruct {
 }
 
 import 'highlight.js/styles/github.css';
+import { Theme } from '@mui/material/styles';
 
 function Blog({blog, darkCss, lightCss }) {
   const ref : React.MutableRefObject<HTMLElement> = React.useRef();
