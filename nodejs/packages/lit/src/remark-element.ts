@@ -46,6 +46,12 @@ export class RemarkElement extends LitElement {
 
   constructor() {
     super();
+
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+    })
   }
 
   private _generate() {
@@ -75,7 +81,7 @@ export class RemarkElement extends LitElement {
       const el = els[i];
       const txt = el.innerText;
       console.log(txt)
-      const cb = function(svgGraph: string){
+      const cb = function cb(svgGraph: string){
         el.innerHTML = svgGraph;
       };
       mermaid.mermaidAPI.render(`mermaid-${i}`, txt, cb);
