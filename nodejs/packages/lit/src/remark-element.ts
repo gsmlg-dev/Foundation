@@ -61,6 +61,7 @@ export class RemarkElement extends LitElement {
 
   private _generate() {
     const content = this.content || this.innerHTML;
+    setTimeout(() => this._do_updated(), 1000);
     return unified()
       .use(remarkParse)
       .use(remarkGfm)
@@ -74,7 +75,7 @@ export class RemarkElement extends LitElement {
       });
   }
 
-  override updated() {
+  private _do_updated() {
     const els : NodeListOf<HTMLElement> = this.renderRoot.querySelectorAll('code.language-mermaid');
     const fragement = document.createElement('div');
     fragement.innerHTML = this._fragement;
