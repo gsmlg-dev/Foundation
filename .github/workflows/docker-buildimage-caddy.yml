@@ -39,6 +39,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWD }}
       -
         name: Build and push
+        id: build
         uses: docker/build-push-action@v2
         with:
           context: docker/caddy/
@@ -99,5 +100,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
           asset_name: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
-          tag: caddy-v${{ steps.semantic.outputs.new_release_version }}
+          tag: caddy-v${{ needs.build-image.outputs.version }}
 
