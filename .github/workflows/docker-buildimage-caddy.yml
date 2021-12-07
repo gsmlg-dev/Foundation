@@ -10,6 +10,8 @@ on:
 jobs:
   build-image:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       -
         name: Checkout
@@ -48,4 +50,54 @@ jobs:
           tags: |
             docker.io/gsmlg/caddy:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/caddy:latest
+  build-package:
+    runs-on: ubuntu-latest
+    needs: [ build-image ]
+    strategy:
+      matrix:
+        platforms:
+          - os: linux
+            arch: amd64
+          - os: darwin
+            arch: amd64
+          - os: freebsd
+            arch: amd64
+          - os: windows
+            arch: amd64
+          - os: linux
+            arch: arm64
+          - os: android
+            arch: arm64
+          - os: darwin
+            arch: arm64
+          - os: windows
+            arch: arm64
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.17.1'
+      - run: go version
+      - run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+      - 
+        env:
+          GOOS: ${{ matrix.platforms.os }}
+          GOARCH: ${{ matrix.platforms.arch }}
+        run: |-
+          xcaddy build v2.4.6 \
+            --output caddy_${GOOS}_${GOARCH} \
+            --with github.com/mholt/caddy-l4 \
+            --with github.com/caddy-dns/cloudflare \
+            --with github.com/mholt/caddy-webdav \
+            --with github.com/caddy-dns/route53 \
+            --with github.com/greenpau/caddy-auth-portal
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
+          asset_name: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
+          tag: caddy-v${{ steps.semantic.outputs.new_release_version }}
 
