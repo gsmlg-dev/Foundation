@@ -60,7 +60,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.6.0"
+    "@gsmlg/scripts": "^1.7.1"
   },
   "peerDependencies": {
     "react": "^17.0.2"

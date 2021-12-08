@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@gsmlg/scripts": "^1.7.1",
-    "@types/node": "^16.11.11",
+    "@types/node": "^16.11.12",
     "typescript": "^4.5.2"
   },
   "files": [
@@ -38,7 +38,7 @@
     "lit": "^2.0.2",
     "lit-element": "^3.0.2",
     "lit-html": "^2.0.2",
-    "mermaid": "^8.13.4",
+    "mermaid": "^8.13.5",
     "rehype-highlight": "^5.0.1",
     "rehype-stringify": "^9.0.2",
     "remark": "^14.0.2",
