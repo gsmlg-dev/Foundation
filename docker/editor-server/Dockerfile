@@ -55,7 +55,9 @@ RUN apt-get install -y default-jdk \
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install -y -qq nodejs \
   && npm install -g npm \
-  && npm install -g yarn
+  && npm install -g yarn \
+  && npm install -g cnpm --registry=https://registry.npmmirror.com \
+  && npm install -g npm-check-updates
 
 # install golang
 RUN export ARCH=`dpkg --print-architecture`; \
