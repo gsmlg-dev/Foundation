@@ -36,8 +36,6 @@ jobs:
       - name: Deploy 🚀 storybook-static
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ssh-key: ${{ secrets.DEPLOY_KEY }}
           branch: main # The branch the action should deploy to.
           folder: "nodejs/packages/react/storybook-static" # The folder the action should deploy.
           clean: true # Automatically remove deleted files from the deploy branch
