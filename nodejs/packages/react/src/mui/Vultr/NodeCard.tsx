@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
@@ -19,13 +19,13 @@ type Host = {
   times?: number
 }
 
-interface Props {
+interface NodeCardProps {
   host: Host
 }
 
-export function NodeCard({ host }: Props) {
+export const NodeCard = React.forwardRef<HTMLDivElement, NodeCardProps>(({ host, ...props }, ref) => {
   return (
-    <Paper>
+    <Paper {...props} ref={ref}>
       <Card>
         <CardHeader
           avatar={<Avatar aria-label="Recipe">{host.name[0]}</Avatar>}
@@ -57,6 +57,8 @@ export function NodeCard({ host }: Props) {
       </Card>
     </Paper>
   );
-}
+});
+
+NodeCard.displayName = 'NodeCard';
 
 export default NodeCard;

@@ -1,0 +1,12 @@
+{
+  "ams": {
+    "name": "阿姆斯特丹",
+    "host": "ams-nl-ping.vultr.com",
+    "delay": 59,
+    "minDelay": 10,
+    "maxDelay": 420,
+    "averageDelay": 120,
+    "lost": 0,
+    "times": 3
+  }
+}
