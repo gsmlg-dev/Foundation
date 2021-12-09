@@ -23,7 +23,7 @@ interface Props {
   host: Host
 }
 
-function NetworkCard({ host }: Props) {
+export function NodeCard({ host }: Props) {
   return (
     <Paper>
       <Card>
@@ -59,4 +59,4 @@ function NetworkCard({ host }: Props) {
   );
 }
 
-export default NetworkCard;
+export default NodeCard;
