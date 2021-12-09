@@ -1,6 +1,6 @@
 {
   "name": "@gsmlg/react",
-  "version": "0.1.0",
+  "version": "0.0.0-semantically-released",
   "description": "React components that just works.",
   "main": "dist/index.js",
   "repository": "https://github.com/gsmlg-dev/Foundation.git",
