@@ -19,13 +19,16 @@ const Circle = styled.i<RenderProps>`
   background: #eee;
 `;
 
-export class RenderCount extends React.Component<RenderProps, {}, {render: number}> {
+export class RenderCount extends React.Component<RenderProps> {
   static defaultProps = { size: 30 }
 
-  renders = 0
+  private _count = 0
 
   render() {
-    return <Circle size={this.props.size}>{++this.renders}</Circle>;
+    let count = this._count;
+    count = count + 1;
+    this._count = count;
+    return <Circle size={this.props.size}>{count}</Circle>;
   }
 }
 
