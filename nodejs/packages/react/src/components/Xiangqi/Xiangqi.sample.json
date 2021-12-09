@@ -1,0 +1,357 @@
+{
+  "pieces": [
+      {
+          "color": "red",
+          "id": "r0",
+          "live": true,
+          "name": "车",
+          "position": {
+              "x": 0,
+              "y": 0
+          },
+          "type": 4
+      },
+      {
+          "color": "red",
+          "id": "r1",
+          "live": true,
+          "name": "马",
+          "position": {
+              "x": 1,
+              "y": 0
+          },
+          "type": 3
+      },
+      {
+          "color": "red",
+          "id": "r2",
+          "live": true,
+          "name": "相",
+          "position": {
+              "x": 2,
+              "y": 0
+          },
+          "type": 2
+      },
+      {
+          "color": "red",
+          "id": "r3",
+          "live": true,
+          "name": "士",
+          "position": {
+              "x": 3,
+              "y": 0
+          },
+          "type": 1
+      },
+      {
+          "color": "red",
+          "id": "r4",
+          "live": true,
+          "name": "帅",
+          "position": {
+              "x": 4,
+              "y": 0
+          },
+          "type": 0
+      },
+      {
+          "color": "red",
+          "id": "r5",
+          "live": true,
+          "name": "士",
+          "position": {
+              "x": 5,
+              "y": 0
+          },
+          "type": 1
+      },
+      {
+          "color": "red",
+          "id": "r6",
+          "live": true,
+          "name": "相",
+          "position": {
+              "x": 6,
+              "y": 0
+          },
+          "type": 2
+      },
+      {
+          "color": "red",
+          "id": "r7",
+          "live": true,
+          "name": "马",
+          "position": {
+              "x": 7,
+              "y": 0
+          },
+          "type": 3
+      },
+      {
+          "color": "red",
+          "id": "r8",
+          "live": true,
+          "name": "车",
+          "position": {
+              "x": 8,
+              "y": 0
+          },
+          "type": 4
+      },
+      {
+          "color": "red",
+          "id": "r9",
+          "live": true,
+          "name": "炮",
+          "position": {
+              "x": 1,
+              "y": 2
+          },
+          "type": 5
+      },
+      {
+          "color": "red",
+          "id": "r10",
+          "live": true,
+          "name": "炮",
+          "position": {
+              "x": 7,
+              "y": 2
+          },
+          "type": 5
+      },
+      {
+          "color": "red",
+          "id": "r11",
+          "live": true,
+          "name": "兵",
+          "position": {
+              "x": 0,
+              "y": 3
+          },
+          "type": 6
+      },
+      {
+          "color": "red",
+          "id": "r12",
+          "live": true,
+          "name": "兵",
+          "position": {
+              "x": 2,
+              "y": 3
+          },
+          "type": 6
+      },
+      {
+          "color": "red",
+          "id": "r13",
+          "live": true,
+          "name": "兵",
+          "position": {
+              "x": 4,
+              "y": 3
+          },
+          "type": 6
+      },
+      {
+          "color": "red",
+          "id": "r14",
+          "live": true,
+          "name": "兵",
+          "position": {
+              "x": 6,
+              "y": 3
+          },
+          "type": 6
+      },
+      {
+          "color": "red",
+          "id": "r15",
+          "live": true,
+          "name": "兵",
+          "position": {
+              "x": 8,
+              "y": 3
+          },
+          "type": 6
+      },
+      {
+          "color": "black",
+          "id": "b0",
+          "live": true,
+          "name": "車",
+          "position": {
+              "x": 0,
+              "y": 9
+          },
+          "type": 4
+      },
+      {
+          "color": "black",
+          "id": "b1",
+          "live": true,
+          "name": "馬",
+          "position": {
+              "x": 1,
+              "y": 9
+          },
+          "type": 3
+      },
+      {
+          "color": "black",
+          "id": "b2",
+          "live": true,
+          "name": "象",
+          "position": {
+              "x": 2,
+              "y": 9
+          },
+          "type": 2
+      },
+      {
+          "color": "black",
+          "id": "b3",
+          "live": true,
+          "name": "仕",
+          "position": {
+              "x": 3,
+              "y": 9
+          },
+          "type": 1
+      },
+      {
+          "color": "black",
+          "id": "b4",
+          "live": true,
+          "name": "将",
+          "position": {
+              "x": 4,
+              "y": 9
+          },
+          "type": 0
+      },
+      {
+          "color": "black",
+          "id": "b5",
+          "live": true,
+          "name": "仕",
+          "position": {
+              "x": 5,
+              "y": 9
+          },
+          "type": 1
+      },
+      {
+          "color": "black",
+          "id": "b6",
+          "live": true,
+          "name": "象",
+          "position": {
+              "x": 6,
+              "y": 9
+          },
+          "type": 2
+      },
+      {
+          "color": "black",
+          "id": "b7",
+          "live": true,
+          "name": "馬",
+          "position": {
+              "x": 7,
+              "y": 9
+          },
+          "type": 3
+      },
+      {
+          "color": "black",
+          "id": "b8",
+          "live": true,
+          "name": "車",
+          "position": {
+              "x": 8,
+              "y": 9
+          },
+          "type": 4
+      },
+      {
+          "color": "black",
+          "id": "b9",
+          "live": true,
+          "name": "砲",
+          "position": {
+              "x": 1,
+              "y": 7
+          },
+          "type": 5
+      },
+      {
+          "color": "black",
+          "id": "b10",
+          "live": true,
+          "name": "砲",
+          "position": {
+              "x": 7,
+              "y": 7
+          },
+          "type": 5
+      },
+      {
+          "color": "black",
+          "id": "b11",
+          "live": true,
+          "name": "卒",
+          "position": {
+              "x": 0,
+              "y": 6
+          },
+          "type": 6
+      },
+      {
+          "color": "black",
+          "id": "b12",
+          "live": true,
+          "name": "卒",
+          "position": {
+              "x": 2,
+              "y": 6
+          },
+          "type": 6
+      },
+      {
+          "color": "black",
+          "id": "b13",
+          "live": true,
+          "name": "卒",
+          "position": {
+              "x": 4,
+              "y": 6
+          },
+          "type": 6
+      },
+      {
+          "color": "black",
+          "id": "b14",
+          "live": true,
+          "name": "卒",
+          "position": {
+              "x": 6,
+              "y": 6
+          },
+          "type": 6
+      },
+      {
+          "color": "black",
+          "id": "b15",
+          "live": true,
+          "name": "卒",
+          "position": {
+              "x": 8,
+              "y": 6
+          },
+          "type": 6
+      }
+  ],
+  "turn": "red"
+}
