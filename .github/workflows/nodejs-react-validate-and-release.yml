@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'nodejs/packages/react/**'
+      - '!nodejs/packages/react/**.stories.tsx'
       - '.github/workflows/nodejs-react-validate-and-release.yml'
     branches:
       - 'main'
