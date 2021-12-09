@@ -8,7 +8,7 @@
   "license": "GPLv3",
   "private": true,
   "workspaces": [
-     "packages/*"
+    "./packages/*"
   ],
   "scripts": {
     "lerna": "lerna",
