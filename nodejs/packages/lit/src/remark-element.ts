@@ -17,7 +17,7 @@ import light from './atom-one-light.css';
 import dark from './atom-one-dark.css';
 
 @customElement('remark-element')
-export class RemarkElement extends LitElement {
+class RemarkElement extends LitElement {
   static override styles = css`
     :host {
       display: flex;
@@ -61,7 +61,7 @@ export class RemarkElement extends LitElement {
 
   private _generate() {
     const content = this.content || this.innerHTML;
-    setTimeout(() => this._do_updated(), 1000);
+    
     return unified()
       .use(remarkParse)
       .use(remarkGfm)
@@ -107,6 +107,10 @@ export class RemarkElement extends LitElement {
       }
       mermaid.mermaidAPI.render(box.id, decodedTxt, cb);
     }
+  }
+
+  override updated() {
+    setTimeout(() => this._do_updated(), 1000 / 15);
   }
 
   override render() {

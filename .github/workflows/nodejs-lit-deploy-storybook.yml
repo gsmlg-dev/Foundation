@@ -1,0 +1,43 @@
+name: nodejs-lit-deploy-storybook
+on:
+  push:
+    paths:
+      - 'nodejs/packages/lit/**.stories.ts'
+      - '.github/workflows/nodejs-lit-deploy-storybook.yml'
+    branches:
+      - 'main'
+jobs:
+  storybook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+          working-directory: 'nodejs/packages/lit'
+
+      - name: ▶️ Run build-storybook
+        working-directory: 'nodejs/packages/lit'
+        run: npm run build-storybook
+
+      - name: Deploy 🚀 storybook-static
+        uses: JamesIves/github-pages-deploy-action@4.1.7
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: "nodejs/packages/lit/storybook-static" # The folder the action should deploy.
+          clean: true # Automatically remove deleted files from the deploy branch
+          repository-name: "gsmlg-dev/lit"
+          token: ${{ secrets.ACCESS_TOKEN }}
