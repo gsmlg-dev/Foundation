@@ -27,7 +27,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.16.3",
-    "phoenix": "^1.6.2"
+    "phoenix": "^1.6.4"
   },
   "eslintConfig": {
     "extends": [
@@ -60,7 +60,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.7.1"
+    "@gsmlg/scripts": "^1.8.0"
   },
   "peerDependencies": {
     "react": "^17.0.2"
