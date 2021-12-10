@@ -46,7 +46,7 @@ function getEnv() {
         return envCopy
       },
       {
-        [`SCRIPTS_${script.toUpperCase()}`]: true,
+        [`SCRIPTS_${script.toUpperCase().replace(/-/g, '_')}`]: true,
       },
     )
 }

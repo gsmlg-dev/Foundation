@@ -12,6 +12,6 @@ exports[`validate does not include "test" if it doesn't have that script 1`] = `
 
 exports[`validate does not include "typecheck" if it doesn't have that script 1`] = `concurrently --kill-others-on-fail --prefix [{name}] --names build,lint,test --prefix-colors bgBlue.bold.white,bgGreen.bold.white,bgMagenta.bold.white "npm run build --silent" "npm run lint --silent" "npm run test --silent -- --coverage"`;
 
-exports[`validate doesn't use test or lint if it's in pre-commit 1`] = `concurrently --kill-others-on-fail --prefix [{name}] --names build,typecheck --prefix-colors bgBlue.bold.white,bgGreen.bold.white "npm run build --silent" "npm run typecheck --silent"`;
+exports[`validate doesn't use test or lint if it's in pre-commit 1`] = `concurrently --kill-others-on-fail --prefix [{name}] --names build,lint,test,typecheck --prefix-colors bgBlue.bold.white,bgGreen.bold.white,bgMagenta.bold.white,bgCyan.bold.white "npm run build --silent" "npm run lint --silent" "npm run test --silent -- --coverage" "npm run typecheck --silent"`;
 
 exports[`validate exits if there are no scripts to be run 1`] = ``;

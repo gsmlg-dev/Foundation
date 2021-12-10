@@ -8,12 +8,10 @@ const {
   nodeResolve,
 } = require('@rollup/plugin-node-resolve')
 const replace = require('@rollup/plugin-replace')
-const glob = require('glob')
 const camelcase = require('lodash.camelcase')
 const {terser} = require('rollup-plugin-terser')
 const nodeBuiltIns = require('rollup-plugin-node-builtins')
 const nodeGlobals = require('rollup-plugin-node-globals')
-const {sizeSnapshot} = require('rollup-plugin-size-snapshot')
 const omit = require('lodash.omit')
 const {
   pkg,
@@ -22,7 +20,8 @@ const {
   hasDep,
   hasTypescript,
   parseEnv,
-  fromRoot,
+  getRollupInputs,
+  getRollupOutput,
   uniq,
   writeExtraEntry,
 } = require('../utils')
@@ -35,7 +34,6 @@ const format = process.env.BUILD_FORMAT
 const isPreact = parseEnv('BUILD_PREACT', false)
 const isNode = parseEnv('BUILD_NODE', false)
 const name = process.env.BUILD_NAME || capitalize(camelcase(pkg.name))
-const useSizeSnapshot = parseEnv('BUILD_SIZE_SNAPSHOT', false)
 
 const esm = format === 'esm'
 const umd = format === 'umd'
@@ -54,27 +52,6 @@ const defaultExternal = builtInModules.concat(
   umd ? peerDeps : deps.concat(peerDeps),
 )
 
-const input = glob.sync(
-  fromRoot(
-    process.env.BUILD_INPUT ||
-      (hasTypescript ? 'src/index.{js,ts,tsx}' : 'src/index.js'),
-  ),
-)
-const codeSplitting = input.length > 1
-
-if (
-  codeSplitting &&
-  uniq(input.map(single => path.basename(single))).length !== input.length
-) {
-  throw new Error(
-    'Filenames of code-splitted entries should be unique to get deterministic output filenames.' +
-      `\nReceived those: ${input}.`,
-  )
-}
-
-const filenameSuffix = process.env.BUILD_FILENAME_SUFFIX || ''
-const filenamePrefix =
-  process.env.BUILD_FILENAME_PREFIX || (isPreact ? 'preact/' : '')
 const globals = parseEnv(
   'BUILD_GLOBALS',
   isPreact ? Object.assign(defaultGlobals, {preact: 'preact'}) : defaultGlobals,
@@ -105,30 +82,6 @@ function externalPredicate(id) {
   return isDep || (!isRelative && !path.isAbsolute(id)) || isNodeModule
 }
 
-const filename = [
-  name,
-  filenameSuffix,
-  `.${format}`,
-  minify ? '.min' : null,
-  '.js',
-]
-  .filter(Boolean)
-  .join('')
-
-const dirpath = path.join(...[filenamePrefix, 'dist'].filter(Boolean))
-
-const output = [
-  {
-    name,
-    ...(codeSplitting
-      ? {dir: path.join(dirpath, format)}
-      : {file: path.join(dirpath, filename)}),
-    format: esm ? 'es' : format,
-    exports: esm ? 'named' : 'auto',
-    globals,
-  },
-]
-
 const useBuiltinConfig =
   !hasFile('.babelrc') &&
   !hasFile('.babelrc.js') &&
@@ -153,6 +106,33 @@ const extensions = hasTypescript
   ? [...nodeResolveDefaults.extensions, '.ts', '.tsx']
   : nodeResolveDefaults.extensions
 
+const input = getRollupInputs()
+const codeSplitting = input.length > 1
+
+if (
+  codeSplitting &&
+  uniq(input.map(single => path.basename(single))).length !== input.length
+) {
+  throw new Error(
+    'Filenames of code-splitted entries should be unique to get deterministic output filenames.' +
+      `\nReceived those: ${input}.`,
+  )
+}
+
+const {dirpath, filename} = getRollupOutput()
+
+const output = [
+  {
+    name,
+    ...(codeSplitting
+      ? {dir: path.join(dirpath, format)}
+      : {file: path.join(dirpath, filename)}),
+    format: esm ? 'es' : format,
+    exports: esm ? 'named' : 'auto',
+    globals,
+  },
+]
+
 module.exports = {
   input: codeSplitting ? input : input[0],
   output,
@@ -165,7 +145,7 @@ module.exports = {
       mainFields: ['module', 'main', 'jsnext', 'browser'],
       extensions,
     }),
-    commonjs({include: 'node_modules/**'}),
+    commonjs({include: /node_modules/i}),
     json(),
     rollupBabel({
       presets: babelPresets,
@@ -174,7 +154,6 @@ module.exports = {
       extensions,
     }),
     replace(replacements),
-    useSizeSnapshot ? sizeSnapshot({printInfo: false}) : null,
     minify ? terser() : null,
     codeSplitting &&
       ((writes = 0) => ({

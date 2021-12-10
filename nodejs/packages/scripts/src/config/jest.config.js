@@ -1,9 +1,9 @@
-const path = require('path');
-const {ifAnyDep, hasFile, hasPkgProp, fromRoot} = require('../utils');
+const path = require('path')
+const {ifAnyDep, hasFile, hasPkgProp} = require('../utils')
 
-const here = (p) => path.join(__dirname, p);
+const here = p => path.join(__dirname, p)
 
-const useBuiltInBabelConfig = !hasFile('.babelrc') && !hasPkgProp('babel');
+const useBuiltInBabelConfig = !hasFile('.babelrc') && !hasPkgProp('babel')
 
 const ignores = [
   '/node_modules/',
@@ -12,10 +12,10 @@ const ignores = [
   '/__tests__/helpers/',
   '/__tests__/utils/',
   '__mocks__',
-];
+]
 
 const jestConfig = {
-  roots: [fromRoot('src')],
+  roots: ['<rootDir>/src'],
   testEnvironment: ifAnyDep(
     ['webpack', 'rollup', 'react', 'preact'],
     'jsdom',
@@ -23,12 +23,7 @@ const jestConfig = {
   ),
   testURL: 'http://localhost',
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
-  moduleDirectories: [
-    'node_modules',
-    fromRoot('src'),
-    'shared',
-    fromRoot('tests'),
-  ],
+  modulePaths: ['<rootDir>/src', 'shared', '<rootDir>/tests'],
   collectCoverageFrom: ['src/**/*.+(js|jsx|ts|tsx)'],
   testMatch: ['**/__tests__/**/*.+(js|jsx|ts|tsx)'],
   testPathIgnorePatterns: [...ignores],
@@ -46,22 +41,25 @@ const jestConfig = {
     require.resolve('jest-watch-typeahead/filename'),
     require.resolve('jest-watch-typeahead/testname'),
   ],
-  snapshotSerializers: [require.resolve('jest-serializer-path')],
-};
+  snapshotSerializers: [
+    require.resolve('jest-serializer-path'),
+    require.resolve('jest-snapshot-serializer-raw/always'),
+  ],
+}
 
 const setupFiles = [
   'tests/setup-env.js',
   'tests/setup-env.ts',
   'tests/setup-env.tsx',
-];
+]
 for (const setupFile of setupFiles) {
   if (hasFile(setupFile)) {
-    jestConfig.setupFilesAfterEnv = [fromRoot(setupFile)];
+    jestConfig.setupFilesAfterEnv = [`<rootDir>/${setupFile}`]
   }
 }
 
 if (useBuiltInBabelConfig) {
-  jestConfig.transform = {'^.+\\.(js|jsx|ts|tsx)$': here('./babel-transform')};
+  jestConfig.transform = {'^.+\\.(js|jsx|ts|tsx)$': here('./babel-transform')}
 }
 
-module.exports = jestConfig;
+module.exports = jestConfig
