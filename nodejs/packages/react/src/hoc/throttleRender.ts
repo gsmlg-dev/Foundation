@@ -51,7 +51,7 @@ export const throttleRender = (throttleTime = 100) => (View: React.ComponentType
   }
 
   const ThrottledView = (props: Props) => React.createElement(ThrottleView, props);
-  ThrottledView.displayName = `Throttled${View.displayName ? `(${View.displayName})` : ''}<${throttleTime}>)`
+  ThrottledView.displayName = `Throttled${View.displayName ? `(${View.displayName})` : ''}<${throttleTime}>`
   return ThrottledView;
 };
 
