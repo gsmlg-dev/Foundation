@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/web-components';
 import { html } from 'lit-html';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import './remark-element';
 
 // More on default export: https://storybook.js.org/docs/web-components/writing-stories/introduction#default-export
@@ -17,7 +18,7 @@ export interface RemarkElementProps {
 
 // More on component templates: https://storybook.js.org/docs/web-components/writing-stories/introduction#using-args
 const Template : Story<RemarkElementProps> = ({ debug, content }) => (
-  html`<remark-element ?debug=${debug}>${content}</remark-element>`
+  html`<remark-element ?debug=${debug}>${unsafeHTML(content)}</remark-element>`
 );
 
 export const Basic = Template.bind({});
