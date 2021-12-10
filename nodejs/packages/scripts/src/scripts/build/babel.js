@@ -33,7 +33,7 @@ const extensions =
     ? []
     : ['--extensions', [...DEFAULT_EXTENSIONS, '.ts', '.tsx']]
 
-const builtInIgnore = '**/__tests__/**,**/__mocks__/**'
+const builtInIgnore = '**/__tests__/**,**/__mocks__/**,**/*.stories.*'
 
 const ignore = args.includes('--ignore') ? [] : ['--ignore', builtInIgnore]
 

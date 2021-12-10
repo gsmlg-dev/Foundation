@@ -125,6 +125,7 @@ function go() {
     const ignoredFiles = [
       ...glob.sync(fromRoot('dist', '**/__tests__/**')),
       ...glob.sync(fromRoot('dist', '**/__mocks__/**')),
+      ...glob.sync(fromRoot('dist', '**/*.stories.*')),
     ]
     ignoredFiles.forEach(ignoredFile => {
       rimraf.sync(ignoredFile)
