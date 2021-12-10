@@ -4,8 +4,7 @@ import { NodeCard } from '../NodeCard';
 import data from '../NodeCard.sample.json';
 
 it('Render <NodeCard /> with host ams', () => {
-  render(<NodeCard host={data.ams} />)
+  render(<NodeCard host={data.ams} />);
 
   expect(screen.getByText(/vultr\.com/)).toBeTruthy();
 });
-

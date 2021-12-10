@@ -4,11 +4,12 @@ const findPos = (pieces: PieceShape[], p: PositionShape): PieceShape | undefined
   return pieces.find(({ position: { x, y } }) => p.x === x && p.y === y);
 };
 
-const findGeneral= (pieces: PieceShape[], color: ChessColor) : PieceShape | undefined => {
+const findGeneral = (pieces: PieceShape[], color: ChessColor): PieceShape | undefined => {
   return pieces.find(({ color: c, type: t }) => t === 0 && c === color);
-}
+};
 
-const canDrop = (item: PieceShape, pos: PositionShape, pieces: PieceShape[]) : boolean => { // eslint-disable-line complexity
+/* eslint-disable complexity */
+const canDrop = (item: PieceShape, pos: PositionShape, pieces: PieceShape[]): boolean => {
   const fx = item.position.x;
   const fy = item.position.y;
   const tx = pos.x;
@@ -22,11 +23,7 @@ const canDrop = (item: PieceShape, pos: PositionShape, pieces: PieceShape[]) : b
   const rk = findGeneral(pieces, ChessColor.Red);
   const bk = findGeneral(pieces, ChessColor.Black);
   if (!rk || !bk) return false;
-  if (
-    item.type !== 0 &&
-    rk.position.x === bk.position.x &&
-    fx === rk.position.x
-  ) {
+  if (item.type !== 0 && rk.position.x === bk.position.x && fx === rk.position.x) {
     let count = 0;
     for (let i = rk.position.y + 1; i < bk.position.y; i++) {
       if (!hasntPiece({ x: fx, y: i })) count++;

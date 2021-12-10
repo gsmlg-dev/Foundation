@@ -25,9 +25,7 @@ export const ChessBoard = ({
     const x = i % 9;
     const y = Math.floor(i / 9);
     const pieces = allPieces.filter((p) => p.live);
-    const item = pieces.find(
-      ({ position: { x: px, y: py } }) => px === x && py === y,
-    );
+    const item = pieces.find(({ position: { x: px, y: py } }) => px === x && py === y);
     const key = item ? <Piece item={item} turn={turn} /> : null;
     const killPiece = () => {
       if (item) kill(item);

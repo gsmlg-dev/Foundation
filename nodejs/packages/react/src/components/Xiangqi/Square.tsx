@@ -56,7 +56,10 @@ const chessSquareTarget: DropTargetSpec<SquareProps, PieceShape, object> = {
 /**
  * Specifies which props to inject into your component.
  */
-const collect: DropTargetCollector<DropTargetCollectedProps, object> = function collect(connect, monitor) {
+const collect: DropTargetCollector<DropTargetCollectedProps, object> = function collect(
+  connect,
+  monitor,
+) {
   return {
     // Call this function inside render()
     // to let React DnD handle the drag events:
@@ -67,7 +70,7 @@ const collect: DropTargetCollector<DropTargetCollectedProps, object> = function 
     isDropable: monitor.canDrop(),
     itemType: monitor.getItemType(),
   };
-}
+};
 
 const Square = ({
   x,

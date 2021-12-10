@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Xiangqi from './DndContext';
 import sampleData from './Xiangqi.sample.json';
 
-import { DragDropContextProps, ChessColor, PieceShape, PositionShape } from './types'
+import { DragDropContextProps, ChessColor, PieceShape, PositionShape } from './types';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -41,4 +41,3 @@ Sample.args = {
   },
   turn: ChessColor.Red,
 };
-

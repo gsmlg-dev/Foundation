@@ -1,7 +1,13 @@
 import React from 'react';
 import { DragSource, DragSourceSpec, DragSourceCollector } from 'react-dnd';
 
-import { PieceShape, DragSourceProps, DropResult, DragSourceCollectedProps, PieceProps } from './types';
+import {
+  PieceShape,
+  DragSourceProps,
+  DropResult,
+  DragSourceCollectedProps,
+  PieceProps,
+} from './types';
 
 /**
  * Specifies the drag source contract.
@@ -50,7 +56,10 @@ const cardSource: DragSourceSpec<DragSourceProps, PieceShape, DropResult> = {
 /**
  * Specifies which props to inject into your component.
  */
-const collect: DragSourceCollector<DragSourceCollectedProps, object> = function collect(connect, monitor) {
+const collect: DragSourceCollector<DragSourceCollectedProps, object> = function collect(
+  connect,
+  monitor,
+) {
   return {
     // Call this function inside render()
     // to let React DnD handle the drag events:
@@ -58,7 +67,7 @@ const collect: DragSourceCollector<DragSourceCollectedProps, object> = function 
     // You can ask the monitor about the current drag state:
     isDragging: monitor.isDragging(),
   };
-}
+};
 
 const Piece = ({ connectDragSource, item }: PieceProps) => {
   return connectDragSource(

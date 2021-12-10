@@ -1,7 +1,7 @@
 /* --- STATE --- */
 import { ReactChildren, ReactChild } from 'react';
 import { ConnectDragSource, ConnectDropTarget } from 'react-dnd';
-import { Identifier } from 'dnd-core'
+import { Identifier } from 'dnd-core';
 
 export enum ChessColor {
   Black = 'black',
@@ -72,30 +72,30 @@ export interface SquareProps {
 }
 
 export interface PieceProps extends DragSourceCollectedProps {
-  item: PieceShape
+  item: PieceShape;
 }
 
 export interface DragSourceProps {
-  item: PieceShape
-  turn: ChessColor
+  item: PieceShape;
+  turn: ChessColor;
 }
 
 export interface DragSourceCollectedProps {
-  connectDragSource: ConnectDragSource
-  isDragging: boolean
+  connectDragSource: ConnectDragSource;
+  isDragging: boolean;
 }
 
 export interface DropResult {
-  moved: boolean
+  moved: boolean;
 }
 
 export interface DropTargetCollectedProps {
-    // Call this function inside render()
-    // to let React DnD handle the drag events:
-    connectDropTarget: ConnectDropTarget
-    // You can ask the monitor about the current drag state:
-    isOver: boolean
-    isOverCurrent: boolean
-    isDropable: boolean
-    itemType: Identifier | null,
+  // Call this function inside render()
+  // to let React DnD handle the drag events:
+  connectDropTarget: ConnectDropTarget;
+  // You can ask the monitor about the current drag state:
+  isOver: boolean;
+  isOverCurrent: boolean;
+  isDropable: boolean;
+  itemType: Identifier | null;
 }

@@ -29,5 +29,4 @@ SampleWithStyle.args = {
   style: {
     maxWidth: '24rem',
   },
-}
-
+};

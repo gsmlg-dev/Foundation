@@ -16,9 +16,9 @@ const Circle = styled.i`
 `;
 
 export class RenderCount extends React.Component {
-  static defaultProps = { size: 30 }
+  static defaultProps = { size: 30 };
 
-  _count = 0
+  _count = 0;
 
   render() {
     let count = this._count;
