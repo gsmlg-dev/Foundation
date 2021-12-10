@@ -1,11 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-type RenderProps = {
-  size: number
-}
-
-const Circle = styled.i<RenderProps>`
+const Circle = styled.i`
   position: absolute;
   top: 0;
   right: 0;
@@ -19,10 +15,10 @@ const Circle = styled.i<RenderProps>`
   background: #eee;
 `;
 
-export class RenderCount extends React.Component<RenderProps> {
+export class RenderCount extends React.Component {
   static defaultProps = { size: 30 }
 
-  private _count = 0
+  _count = 0
 
   render() {
     let count = this._count;

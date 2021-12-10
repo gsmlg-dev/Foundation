@@ -16,6 +16,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "src/utils/__tests__/RenderCount.test.js", "src/utils/RenderCount.js"],
   "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.tsx"]
 }
