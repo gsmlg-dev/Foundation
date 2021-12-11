@@ -35,6 +35,13 @@ export interface TreeProps {
   linkType?: 'diagonal' | 'step' | 'curve' | 'line';
   stepPercent?: number;
   backgroundColor?: string | undefined;
+  NodeComponent?: React.ComponentType<{
+    key: string | number;
+    layout: string;
+    orientation: string;
+    linkType: string;
+    node: any;
+  }>;
 }
 
 export const Tree: React.FC<TreeProps> = ({
@@ -47,6 +54,7 @@ export const Tree: React.FC<TreeProps> = ({
   linkType = 'step',
   stepPercent = 0.5,
   backgroundColor = 'transparent',
+  NodeComponent,
 }) => {
   const forceUpdate = useForceUpdate();
 
@@ -118,7 +126,15 @@ export const Tree: React.FC<TreeProps> = ({
                   left = node.y;
                 }
 
-                return (
+                return NodeComponent ? (
+                  <NodeComponent
+                    key={key}
+                    layout={layout}
+                    orientation={orientation}
+                    linkType={linkType}
+                    node={node}
+                  />
+                ) : (
                   <Group top={top} left={left} key={key}>
                     {node.depth === 0 && (
                       <circle
@@ -145,14 +161,13 @@ export const Tree: React.FC<TreeProps> = ({
                         rx={node.data.children ? 0 : 10}
                         onClick={() => {
                           node.data.isExpanded = !node.data.isExpanded;
-                          console.log(node);
                           forceUpdate();
                         }}
                       />
                     )}
                     <text
                       dy=".33em"
-                      fontSize={9}
+                      fontSize={14}
                       fontFamily="Arial"
                       textAnchor="middle"
                       style={{ pointerEvents: 'none' }}
