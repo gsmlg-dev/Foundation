@@ -26,14 +26,14 @@ export interface TreeNode {
 }
 
 export interface TreeProps {
-  data: TreeNode
-  width: number
-  height: number
-  margin?: {top: number, left: number, right: number, bottom: number}
-  layout?: 'cartesian' | 'polar'
-  orientation?: 'vertical' | 'horizontal'
-  linkType?: 'diagonal' | 'step' | 'curve' | 'line'
-  stepPercent?: number
+  data: TreeNode;
+  width: number;
+  height: number;
+  margin?: { top: number; left: number; right: number; bottom: number };
+  layout?: 'cartesian' | 'polar';
+  orientation?: 'vertical' | 'horizontal';
+  linkType?: 'diagonal' | 'step' | 'curve' | 'line';
+  stepPercent?: number;
   backgroundColor?: string | undefined;
 }
 
@@ -78,98 +78,102 @@ export const Tree: React.FC<TreeProps> = ({
   const LinkComponent = getLinkComponent({ layout, linkType, orientation });
 
   return totalWidth < 10 ? null : (
-    <div>
-      <svg width={totalWidth} height={totalHeight}>
-        <LinearGradient id="links-gradient" from="#fd9b93" to="#fe6e9e" />
-        <rect width={totalWidth} height={totalHeight} rx={14} fill={backgroundColor} />
-        <Group top={margin.top} left={margin.left}>
-          <VisxTree
-            root={hierarchy(data, (d) => (d.isExpanded ? null : d.children))}
-            size={[sizeWidth, sizeHeight]}
-            separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
-          >
-            {(tree) => (
-              <Group top={origin.y} left={origin.x}>
-                {tree.links().map((link, i) => (
-                  <LinkComponent
-                    key={i}
-                    data={link}
-                    percent={stepPercent}
-                    stroke="rgb(254,110,158,0.6)"
-                    strokeWidth="1"
-                    fill="none"
-                  />
-                ))}
+    <svg width={totalWidth} height={totalHeight}>
+      <LinearGradient id="links-gradient" from="#fd9b93" to="#fe6e9e" />
+      <rect width={totalWidth} height={totalHeight} rx={14} fill={backgroundColor} />
+      <Group top={margin.top} left={margin.left}>
+        <VisxTree
+          root={hierarchy(data, (d) => (d.isExpanded ? null : d.children))}
+          size={[sizeWidth, sizeHeight]}
+          separation={(a, b) => (a.parent === b.parent ? 1 : 0.5) / a.depth}
+        >
+          {(tree) => (
+            <Group top={origin.y} left={origin.x}>
+              {tree.links().map((link, i) => (
+                <LinkComponent
+                  key={i}
+                  data={link}
+                  percent={stepPercent}
+                  stroke="rgb(254,110,158,0.6)"
+                  strokeWidth="1"
+                  fill="none"
+                />
+              ))}
 
-                {tree.descendants().map((node, key) => {
-                  const width = 40;
-                  const height = 20;
+              {tree.descendants().map((node, key) => {
+                const width = 40;
+                const height = 20;
 
-                  let top: number = node.y;
-                  let left: number = node.x;
-                  if (layout === 'polar') {
-                    const [radialX, radialY] = pointRadial(node.x, node.y);
-                    top = radialY;
-                    left = radialX;
-                  } else if (orientation === 'vertical') {
-                    top = node.y;
-                    left = node.x;
-                  } else {
-                    top = node.x;
-                    left = node.y;
-                  }
+                let top: number = node.y;
+                let left: number = node.x;
+                if (layout === 'polar') {
+                  const [radialX, radialY] = pointRadial(node.x, node.y);
+                  top = radialY;
+                  left = radialX;
+                } else if (orientation === 'vertical') {
+                  top = node.y;
+                  left = node.x;
+                } else {
+                  top = node.x;
+                  left = node.y;
+                }
 
-                  return (
-                    <Group top={top} left={left} key={key}>
-                      {node.depth === 0 && (
-                        <circle
-                          r={16}
-                          fill="url('#links-gradient')"
-                          onClick={() => {
-                            node.data.isExpanded = !node.data.isExpanded;
-                            console.log(node);
-                            forceUpdate();
-                          }}
-                        />
-                      )}
-                      {node.depth !== 0 && (
-                        <rect
-                          height={height}
-                          width={width}
-                          y={-height / 2}
-                          x={-width / 2}
-                          fill={backgroundColor}
-                          stroke={node.data.children ? '#03c0dc' : '#26deb0'}
-                          strokeWidth={0}
-                          strokeDasharray={node.data.children ? '0' : '2,2'}
-                          strokeOpacity={node.data.children ? 1 : 0.6}
-                          rx={node.data.children ? 0 : 10}
-                          onClick={() => {
-                            node.data.isExpanded = !node.data.isExpanded;
-                            console.log(node);
-                            forceUpdate();
-                          }}
-                        />
-                      )}
-                      <text
-                        dy=".33em"
-                        fontSize={9}
-                        fontFamily="Arial"
-                        textAnchor="middle"
-                        style={{ pointerEvents: 'none' }}
-                        fill={node.depth === 0 ? '#71248e' : node.children ? '#fc32ba' : '#26deb0'}
-                      >
-                        {node.data.name}
-                      </text>
-                    </Group>
-                  );
-                })}
-              </Group>
-            )}
-          </VisxTree>
-        </Group>
-      </svg>
-    </div>
+                return (
+                  <Group top={top} left={left} key={key}>
+                    {node.depth === 0 && (
+                      <circle
+                        r={16}
+                        fill="url('#links-gradient')"
+                        onClick={() => {
+                          node.data.isExpanded = !node.data.isExpanded;
+                          console.log(node);
+                          forceUpdate();
+                        }}
+                      />
+                    )}
+                    {node.depth !== 0 && (
+                      <rect
+                        height={height}
+                        width={width}
+                        y={-height / 2}
+                        x={-width / 2}
+                        fill={backgroundColor}
+                        stroke={node.data.children ? '#03c0dc' : '#26deb0'}
+                        strokeWidth={0}
+                        strokeDasharray={node.data.children ? '0' : '2,2'}
+                        strokeOpacity={node.data.children ? 1 : 0.6}
+                        rx={node.data.children ? 0 : 10}
+                        onClick={() => {
+                          node.data.isExpanded = !node.data.isExpanded;
+                          console.log(node);
+                          forceUpdate();
+                        }}
+                      />
+                    )}
+                    <text
+                      dy=".33em"
+                      fontSize={9}
+                      fontFamily="Arial"
+                      textAnchor="middle"
+                      style={{ pointerEvents: 'none' }}
+                      fill={
+                        node.depth === 0
+                          ? '#71248e'
+                          : node.children
+                          ? '#fc32ba'
+                          : '#26deb0'
+                      }
+                    >
+                      {node.data.name}
+                    </text>
+                  </Group>
+                );
+              })}
+            </Group>
+          )}
+        </VisxTree>
+      </Group>
+    </svg>
   );
 };
 

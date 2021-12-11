@@ -11,30 +11,34 @@ export default {
           name: 'zcloud-web.gsmlg.com',
           children: [
             {
-              name: 'master.zcloud-web.gsmlg.com'
+              name: 'master.zcloud-web.gsmlg.com',
             },
             {
               name: 'pm.zcloud-web.gsmlg.com',
               children: [
                 {
-                  name: 'failover.pm.zcloud-web.gsmlg.com'
+                  name: 'failover.pm.zcloud-web.gsmlg.com',
                 },
                 {
-                  name: 'monitor.pm.zcloud-web.gsmlg.com'
+                  name: 'monitor.pm.zcloud-web.gsmlg.com',
                 },
                 {
-                  name: 'dns.pm.zcloud-web.gsmlg.com'
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  name: 'dns.pm.zcloud-web.gsmlg.com',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     { name: 'gsmlg.dev' },
     {
       name: 'gsmlg.cn',
-      children: [{ name: 'office.gsmlg.cn' }, { name: 'www.gsmlg.cn' }, { name: 'gateway.gsmlg.cn' }]
-    }
-  ]
+      children: [
+        { name: 'office.gsmlg.cn' },
+        { name: 'www.gsmlg.cn' },
+        { name: 'gateway.gsmlg.cn' },
+      ],
+    },
+  ],
 };
