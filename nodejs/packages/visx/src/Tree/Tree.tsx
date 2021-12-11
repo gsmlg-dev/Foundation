@@ -41,6 +41,7 @@ export interface TreeProps {
     orientation: string;
     linkType: string;
     node: any;
+    forceUpdate: () => void;
   }>;
 }
 
@@ -133,6 +134,7 @@ export const Tree: React.FC<TreeProps> = ({
                     orientation={orientation}
                     linkType={linkType}
                     node={node}
+                    forceUpdate={forceUpdate}
                   />
                 ) : (
                   <Group top={top} left={left} key={key}>
