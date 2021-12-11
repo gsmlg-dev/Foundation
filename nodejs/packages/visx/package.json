@@ -48,6 +48,7 @@
     "@visx/hierarchy": "2.1.2",
     "@visx/shape": "2.4.0",
     "d3-hierarchy": "3.1.1",
+    "d3-shape": "^3.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-move": "6.5.0",

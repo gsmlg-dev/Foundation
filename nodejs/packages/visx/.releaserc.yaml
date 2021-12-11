@@ -1,4 +1,4 @@
-extends: "semantic-release-monorepo"
+extends: 'semantic-release-monorepo'
 release:
   repositoryUrl: https://github.com/gsmlg/Foundation
   plugins:
@@ -11,5 +11,5 @@ branches:
   - main
   - next
   - next-major
-  - {name: 'beta', prerelease: true}
-  - {name: 'alpha', prerelease: true}
+  - { name: 'beta', prerelease: true }
+  - { name: 'alpha', prerelease: true }
