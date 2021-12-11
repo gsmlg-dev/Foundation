@@ -13,7 +13,7 @@ import { DragDropContextProps } from './types';
 import { ChessBoard } from './ChessBoard';
 import canDrop from './canDrop';
 
-const DragDropContext = (props: DragDropContextProps) => {
+const DragDropContext : React.FC<DragDropContextProps> = (props) => {
   const [hasTouch, setTouchable] = useState(false);
   useEffect(() => {
     let touchable = false;

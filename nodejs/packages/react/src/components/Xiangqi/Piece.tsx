@@ -69,7 +69,7 @@ const collect: DragSourceCollector<DragSourceCollectedProps, object> = function 
   };
 };
 
-const Piece = ({ connectDragSource, item }: PieceProps) => {
+const Piece : React.FC<PieceProps> = ({ connectDragSource, item }) => {
   return connectDragSource(
     <div
       style={{

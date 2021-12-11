@@ -11,17 +11,17 @@ import Piece from './Piece';
 
 import { ChessBoardProps } from './types';
 
-export const ChessBoard = ({
+export const ChessBoard : React.FC<ChessBoardProps> = ({
   blackPieces,
   redPieces,
   movePiece,
   turn,
   kill,
   canDrop,
-}: ChessBoardProps) => {
+}) => {
   const allPieces = redPieces.concat(blackPieces);
 
-  const renderSquare = (i): JSX.Element => {
+  const renderSquare = (i : number): JSX.Element => {
     const x = i % 9;
     const y = Math.floor(i / 9);
     const pieces = allPieces.filter((p) => p.live);

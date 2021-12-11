@@ -72,14 +72,14 @@ const collect: DropTargetCollector<DropTargetCollectedProps, object> = function 
   };
 };
 
-const Square = ({
+const Square : React.FC<SquareProps> = ({
   x,
   y,
   isDropable,
   connectDropTarget,
   piece,
   children,
-}: SquareProps) => {
+}) => {
   const bgColor = isDropable ? (piece ? 'red' : 'green') : 'transparent';
 
   return connectDropTarget(
