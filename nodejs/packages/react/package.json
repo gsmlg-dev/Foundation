@@ -4,6 +4,7 @@
   "description": "React components that just works.",
   "main": "dist/index.js",
   "repository": "https://github.com/gsmlg-dev/Foundation.git",
+  "homepage": "https://gsmlg-dev.github.io/react",
   "author": "Jonathan Gao",
   "license": "GPLv3",
   "private": false,

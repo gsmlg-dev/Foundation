@@ -4,6 +4,7 @@
   "description": "@visx charts library.",
   "main": "dist/index.js",
   "repository": "https://github.com/gsmlg-dev/Foundation.git",
+  "homepage": "https://gsmlg-dev.github.io/visx",
   "author": "Jonathan Gao",
   "license": "GPLv3",
   "private": false,
@@ -39,7 +40,10 @@
   "keywords": [
     "react",
     "component",
-    "ui"
+    "ui",
+    "visx",
+    "d3",
+    "chart"
   ],
   "dependencies": {
     "@babel/runtime": "^7.16.3",
@@ -52,7 +56,6 @@
     "d3-shape": "^3.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-move": "6.5.0",
     "react-spring": "9.3.2"
   }
 }
