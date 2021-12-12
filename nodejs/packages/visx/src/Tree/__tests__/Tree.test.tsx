@@ -5,7 +5,7 @@ import data from '../data.sample';
 
 it('<Tree /> should be render correctly', async () => {
   render(
-    <Tree width={100} height={100} data={data} Node={({ node }) => node?.data?.name} />,
+    <Tree width={100} height={100} data={data} />,
   );
   expect(await screen.findAllByText(/gsmlg/)).toBeTruthy();
 });

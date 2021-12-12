@@ -18,6 +18,22 @@ const defaultMargin = { top: 30, left: 30, right: 30, bottom: 70 };
 //   margin?: { top: number; right: number; bottom: number; left: number };
 // };
 
+export type NodeType = React.ComponentType<{
+  key: string | number;
+  layout: string;
+  orientation: string;
+  linkType: string;
+  node: any;
+  forceUpdate: () => void;
+  [t: string]: any;
+}>
+
+export type LinkType = React.ComponentType<{
+  key: number | string;
+  data: any;
+  [t: string]: any;
+}>
+
 export interface TreeNode {
   name: string;
   isExpanded?: boolean;
@@ -35,14 +51,8 @@ export interface TreeProps {
   linkType?: 'diagonal' | 'step' | 'curve' | 'line';
   stepPercent?: number;
   backgroundColor?: string | undefined;
-  Node?: React.ComponentType<{
-    key: string | number;
-    layout: string;
-    orientation: string;
-    linkType: string;
-    node: any;
-    forceUpdate: () => void;
-  }>;
+  Node?: NodeType;
+  Link?: LinkType;
 }
 
 export const Tree: React.FC<TreeProps> = ({
@@ -55,7 +65,8 @@ export const Tree: React.FC<TreeProps> = ({
   linkType = 'step',
   stepPercent = 0.5,
   backgroundColor = 'transparent',
-  Node,
+  Node = undefined,
+  Link = undefined,
 }) => {
   const forceUpdate = useForceUpdate();
 
@@ -84,7 +95,7 @@ export const Tree: React.FC<TreeProps> = ({
     }
   }
 
-  const LinkComponent = getLinkComponent({ layout, linkType, orientation });
+  const LinkComponent = Link ?? getLinkComponent({ layout, linkType, orientation });
 
   return totalWidth < 10 ? null : (
     <svg width={totalWidth} height={totalHeight}>
