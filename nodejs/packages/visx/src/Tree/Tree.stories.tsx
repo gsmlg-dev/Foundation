@@ -118,5 +118,5 @@ SampleWithCostemNodeComponent.args = {
     bottom: 40,
   },
   backgroundColor: '#111111',
-  NodeComponent: CustomNode,
+  Node: CustomNode,
 };
