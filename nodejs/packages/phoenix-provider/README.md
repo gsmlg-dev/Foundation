@@ -6,6 +6,10 @@
 
 ---
 
+### Now is written by typescript
+
+Can be check
+
 ### API
 
 ```javascript
@@ -18,7 +22,7 @@ import {
 } from 'phoenix-provider';
 
 React.rencer(
-    <Provider url={'/socket'} params={{ token: 'my-app-token' }}>
+    <Provider url={'/socket'} options={{ params: {token: 'my-app-token' }}}>
         <App>
     </Provider>
 )
