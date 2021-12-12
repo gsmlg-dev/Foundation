@@ -34,7 +34,7 @@ export default function MyApp(props: MyAppProps) {
         />
         <meta name="theme-color" content={theme.palette.primary.main} />
       </Head>
-      <PhoenixProvider url={'/socket'} params={{ token: 'anonymous' }}>
+      <PhoenixProvider url={'/socket'} options={{ params: {token: 'anonymous' }}}>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
             <CssBaseline />
