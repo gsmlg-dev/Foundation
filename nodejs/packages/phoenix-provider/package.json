@@ -11,10 +11,10 @@
   "scripts": {
     "test": "gsmlg-scripts test",
     "test:update": "gsmlg-scripts test --updateSnapshot",
-    "build": "gsmlg-scripts build && mv index.d.ts dist/index.d.ts",
+    "build": "gsmlg-scripts build",
     "lint": "gsmlg-scripts lint",
     "format": "gsmlg-scripts format",
-    "validate": "gsmlg-scripts validate --passWithNoTests"
+    "validate": "gsmlg-scripts validate"
   },
   "files": [
     "dist"
@@ -23,31 +23,12 @@
     "phoenix",
     "react"
   ],
-  "author": "Jonathan Gao <me@gsmlg.org> (https://gsmlg.com)",
+  "author": "Jonathan Gao <me@gsmlg.org> (https://gsmlg.org)",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.16.3",
     "phoenix": "^1.6.4"
   },
-  "eslintConfig": {
-    "extends": [
-      "gsmlg",
-      "gsmlg/jest"
-    ],
-    "rules": {
-      "no-process-exit": "off",
-      "import/no-dynamic-require": "off",
-      "import/no-unassigned-import": "off",
-      "no-console": "off",
-      "no-nested-ternary": "off",
-      "no-useless-catch": "off"
-    }
-  },
-  "eslintIgnore": [
-    "node_modules",
-    "coverage",
-    "dist"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/gsmlg-dev/Foundation"
@@ -60,7 +41,10 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.8.0"
+    "@gsmlg/scripts": "^1.8.0",
+    "@types/jest": "^27.0.3",
+    "@types/react": "^17.0.37",
+    "typescript": "^4.5.3"
   },
   "peerDependencies": {
     "react": "^17.0.2"
