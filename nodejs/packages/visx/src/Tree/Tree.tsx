@@ -12,11 +12,11 @@ function useForceUpdate() {
 
 const defaultMargin = { top: 30, left: 30, right: 30, bottom: 70 };
 
-export type LinkTypesProps = {
-  width: number;
-  height: number;
-  margin?: { top: number; right: number; bottom: number; left: number };
-};
+// export type LinkTypesProps = {
+//   width: number;
+//   height: number;
+//   margin?: { top: number; right: number; bottom: number; left: number };
+// };
 
 export interface TreeNode {
   name: string;
