@@ -35,7 +35,7 @@ export interface TreeProps {
   linkType?: 'diagonal' | 'step' | 'curve' | 'line';
   stepPercent?: number;
   backgroundColor?: string | undefined;
-  NodeComponent?: React.ComponentType<{
+  Node?: React.ComponentType<{
     key: string | number;
     layout: string;
     orientation: string;
@@ -55,7 +55,7 @@ export const Tree: React.FC<TreeProps> = ({
   linkType = 'step',
   stepPercent = 0.5,
   backgroundColor = 'transparent',
-  NodeComponent,
+  Node,
 }) => {
   const forceUpdate = useForceUpdate();
 
@@ -127,8 +127,8 @@ export const Tree: React.FC<TreeProps> = ({
                   left = node.y;
                 }
 
-                return NodeComponent ? (
-                  <NodeComponent
+                return Node ? (
+                  <Node
                     key={key}
                     layout={layout}
                     orientation={orientation}
