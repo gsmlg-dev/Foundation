@@ -75,6 +75,6 @@ const dark = `
 .hljs-link {
   text-decoration: underline;
 }
-`
+`;
 
 export default dark;

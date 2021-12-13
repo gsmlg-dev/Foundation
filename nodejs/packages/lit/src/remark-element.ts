@@ -39,11 +39,11 @@ class RemarkElement extends LitElement {
   `;
 
   @property({ type: Boolean, attribute: true, reflect: true })
-  debug : boolean = false;
+  debug: boolean = false;
 
-  private _content : string | undefined = undefined;
+  private _content: string | undefined = undefined;
   set content(val: string | undefined) {
-    let oldVal = this._content;
+    const oldVal = this._content;
     this._content = val;
     this.requestUpdate('content', oldVal);
   }
@@ -68,7 +68,7 @@ class RemarkElement extends LitElement {
 
   private _generate() {
     const content = this.content ?? this.innerHTML;
-    
+
     return unified()
       .use(remarkParse)
       .use(remarkGfm)
@@ -83,10 +83,14 @@ class RemarkElement extends LitElement {
   }
 
   private _do_updated() {
-    const els : NodeListOf<HTMLElement> = this.renderRoot.querySelectorAll('code.language-mermaid');
+    const els: NodeListOf<HTMLElement> = this.renderRoot.querySelectorAll(
+      'code.language-mermaid',
+    );
     const fragement = document.createElement('div');
     fragement.innerHTML = this._fragement;
-    const contentEls : NodeListOf<HTMLElement> = fragement.querySelectorAll('code.language-mermaid');
+    const contentEls: NodeListOf<HTMLElement> = fragement.querySelectorAll(
+      'code.language-mermaid',
+    );
 
     for (let i = 0, len = els.length; i < len; i += 1) {
       const boxId = `mermaid-${this._mid}-${i}`;
@@ -95,7 +99,7 @@ class RemarkElement extends LitElement {
         box = document.createElement('div');
         box.id = boxId;
         document.body.append(box);
-        box.style.display='none';
+        box.style.display = 'none';
       }
       const el = els[i];
       const txt = contentEls[i].innerText;
@@ -104,7 +108,7 @@ class RemarkElement extends LitElement {
       }
       const cb = (svgGraph: string) => {
         if (this.debug) {
-          console.log(svgGraph)
+          console.log(svgGraph);
         }
         el.innerHTML = svgGraph;
       };
@@ -133,10 +137,8 @@ class RemarkElement extends LitElement {
     return html`${until(md)}`;
   }
 
-  private _decodeEntities(txt: string) : string {
-    return txt
-      .replace(/&gt;/ig, '>')
-      .replace(/&lt;/ig, '<');
+  private _decodeEntities(txt: string): string {
+    return txt.replace(/&gt;/gi, '>').replace(/&lt;/gi, '<');
   }
 }
 

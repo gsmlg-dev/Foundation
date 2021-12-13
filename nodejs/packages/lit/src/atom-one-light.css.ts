@@ -74,6 +74,6 @@ const light = `
 .hljs-link {
   text-decoration: underline;
 }
-`
+`;
 
 export default light;

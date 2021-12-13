@@ -114,6 +114,6 @@ background-color: #ffeef0;
 .hljs-tag {
 /* purposely ignored */
 }
-`
+`;
 
 export default oceanic;

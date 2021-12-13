@@ -7,20 +7,20 @@ import './remark-element';
 export default {
   title: '@gsmlg/remark-element',
   // More on argTypes: https://storybook.js.org/docs/web-components/api/argtypes
-  argTypes: {
-  },
+  argTypes: {},
 } as Meta;
 
 export interface RemarkElementProps {
-  debug: boolean
-  content?: string
-  innerHTML?: string
+  debug: boolean;
+  content?: string;
+  innerHTML?: string;
 }
 
 // More on component templates: https://storybook.js.org/docs/web-components/writing-stories/introduction#using-args
-const Template : Story<RemarkElementProps> = ({ debug, content, innerHTML }) => (
-  html`<remark-element ?debug=${debug} .content=${content}>${innerHTML}</remark-element>`
-);
+const Template: Story<RemarkElementProps> = ({ debug, content, innerHTML }) =>
+  html`<remark-element ?debug=${debug} .content=${content}
+    >${unsafeHTML(innerHTML)}</remark-element
+  >`;
 
 export const Basic = Template.bind({});
 // More on args: https://storybook.js.org/docs/web-components/writing-stories/args
@@ -28,7 +28,7 @@ Basic.args = {
   debug: true,
   content: `
 # RemarkElement
-Render *markdown*`
+Render *markdown*`,
 };
 
 export const WithBlock = Template.bind({});
@@ -44,7 +44,7 @@ console.log(Hello());
 console.log(Hello('Josh'));
 \`\`\`
 
-`
+`,
 };
 
 export const WithChart = Template.bind({});
@@ -61,9 +61,8 @@ graph TD;
     B-->D;
     C-->D;
 \`\`\`
-`
+`,
 };
-
 
 export const WithInnerHTMLChart = Template.bind({});
 
@@ -79,5 +78,5 @@ graph TD;
     B-->D;
     C-->D;
 \`\`\`
-`
+`,
 };
