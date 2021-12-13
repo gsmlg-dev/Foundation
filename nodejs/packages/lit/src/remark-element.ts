@@ -38,11 +38,18 @@ class RemarkElement extends LitElement {
     }
   `;
 
-  @property({ type: Boolean })
+  @property({ type: Boolean, attribute: true, reflect: true })
   debug : boolean = false;
 
-  @property()
-  content : string = '';
+  private _content : string | undefined = undefined;
+  set content(val: string | undefined) {
+    let oldVal = this._content;
+    this._content = val;
+    this.requestUpdate('content', oldVal);
+  }
+  get content() {
+    return this._content;
+  }
 
   private _mid: string;
   private _fragement: string;
@@ -60,7 +67,7 @@ class RemarkElement extends LitElement {
   }
 
   private _generate() {
-    const content = this.content || this.innerHTML;
+    const content = this.content ?? this.innerHTML;
     
     return unified()
       .use(remarkParse)
@@ -110,13 +117,20 @@ class RemarkElement extends LitElement {
   }
 
   override updated() {
-    setTimeout(() => this._do_updated(), 1000 / 15);
+    setTimeout(() => this._do_updated(), 1000 / 60);
   }
+
+  // override attributeChangedCallback(...args) {
+  //   if (this.debug) {
+  //     console.log(...args);
+  //   }
+  //   this.requestUpdate(...args);
+  // }
 
   override render() {
     const md = this._generate();
 
-    return html` ${until(md)} `;
+    return html`${until(md)}`;
   }
 
   private _decodeEntities(txt: string) : string {
