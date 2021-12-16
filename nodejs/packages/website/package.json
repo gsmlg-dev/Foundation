@@ -10,23 +10,23 @@
     "start": "NODE_ENV='development' next start"
   },
   "dependencies": {
-    "@emotion/react": "^11.7.0",
+    "@emotion/react": "^11.7.1",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",
-    "@gsmlg/react": "^1.5.0",
-    "@mui/icons-material": "^5.2.1",
-    "@mui/material": "^5.2.3",
+    "@gsmlg/react": "^1.7.0",
+    "@mui/icons-material": "^5.2.4",
+    "@mui/material": "^5.2.4",
     "@mui/styles": "^5.2.3",
     "@react-spring/three": "^9.3.1",
-    "@react-three/drei": "^7.27.3",
-    "@react-three/fiber": "^7.0.21",
+    "@react-three/drei": "^8.2.1",
+    "@react-three/fiber": "^7.0.24",
     "highlight.js": "^11.3.1",
     "lowlight": "^2.4.1",
     "mermaid": "^8.13.5",
     "next": "12.0.7",
     "next-transpile-modules": "^9.0.0",
     "phoenix-provider": "^2.0.1",
-    "puppeteer": "^12.0.1",
+    "puppeteer": "^13.0.0",
     "react": "17.0.2",
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "^14.0.2",
@@ -44,13 +44,13 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.8.0",
+    "@gsmlg/scripts": "^1.10.0",
     "@types/node": "^16.11.12",
     "@types/react": "^17.0.37",
     "axios": "^0.24.0",
     "eslint-config-next": "12.0.7",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.1",
-    "typescript": "^4.5.3"
+    "typescript": "^4.5.4"
   }
 }
