@@ -75,7 +75,7 @@ const collect: DragSourceCollector<DragSourceCollectedProps, object> = function 
 
 const Piece : React.FC<PieceProps> = ({ connectDragSource, item }) => {
   const preferColor = usePrefersColorScheme();
-  let itemColor : ChessColr | 'white' = item.color;
+  let itemColor : ChessColor | 'white' = item.color;
   if (preferColor === 'dark' && itemColor === ChessColor.Black) {
     itemColor = 'white';
   }
