@@ -3,7 +3,7 @@ FROM gsmlg/phoenix:alpine AS builder
 ARG MIX_ENV=prod
 ARG NAME=gsmlg
 ARG RELEASE_VERSION=0.1.0
-ARG WEB_VERSION=1.25.3
+ARG WEB_VERSION=1.25.4
 
 COPY . /build
 
