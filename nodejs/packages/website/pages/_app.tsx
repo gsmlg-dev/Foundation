@@ -3,9 +3,9 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { Provider as PhoenixProvider } from 'phoenix-provider';
-import { usePrefersColorScheme } from '@gsmlg/react/dist/hooks/usePrefersColorScheme';
 
 import getTheme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
@@ -21,8 +21,8 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  const colorScheme = usePrefersColorScheme();
-  const theme = getTheme(colorScheme);
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = getTheme(prefersDarkMode ? 'dark' : 'light');
 
   return (
     <CacheProvider value={emotionCache}>
