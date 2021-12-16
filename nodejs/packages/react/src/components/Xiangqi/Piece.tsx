@@ -1,5 +1,8 @@
 import React from 'react';
 import { DragSource, DragSourceSpec, DragSourceCollector } from 'react-dnd';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
 
 import {
   PieceShape,
@@ -7,6 +10,7 @@ import {
   DropResult,
   DragSourceCollectedProps,
   PieceProps,
+  ChessColor,
 } from './types';
 
 /**
@@ -70,25 +74,30 @@ const collect: DragSourceCollector<DragSourceCollectedProps, object> = function 
 };
 
 const Piece : React.FC<PieceProps> = ({ connectDragSource, item }) => {
+  const preferColor = usePrefersColorScheme();
+  let itemColor : ChessColr | 'white' = item.color;
+  if (preferColor === 'dark' && itemColor === ChessColor.Black) {
+    itemColor = 'white';
+  }
   return connectDragSource(
     <div
-      style={{
-        width: '50px',
-        height: '50px',
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
-        marginTop: '-25px',
-        marginLeft: '-25px',
-        fontSize: '30px',
-        textAlign: 'center',
-        lineHeight: '50px',
-        border: '1px solid black',
-        borderRadius: '50%',
-        backgroundColor: 'white',
-        userSelect: 'none',
-        color: item.color,
-      }}
+      css={css`
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        marginTop: -25px;
+        marginLeft: -25px;
+        fontSize: 30px;
+        textAlign: center;
+        lineHeight: 50px;
+        border: 1px solid black;
+        borderRadius: 50%;
+        background-color: white;
+        userSelect: none;
+        color: ${itemColor};
+      `}
     >
       {item.name}
     </div>,

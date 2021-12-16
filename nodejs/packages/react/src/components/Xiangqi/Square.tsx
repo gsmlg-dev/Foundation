@@ -1,6 +1,7 @@
 import React from 'react';
 import { DropTarget, DropTargetSpec, DropTargetCollector } from 'react-dnd';
 import { PieceShape, SquareProps, DropTargetCollectedProps } from './types';
+import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
 
 /**
  * Specifies the drop target contract.
@@ -80,7 +81,9 @@ const Square : React.FC<SquareProps> = ({
   piece,
   children,
 }) => {
+  const preferColor = usePrefersColorScheme();
   const bgColor = isDropable ? (piece ? 'red' : 'green') : 'transparent';
+  const lineColor = preferColor === 'dark' ? 'white' : 'black';
 
   return connectDropTarget(
     <div
@@ -94,7 +97,7 @@ const Square : React.FC<SquareProps> = ({
         style={{
           height: '1px',
           width: [0, 8].includes(x) ? '50%' : '100%',
-          backgroundColor: 'black',
+          backgroundColor: lineColor,
           transform: `translate(${x === 0 ? '30px' : 0}, 30px)`,
         }}
       />
@@ -105,7 +108,7 @@ const Square : React.FC<SquareProps> = ({
               ? '50%'
               : '100%',
           width: '1px',
-          backgroundColor: 'black',
+          backgroundColor: lineColor,
           transform: `translate(30px, ${
             y === 0 || (y === 5 && ![0, 8].includes(x)) ? '30px' : 0
           })`,

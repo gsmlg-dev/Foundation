@@ -3,13 +3,15 @@
  * ChessBoard
  *
  */
-
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import React from 'react';
 
 import Square from './Square';
 import Piece from './Piece';
 
 import { ChessBoardProps } from './types';
+import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
 
 export const ChessBoard : React.FC<ChessBoardProps> = ({
   blackPieces,
@@ -34,12 +36,12 @@ export const ChessBoard : React.FC<ChessBoardProps> = ({
     return (
       <div
         key={`key-${i}`}
-        style={{
-          width: '60px',
-          height: '60px',
-          position: 'relative',
-          backgroundColor: 'transparent',
-        }}
+        css={css`
+          width: 60px;
+          height: 60px;
+          position: relative;
+          background-color: transparent;
+        `}
       >
         <Square
           piece={item}
@@ -63,40 +65,40 @@ export const ChessBoard : React.FC<ChessBoardProps> = ({
 
   return (
     <div
-      style={{
-        width: '540px',
-        height: '600px',
-        display: 'flex',
-        flexWrap: 'wrap',
-        position: 'relative',
-      }}
+      css={css`
+        width: 540px;
+        height: 600px;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+      `}
     >
       {squares}
       <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '25%',
-          marginTop: '-30px',
-          height: '60px',
-          lineHeight: '60px',
-          fontSize: '24px',
-          userSelect: 'none',
-        }}
+        css={css`
+          position: absolute;
+          top: 50%;
+          left: 25%;
+          margin-top: -30px;
+          height: 60px;
+          line-height: 60px;
+          font-size: 24px;
+          user-select: none;
+        `}
       >
         楚 河
       </div>
       <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          right: '25%',
-          marginTop: '-30px',
-          height: '60px',
-          lineHeight: '60px',
-          fontSize: '24px',
-          userSelect: 'none',
-        }}
+        css={css`
+          position: absolute;
+          top: 50%;
+          right: 25%;
+          margin-top: -30px;
+          height: 60px;
+          line-height: 60px;
+          font-size: 24px;
+          user-select: none;
+        `}
       >
         漢 界
       </div>
