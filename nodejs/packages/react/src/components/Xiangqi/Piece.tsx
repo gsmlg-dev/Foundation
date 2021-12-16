@@ -92,9 +92,9 @@ const Piece : React.FC<PieceProps> = ({ connectDragSource, item }) => {
         fontSize: 30px;
         textAlign: center;
         lineHeight: 50px;
-        border: 1px solid black;
+        border: 1px solid ${preferColor === 'dark' ? 'white' : 'black'};
         borderRadius: 50%;
-        background-color: white;
+        background-color: ${preferColor === 'dark' ? 'black' : 'white'};
         userSelect: none;
         color: ${itemColor};
       `}

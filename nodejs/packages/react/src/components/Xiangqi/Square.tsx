@@ -1,7 +1,7 @@
 import React from 'react';
 import { DropTarget, DropTargetSpec, DropTargetCollector } from 'react-dnd';
-import { PieceShape, SquareProps, DropTargetCollectedProps } from './types';
 import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
+import { PieceShape, SquareProps, DropTargetCollectedProps } from './types';
 
 /**
  * Specifies the drop target contract.

@@ -11,7 +11,7 @@ import Square from './Square';
 import Piece from './Piece';
 
 import { ChessBoardProps } from './types';
-import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
+// import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
 
 export const ChessBoard : React.FC<ChessBoardProps> = ({
   blackPieces,
