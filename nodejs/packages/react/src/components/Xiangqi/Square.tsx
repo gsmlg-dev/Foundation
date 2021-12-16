@@ -1,6 +1,5 @@
 import React from 'react';
 import { DropTarget, DropTargetSpec, DropTargetCollector } from 'react-dnd';
-import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
 import { PieceShape, SquareProps, DropTargetCollectedProps } from './types';
 
 /**
@@ -80,12 +79,13 @@ const Square : React.FC<SquareProps> = ({
   connectDropTarget,
   piece,
   children,
+  readonly,
+  darkMode,
 }) => {
-  const preferColor = usePrefersColorScheme();
-  const bgColor = isDropable ? (piece ? 'red' : 'green') : 'transparent';
-  const lineColor = preferColor === 'dark' ? 'white' : 'black';
+  const bgColor = (isDropable && !readonly) ? (piece ? 'red' : 'green') : 'transparent';
+  const lineColor = darkMode ? 'white' : 'black';
 
-  return connectDropTarget(
+  const Element = (
     <div
       style={{
         width: '100%',
@@ -115,8 +115,10 @@ const Square : React.FC<SquareProps> = ({
         }}
       />
       {children}
-    </div>,
+    </div>
   );
+
+  return readonly ? Element : connectDropTarget(Element);
 };
 
 export default DropTarget('Piece', chessSquareTarget, collect)(Square);

@@ -11,7 +11,6 @@ import Square from './Square';
 import Piece from './Piece';
 
 import { ChessBoardProps } from './types';
-// import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
 
 export const ChessBoard : React.FC<ChessBoardProps> = ({
   blackPieces,
@@ -20,6 +19,8 @@ export const ChessBoard : React.FC<ChessBoardProps> = ({
   turn,
   kill,
   canDrop,
+  readonly,
+  darkMode,
 }) => {
   const allPieces = redPieces.concat(blackPieces);
 
@@ -28,7 +29,14 @@ export const ChessBoard : React.FC<ChessBoardProps> = ({
     const y = Math.floor(i / 9);
     const pieces = allPieces.filter((p) => p.live);
     const item = pieces.find(({ position: { x: px, y: py } }) => px === x && py === y);
-    const key = item ? <Piece item={item} turn={turn} /> : null;
+    const key = item ? (
+      <Piece 
+        item={item}
+        turn={turn}
+        readonly={readonly}
+        darkMode={darkMode}
+      />
+    ) : null;
     const killPiece = () => {
       if (item) kill(item);
     };
@@ -51,6 +59,8 @@ export const ChessBoard : React.FC<ChessBoardProps> = ({
           pieces={pieces}
           kill={killPiece}
           canDrop={canDrop}
+          readonly={readonly}
+          darkMode={darkMode}
         >
           {key}
         </Square>

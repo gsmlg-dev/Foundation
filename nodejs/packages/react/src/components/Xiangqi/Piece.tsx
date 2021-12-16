@@ -2,7 +2,6 @@ import React from 'react';
 import { DragSource, DragSourceSpec, DragSourceCollector } from 'react-dnd';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { usePrefersColorScheme } from '../../hooks/usePrefersColorScheme';
 
 import {
   PieceShape,
@@ -73,13 +72,12 @@ const collect: DragSourceCollector<DragSourceCollectedProps, object> = function 
   };
 };
 
-const Piece : React.FC<PieceProps> = ({ connectDragSource, item }) => {
-  const preferColor = usePrefersColorScheme();
+const Piece : React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkMode }) => {
   let itemColor : ChessColor | 'white' = item.color;
-  if (preferColor === 'dark' && itemColor === ChessColor.Black) {
+  if (darkMode && itemColor === ChessColor.Black) {
     itemColor = 'white';
   }
-  return connectDragSource(
+  const Element = (
     <div
       css={css`
         width: 50px;
@@ -92,16 +90,17 @@ const Piece : React.FC<PieceProps> = ({ connectDragSource, item }) => {
         fontSize: 30px;
         textAlign: center;
         lineHeight: 50px;
-        border: 1px solid ${preferColor === 'dark' ? 'white' : 'black'};
+        border: 1px solid ${darkMode ? 'white' : 'black'};
         borderRadius: 50%;
-        background-color: ${preferColor === 'dark' ? 'black' : 'white'};
+        background-color: ${darkMode ? 'black' : 'white'};
         userSelect: none;
         color: ${itemColor};
       `}
     >
       {item.name}
-    </div>,
+    </div>
   );
+  return readonly ? Element : connectDragSource(Element);
 };
 
 export default DragSource('Piece', cardSource, collect)(Piece);

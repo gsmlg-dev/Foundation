@@ -47,15 +47,12 @@ export interface DragDropContextProps {
   kill: (item: PieceShape) => PieceShape;
   movePiece: (item: PieceShape, pos: PositionShape) => void;
   turn: ChessColor;
+  readonly: boolean;
 }
 
-export interface ChessBoardProps {
-  redPieces: PieceShape[];
-  blackPieces: PieceShape[];
-  kill: (item: PieceShape) => PieceShape;
-  movePiece: (item: PieceShape, pos: PositionShape) => void;
+export interface ChessBoardProps extends DragDropContextProps {
   canDrop: (item: PieceShape, pos: PositionShape, pieces: PieceShape[]) => boolean;
-  turn: ChessColor;
+  darkMode: boolean;
 }
 
 export interface SquareProps {
@@ -69,10 +66,15 @@ export interface SquareProps {
   kill: () => void;
   isDropable: boolean;
   children: ReactChild | ReactChildren;
+  readonly: boolean;
+  darkMode: boolean;
 }
 
 export interface PieceProps extends DragSourceCollectedProps {
   item: PieceShape;
+  turn: ChessColor;
+  readonly: boolean;
+  darkMode: boolean;
 }
 
 export interface DragSourceProps {
