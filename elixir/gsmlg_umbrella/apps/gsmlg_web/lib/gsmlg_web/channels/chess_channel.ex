@@ -10,8 +10,8 @@ defmodule GSMLGWeb.ChessChannel do
   end
 
   def handle_info({:after_join, _msg}, socket) do
-    {:ok, %{pieces: pieces, turn: turn}} = Room.get_state()
-    push(socket, "init_pieces", %{pieces: pieces, turn: turn})
+    {:ok, %{pieces: pieces, turn: turn, start?: started, done: done}} = Room.get_state()
+    push(socket, "init_pieces", %{pieces: pieces, turn: turn, started: started, done: done})
     {:noreply, socket}
   end
 

@@ -18,9 +18,22 @@ defmodule GSMLGWeb.Schema do
       resolve(&Resolvers.Node.list_nodes/3)
     end
 
+    @desc "Get chess"
+    field :chess, :chess do
+      resolve(&Resolvers.Chess.get_chess/3)
+    end
+
     @desc "Get all chess piece"
     field :pieces, list_of(:piece) do
       resolve(&Resolvers.Chess.list_pieces/3)
     end
+  end
+
+  mutation do
+    # field :start_chess, :chess do
+    #   arg :started, non_null(:boolean)
+
+    #   resolve(&Resolvers.Chess.start_chess/3)
+    # end
   end
 end

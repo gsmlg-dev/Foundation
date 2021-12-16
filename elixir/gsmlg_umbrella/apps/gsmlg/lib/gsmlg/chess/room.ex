@@ -31,8 +31,9 @@ defmodule GSMLG.Chess.Room do
       |> Map.put(:pieces, pieces)
       |> Map.put(:start?, true)
       |> Map.put(:turn, "red")
+      |> Map.put(:done, false)
 
-    {:reply, {:ok, pieces}, newState}
+    {:reply, {:ok, newState}, newState}
   end
 
   def handle_call(:get_state, _from, state) do
@@ -61,6 +62,6 @@ defmodule GSMLG.Chess.Room do
       |> Map.put(:pieces, pieces)
       |> Map.put(:turn, if(color == "red", do: "black", else: "red"))
 
-    {:reply, {:ok, pieces}, newState}
+    {:reply, {:ok, newState}, newState}
   end
 end
