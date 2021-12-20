@@ -97,7 +97,7 @@ function Xiangqi(props: Props) {
 
   useEffect(() => {
     if (channel) {
-      channel.on('init_pieces', ({ pieces , turn}) => {
+      channel.on('init_pieces', ({ pieces , turn }) => {
         setPieces({
           redPieces: pieces.filter((p) => p.color === ChessColor.Red),
           blackPieces: pieces.filter((p) => p.color === ChessColor.Black),
