@@ -27,14 +27,20 @@ defmodule GSMLGWeb.ChessChannel do
 
   def handle_in("start", _payload, socket) do
     {:ok, %{pieces: pieces, turn: turn, done: done, start?: started}} = Room.start_room()
-    push(socket, "init_pieces",%{pieces: pieces, turn: turn, done: done, start?: started})
+    push(socket, "init_pieces", %{pieces: pieces, turn: turn, done: done, start?: started})
     broadcast!(socket, "init_pieces", %{pieces: pieces, turn: turn, done: done, start?: started})
     {:noreply, socket}
   end
 
   def handle_in("move_chess", payload, socket) do
     {:ok, %{pieces: pieces, turn: turn, done: done, start?: started}} = Room.move_chess(payload)
-    broadcast!(socket, "move_chess_remote", Map.put(payload, :pieces, pieces))
+
+    broadcast!(
+      socket,
+      "move_chess_remote",
+      payload |> Map.put(:pieces, pieces) |> Map.put(:turn, turn) |> Map.put(:done, done)
+    )
+
     {:noreply, socket}
   end
 

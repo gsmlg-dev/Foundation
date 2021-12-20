@@ -31,7 +31,7 @@ defmodule GSMLGWeb.Schema do
 
   mutation do
     field :start_chess, :chess do
-      arg :started, non_null(:boolean)
+      arg(:started, non_null(:boolean))
 
       resolve(&Resolvers.Chess.start_chess/3)
     end

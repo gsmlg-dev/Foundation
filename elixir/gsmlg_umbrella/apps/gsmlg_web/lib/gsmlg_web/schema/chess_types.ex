@@ -3,10 +3,10 @@ defmodule GSMLGWeb.Schema.ChessTypes do
 
   object :chess do
     # start?: false, done?: false, pieces: [], turn: nil
-    field :started, :boolean
-    field :done, :boolean
-    field :pieces, list_of(:piece)
-    field :turn, :string
+    field(:started, :boolean)
+    field(:done, :boolean)
+    field(:pieces, list_of(:piece))
+    field(:turn, :string)
   end
 
   object :piece do

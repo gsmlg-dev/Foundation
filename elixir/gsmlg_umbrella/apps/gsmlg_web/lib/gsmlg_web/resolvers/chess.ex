@@ -7,6 +7,7 @@ defmodule GSMLGWeb.Resolvers.Chess do
   def get_chess(_parent, _args, _resolution) do
     {:ok, %{start?: started, done?: done, pieces: pieces, turn: turn}} =
       GSMLG.Chess.Room.get_state()
+
     GSMLG.Chess.Room.get_state()
     {:ok, %{started: started, done: done, pieces: pieces, turn: turn}}
   end
