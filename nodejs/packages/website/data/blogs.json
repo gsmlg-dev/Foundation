@@ -17,7 +17,7 @@
   },
   {
     "author": "Gao",
-    "content": "今天使用docker build镜像的时候出现错误：\n\n```\ndevmapper: Thin Pool has 162422 free data blocks which is less than minimum required 163840 free data blocks. Create more free space in thin pool or use dm.min_free_space option to change behavior\n```\n\n解决方式：\n\n```bash\n\ndocker rm $(docker ps -q -f status=exited)\ndocker volume rm $(docker volume ls -qf dangling=true)\ndocker rmi $(docker images --filter \"dangling=true\" -q --no-trunc)\n\n```\n\n",
+    "content": "今天使用docker build镜像的时候出现错误：\n\n```\ndevmapper: Thin Pool has 162422 free data blocks which is less than minimum required 163840 free data blocks. \nCreate more free space in thin pool or use dm.min_free_space option to change behavior\n```\n\n解决方式：\n\n```bash\n\ndocker rm $(docker ps -q -f status=exited)\ndocker volume rm $(docker volume ls -qf dangling=true)\ndocker rmi $(docker images --filter \"dangling=true\" -q --no-trunc)\n\n```\n\n",
     "date": "2021-12-08",
     "id": 60,
     "slug": "docker-thin-pool",
