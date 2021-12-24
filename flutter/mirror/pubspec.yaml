@@ -53,6 +53,11 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
+  remove_alpha_ios: true
+  macos: true
+  windows: true
+  linux: true
+  web: true
   image_path: "assets/icon/icon.png"
 
 # The following section is specific to Flutter.
