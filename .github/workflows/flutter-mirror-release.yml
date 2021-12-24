@@ -198,7 +198,7 @@ jobs:
           flutter pub get
 
       - name: 🕸 Build iOS
-        run:
+        run: |
           cd flutter/mirror
           flutter build ios --no-codesign
 
@@ -241,7 +241,7 @@ jobs:
           flutter pub get
 
       - name: 🕸 Build macOS
-        run:
+        run: |
           cd flutter/mirror
           flutter build macos
 
@@ -291,7 +291,7 @@ jobs:
           cd flutter/mirror
           flutter build windows
 
-      - run: dir flutter\\mirror\\build /AD /s
+      - run: dir flutter /AD /s
       - name: Create package file
         run : tar zcf mirror.windows.tar.gz -C flutter\\mirror\\build\\windows\\x64\\Release Runner
 
