@@ -59,7 +59,6 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && npm install -g yarn \
   && npm install -g cnpm --registry=https://registry.npmmirror.com \
   && npm install -g npm-check-updates \
-  && npm install -g puppeteer \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
