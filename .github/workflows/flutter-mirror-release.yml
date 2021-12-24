@@ -158,7 +158,7 @@ jobs:
           flutter build apk
 
       - name: Create package file
-        run : tar zcf mirror.android.tar.gz -C flutter/mirror/build/app/outputs/flutter-apk/ app.apk app.apk.sha1 app-debug.apk
+        run : tar zcf mirror.android.tar.gz -C flutter/mirror/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
@@ -289,9 +289,9 @@ jobs:
           cd flutter/mirror
           flutter build windows
 
-      - run: Get-ChildItem -Recurse flutter/mirror
+      - run: Get-ChildItem -Recurse flutter/mirror/build
       - name: Create package file
-        run : tar zcf mirror.windows.tar.gz -C flutter/mirror/build/windows/x64/Release Runner
+        run : tar zcf mirror.windows.tar.gz -C build/windows/runner/ Release
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
