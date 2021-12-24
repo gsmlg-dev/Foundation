@@ -119,7 +119,7 @@ jobs:
 
       - run: find flutter/mirror/build -print
       - name: Create package file
-        run : tar zcf mirror.linux.tar.gz -C flutter/mirror/build/linux/release/ bundle
+        run : tar zcf mirror.linux.tar.gz -C flutter/mirror/build/linux/x64/release bundle
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
@@ -202,7 +202,7 @@ jobs:
           cd flutter/mirror
           flutter build ios --no-codesign
 
-      - run: find flutter/mirror/build -print
+      - run: find flutter/mirror
       - name: Create package file
         run : tar zcf mirror.ios.tar.gz -C flutter/mirror/build/ios/iphoneos/ Runner.app
 
@@ -245,7 +245,7 @@ jobs:
           cd flutter/mirror
           flutter build macos
 
-      - run: find flutter/mirror/build
+      - run: find flutter/mirror
       - name: Create package file
         run : tar zcf mirror.macos.tar.gz -C flutter/mirror/build/macos/Build/Products/Release/ mirror.app
 
@@ -291,9 +291,9 @@ jobs:
           cd flutter/mirror
           flutter build windows
 
-      - run: find flutter\mirror\build
+      - run: dir flutter\\mirror\\build /AD /s
       - name: Create package file
-        run : tar zcf mirror.windows.tar.gz -C flutter\mirror\build\windows\x64\Release Runner
+        run : tar zcf mirror.windows.tar.gz -C flutter\\mirror\\build\\windows\\x64\\Release Runner
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
