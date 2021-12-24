@@ -66,7 +66,7 @@ jobs:
           flutter build web
 
       - name: Create package file
-        run : tar zcf mirror.web.tar.gz -C build web
+        run : tar zcf mirror.web.tar.gz -C flutter/mirror/build web
 
   build-linux:
     runs-on: ubuntu-latest
@@ -110,7 +110,7 @@ jobs:
 
       - run: find build/linux/release/bundle
       - name: Create package file
-        run : tar zcf mirror.linux.tar.gz -C build/linux/release/ bundle
+        run : tar zcf mirror.linux.tar.gz -C flutter/mirror/build/linux/release/ bundle
 
   build-apk:
     runs-on: ubuntu-latest
@@ -143,7 +143,7 @@ jobs:
           flutter build apk
 
       - name: Create package file
-        run : tar zcf mirror.android.tar.gz -C build/app/outputs/flutter-apk/ app.apk
+        run : tar zcf mirror.android.tar.gz -C flutter/mirror/build/app/outputs/flutter-apk/ app.apk
 
   build-ios:
     runs-on: macos-latest
@@ -176,7 +176,7 @@ jobs:
           flutter build ios --no-codesign
 
       - name: Create package file
-        run : tar zcf mirror.ios.tar.gz -C build/ios/iphoneos/ Runner.app
+        run : tar zcf mirror.ios.tar.gz -C flutter/mirror/build/ios/iphoneos/ Runner.app
 
   build-macos:
     runs-on: macos-latest
@@ -209,7 +209,7 @@ jobs:
           flutter build macos
 
       - name: Create package file
-        run : tar zcf mirror.macos.tar.gz -C build/macos/Build/Products/Release/ mirror.app
+        run : tar zcf mirror.macos.tar.gz -C flutter/mirror/build/macos/Build/Products/Release/ mirror.app
 
   build-windows:
     runs-on: windows-latest
@@ -245,4 +245,4 @@ jobs:
           flutter build windows
 
       - name: Create package file
-        run : tar zcf mirror.windows.tar.gz -C \\build\\windows\\x64\\Release\\ Runner
+        run : tar zcf mirror.windows.tar.gz -C \\flutter\\mirror\\build\\windows\\x64\\Release\\ Runner
