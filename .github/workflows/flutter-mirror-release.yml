@@ -117,7 +117,7 @@ jobs:
           cd flutter/mirror
           flutter build linux
 
-      - run: find build/linux/ -print
+      - run: find flutter/mirror/build -print
       - name: Create package file
         run : tar zcf mirror.linux.tar.gz -C flutter/mirror/build/linux/release/ bundle
 
@@ -202,7 +202,7 @@ jobs:
           cd flutter/mirror
           flutter build ios --no-codesign
 
-      - run: find flutter/mirror/build/ios -print
+      - run: find flutter/mirror/build -print
       - name: Create package file
         run : tar zcf mirror.ios.tar.gz -C flutter/mirror/build/ios/iphoneos/ Runner.app
 
@@ -245,7 +245,7 @@ jobs:
           cd flutter/mirror
           flutter build macos
 
-      - run: find flutter/mirror/build/macos
+      - run: find flutter/mirror/build
       - name: Create package file
         run : tar zcf mirror.macos.tar.gz -C flutter/mirror/build/macos/Build/Products/Release/ mirror.app
 
@@ -291,7 +291,7 @@ jobs:
           cd flutter/mirror
           flutter build windows
 
-      - run: find flutter\mirror\build\windows
+      - run: find flutter\mirror\build
       - name: Create package file
         run : tar zcf mirror.windows.tar.gz -C flutter\mirror\build\windows\x64\Release Runner
 
