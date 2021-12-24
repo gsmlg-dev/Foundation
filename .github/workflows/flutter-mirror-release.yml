@@ -68,6 +68,15 @@ jobs:
       - name: Create package file
         run : tar zcf mirror.web.tar.gz -C flutter/mirror/build web
 
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mirror.web.tar.gz
+          asset_name: mirror.web.tar.gz
+          tag: mirror-v${{ steps.semantic.outputs.new_release_version }}
+          overwrite: true
+
   build-linux:
     runs-on: ubuntu-latest
     name: Build Linux
@@ -108,9 +117,18 @@ jobs:
           cd flutter/mirror
           flutter build linux
 
-      - run: find build/linux/release/bundle
+      - run: find build/linux/ -print
       - name: Create package file
         run : tar zcf mirror.linux.tar.gz -C flutter/mirror/build/linux/release/ bundle
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mirror.linux.tar.gz
+          asset_name: mirror.linux.tar.gz
+          tag: mirror-v${{ steps.semantic.outputs.new_release_version }}
+          overwrite: true
 
   build-apk:
     runs-on: ubuntu-latest
@@ -145,6 +163,15 @@ jobs:
       - name: Create package file
         run : tar zcf mirror.android.tar.gz -C flutter/mirror/build/app/outputs/flutter-apk/ app.apk
 
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mirror.android.tar.gz
+          asset_name: mirror.android.tar.gz
+          tag: mirror-v${{ steps.semantic.outputs.new_release_version }}
+          overwrite: true
+
   build-ios:
     runs-on: macos-latest
     name: Build ios
@@ -175,8 +202,18 @@ jobs:
           cd flutter/mirror
           flutter build ios --no-codesign
 
+      - run: find flutter/mirror/build/ios -print
       - name: Create package file
         run : tar zcf mirror.ios.tar.gz -C flutter/mirror/build/ios/iphoneos/ Runner.app
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mirror.ios.tar.gz
+          asset_name: mirror.ios.tar.gz
+          tag: mirror-v${{ steps.semantic.outputs.new_release_version }}
+          overwrite: true
 
   build-macos:
     runs-on: macos-latest
@@ -208,8 +245,18 @@ jobs:
           cd flutter/mirror
           flutter build macos
 
+      - run: find flutter/mirror/build/macos
       - name: Create package file
         run : tar zcf mirror.macos.tar.gz -C flutter/mirror/build/macos/Build/Products/Release/ mirror.app
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mirror.macos.tar.gz
+          asset_name: mirror.macos.tar.gz
+          tag: mirror-v${{ steps.semantic.outputs.new_release_version }}
+          overwrite: true
 
   build-windows:
     runs-on: windows-latest
@@ -244,5 +291,15 @@ jobs:
           cd flutter/mirror
           flutter build windows
 
+      - run: find flutter\mirror\build\windows
       - name: Create package file
-        run : tar zcf mirror.windows.tar.gz -C \\flutter\\mirror\\build\\windows\\x64\\Release\\ Runner
+        run : tar zcf mirror.windows.tar.gz -C flutter\mirror\build\windows\x64\Release Runner
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mirror.windows.tar.gz
+          asset_name: mirror.windows.tar.gz
+          tag: mirror-v${{ steps.semantic.outputs.new_release_version }}
+          overwrite: true
