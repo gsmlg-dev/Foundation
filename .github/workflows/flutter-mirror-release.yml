@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       
-      # - run: test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
+      - run: test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
 
   build-web:
     runs-on: ubuntu-latest
