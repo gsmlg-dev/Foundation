@@ -292,7 +292,7 @@ jobs:
           cd flutter/mirror
           flutter build windows
 
-      - run: dir flutter /S
+      - run: find flutter
       - name: Create package file
         run : tar zcf mirror.windows.tar.gz -C flutter\\mirror\\build\\windows\\x64\\Release Runner
 
