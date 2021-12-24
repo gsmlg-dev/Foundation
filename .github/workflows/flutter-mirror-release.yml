@@ -289,9 +289,8 @@ jobs:
           cd flutter/mirror
           flutter build windows
 
-      - run: Get-ChildItem -Recurse flutter/mirror/build
       - name: Create package file
-        run : tar zcf mirror.windows.tar.gz -C build/windows/runner/ Release
+        run : tar zcf mirror.windows.tar.gz -C flutter/mirror/build/windows/runner/ Release
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
