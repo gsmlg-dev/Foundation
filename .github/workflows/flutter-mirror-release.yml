@@ -155,7 +155,7 @@ jobs:
       - name: 🕸 Build APK
         run: |
           cd flutter/mirror
-          flutter build apk
+          flutter build apk --build-name=${{ needs.release.outputs.version }}
 
       - name: Create package file
         run : tar zcf mirror.android.tar.gz -C flutter/mirror/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
@@ -197,7 +197,7 @@ jobs:
       - name: 🕸 Build iOS
         run: |
           cd flutter/mirror
-          flutter build ios --no-codesign
+          flutter build ios --no-codesign --build-name=${{ needs.release.outputs.version }}
 
       - name: Create package file
         run : tar zcf mirror.ios.tar.gz -C flutter/mirror/build/ios/iphoneos/ Runner.app
@@ -242,7 +242,7 @@ jobs:
       - name: 🕸 Build macOS
         run: |
           cd flutter/mirror
-          flutter build macos
+          flutter build macos --build-name=${{ needs.release.outputs.version }}
 
       - name: Create package file
         run : tar zcf mirror.macos.tar.gz -C flutter/mirror/build/macos/Build/Products/Release/ mirror.app
