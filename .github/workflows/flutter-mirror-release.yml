@@ -52,7 +52,7 @@ jobs:
       - name: 🚀 Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.5.3'
+          flutter-version: '2.8.1'
           channel: 'stable'
 
       - name: 🐳 Install dependencies
@@ -94,7 +94,7 @@ jobs:
       - name: 🚀 Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.5.3'
+          flutter-version: '2.8.1'
           channel: 'stable'
 
       - name: Enable linux
@@ -144,7 +144,7 @@ jobs:
       - name: 🚀 Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.5.3'
+          flutter-version: '2.8.1'
           channel: 'stable'
 
       - name: 🐳 Install dependencies
@@ -186,7 +186,7 @@ jobs:
       - name: 🚀 Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.5.3'
+          flutter-version: '2.8.1'
           channel: 'stable'
 
       - name: 🐳 Install dependencies
@@ -228,7 +228,7 @@ jobs:
       - name: 🚀 Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.5.3'
+          flutter-version: '2.8.1'
           channel: 'stable'
 
       - name: Enable windows
@@ -273,7 +273,7 @@ jobs:
       - name: 🚀 Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.5.3'
+          flutter-version: '2.8.1'
           channel: 'stable'
 
       - name: Enable windows
