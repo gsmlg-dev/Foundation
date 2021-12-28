@@ -72,7 +72,7 @@ jobs:
 
       - name: 🏗 Run install semantic-release
         working-directory: 'nodejs/packages/jsfuck'
-        run: npm install --save-dev semantic-release-monorepo semantic-release @semantic-release/exec
+        run: npm install --save-dev semantic-release-monorepo semantic-release
 
       - name: 🚀 Release
         working-directory: 'nodejs/packages/jsfuck'
