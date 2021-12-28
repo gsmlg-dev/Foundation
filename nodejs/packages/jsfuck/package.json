@@ -1,0 +1,33 @@
+{
+  "name": "@gsmlg/jsfuck",
+  "private": false,
+  "author": "Jonathan Gao",
+  "version": "0.0.0-semantically-released",
+  "description": "Write any JavaScript with just 6 characters: []()!+",
+  "keywords": [
+    "jsfuck",
+    "fuck"
+  ],
+  "license": "GPLv3",
+  "scripts": {
+    "test": "gsmlg-scripts test",
+    "build": "gsmlg-scripts build",
+    "lint": "gsmlg-scripts lint",
+    "format": "gsmlg-scripts format",
+    "validate": "gsmlg-scripts validate"
+  },
+  "main": "./dist/index.js",
+  "dependencies": {
+    "@babel/runtime": "^7.16.5"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "devDependencies": {
+    "@gsmlg/scripts": "^1.10.0"
+  }
+}
