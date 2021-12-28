@@ -16,6 +16,7 @@ module.exports = {
     'prefer-template': 'error',
     'require-yield': 'error',
     'symbol-description': 'error',
+    'prefer-object-has-own': 'off', // This rule should not be used unless ES2022 is supported in your codebase.
   },
   overrides: [
     {
