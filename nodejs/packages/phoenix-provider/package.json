@@ -26,8 +26,8 @@
   "author": "Jonathan Gao <me@gsmlg.org> (https://gsmlg.org)",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.16.3",
-    "phoenix": "^1.6.4"
+    "@babel/runtime": "^7.16.5",
+    "phoenix": "^1.6.5"
   },
   "repository": {
     "type": "git",
@@ -41,10 +41,10 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.8.0",
+    "@gsmlg/scripts": "^1.12.0",
     "@types/jest": "^27.0.3",
-    "@types/react": "^17.0.37",
-    "typescript": "^4.5.3"
+    "@types/react": "^17.0.38",
+    "typescript": "^4.5.4"
   },
   "peerDependencies": {
     "react": "^17.0.2"
