@@ -85,13 +85,14 @@ const Square: React.FC<SquareProps> = ({
   const bgColor = isDropable && !readonly ? (piece ? 'red' : 'green') : 'transparent';
   const lineColor = darkMode ? 'white' : 'black';
 
-  const Element = (
+  return (
     <div
       style={{
         width: '100%',
         height: '100%',
         backgroundColor: bgColor,
       }}
+      ref={(instance) => readonly || connectDropTarget(instance)}
     >
       <div
         style={{
@@ -109,16 +110,13 @@ const Square: React.FC<SquareProps> = ({
               : '100%',
           width: '1px',
           backgroundColor: lineColor,
-          transform: `translate(30px, ${
-            y === 0 || (y === 5 && ![0, 8].includes(x)) ? '30px' : 0
-          })`,
+          transform: `translate(30px, ${y === 0 || (y === 5 && ![0, 8].includes(x)) ? '30px' : 0
+            })`,
         }}
       />
       {children}
     </div>
   );
-
-  return readonly ? Element : connectDropTarget(Element);
 };
 
 export default DropTarget('Piece', chessSquareTarget, collect)(Square);

@@ -22,8 +22,8 @@ Sample.args = {};
 
 export const SampleWithStyle = Template.bind({});
 SampleWithStyle.args = {
-  width: 600,
-  height: 600,
+  width: '600',
+  height: '600',
 };
 
 export const SampleWithColor = Template.bind({});

@@ -77,7 +77,7 @@ const Piece: React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkMo
   if (darkMode && itemColor === ChessColor.Black) {
     itemColor = 'white';
   }
-  const Element = (
+  return (
     <div
       css={css`
         width: 50px;
@@ -85,22 +85,22 @@ const Piece: React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkMo
         position: absolute;
         left: 50%;
         top: 50%;
-        margintop: -25px;
-        marginleft: -25px;
-        fontsize: 30px;
-        textalign: center;
-        lineheight: 50px;
+        margin-top: -25px;
+        margin-left: -25px;
+        font-size: 30px;
+        text-align: center;
+        line-height: 50px;
         border: 1px solid ${darkMode ? 'white' : 'black'};
-        borderradius: 50%;
+        border-radius: 50%;
         background-color: ${darkMode ? 'black' : 'white'};
-        userselect: none;
+        user-select: none;
         color: ${itemColor};
       `}
+      ref={(instance) => readonly || connectDragSource(instance)}
     >
       {item.name}
     </div>
   );
-  return readonly ? Element : connectDragSource(Element);
 };
 
 export default DragSource('Piece', cardSource, collect)(Piece);
