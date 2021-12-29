@@ -12,7 +12,7 @@ import Piece from './Piece';
 
 import { ChessBoardProps } from './types';
 
-export const ChessBoard : React.FC<ChessBoardProps> = ({
+export const ChessBoard: React.FC<ChessBoardProps> = ({
   blackPieces,
   redPieces,
   movePiece,
@@ -24,18 +24,13 @@ export const ChessBoard : React.FC<ChessBoardProps> = ({
 }) => {
   const allPieces = redPieces.concat(blackPieces);
 
-  const renderSquare = (i : number): JSX.Element => {
+  const renderSquare = (i: number): JSX.Element => {
     const x = i % 9;
     const y = Math.floor(i / 9);
     const pieces = allPieces.filter((p) => p.live);
     const item = pieces.find(({ position: { x: px, y: py } }) => px === x && py === y);
     const key = item ? (
-      <Piece 
-        item={item}
-        turn={turn}
-        readonly={readonly}
-        darkMode={darkMode}
-      />
+      <Piece item={item} turn={turn} readonly={readonly} darkMode={darkMode} />
     ) : null;
     const killPiece = () => {
       if (item) kill(item);

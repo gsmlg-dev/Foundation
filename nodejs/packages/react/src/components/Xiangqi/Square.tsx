@@ -72,7 +72,7 @@ const collect: DropTargetCollector<DropTargetCollectedProps, object> = function 
   };
 };
 
-const Square : React.FC<SquareProps> = ({
+const Square: React.FC<SquareProps> = ({
   x,
   y,
   isDropable,
@@ -82,7 +82,7 @@ const Square : React.FC<SquareProps> = ({
   readonly,
   darkMode,
 }) => {
-  const bgColor = (isDropable && !readonly) ? (piece ? 'red' : 'green') : 'transparent';
+  const bgColor = isDropable && !readonly ? (piece ? 'red' : 'green') : 'transparent';
   const lineColor = darkMode ? 'white' : 'black';
 
   const Element = (

@@ -72,8 +72,8 @@ const collect: DragSourceCollector<DragSourceCollectedProps, object> = function 
   };
 };
 
-const Piece : React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkMode }) => {
-  let itemColor : ChessColor | 'white' = item.color;
+const Piece: React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkMode }) => {
+  let itemColor: ChessColor | 'white' = item.color;
   if (darkMode && itemColor === ChessColor.Black) {
     itemColor = 'white';
   }
@@ -85,15 +85,15 @@ const Piece : React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkM
         position: absolute;
         left: 50%;
         top: 50%;
-        marginTop: -25px;
-        marginLeft: -25px;
-        fontSize: 30px;
-        textAlign: center;
-        lineHeight: 50px;
+        margintop: -25px;
+        marginleft: -25px;
+        fontsize: 30px;
+        textalign: center;
+        lineheight: 50px;
         border: 1px solid ${darkMode ? 'white' : 'black'};
-        borderRadius: 50%;
+        borderradius: 50%;
         background-color: ${darkMode ? 'black' : 'white'};
-        userSelect: none;
+        userselect: none;
         color: ${itemColor};
       `}
     >

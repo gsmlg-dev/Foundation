@@ -1,4 +1,4 @@
-extends: "semantic-release-monorepo"
+extends: 'semantic-release-monorepo'
 repositoryUrl: https://github.com/gsmlg/Foundation
 plugins:
   - '@semantic-release/commit-analyzer'
@@ -10,5 +10,5 @@ branches:
   - main
   - next
   - next-major
-  - {name: 'beta', prerelease: true}
-  - {name: 'alpha', prerelease: true}
+  - { name: 'beta', prerelease: true }
+  - { name: 'alpha', prerelease: true }

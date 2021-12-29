@@ -15,7 +15,7 @@ import { DragDropContextProps } from './types';
 import { ChessBoard } from './ChessBoard';
 import canDrop from './canDrop';
 
-const DragDropContext : React.FC<DragDropContextProps> = (props) => {
+const DragDropContext: React.FC<DragDropContextProps> = (props) => {
   const touchable = useTouchable();
   const colorScheme = usePrefersColorScheme();
   const { redPieces, blackPieces, kill, movePiece, turn, readonly } = props;
