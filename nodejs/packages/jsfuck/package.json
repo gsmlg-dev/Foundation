@@ -28,6 +28,6 @@
     "node": ">=8.0.0"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.10.0"
+    "@gsmlg/scripts": "^1.12.0"
   }
 }
