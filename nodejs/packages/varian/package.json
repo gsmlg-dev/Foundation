@@ -20,7 +20,7 @@
     "validate": "gsmlg-scripts validate"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.8.0",
+    "@gsmlg/scripts": "^1.12.0",
     "coffeescript": "^2.6.1"
   },
   "browserify": {
@@ -59,6 +59,6 @@
   },
   "keywords": [],
   "dependencies": {
-    "@babel/runtime": "^7.16.3"
+    "@babel/runtime": "^7.16.5"
   }
 }
