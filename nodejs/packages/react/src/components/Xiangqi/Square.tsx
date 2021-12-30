@@ -110,8 +110,9 @@ const Square: React.FC<SquareProps> = ({
               : '100%',
           width: '1px',
           backgroundColor: lineColor,
-          transform: `translate(30px, ${y === 0 || (y === 5 && ![0, 8].includes(x)) ? '30px' : 0
-            })`,
+          transform: `translate(30px, ${
+            y === 0 || (y === 5 && ![0, 8].includes(x)) ? '30px' : 0
+          })`,
         }}
       />
       {children}
