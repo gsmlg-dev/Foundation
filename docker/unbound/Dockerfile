@@ -10,3 +10,4 @@ EXPOSE 53 853 8953
 
 ENTRYPOINT ["/usr/sbin/unbound", "-d"]
 
+VOLUME ["/etc/unbound/"]
