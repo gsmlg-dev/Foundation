@@ -12,7 +12,7 @@ jobs:
     name: Create semantic release
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.semantic.outputs.new_release_version }}
+      version: ${{ needs.release.outputs.version }}
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.1
@@ -36,7 +36,7 @@ jobs:
         run: |
           cat <<EOF
           Published: ${{ steps.semantic.outputs.new_release_published }}
-          New Release Version: ${{ steps.semantic.outputs.new_release_version }}
+          New Release Version: ${{ needs.release.outputs.version }}
           New Release Major Version: ${{ steps.semantic.outputs.new_release_major_version }}
           New Release Minor Version: ${{ steps.semantic.outputs.new_release_minor_version }}
           New Release Patch Version: ${{ steps.semantic.outputs.new_release_patch_version }}
@@ -44,7 +44,7 @@ jobs:
           New Release Notes: 
           ${{ steps.semantic.outputs.new_release_notes }}
           EOF
-          test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
+          test -z "${{ needs.release.outputs.version }}" && exit 1 || exit 0
 
   build-docker-image:
     name: Build docker image
@@ -74,9 +74,9 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            RELEASE_VERSION=${{ steps.semantic.outputs.new_release_version }}
+            RELEASE_VERSION=${{ needs.release.outputs.version }}
           tags: |
-            docker.io/gsmlg/gsmlg.org:v${{ steps.semantic.outputs.new_release_version }}
+            docker.io/gsmlg/gsmlg.org:v${{ needs.release.outputs.version }}
             docker.io/gsmlg/gsmlg.org:latest
 
   build-package:
@@ -86,7 +86,7 @@ jobs:
         os: 
           - runner: ubuntu-latest
             arch: x86_64
-          - runner: ARM64
+          - runner: ubuntu-arm64
             arch: arm64
     runs-on: ${{ matrix.os.runner }}
     needs: [ release ]
@@ -104,7 +104,7 @@ jobs:
         env:
           MIX_ENV: prod
           RELEASE_NAME: gsmlg_umbrella
-          RELEASE_VSN: ${{ steps.semantic.outputs.new_release_version }}
+          RELEASE_VSN: ${{ needs.release.outputs.version }}
         run: |
           cd elixir/gsmlg_umbrella
           mix do deps.get, compile
@@ -124,5 +124,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: elixir/gsmlg_umbrella/gsmlg.tar.gz
           asset_name: gsmlg_umbrella_${{ matrix.os.arch }}.tar.gz
-          tag: gsmlg-v${{ steps.semantic.outputs.new_release_version }}
+          tag: gsmlg-v${{ needs.release.outputs.version }}
           overwrite: true
