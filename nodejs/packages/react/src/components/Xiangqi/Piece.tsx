@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDrag, DragSourceSpec, DragSourceCollector } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
@@ -9,7 +9,7 @@ const Piece: React.FC<PieceProps> = ({ item, turn, readonly, darkMode }) => {
   const [collected, drag, dragPreview] = useDrag(() => ({
     type: ChessPieceDraggalbeType,
     item,
-    canDrag(monitor) {
+    canDrag(_monitor) {
       if (readonly) return false;
       return item.color === turn;
     },

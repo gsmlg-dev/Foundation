@@ -16,7 +16,7 @@ const Square: React.FC<SquareProps> = ({
 }) => {
   const [collectedProps, drop] = useDrop({
     accept: ChessPieceDraggalbeType,
-    canDrop(item: PieceShape, monitor) {
+    canDrop(item: PieceShape, _monitor) {
       return canDrop(item, { x, y }, pieces);
     },
 
