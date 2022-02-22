@@ -1,6 +1,22 @@
 [
   {
     "author": "Gao",
+    "content": "今天突发奇想，在没用到的Android手机上运行`github-runner`\n\n经过一番实践，成功了\n\n记录步骤：\n\n1. 安装`termux`\n\n可以在Google Play Store安装，新版本移动到F-Droid去安装了，\n也可以在Github上进行安装： https://github.com/termux/termux-app/releases\n\n2. 安装`Andronix`\n\n可以在Google Play Store安装，\n也可以直接安装： https://github.com/AndronixApp/AndronixOrigin\n\n我这里直接使用GitHub上的安装脚本安装，修改了一些基本参数方便本地使用，\n缺少`proot`，需要安装proot，`pkg install proot`\n\n安装好后会在目录下生成`start-ubuntu20.sh`, 运行即可chroot进入ubuntu系统\n\n3. 下载`Github Action Runner`\n\n进入ubuntu系统后，下载并解压缩`runner`到`/opt/actions-runner`\n\n添加用户`actions-runner`\n```bash\nuseradd -m -d /opt/actions-runner actions-runner\n```\n\n安装依赖\n```bash\napt install openssh-server openssh-client\ncd /opt/actions-runner\n./bin/installdependencies.sh\n```\n\n根据`Github`文档配置添加action\n```bash\n./config.sh --url https://github.com/<GROUP> --token <token>\n./run\n```\n\n4. 配置与运行\n\n配置环境变量\n在`/opt/actions-runner/.env`中配置环境变量\n```\nLANG=C.UTF-8\nhttp_proxy=http://user:pass@1.2.3.4:5678\nhttps_proxy=http://user:pass@1.2.3.4:5678\nno_proxy=gsmlg.org,gsmlg.dev,gsmlg.net,gsmlg.cn\n```\n\n运行：\n```bash\n# 进入termux中执行\nnohup ./start-ubuntu20.sh su -c /opt/actions-runner/run.sh - actions-runner > /data/data/com.termux/files/usr/tmp/runner.log 2>&1 &\n```\n\n",
+    "date": "2022-02-22",
+    "id": 66,
+    "slug": "run-github-runner-on-android",
+    "title": "在Android手机上运行`github-runner`"
+  },
+  {
+    "author": "Gao",
+    "content": "# 操作系统：Raspbian OS\n\n挂载boot分区\n\n1. 启用ssh\n创建ssh文件\n\n2. 配置Wi-Fi\n创建文件 `wpa_supplicant.conf`\n\n配置文件内容：\n```\ncountry=CN\nctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\nnetwork={\n    ssid=\"YOUR_NETWORK_NAME\"\n    psk=\"YOUR_PASSWORD\"\n    key_mgmt=WPA-PSK\n}\n```\n\n\n# 操作系统：Ubuntu Server\n\n挂载boot分区\n\n1. 启用ssh\n创建ssh文件\n\n2. 配置Wi-Fi\n创建文件network-config, 内容为 `netplan` 格式\n\n```yaml\n# This file contains a netplan-compatible configuration which cloud-init\n# will apply on first-boot. Please refer to the cloud-init documentation and\n# the netplan reference for full details:\n#\n# https://cloudinit.readthedocs.io/\n# https://netplan.io/reference\n#\n# Some additional examples are commented out below\nversion: 2\nethernets:\n  eth0:\n    dhcp4: true\n    optional: true\nwifis:\n  wlan0:\n    dhcp4: true\n    optional: true\n    access-points:\n      your_wifi_ssid:\n        password: \"your_wifi_password\"\n```\n\n# Motioneyeos\n\n和raspbian配置相同\n\n\n",
+    "date": "2022-02-17",
+    "id": 65,
+    "slug": "setup-wifi-and-ssh-to-raspberrypi",
+    "title": "在没有显示器时，给树莓派配置Wi-Fi和SSH"
+  },
+  {
+    "author": "Gao",
     "content": "使用Caddy做为服务网关\n\n配置方式\n\n```\n(route53) {\n\ttls {\n\t\tca https://acme-v02.api.letsencrypt.org/directory\n\t\tdns route53 {\n\t\t\tmax_retries 3\n\t\t}\n\t\tresolvers 8.8.8.8 1.1.1.1\n\t}\n}\n\n*.gsmlg.net {\n\timport route53\n\n\t@router host srv.gsmlg.net\n\thandle @router {\n\t\treverse_proxy localhost:8080\n\t}\n\n\t@nexus host addr.gsmlg.net\n\thandle @nexus {\n\t\treverse_proxy localhost:8081\n\t}\n\n\t@pve host secure.gsmlg.net\n\thandle @pve {\n\t\treverse_proxy https://1.2.4.8:8088 {\n\t\t\theader_up Host {upstream_hostport}\n\t\t\theader_up X-Forwarded-Host {host}\n\t\t\theader_down content-security-policy \"default-src 'none'; base-uri 'self'; block-all-mixed-content;\"\n\t\t\ttransport http {\n\t\t\t\ttls_insecure_skip_verify\n\t\t\t}\n\t\t}\n\t}\n}\n```\n\n增加简单认证\n```\n# 生产密码\n# caddy hash-password [--algorithm <name>] [--salt <string>] [--plaintext <password>]\ngsmlg.net {\n\treverse_proxy localhost:10280 {\n\t}\n\tbasicauth /admin* {\n\t\tJosh {env.PASSWD}\n\t}\n\tbasicauth /graph* {\n\t\tJosh {env.PASSWD}\n\t}\n\t@api_cud {\n\t\tmethod POST PUT DELETE\n\t\tpath /api/*\n\t}\n\tbasicauth @api_cud {\n\t\tJosh {env.PASSWD}\n\t}\n}\n```\n\n重定向\n```\nwww.gsmlg.net {\n\tredir https://gsmlg.net{uri}\n}\n```\n\n文件服务\n\n```\nfile.gsmlg.net {\n    root * /var/www/static\n    file_server\n}\n```\n",
     "date": "2022-02-10",
     "id": 64,
