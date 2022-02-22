@@ -1,78 +1,30 @@
 import React from 'react';
-import { DragSource, DragSourceSpec, DragSourceCollector } from 'react-dnd';
+import { useDrag, DragSourceSpec, DragSourceCollector } from 'react-dnd';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import {
-  PieceShape,
-  DragSourceProps,
-  DropResult,
-  DragSourceCollectedProps,
-  PieceProps,
-  ChessColor,
-} from './types';
+import { PieceProps, ChessColor, ChessPieceDraggalbeType } from './types';
 
-/**
- * Specifies the drag source contract.
- * Only `beginDrag` function is required.
- */
-const cardSource: DragSourceSpec<DragSourceProps, PieceShape, DropResult> = {
-  canDrag(props) {
-    return props.item.color === props.turn;
-  },
+const Piece: React.FC<PieceProps> = ({ item, turn, readonly, darkMode }) => {
+  const [collected, drag, dragPreview] = useDrag(() => ({
+    type: ChessPieceDraggalbeType,
+    item,
+    canDrag(monitor) {
+      if (readonly) return false;
+      return item.color === turn;
+    },
 
-  isDragging(props, monitor) {
-    // If your component gets unmounted while dragged
-    // (like a card in Kanban board dragged between lists)
-    // you can implement something like this to keep its
-    // appearance dragged:
-    return monitor.getItem().id === props.item.id;
-  },
+    isDragging(monitor) {
+      return monitor.getItem().id === item.id;
+    },
+    collect(monitor) {
+      return {
+        // You can ask the monitor about the current drag state:
+        isDragging: monitor.isDragging(),
+      };
+    },
+  }));
 
-  beginDrag(props, _monitor, _component) {
-    // Return the data describing the dragged item
-    const item = props.item;
-    return item;
-  },
-
-  endDrag(props, monitor, _component) {
-    if (!monitor.didDrop()) {
-      // You can check whether the drop was successful
-      // or if the drag ended but nobody handled the drop
-      return;
-    }
-
-    // When dropped on a compatible target, do something.
-    // Read the original dragged item from getItem():
-    const item = monitor.getItem(); // eslint-disable-line
-
-    // You may also read the drop result from the drop target
-    // that handled the drop, if it returned an object from
-    // its drop() method.
-    const dropResult = monitor.getDropResult(); // eslint-disable-line
-
-    // This is a good place to call some Flux action
-    // CardActions.moveCardToList(item.id, dropResult.listId);
-  },
-};
-
-/**
- * Specifies which props to inject into your component.
- */
-const collect: DragSourceCollector<DragSourceCollectedProps, object> = function collect(
-  connect,
-  monitor,
-) {
-  return {
-    // Call this function inside render()
-    // to let React DnD handle the drag events:
-    connectDragSource: connect.dragSource(),
-    // You can ask the monitor about the current drag state:
-    isDragging: monitor.isDragging(),
-  };
-};
-
-const Piece: React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkMode }) => {
   let itemColor: ChessColor | 'white' = item.color;
   if (darkMode && itemColor === ChessColor.Black) {
     itemColor = 'white';
@@ -96,11 +48,11 @@ const Piece: React.FC<PieceProps> = ({ connectDragSource, item, readonly, darkMo
         user-select: none;
         color: ${itemColor};
       `}
-      ref={(instance) => readonly || connectDragSource(instance)}
+      ref={collected.isDragging ? dragPreview : drag}
     >
       {item.name}
     </div>
   );
 };
 
-export default DragSource('Piece', cardSource, collect)(Piece);
+export default Piece;

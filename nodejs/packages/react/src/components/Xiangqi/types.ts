@@ -1,7 +1,5 @@
 /* --- STATE --- */
 import { ReactChildren, ReactChild } from 'react';
-import { ConnectDragSource, ConnectDropTarget } from 'react-dnd';
-import { Identifier } from 'dnd-core';
 
 export enum ChessColor {
   Black = 'black',
@@ -17,6 +15,8 @@ export enum PieceType {
   Cannon = 5, // 炮
   Soldier = 6, // 兵
 }
+
+export const ChessPieceDraggalbeType = 'GSMLG-Chess-Piece';
 
 export type PositionShape = {
   x: number;
@@ -59,45 +59,18 @@ export interface SquareProps {
   x: number;
   y: number;
   canDrop: (item: PieceShape, pos: PositionShape, pieces: PieceShape[]) => boolean;
-  connectDropTarget: ConnectDropTarget;
-  piece: PieceShape | null;
+  piece: PieceShape | null | undefined;
   pieces: PieceShape[];
   movePiece: (item: PieceShape, pos: PositionShape) => void;
   kill: () => void;
-  isDropable: boolean;
-  children: ReactChild | ReactChildren;
+  children: ReactChild | ReactChildren | null;
   readonly: boolean;
   darkMode: boolean;
 }
 
-export interface PieceProps extends DragSourceCollectedProps {
+export interface PieceProps {
   item: PieceShape;
   turn: ChessColor;
   readonly: boolean;
   darkMode: boolean;
-}
-
-export interface DragSourceProps {
-  item: PieceShape;
-  turn: ChessColor;
-}
-
-export interface DragSourceCollectedProps {
-  connectDragSource: ConnectDragSource;
-  isDragging: boolean;
-}
-
-export interface DropResult {
-  moved: boolean;
-}
-
-export interface DropTargetCollectedProps {
-  // Call this function inside render()
-  // to let React DnD handle the drag events:
-  connectDropTarget: ConnectDropTarget;
-  // You can ask the monitor about the current drag state:
-  isOver: boolean;
-  isOverCurrent: boolean;
-  isDropable: boolean;
-  itemType: Identifier | null;
 }
