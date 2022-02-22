@@ -84,8 +84,11 @@ jobs:
     strategy:
       matrix:
         os: 
-          - ubuntu-latest
-    runs-on: ${{ matrix.os }}
+          - runner: ubuntu-latest
+            arch: x86_64
+          - runner: ARM64
+            arch: arm64
+    runs-on: ${{ matrix.os.runner }}
     needs: [ release ]
     steps:
       - name: ⬇️ Checkout repo
@@ -120,6 +123,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: elixir/gsmlg_umbrella/gsmlg.tar.gz
-          asset_name: gsmlg_umbrella.tar.gz
+          asset_name: gsmlg_umbrella_${{ matrix.os.arch }}.tar.gz
           tag: gsmlg-v${{ steps.semantic.outputs.new_release_version }}
           overwrite: true
