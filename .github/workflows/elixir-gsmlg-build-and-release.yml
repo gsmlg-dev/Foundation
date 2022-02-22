@@ -8,8 +8,11 @@ on:
     branches:
       - "main"
 jobs:
-  build-and-release:
+  release:
+    name: Create semantic release
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.1
@@ -43,6 +46,13 @@ jobs:
           EOF
           test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
 
+  build-docker-image:
+    name: Build docker image
+    runs-on: ubuntu-latest
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -68,6 +78,18 @@ jobs:
           tags: |
             docker.io/gsmlg/gsmlg.org:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/gsmlg.org:latest
+
+  build-package:
+    name: Build otp relase package
+    strategy:
+      matrix:
+        os: 
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
 
       - name: Setup Elixir
         uses: erlef/setup-beam@v1
