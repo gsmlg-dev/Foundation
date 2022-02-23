@@ -12,3 +12,5 @@ Publish compiled code to github release.
 
 - gsmlg_web
 
+Web build needs to install nodejs
+
