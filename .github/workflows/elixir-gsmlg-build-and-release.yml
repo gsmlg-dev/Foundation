@@ -94,13 +94,17 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2
 
-      - name: Setup Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          otp-version: '24'
-          elixir-version: '1.12.3'
+      - name: 💊 Setup Elixir
+        working-directory: elixir
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update
+          apt-get install -y elixir
+          mix local.hex --force
+          mix local.rebar --force
+          mix archive.install hex phx_new --force
 
-      - name: Run build
+      - name: ⚙️ Run build
         env:
           MIX_ENV: prod
           RELEASE_NAME: gsmlg_umbrella
@@ -118,7 +122,7 @@ jobs:
           cp -r _build/prod/rel/gsmlg_umbrella gsmlg
           tar zcf gsmlg.tar.gz gsmlg
 
-      - name: Upload binaries to release
+      - name: ⬆️ Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
