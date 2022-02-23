@@ -17,3 +17,5 @@ Web build needs to install nodejs.
 ## Database
 
 Server need mariadb as a service.
+
+Create db scripts
