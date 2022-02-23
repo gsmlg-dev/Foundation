@@ -6,3 +6,9 @@ Automate build and release.
 
 Publish compiled code to github release.
 
+## Applications
+
+- gsmlg
+
+- gsmlg_web
+
