@@ -12,5 +12,8 @@ Publish compiled code to github release.
 
 - gsmlg_web
 
-Web build needs to install nodejs
+Web build needs to install nodejs.
 
+## Database
+
+Server need mariadb as a service.
