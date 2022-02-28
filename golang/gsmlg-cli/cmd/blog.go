@@ -5,26 +5,26 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-    "encoding/json"
+	"encoding/json"
 	"fmt"
-    "io/ioutil"
-    "log"
-    "net/http"
+	"io/ioutil"
+	"log"
+	"net/http"
 
 	"github.com/spf13/cobra"
 )
 
 type Blog struct {
-    Id  int  `json:"id"`
-    Slug    string  `json:"slug"`
-    Title   string  `json:"title"`
-    Date    string  `json:"date"`
-    Author  string  `json:"author"`
-    Content string  `json:"content"`
+	Id      int    `json:"id"`
+	Slug    string `json:"slug"`
+	Title   string `json:"title"`
+	Date    string `json:"date"`
+	Author  string `json:"author"`
+	Content string `json:"content"`
 }
 
 type BlogResponse struct {
-    Data    []Blog  `json:"data"`
+	Data []Blog `json:"data"`
 }
 
 // blogCmd represents the blog command
@@ -36,34 +36,34 @@ var blogCmd = &cobra.Command{
     Support plain text and json format.
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-        resp, err := http.Get("https://gsmlg.org/api/blogs")
-        if err != nil {
-            log.Fatalln(err)
-        }
+		resp, err := http.Get("https://gsmlg.org/api/blogs")
+		if err != nil {
+			log.Fatalln(err)
+		}
 
-        body, err := ioutil.ReadAll(resp.Body)
-        if err != nil {
-            log.Fatalln(err)
-        }
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatalln(err)
+		}
 
-        var br BlogResponse
-        if err := json.Unmarshal(body, &br); err != nil {
-            log.Fatalln(err)
-        }
+		var br BlogResponse
+		if err := json.Unmarshal(body, &br); err != nil {
+			log.Fatalln(err)
+		}
 
-        var maxLen int = 0
-        for _, b := range br.Data {
-            if l := len(b.Slug); l > maxLen {
-                maxLen = l
-            }
-        }
+		var maxLen int = 0
+		for _, b := range br.Data {
+			if l := len(b.Slug); l > maxLen {
+				maxLen = l
+			}
+		}
 
-        pf := fmt.Sprintf("%%-3d\t%%-%ds\t%%s\n", maxLen)
+		pf := fmt.Sprintf("%%-3d\t%%-%ds\t%%s\n", maxLen)
 
-        // fmt.Printf("%+v\n", b.Data)
-        for _, b := range br.Data {
-            fmt.Printf(pf, b.Id, b.Slug, b.Title)
-        }
+		// fmt.Printf("%+v\n", b.Data)
+		for _, b := range br.Data {
+			fmt.Printf(pf, b.Id, b.Slug, b.Title)
+		}
 	},
 }
 
