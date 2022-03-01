@@ -5,10 +5,11 @@ import (
 	"fmt"
 )
 
-func Json(l []interface{}) error {
+func Json(l interface{}) {
 	s, err := json.Marshal(l)
 	if err != nil {
-		return err
+		fmt.Printf("%v\n", err)
+		return
 	}
 	fmt.Printf("%s\n", s)
 }
