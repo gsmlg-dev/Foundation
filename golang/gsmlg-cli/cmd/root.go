@@ -27,7 +27,7 @@ import (
 var (
 	cfgFile    string
 	version    string
-	getVersion bool
+	getVersion *bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -38,8 +38,9 @@ var rootCmd = &cobra.Command{
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		if getVersion {
+		if *getVersion != false {
 			fmt.Printf("Version: %s\n", version)
+			os.Exit(0)
 		}
 	},
 }
@@ -64,7 +65,7 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	getVersion := rootCmd.Flags().BoolP("version", "v", false, "Print version")
+	getVersion = rootCmd.Flags().BoolP("version", "v", false, "Print version")
 }
 
 // initConfig reads in config file and ENV variables if set.
