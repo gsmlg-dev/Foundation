@@ -5,11 +5,10 @@ Copyright © 2022 Jonathan Gao <gsmlg.com@gmail.com>
 package cmd
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/gsmlg-dev/Foundation/golang/gsmlg/blog"
+	"github.com/gsmlg-dev/Foundation/golang/gsmlg/print"
 	"github.com/spf13/cobra"
 )
 
@@ -33,14 +32,10 @@ var blogCmd = &cobra.Command{
 			}
 
 			if output == "json" {
-				s, err := json.Marshal(b)
-				if err != nil {
-					log.Fatalln(err)
-				}
-				fmt.Printf("%s\n", s)
+				print.Json(b)
 			} else {
-				pf := fmt.Sprintf("%%-%dd\t%%-%ds\t%%s\n", len(string(b.Id)), len(b.Slug))
-				fmt.Printf(pf, b.Id, b.Slug, b.Title)
+				pf := []blog.Blog{b}
+				print.Table(pf, []string{"id", "slug", "title", "date"})
 			}
 		} else {
 
@@ -51,29 +46,9 @@ var blogCmd = &cobra.Command{
 			}
 
 			if output == "json" {
-				s, err := json.Marshal(list)
-				if err != nil {
-					log.Fatalln(err)
-				}
-				fmt.Printf("%s\n", s)
+				print.Json(list)
 			} else {
-				var (
-					l1 int = 0
-					l2 int = 0
-				)
-				for _, b := range list {
-					if l := len(string(b.Id)); l > l1 {
-						l1 = l
-					}
-					if l := len(b.Slug); l > l2 {
-						l2 = l
-					}
-				}
-				pf := fmt.Sprintf("%%-%dd\t%%-%ds\t%%s\n", l1, l2)
-
-				for _, b := range list {
-					fmt.Printf(pf, b.Id, b.Slug, b.Title)
-				}
+				print.Table(list, []string{"id", "slug", "title", "date"})
 			}
 		}
 	},
