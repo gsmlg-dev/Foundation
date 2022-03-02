@@ -9,32 +9,44 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/base64"
+	"encoding/pem"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
+var rsa_generateKey_length *int
+var rsa_generateKey_raw *bool
+
 // generateKeyCmd represents the generateKey command
 var generateKeyCmd = &cobra.Command{
 	Use:   "generateKey",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "RSA generate private key",
+	Long: `RSA generate private key:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Use --length or -l to set private key length.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		k, err := rsa.GenerateKey(rand.Reader, 2048)
+		k, err := rsa.GenerateKey(rand.Reader, *rsa_generateKey_length)
 		if err != nil {
 			println(err.Error())
 		}
+
 		key := x509.MarshalPKCS1PrivateKey(k)
-		// pubKey := x509.MarshalPKCS1PublicKey(&k.PublicKey)
-		keyStr := base64.StdEncoding.EncodeToString(key)
-		// pubStr := base64.StdEncoding.EncodeToString(pubKey)
-		fmt.Printf("%s\n\n", keyStr)
-		// fmt.Printf("%s\n\n", pubStr)
+		if *rsa_generateKey_raw {
+			keyStr := base64.StdEncoding.EncodeToString(key)
+			fmt.Printf("%s\n", keyStr)
+		} else {
+			block := &pem.Block{
+				Type: "RSA PRIVATE KEY",
+				Headers: map[string]string{
+					"Generater": "gsmlg-cli",
+				},
+				Bytes: []byte(key),
+			}
+			b := pem.EncodeToMemory(block)
+			fmt.Printf("%s", b)
+		}
+
 	},
 }
 
@@ -50,4 +62,6 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// generateKeyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rsa_generateKey_length = generateKeyCmd.Flags().IntP("length", "l", 2048, "RSA private key length")
+	rsa_generateKey_raw = generateKeyCmd.Flags().BoolP("raw", "r", false, "Print raw output RSA private key")
 }

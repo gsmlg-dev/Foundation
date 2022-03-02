@@ -13,15 +13,13 @@ import (
 // rsaCmd represents the rsa command
 var rsaCmd = &cobra.Command{
 	Use:   "rsa",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "RSA key pair management",
+	Long: `RSA key pair management:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+gsmlg-cli rsa generateKey --length 3072 > privateKey.pem
+gsmlg-cli rsa publicKey --private-key privateKey.pem`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("rsa called")
+		fmt.Println(cmd.Long)
 	},
 }
 
