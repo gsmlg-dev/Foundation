@@ -8,7 +8,7 @@ plugins:
     - "prepareCmd" : >-
         echo ${nextRelease.version};
         mkdir -p build;
-        export LDFLAGS="-ldflags '-w -s -X github.com/gsmlg-dev/Foundation/golang/gsmlg-cli/cmd.version=${nextRelease.version}'" ;
+        export LDFLAGS='-ldflags "-w -s -X github.com/gsmlg-dev/Foundation/golang/gsmlg-cli/cmd.version=${nextRelease.version}"';
         GOOS=linux GOARCH=amd64 go build \${LDFLAGS} -o build/gsmlg-cli_linux_amd64 main.go ;
         GOOS=windows GOARCH=amd64 go build \${LDFLAGS} -o build/gsmlg-cli_amd64.exe main.go ;
         GOOS=darwin GOARCH=amd64 go build \${LDFLAGS} -o build/gsmlg-cli_mac_amd64 main.go ;
