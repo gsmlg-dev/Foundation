@@ -1,9 +1,8 @@
-package main
+package hashdir
 
 import (
 	"crypto/sha256"
 	"encoding/base64"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -18,10 +17,10 @@ func check(e error) {
 
 func base64UrlSafeEncode(source []byte) string {
 	// Base64 Url Safe is the same as Base64 but does not contain '/' and '+' (replaced by '_' and '-') and trailing '=' are removed.
-	bytearr := base64.StdEncoding.EncodeToString(source)
-	safeurl := strings.Replace(string(bytearr), "/", "_", -1)
-	safeurl = strings.Replace(safeurl, "+", "-", -1)
-	safeurl = strings.Replace(safeurl, "=", "", -1)
+	safeurl := base64.StdEncoding.EncodeToString(source)
+	safeurl = strings.ReplaceAll(safeurl, "/", "_")
+	safeurl = strings.ReplaceAll(safeurl, "+", "-")
+	safeurl = strings.ReplaceAll(safeurl, "=", "")
 	return safeurl
 }
 
@@ -47,14 +46,4 @@ func Hashdir(dir string) string {
 	encodHash := base64UrlSafeEncode(ha)
 
 	return encodHash
-}
-
-func main() {
-
-	dir := os.Args[1]
-
-	encodHash := Hashdir(dir)
-
-	fmt.Println(encodHash)
-
 }
