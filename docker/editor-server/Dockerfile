@@ -63,7 +63,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
 
 # install golang
 RUN export ARCH=`dpkg --print-architecture`; \
-  export GO_VERSION="1.17.5"; \
+  export GO_VERSION="1.17.6"; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && tar -C /usr/local -xzf "/tmp/${GOPKG}" \
@@ -79,6 +79,10 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
   && /usr/local/go/bin/go get google.golang.org/grpc@latest \
   && /usr/local/go/bin/go install github.com/minio/mc@latest \
+  && /usr/local/go/bin/go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
+  && /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest \
+  && /usr/local/go/bin/go get -x -d github.com/go-delve/delve/cmd/dlv@master \
+  && /usr/local/go/bin/go install honnef.co/go/tools/cmd/staticcheck@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct \
   && chown -R coder:coder "${GOPATH}"
@@ -115,7 +119,7 @@ RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.de
 
 # install kubectl
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.21.5/bin/linux/${ARCH}/kubectl" \
+  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.23.4/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
   && mv kubectl /usr/local/bin/kubectl
 
