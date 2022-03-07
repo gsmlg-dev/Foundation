@@ -101,7 +101,7 @@ func (d Ding) Send(message string, typ string) {
 
 	baseurl := fmt.Sprintf(d.url, params.Encode())
 
-	var msg map[string]interface{}
+	var msg map[string]interface{} = map[string]interface{}{}
 
 	msg["type"] = typ
 	msg["text"] = message
