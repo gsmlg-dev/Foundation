@@ -20,8 +20,8 @@ var (
 )
 
 func init() {
-	flag.StringVar(&host, "h", ":1080", "Set pac server Listen address, default is ':1080'.")
-	flag.StringVar(&proxyServer, "s", "PROXY 127.0.0.1:3128", "Set pac server Listen address, default is 'PROXY 127.0.0.1:3128'.")
+	flag.StringVar(&host, "h", ":1080", "Set pac server listen address, default is ':1080'.")
+	flag.StringVar(&proxyServer, "s", "PROXY 127.0.0.1:3128", "Set proxy server address, default is 'PROXY 127.0.0.1:3128'.")
 	flag.BoolVar(&printHosts, "p", false, "Print hosts in gfwlist.pac.")
 }
 
