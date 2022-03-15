@@ -58,7 +58,7 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	log.Println(fmt.Sprintf("PAC Server start at %s", addr))
+	log.Println(fmt.Sprintf("GeoIP Server start at %s", addr))
 
 	log.Fatal(s.ListenAndServe())
 }
