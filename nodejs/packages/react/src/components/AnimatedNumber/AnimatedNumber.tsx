@@ -16,13 +16,14 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000,
     if (animatedValue === animateOpt.toValue) return;
     const startTime : number = animateOpt.startTime;
     const endTime : number = animateOpt.startTime + animateOpt.duration;
+    const now = +new Date();
     const endValue = animateOpt.toValue;
-    const timeRange = endTime - startTime;
-    const nums = timeRange / 1000 * 30 - 2;
+    const timeRange = endTime - now;
+    const nums = (timeRange / 1000 ) * 30 - 2;
     const remaining = endValue - animatedValue;
     const inc = nums > 0 ? (remaining / nums) : remaining;
     let nextVal = animatedValue + inc;
-    if (timeRange < (1000 / 30 * 2)) {
+    if (endTime - now < 50) {
       nextVal = endValue;
     }
     const t = requestAnimationFrame(() => {

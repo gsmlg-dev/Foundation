@@ -1,14 +1,25 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { AnimatedNumber } from '../AnimatedNumber';
 
-it('Render <AnimatedNumber />', () => {
-  render(<AnimatedNumber value={100} duration={1000} />);
-  expect(screen.getByText(/0/)).toBeTruthy();
+const delay = (t: number) => new Promise((f) => {
+  setTimeout(f, t);
+});
 
-  // rerender(<AnimatedNumber value={999} duration={1000} />);
-  // expect(screen.getByText(/999/)).toBeFalsy();
+it('Render <AnimatedNumber />', async () => {
+  await act(async () => {
+    const { rerender } = render(<AnimatedNumber value={100} duration={1000} />);
+    expect(screen.getByText(/0/)).toBeTruthy();
+    await delay(1000);
+    expect(screen.getByText(/100/)).toBeTruthy();
+  
+    rerender(<AnimatedNumber value={999} duration={1000} />);
+    await delay(1000);
+    expect(screen.getByText(/999/)).toBeTruthy();
+  
+    rerender(<AnimatedNumber value={1111} duration={200} formatValue={(v) => `${v}s`} />);
+    await delay(200);
+    expect(screen.getByText(/1111s/)).toBeTruthy();
 
-  // rerender(<AnimatedNumber value={1111} duration={0} formatValue={(v) => `${v}s`} />);
-  // expect(screen.getByText(/1111s/)).toBeTruthy();
+  });
 });
