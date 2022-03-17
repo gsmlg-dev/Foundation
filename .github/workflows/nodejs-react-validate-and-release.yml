@@ -11,8 +11,10 @@ jobs:
   main:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        node: [14, 16]
+        os:
+          - ubuntu-latest
+          # - macos-latest
+        node: [16]
     runs-on: ${{ matrix.os }}
     steps:
       - name: 🛑 Cancel Previous Runs
