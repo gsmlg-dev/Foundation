@@ -39,5 +39,3 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000,
     </span>
   );
 };
-
-export default AnimatedNumber;

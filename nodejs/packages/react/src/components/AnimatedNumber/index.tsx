@@ -1,3 +1,3 @@
-import AnimatedNumber from './AnimatedNumber';
+import { AnimatedNumber } from './AnimatedNumber';
 
 export default AnimatedNumber;
