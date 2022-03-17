@@ -8,31 +8,28 @@ interface AnimatedNumberProps {
 
 export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000, value, formatValue = (v) => `${v}`}) => {
   const [animatedValue, setAnimatedValue] = React.useState(0);
-  const [animateOpt, setAnimateOpt] = React.useState({ duration, toValue: 0 });
+  const [animateOpt, setAnimateOpt] = React.useState({ duration, toValue: 0, startTime: +new Date() });
   React.useEffect(() => {
-    setAnimateOpt({ duration, toValue: value });
+    setAnimateOpt({ duration, toValue: value, startTime: +new Date() });
   }, [duration, value]);
   React.useEffect(() => {
-    let tick = -1;
-    const startTime : number = +new Date();
-    const endTime : number = new Date().valueOf() + duration;
-    const startValue = animatedValue;
+    if (animatedValue === animateOpt.toValue) return;
+    const startTime : number = animateOpt.startTime;
+    const endTime : number = animateOpt.startTime + animateOpt.duration;
     const endValue = animateOpt.toValue;
-    const runAnimation = () => {
-      const t = +new Date();
-      if (t >= endTime) {
-        setAnimatedValue(endValue);
-        return;
-      }
-      const remained = endTime - t;
-      const percent = remained / (endTime - startTime);
-      const val = startValue + ((endValue - startValue) * percent);
-      setAnimatedValue(val);
-      tick = requestAnimationFrame(runAnimation);
-    };
-    runAnimation();
-    return () => cancelAnimationFrame(tick);
-  }, [animateOpt]); // eslint-disable-line react-hooks/exhaustive-deps
+    const timeRange = endTime - startTime;
+    const nums = timeRange / 1000 * 30 - 2;
+    const remaining = endValue - animatedValue;
+    const inc = nums > 0 ? (remaining / nums) : remaining;
+    let nextVal = animatedValue + inc;
+    if (timeRange < (1000 / 30 * 2)) {
+      nextVal = endValue;
+    }
+    const t = requestAnimationFrame(() => {
+      setAnimatedValue(nextVal);
+    });
+    return () => cancelAnimationFrame(t);
+  }, [animateOpt, animatedValue]);
   return (
     <span>
       {formatValue(animatedValue)}
