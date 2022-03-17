@@ -1,12 +1,12 @@
 import React from 'react';
 
 interface AnimatedNumberProps {
-  duration: number;
+  duration?: number;
   value: number;
-  formatValue: (v: number) => string;
+  formatValue?: (v: number) => string;
 }
 
-const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000, value, formatValue = (v) => `${v}`}) => {
+export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000, value, formatValue = (v) => `${v}`}) => {
   const [animatedValue, setAnimatedValue] = React.useState(0);
   const [animateOpt, setAnimateOpt] = React.useState({ duration, toValue: 0 });
   React.useEffect(() => {
@@ -19,7 +19,7 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000, value,
     const startValue = animatedValue;
     const endValue = animateOpt.toValue;
     const runAnimation = () => {
-      let t = +new Date();
+      const t = +new Date();
       if (t >= endTime) {
         setAnimatedValue(endValue);
         return;
@@ -32,7 +32,7 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000, value,
     };
     runAnimation();
     return () => cancelAnimationFrame(tick);
-  }, [animateOpt]);
+  }, [animateOpt]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <span>
       {formatValue(animatedValue)}
