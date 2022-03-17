@@ -15,7 +15,7 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({ duration = 1000,
   React.useEffect(() => {
     if (animatedValue === animateOpt.toValue) return;
     const startTime : number = animateOpt.startTime;
-    const endTime : number = animateOpt.startTime + animateOpt.duration;
+    const endTime : number = startTime + animateOpt.duration;
     const now = +new Date();
     const endValue = animateOpt.toValue;
     const timeRange = endTime - now;
