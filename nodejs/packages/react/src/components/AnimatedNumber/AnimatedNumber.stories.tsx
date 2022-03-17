@@ -26,7 +26,7 @@ Sample.args = {
 
 export const SampleWithoutFixed = Template.bind({});
 
-Sample.args = {
+SampleWithoutFixed.args = {
   value: 2048,
   duration: 2000,
   formatValue: (v: number) => `${v}`,
