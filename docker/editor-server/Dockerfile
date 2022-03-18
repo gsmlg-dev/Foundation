@@ -82,7 +82,6 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install golang.org/x/tools/gopls@latest \
   && /usr/local/go/bin/go install github.com/ramya-rao-a/go-outline@latest \
   && /usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest \
-  && /usr/local/go/bin/go install github.com/rogpeppe/godef@latest \
   && /usr/local/go/bin/go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
   && /usr/local/go/bin/go install github.com/minio/mc@latest \
   && /usr/local/go/bin/go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
