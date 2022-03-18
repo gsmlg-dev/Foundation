@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 Jonathan Gao <gsmlg.com@gmail.com>
 
 */
 package cmd
