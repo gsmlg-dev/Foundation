@@ -1,11 +1,11 @@
 FROM docker.io/gsmlg/code-server:v4.1.0
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+LABEL CODE_SERVER_VERSION=4.1.0
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV container=docker
-ENV LC_ALL=en_US.UTF-8
 ENV TZ=Asia/Shanghai
 
 USER root
@@ -37,6 +37,8 @@ RUN apt-get install -y -qq \
 
 # Gen locale
 ARG LANG=en_US.UTF-8
+ENV LANG=$LANG
+ENV LC_ALL=$LANG
 RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && locale-gen \
     && update-locale LANG=$LANG \
@@ -55,6 +57,7 @@ RUN apt-get install -y default-jdk \
 
 # install nodejs
 ARG NODEJS_VERSION=16
+ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y -qq nodejs \
   && npm install -g npm \
@@ -65,14 +68,16 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
 
 # install golang
 ARG GO_VERSION=1.18
+ARG GO111MODULE=on
+ARG GOPATH=/opt/go
+ENV GOPATH=$GOPATH
 RUN export ARCH=`dpkg --print-architecture`; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && tar -C /usr/local -xzf "/tmp/${GOPKG}" \
-  && export GOPATH="/opt/go" && mkdir -p "${GOPATH}" \
+  && mkdir -p "${GOPATH}" \
   && echo "export PATH=\${PATH}:/usr/local/go/bin:${GOPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export GOPATH=${GOPATH}" | tee -a "/etc/zsh/zshenv" \
-  && export GO111MODULE=on \
   && /usr/local/go/bin/go install golang.org/x/tools/gopls@latest \
   && /usr/local/go/bin/go install github.com/ramya-rao-a/go-outline@latest \
   && /usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest \
@@ -102,6 +107,8 @@ RUN apt-get install -y python3 python3-pip \
 
 # install rust
 ARG RUSTPATH=/opt/rust
+ENV RUSTUP_HOME=${RUSTPATH}
+ENV CARGO_HOME=${RUSTPATH}
 RUN export RUSTUP_HOME=${RUSTPATH} \
   && export CARGO_HOME=${RUSTPATH} \
   && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
@@ -121,7 +128,7 @@ RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.de
   && apt-get install -y -qq elixir
 
 # install ruby
-RUN ap-get update && apt-get install -y -qq ruby-full
+RUN apt-get install -y -qq ruby-full
 
 # install kubectl
 ARG KUBECTL_VERSION=1.23.4
