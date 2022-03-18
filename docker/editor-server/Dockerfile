@@ -71,6 +71,7 @@ ARG GO_VERSION=1.18
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
+ENV GOPROXY=https://goproxy.io,direct
 RUN export ARCH=`dpkg --print-architecture`; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
@@ -82,9 +83,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/ramya-rao-a/go-outline@latest \
   && /usr/local/go/bin/go install golang.org/x/tools/cmd/goimports@latest \
   && /usr/local/go/bin/go install github.com/rogpeppe/godef@latest \
-  && /usr/local/go/bin/go get google.golang.org/protobuf/proto@latest \
   && /usr/local/go/bin/go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
-  && /usr/local/go/bin/go get google.golang.org/grpc@latest \
   && /usr/local/go/bin/go install github.com/minio/mc@latest \
   && /usr/local/go/bin/go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
   && /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest \
@@ -92,7 +91,6 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/spf13/cobra/cobra@latest \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gomobile@latest \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gobind@latest \
-  && /usr/local/go/bin/go get golang.org/x/mobile/bind \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
