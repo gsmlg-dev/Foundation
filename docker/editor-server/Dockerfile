@@ -86,7 +86,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/minio/mc@latest \
   && /usr/local/go/bin/go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
   && /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest \
-  && /usr/local/go/bin/go install github.com/spf13/cobra/cobra@latest \
+  && /usr/local/go/bin/go install github.com/spf13/cobra-cli@latest \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gomobile@latest \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gobind@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
