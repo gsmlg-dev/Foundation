@@ -1,4 +1,4 @@
-FROM docker.io/gsmlg/code-server:v4.0.2
+FROM docker.io/gsmlg/code-server:v4.1.0
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
@@ -36,24 +36,26 @@ RUN apt-get install -y -qq \
   apache2-utils
 
 # Gen locale
-RUN export LANG=en_US.UTF-8 \
-    && echo $LANG UTF-8 | tee -a /etc/locale.gen \
+ARG LANG=en_US.UTF-8
+RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && locale-gen \
     && update-locale LANG=$LANG \
-    && update-locale LC_ALL=en_US.UTF-8
+    && update-locale LC_ALL=$LANG
 
 # install jdk
+ARG ANTLR_VERSION=4.9.2
 RUN apt-get install -y default-jdk \
-  && curl -sSLf https://www.antlr.org/download/antlr-4.9.2-complete.jar -o /usr/local/lib/antlr-4.9.2-complete.jar \
+  && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
   && echo "#!/bin/bash" > /usr/local/bin/antlr \
-  && echo 'java -jar /usr/local/lib/antlr-4.9.2-complete.jar "$@"' >> /usr/local/bin/antlr \
+  && echo 'java -jar /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar "$@"' >> /usr/local/bin/antlr \
   && chmod +x /usr/local/bin/antlr \
   && echo "#!/bin/bash" > /usr/local/bin/grun \
   && echo 'java org.antlr.v4.gui.TestRig "$@"' >> /usr/local/bin/grun \
   && chmod +x /usr/local/bin/grun
 
 # install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+ARG NODEJS_VERSION=16
+RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y -qq nodejs \
   && npm install -g npm \
   && npm install -g yarn \
@@ -62,8 +64,8 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
+ARG GO_VERSION=1.18
 RUN export ARCH=`dpkg --print-architecture`; \
-  export GO_VERSION="1.17.6"; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
   && tar -C /usr/local -xzf "/tmp/${GOPKG}" \
@@ -81,10 +83,13 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/minio/mc@latest \
   && /usr/local/go/bin/go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
   && /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest \
-  && /usr/local/go/bin/go get -x -d github.com/go-delve/delve/cmd/dlv@master \
   && /usr/local/go/bin/go install honnef.co/go/tools/cmd/staticcheck@latest \
+  && /usr/local/go/bin/go install github.com/spf13/cobra/cobra@latest \
+  && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gomobile@latest \
+  && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gobind@latest \
+  && /usr/local/go/bin/go get golang.org/x/mobile/bind \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
-  && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct \
+  && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
 
 # install python
@@ -96,8 +101,8 @@ RUN apt-get install -y python3 python3-pip \
   && python -m pip install awscli
 
 # install rust
-RUN export RUSTPATH=/opt/rust \
-  && export RUSTUP_HOME=${RUSTPATH} \
+ARG RUSTPATH=/opt/rust
+RUN export RUSTUP_HOME=${RUSTPATH} \
   && export CARGO_HOME=${RUSTPATH} \
   && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
@@ -115,11 +120,13 @@ RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.de
   && apt-get install -y -qq esl-erlang \
   && apt-get install -y -qq elixir
 
-# TODO: Add ruby installation2
+# install ruby
+RUN ap-get update && apt-get install -y -qq ruby-full
 
 # install kubectl
+ARG KUBECTL_VERSION=1.23.4
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v1.23.4/bin/linux/${ARCH}/kubectl" \
+  curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
   && mv kubectl /usr/local/bin/kubectl
 
@@ -132,7 +139,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
 # install helm
 RUN curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-# install flutter
+# install flutter deps
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
 
 # install cli53
