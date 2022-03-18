@@ -43,6 +43,8 @@ jobs:
           file: docker/editor-server/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
+          build-args: |
+            VERSION=${{ steps.semantic.outputs.new_release_version }}
           tags: |
             docker.io/gsmlg/editor-server:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/editor-server:latest

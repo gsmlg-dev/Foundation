@@ -3,6 +3,10 @@ FROM docker.io/gsmlg/code-server:v4.1.0
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 LABEL CODE_SERVER_VERSION=4.1.0
 
+ARG VERSION
+LABEL VERSION=$VERSION
+ENV EDITOR_VERSION=$VERSION
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV container=docker
