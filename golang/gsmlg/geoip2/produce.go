@@ -3,33 +3,33 @@ package geoip2
 const defaultLang = "en"
 
 func getNameByLang(n map[string]string, l string) string {
-	if n == nil {
+	if len(n) == 0 {
 		return ""
 	}
-	s := n[lang]
-	if s != nil {
-		return s
+	if val, ok := n[l]; ok {
+		return val
 	}
-	d := n[defaultLang]
-	if d != nil {
-		return d
+	if val, ok := n[defaultLang]; ok {
+		return val
 	}
 	return ""
 }
 
 func ProduceCity(c *City, lang string) map[string]interface{} {
+	cc := *c
 	var out map[string]interface{}
-	out["city"] = getNameByLang(c.City.Names, lang)
-	out["continent"] = getNameByLang(c.Continent.Names, lang)
-	out["country"] = getNameByLang(c.Country.Names, lang)
 
-	out["latitude"] = c.Location.Latitude
-	out["longitude"] = c.Location.Longitude
-	out["accuracyRadius"] = c.Location.AccuracyRadius
+	out["city"] = getNameByLang(cc.City.Names, lang)
+	out["continent"] = getNameByLang(cc.Continent.Names, lang)
+	out["country"] = getNameByLang(cc.Country.Names, lang)
 
-	out["postCode"] = c.Postal.Code
+	out["latitude"] = cc.Location.Latitude
+	out["longitude"] = cc.Location.Longitude
+	out["accuracyRadius"] = cc.Location.AccuracyRadius
 
-	out["registeredCountry"] = getNameByLang(c.RegisteredCountry.Names, lang)
+	out["postCode"] = cc.Postal.Code
+
+	out["registeredCountry"] = getNameByLang(cc.RegisteredCountry.Names, lang)
 
 	return out
 }
