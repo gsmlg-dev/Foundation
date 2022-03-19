@@ -16,20 +16,19 @@ func getNameByLang(n map[string]string, l string) string {
 }
 
 func ProduceCity(c *City, lang string) map[string]interface{} {
-	cc := *c
-	var out map[string]interface{}
+	out := make(map[string]interface{})
 
-	out["city"] = getNameByLang(cc.City.Names, lang)
-	out["continent"] = getNameByLang(cc.Continent.Names, lang)
-	out["country"] = getNameByLang(cc.Country.Names, lang)
+	out["city"] = getNameByLang(c.City.Names, lang)
+	out["continent"] = getNameByLang(c.Continent.Names, lang)
+	out["country"] = getNameByLang(c.Country.Names, lang)
 
-	out["latitude"] = cc.Location.Latitude
-	out["longitude"] = cc.Location.Longitude
-	out["accuracyRadius"] = cc.Location.AccuracyRadius
+	out["latitude"] = c.Location.Latitude
+	out["longitude"] = c.Location.Longitude
+	out["accuracyRadius"] = c.Location.AccuracyRadius
 
-	out["postCode"] = cc.Postal.Code
+	out["postCode"] = c.Postal.Code
 
-	out["registeredCountry"] = getNameByLang(cc.RegisteredCountry.Names, lang)
+	out["registeredCountry"] = getNameByLang(c.RegisteredCountry.Names, lang)
 
 	return out
 }
