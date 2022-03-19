@@ -1,6 +1,22 @@
 [
   {
     "author": "Gao",
+    "content": "## macOS 创建用户\n\nmacOS没有一般Unix/Linux的创建用户命令.\n\nmacOS用户都使用Directory Service实现.\n\n## 使用`dscl`\n\n`dscl`: Directory Service command line utility\n\n```\nsudo dscl . -create /Users/USERNAME_HERE\n# or\nsudo dscl localhost -create /Local/Default/Users/USERNAME_HERE\n```\n\n\n## 使用`sysadminctl`\n\n```\n/usr/sbin/sysadminctl -h\n\nsysadminctl -addUser <user name> \\\n    [-fullName <full name>] \\\n    [-UID <user ID>] \\\n    [-GID <group ID>] \\\n    [-shell <path to shell>] \\\n    [-password <user password>] \\\n    [-hint <user hint>] \\\n    [-home <full path to home>] \\\n    [-admin] [-roleAccount] \\\n    [-picture <full path to user image>] \\\n    (interactive] || -adminUser <administrator user name> \\\n    -adminPassword <administrator password>)\n```",
+    "date": "2022-03-18",
+    "id": 68,
+    "slug": "macos-create-user-cli",
+    "title": "macOS使用命令行创建用户"
+  },
+  {
+    "author": "Gao",
+    "content": "将主力机更新到了M1处理器的macbook pro, 记录流程.\n\n### 1. 操作系统更新到想同版本.\n\n### 2. 运行migration assisstant, 将数据进行迁移\n\n### 3. 迁移完成后需要处理的工作\n\n由于macOS更换了处理器架构, 所以迁移的软件都是x86软件, 很多需要重新安装\n\nhomebrew的软件都需要重新安装\n\n1. 清除`homebrew`的`formula`和`cask`\n\n```bash\nfor n in $(brew list); do echo $n; brew uninstall --ignore-dependencies --force $n; done\n\nfor c in $(brew list --cask)\ndo\n  brew uninstall --cask --force $c;\ndone\n```\n\n2. 删除目录\n\n```bash\nrm -rf /usr/local/Cellar\nrm -rf /usr/loca/Caskroom\n```\n\n3. 清空环境变量并删除`homebrew`\n\n```bash\nsudo rm -rf /usr/local/Homebrew\n```\n\n4. 重新安装`homebrew`\n\n```bash\n/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"\n```\n\n有别于x86, arm版本homebrew会安装在目录`/opt/homebrew`\n\n之后可以在安装之前需要安装的brew工具了",
+    "date": "2022-03-10",
+    "id": 67,
+    "slug": "migrate-macos-to-m1",
+    "title": "macOS迁移到M1处理器"
+  },
+  {
+    "author": "Gao",
     "content": "今天突发奇想，在没用到的Android手机上运行`github-runner`\n\n经过一番实践，成功了\n\n记录步骤：\n\n1. 安装`termux`\n\n可以在Google Play Store安装，新版本移动到F-Droid去安装了，\n也可以在Github上进行安装： https://github.com/termux/termux-app/releases\n\n2. 安装`Andronix`\n\n可以在Google Play Store安装，\n也可以直接安装： https://github.com/AndronixApp/AndronixOrigin\n\n我这里直接使用GitHub上的安装脚本安装，修改了一些基本参数方便本地使用，\n缺少`proot`，需要安装proot，`pkg install proot`\n\n安装好后会在目录下生成`start-ubuntu20.sh`, 运行即可chroot进入ubuntu系统\n\n3. 下载`Github Action Runner`\n\n进入ubuntu系统后，下载并解压缩`runner`到`/opt/actions-runner`\n\n添加用户`actions-runner`\n```bash\nuseradd -m -d /opt/actions-runner actions-runner\n```\n\n安装依赖\n```bash\napt install openssh-server openssh-client\ncd /opt/actions-runner\n./bin/installdependencies.sh\n```\n\n根据`Github`文档配置添加action\n```bash\n./config.sh --url https://github.com/<GROUP> --token <token>\n./run\n```\n\n4. 配置与运行\n\n配置环境变量\n在`/opt/actions-runner/.env`中配置环境变量\n```\nLANG=C.UTF-8\nhttp_proxy=http://user:pass@1.2.3.4:5678\nhttps_proxy=http://user:pass@1.2.3.4:5678\nno_proxy=gsmlg.org,gsmlg.dev,gsmlg.net,gsmlg.cn\n```\n\n运行：\n```bash\n# 进入termux中执行\nnohup ./start-ubuntu20.sh su -c /opt/actions-runner/run.sh - actions-runner > /data/data/com.termux/files/usr/tmp/runner.log 2>&1 &\n```\n\n",
     "date": "2022-02-22",
     "id": 66,
