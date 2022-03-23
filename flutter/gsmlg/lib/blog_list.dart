@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'components/blog_tile.dart';
-import 'components/banner_image.dart';
 import 'components/default_app_bar.dart';
 import 'models/blog.dart';
-import 'blog_detial.dart';
+import 'blog_detail.dart';
 import 'styles.dart';
 
-const ListItemHeight = 245.0;
+const ListItemHeight = 115.0;
 
 class BlogList extends StatefulWidget {
   @override
@@ -71,9 +70,7 @@ class _BlogListState extends State<BlogList> {
         onTap: () => _navigateToBlogDetail(context, blog.id),
         child: Container(
           height: ListItemHeight,
-          child: Stack(children: [
-            _tileFooter(blog),
-          ]),
+          child: _tileFooter(blog),
         ));
   }
 
@@ -87,7 +84,7 @@ class _BlogListState extends State<BlogList> {
     final overlay = Container(
       padding: EdgeInsets.symmetric(
           vertical: 5.0, horizontal: Styles.horizontalPaddingDefault),
-      decoration: BoxDecoration(color: Colors.black.withOpacity(0.5)),
+      decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
       child: info,
     );
     return Column(

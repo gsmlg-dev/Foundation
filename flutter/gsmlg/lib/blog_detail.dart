@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'models/blog.dart';
 import 'components/default_app_bar.dart';
-import 'components/banner_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'components/blog_tile.dart';
 import 'styles.dart';
 
-const BannerImageHeight = 300.0;
 const BodyVerticalPadding = 20.0;
 const FooterHeight = 100.0;
 
@@ -54,6 +53,10 @@ class _BlogDetailState extends State<BlogDetail> {
   Widget _renderBody(BuildContext context, Blog blog) {
     var result = <Widget>[];
     result.add(_renderHeader());
+    result.add(MarkdownBody(
+      selectable: true,
+      data: this.blog.content,
+    ));
     return SingleChildScrollView(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -100,7 +103,7 @@ class _BlogDetailState extends State<BlogDetail> {
 
   Widget _renderBookButton() {
     return FlatButton(
-      color: Styles.accentColor,
+      color: Styles.authorColor,
       textColor: Styles.textColorBright,
       onPressed: _handleBookPress,
       child: Text('Book'.toUpperCase(), style: Styles.textCTAButton),

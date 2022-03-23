@@ -42,7 +42,7 @@ class Blog {
       throw (resp.body);
     }
     List<Blog> list = <Blog>[];
-    for (var jsonItem in json.decode(resp.body)) {
+    for (var jsonItem in json.decode(resp.body)['data']) {
       list.add(Blog.fromJson(jsonItem));
     }
     return list;
@@ -56,7 +56,7 @@ class Blog {
     if (resp.statusCode != 200) {
       throw (resp.body);
     }
-    final Map<String, dynamic> itemMap = json.decode(resp.body);
+    final Map<String, dynamic> itemMap = json.decode(resp.body)['data'];
     return Blog.fromJson(itemMap);
   }
 }

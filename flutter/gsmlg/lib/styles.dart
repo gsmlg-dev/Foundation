@@ -9,8 +9,8 @@ class Styles {
   static final Color _textColorDefault = _hexToColor('000000');
   static final Color _textColorFaint = _hexToColor('999999');
   static final Color textColorBright = _hexToColor('FFFFFF');
-  static final Color accentColor = _hexToColor('FF0000');
-  static final String _fontNameDefault = 'Montserrat';
+  static final Color authorColor = _hexToColor('aaaaaa');
+  static final String _fontNameDefault = 'GSMLG';
   static final navBarTitle = TextStyle(
     fontFamily: _fontNameDefault,
     fontWeight: FontWeight.w600,
@@ -46,7 +46,7 @@ class Styles {
   static final blogTileSubTitle = TextStyle(
     fontFamily: _fontNameDefault,
     fontSize: _textSizeDefault,
-    color: accentColor,
+    color: authorColor,
   );
   static final blogTileCaption = TextStyle(
     fontFamily: _fontNameDefault,
