@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gsmlg">
+    package="org.gsmlg.app">
    <application
         android:label="gsmlg"
         android:icon="@mipmap/ic_launcher">
