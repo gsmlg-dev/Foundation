@@ -149,17 +149,21 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
+          apt-get update 
+          apt-get install -y git
           cd flutter/gsmlg
           flutter pub get
 
       - name: 🕸 Build APK
         run: |
-          NUM=$(($(git tag --list |grep 'gsmlg-app-v') + 1))
+          NUM="$(($(git tag --list |grep 'gsmlg-app-v') + 1))"
           cd flutter/gsmlg
-          flutter build apk --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
+          flutter build apk --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
+          flutter build appbundle --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
 
       - name: Create package file
-        run : tar zcf gsmlg-app.android.tar.gz -C flutter/gsmlg/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
+        run : |
+          tar zcf gsmlg-app.android.tar.gz -C flutter/gsmlg/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
@@ -192,14 +196,17 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
+          apt-get update 
+          apt-get install -y git
           cd flutter/gsmlg
           flutter pub get
 
       - name: 🕸 Build iOS
         run: |
-          NUM=$(($(git tag --list |grep 'gsmlg-app-v') + 1))
+          NUM="$(($(git tag --list |grep 'gsmlg-app-v') + 1))"
           cd flutter/gsmlg
           flutter build ios --no-codesign --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
+          flutter build ipa --no-codesign --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
 
       - name: Create package file
         run : tar zcf gsmlg-app.ios.tar.gz -C flutter/gsmlg/build/ios/iphoneos/ Runner.app
@@ -238,12 +245,14 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
+          apt-get update 
+          apt-get install -y git
           cd flutter/gsmlg
           flutter pub get
 
       - name: 🕸 Build macOS
         run: |
-          NUM=$(($(git tag --list |grep 'gsmlg-app-v') + 1))
+          NUM="$(($(git tag --list |grep 'gsmlg-app-v') + 1))"
           cd flutter/gsmlg
           flutter build macos --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
 
