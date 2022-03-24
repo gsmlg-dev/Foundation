@@ -74,7 +74,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: gsmlg.web.tar.gz
           asset_name: gsmlg.web.tar.gz
-          tag: gsmlg-v${{ needs.release.outputs.version }}
+          tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
   build-linux:
@@ -124,7 +124,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: gsmlg.linux.tar.gz
           asset_name: gsmlg.linux.tar.gz
-          tag: gsmlg-v${{ needs.release.outputs.version }}
+          tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
   build-apk:
@@ -167,7 +167,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: gsmlg.android.tar.gz
           asset_name: gsmlg.android.tar.gz
-          tag: gsmlg-v${{ needs.release.outputs.version }}
+          tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
   build-ios:
@@ -210,7 +210,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: gsmlg.ios.tar.gz
           asset_name: gsmlg.ios.tar.gz
-          tag: gsmlg-v${{ needs.release.outputs.version }}
+          tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
   build-macos:
@@ -256,7 +256,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: gsmlg.macos.tar.gz
           asset_name: gsmlg.macos.tar.gz
-          tag: gsmlg-v${{ needs.release.outputs.version }}
+          tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
   build-windows:
@@ -301,6 +301,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: gsmlg.windows.tar.gz
           asset_name: gsmlg.windows.tar.gz
-          tag: gsmlg-v${{ needs.release.outputs.version }}
+          tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
