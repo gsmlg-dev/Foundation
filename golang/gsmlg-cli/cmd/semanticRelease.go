@@ -21,36 +21,17 @@ import (
 	"github.com/go-semantic-release/semantic-release/v2/pkg/plugin/manager"
 	"github.com/go-semantic-release/semantic-release/v2/pkg/provider"
 	"github.com/go-semantic-release/semantic-release/v2/pkg/semrel"
+	"github.com/gsmlg-dev/Foundation/golang/gsmlg/errorhandler"
 	"github.com/spf13/cobra"
 )
 
-// SRVERSION is the semantic-release version (added at compile time)
-var SRVERSION string
-
 var exitHandler func()
-
-func errorHandler(logger *log.Logger) func(error, ...int) {
-	return func(err error, exitCode ...int) {
-		if err != nil {
-			logger.Println(err)
-			if exitHandler != nil {
-				exitHandler()
-			}
-			if len(exitCode) == 1 {
-				os.Exit(exitCode[0])
-				return
-			}
-			os.Exit(1)
-		}
-	}
-}
 
 // semanticReleaseCmd represents the semanticRelease command
 var semanticReleaseCmd = &cobra.Command{
-	Use:     "semantic-release",
-	Short:   "semantic-release - fully automated package/module/image publishing",
-	Run:     cliHandler,
-	Version: SRVERSION,
+	Use:   "semantic-release",
+	Short: "semantic-release - fully automated package/module/image publishing",
+	Run:   semanticReleaseCmdHandler,
 }
 
 func init() {
@@ -89,11 +70,10 @@ func mergeConfigWithDefaults(defaults, conf map[string]string) {
 	}
 }
 
-func cliHandler(cmd *cobra.Command, args []string) {
+func semanticReleaseCmdHandler(cmd *cobra.Command, args []string) {
 	logger := log.New(os.Stderr, "[go-semantic-release]: ", 0)
-	exitIfError := errorHandler(logger)
-
-	logger.Printf("version: %s\n", SRVERSION)
+	exitIfError := errorhandler.CreateExitIfError("go-semantic-release")
+	errorhandler.SetExitHandler(exitHandler)
 
 	conf, err := config.NewConfig(cmd)
 	exitIfError(err)
