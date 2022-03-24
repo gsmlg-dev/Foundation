@@ -1,0 +1,306 @@
+name: flutter-gsmlg-release
+on:
+  push:
+    paths:
+      - "flutter/gsmlg/**"
+      - ".github/workflows/flutter-gsmlg-release.yml"
+    branches:
+      - "main"
+jobs:
+  release:
+    name: Create semantic release
+    runs-on: ubuntu-latest
+    outputs:
+      name: gsmlg-app
+      build_name: com.gsmlg.app
+      version: ${{ steps.semantic.outputs.new_release_version }}
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🚀 Release
+        uses: gsmlg/semantic-release-action@v3
+        id: semantic
+        with:
+          release_name: gsmlg-app
+          working-directory: 'flutter/gsmlg'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - run: test -z "${{ steps.semantic.outputs.new_release_version }}" && exit 1 || exit 0
+
+  build-web:
+    runs-on: ubuntu-latest
+    name: Build web
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        run: |
+          cd flutter/gsmlg
+          flutter pub get
+
+      - name: 🕸 Build Web
+        run: |
+          cd flutter/gsmlg
+          flutter build web --release
+
+      - name: Create package file
+        run : tar zcf gsmlg.web.tar.gz -C flutter/gsmlg/build web
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: gsmlg.web.tar.gz
+          asset_name: gsmlg.web.tar.gz
+          tag: gsmlg-v${{ needs.release.outputs.version }}
+          overwrite: true
+
+  build-linux:
+    runs-on: ubuntu-latest
+    name: Build Linux
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+          channel: 'stable'
+
+      - name: Enable linux
+        run: flutter config --enable-linux-desktop
+
+      - name: Patch for linux build
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev
+
+      - name: 🐳 Install dependencies
+        run: |
+          cd flutter/gsmlg
+          flutter pub get
+
+      - name: 🕸 Build Linux
+        run: |
+          cd flutter/gsmlg
+          flutter build linux --release
+
+      - name: Create package file
+        run : tar zcf gsmlg.linux.tar.gz -C flutter/gsmlg/build/linux/x64/release bundle
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: gsmlg.linux.tar.gz
+          asset_name: gsmlg.linux.tar.gz
+          tag: gsmlg-v${{ needs.release.outputs.version }}
+          overwrite: true
+
+  build-apk:
+    runs-on: ubuntu-latest
+    name: Build apk
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        run: |
+          cd flutter/gsmlg
+          flutter pub get
+
+      - name: 🕸 Build APK
+        run: |
+          NUM=$(($(git tag --list |grep 'gsmlg-app-v') + 1))
+          cd flutter/gsmlg
+          flutter build apk --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
+
+      - name: Create package file
+        run : tar zcf gsmlg.android.tar.gz -C flutter/gsmlg/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: gsmlg.android.tar.gz
+          asset_name: gsmlg.android.tar.gz
+          tag: gsmlg-v${{ needs.release.outputs.version }}
+          overwrite: true
+
+  build-ios:
+    runs-on: macos-latest
+    name: Build ios
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+          channel: 'stable'
+
+      - name: 🐳 Install dependencies
+        run: |
+          cd flutter/gsmlg
+          flutter pub get
+
+      - name: 🕸 Build iOS
+        run: |
+          NUM=$(($(git tag --list |grep 'gsmlg-app-v') + 1))
+          cd flutter/gsmlg
+          flutter build ios --no-codesign --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
+
+      - name: Create package file
+        run : tar zcf gsmlg.ios.tar.gz -C flutter/gsmlg/build/ios/iphoneos/ Runner.app
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: gsmlg.ios.tar.gz
+          asset_name: gsmlg.ios.tar.gz
+          tag: gsmlg-v${{ needs.release.outputs.version }}
+          overwrite: true
+
+  build-macos:
+    runs-on: macos-latest
+    name: Build macOS
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+          channel: 'stable'
+
+      - name: Enable windows
+        run: flutter config --enable-macos-desktop
+
+      - name: 🐳 Install dependencies
+        run: |
+          cd flutter/gsmlg
+          flutter pub get
+
+      - name: 🕸 Build macOS
+        run: |
+          NUM=$(($(git tag --list |grep 'gsmlg-app-v') + 1))
+          cd flutter/gsmlg
+          flutter build macos --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
+
+      - name: Create package file
+        run : tar zcf gsmlg.macos.tar.gz -C flutter/gsmlg/build/macos/Build/Products/Release/ gsmlg.app
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: gsmlg.macos.tar.gz
+          asset_name: gsmlg.macos.tar.gz
+          tag: gsmlg-v${{ needs.release.outputs.version }}
+          overwrite: true
+
+  build-windows:
+    runs-on: windows-latest
+    name: Build windows
+    needs: [ release ]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: 🛤 Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: 🚀 Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+          channel: 'stable'
+
+      - name: Enable windows
+        run: flutter config --enable-windows-desktop
+
+      - name: 🐳 Install dependencies
+        run: |
+          cd flutter/gsmlg
+          flutter pub get
+
+      - name: 🕸 Build Windows
+        run: |
+          cd flutter/gsmlg
+          flutter build windows --release
+
+      - name: Create package file
+        run : tar zcf gsmlg.windows.tar.gz -C flutter/gsmlg/build/windows/runner/ Release
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: gsmlg.windows.tar.gz
+          asset_name: gsmlg.windows.tar.gz
+          tag: gsmlg-v${{ needs.release.outputs.version }}
+          overwrite: true
+
