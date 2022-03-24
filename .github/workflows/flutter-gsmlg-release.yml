@@ -66,14 +66,14 @@ jobs:
           flutter build web --release
 
       - name: Create package file
-        run : tar zcf gsmlg.web.tar.gz -C flutter/gsmlg/build web
+        run : tar zcf gsmlg-app.web.tar.gz -C flutter/gsmlg/build web
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: gsmlg.web.tar.gz
-          asset_name: gsmlg.web.tar.gz
+          file: gsmlg-app.web.tar.gz
+          asset_name: gsmlg-app.web.tar.gz
           tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
@@ -116,14 +116,14 @@ jobs:
           flutter build linux --release
 
       - name: Create package file
-        run : tar zcf gsmlg.linux.tar.gz -C flutter/gsmlg/build/linux/x64/release bundle
+        run : tar zcf gsmlg-app.linux.tar.gz -C flutter/gsmlg/build/linux/x64/release bundle
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: gsmlg.linux.tar.gz
-          asset_name: gsmlg.linux.tar.gz
+          file: gsmlg-app.linux.tar.gz
+          asset_name: gsmlg-app.linux.tar.gz
           tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
@@ -159,14 +159,14 @@ jobs:
           flutter build apk --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
 
       - name: Create package file
-        run : tar zcf gsmlg.android.tar.gz -C flutter/gsmlg/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
+        run : tar zcf gsmlg-app.android.tar.gz -C flutter/gsmlg/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: gsmlg.android.tar.gz
-          asset_name: gsmlg.android.tar.gz
+          file: gsmlg-app.android.tar.gz
+          asset_name: gsmlg-app.android.tar.gz
           tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
@@ -202,14 +202,14 @@ jobs:
           flutter build ios --no-codesign --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
 
       - name: Create package file
-        run : tar zcf gsmlg.ios.tar.gz -C flutter/gsmlg/build/ios/iphoneos/ Runner.app
+        run : tar zcf gsmlg-app.ios.tar.gz -C flutter/gsmlg/build/ios/iphoneos/ Runner.app
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: gsmlg.ios.tar.gz
-          asset_name: gsmlg.ios.tar.gz
+          file: gsmlg-app.ios.tar.gz
+          asset_name: gsmlg-app.ios.tar.gz
           tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
@@ -248,14 +248,14 @@ jobs:
           flutter build macos --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
 
       - name: Create package file
-        run : tar zcf gsmlg.macos.tar.gz -C flutter/gsmlg/build/macos/Build/Products/Release/ gsmlg.app
+        run : tar zcf gsmlg-app.macos.tar.gz -C flutter/gsmlg/build/macos/Build/Products/Release/ gsmlg.app
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: gsmlg.macos.tar.gz
-          asset_name: gsmlg.macos.tar.gz
+          file: gsmlg-app.macos.tar.gz
+          asset_name: gsmlg-app.macos.tar.gz
           tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
@@ -293,14 +293,14 @@ jobs:
           flutter build windows --release
 
       - name: Create package file
-        run : tar zcf gsmlg.windows.tar.gz -C flutter/gsmlg/build/windows/runner/ Release
+        run : tar zcf gsmlg-app.windows.tar.gz -C flutter/gsmlg/build/windows/runner/ Release
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: gsmlg.windows.tar.gz
-          asset_name: gsmlg.windows.tar.gz
+          file: gsmlg-app.windows.tar.gz
+          asset_name: gsmlg-app.windows.tar.gz
           tag: gsmlg-app-v${{ needs.release.outputs.version }}
           overwrite: true
 
