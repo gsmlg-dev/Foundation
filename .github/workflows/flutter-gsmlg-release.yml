@@ -57,13 +57,13 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
-          cd flutter/gsmlg
           flutter pub get
+        working-directory: flutter/gsmlg
 
       - name: 🕸 Build Web
         run: |
-          cd flutter/gsmlg
           flutter build web --release
+        working-directory: flutter/gsmlg
 
       - name: Create package file
         run : tar zcf gsmlg-app.web.tar.gz -C flutter/gsmlg/build web
@@ -107,13 +107,13 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
-          cd flutter/gsmlg
           flutter pub get
+        working-directory: flutter/gsmlg
 
       - name: 🕸 Build Linux
         run: |
-          cd flutter/gsmlg
           flutter build linux --release
+        working-directory: flutter/gsmlg
 
       - name: Create package file
         run : tar zcf gsmlg-app.linux.tar.gz -C flutter/gsmlg/build/linux/x64/release bundle
@@ -151,15 +151,14 @@ jobs:
         run: |
           sudo apt-get update 
           sudo apt-get install -y git
-          cd flutter/gsmlg
           flutter pub get
+        working-directory: flutter/gsmlg
 
       - name: 🕸 Build APK / appbundle
         run: |
-          NUM="$(($(git tag --list |grep 'gsmlg-app-v') + 1))"
-          cd flutter/gsmlg
-          flutter build apk --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
-          flutter build appbundle --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
+          flutter build apk --build-name=${{ needs.release.outputs.version }} --release
+          flutter build appbundle --build-name=${{ needs.release.outputs.version }} --release
+        working-directory: flutter/gsmlg
 
       - name: Create package file
         run : |
@@ -224,15 +223,14 @@ jobs:
         run: |
           sudo apt-get update 
           sudo apt-get install -y git
-          cd flutter/gsmlg
           flutter pub get
+        working-directory: flutter/gsmlg
 
       - name: 🕸 Build iOS
         run: |
-          NUM="$(($(git tag --list |grep 'gsmlg-app-v') + 1))"
-          cd flutter/gsmlg
-          flutter build ios --no-codesign --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
-          flutter build ipa --no-codesign --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
+          flutter build ios --no-codesign --build-name=${{ needs.release.outputs.version }}
+          flutter build ipa --no-codesign --build-name=${{ needs.release.outputs.version }}
+        working-directory: flutter/gsmlg
 
       - name: Create package file
         run : 
@@ -276,14 +274,13 @@ jobs:
         run: |
           sudo apt-get update 
           sudo apt-get install -y git
-          cd flutter/gsmlg
           flutter pub get
+        working-directory: flutter/gsmlg
 
       - name: 🕸 Build macOS
         run: |
-          NUM="$(($(git tag --list |grep 'gsmlg-app-v') + 1))"
-          cd flutter/gsmlg
-          flutter build macos --build-name=${{ needs.release.outputs.version }} --build-number=$NUM --release
+          flutter build macos --build-name=${{ needs.release.outputs.version }} --release
+        working-directory: flutter/gsmlg
 
       - name: Create package file
         run : tar zcf gsmlg-app.macos.tar.gz -C flutter/gsmlg/build/macos/Build/Products/Release/ gsmlg.app
@@ -321,14 +318,12 @@ jobs:
         run: flutter config --enable-windows-desktop
 
       - name: 🐳 Install dependencies
-        run: |
-          cd flutter/gsmlg
-          flutter pub get
+        run: flutter pub get
+        working-directory: flutter/gsmlg
 
       - name: 🕸 Build Windows
-        run: |
-          cd flutter/gsmlg
-          flutter build windows --release
+        run: flutter build windows --release
+        working-directory: flutter/gsmlg
 
       - name: Create package file
         run : tar zcf gsmlg-app.windows.tar.gz -C flutter/gsmlg/build/windows/runner/ Release
