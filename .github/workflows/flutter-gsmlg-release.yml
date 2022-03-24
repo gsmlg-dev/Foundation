@@ -129,7 +129,7 @@ jobs:
 
   build-apk:
     runs-on: ubuntu-latest
-    name: Build apk
+    name: Build Android
     needs: [ release ]
     steps:
       - name: ⬇️ Checkout repo
@@ -149,12 +149,12 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
-          apt-get update 
-          apt-get install -y git
+          sudo apt-get update 
+          sudo apt-get install -y git
           cd flutter/gsmlg
           flutter pub get
 
-      - name: 🕸 Build APK
+      - name: 🕸 Build APK / appbundle
         run: |
           NUM="$(($(git tag --list |grep 'gsmlg-app-v') + 1))"
           cd flutter/gsmlg
@@ -163,7 +163,9 @@ jobs:
 
       - name: Create package file
         run : |
-          tar zcf gsmlg-app.android.tar.gz -C flutter/gsmlg/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
+          tar cf gsmlg-app.android.tar -C flutter/gsmlg/build/app/outputs/flutter-apk/ app.apk app.apk.sha1
+          tar uf gsmlg-app.android.tar -C flutter/gsmlg/build/app/outputs/bundle/release/ app-release.aab 
+          gzip gsmlg-app.android.tar
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
@@ -196,8 +198,8 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
-          apt-get update 
-          apt-get install -y git
+          sudo apt-get update 
+          sudo apt-get install -y git
           cd flutter/gsmlg
           flutter pub get
 
@@ -209,7 +211,10 @@ jobs:
           flutter build ipa --no-codesign --build-name=${{ needs.release.outputs.version }} --build-number=$NUM
 
       - name: Create package file
-        run : tar zcf gsmlg-app.ios.tar.gz -C flutter/gsmlg/build/ios/iphoneos/ Runner.app
+        run : 
+          tar cf gsmlg-app.ios.tar -C flutter/gsmlg/build/ios/iphoneos/ Runner.app
+          tar uf gsmlg-app.ios.tar -C flutter/gsmlg/build/ios/archive/ Runner.xcarchive
+          gzip gsmlg-app.ios.tar
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
@@ -245,8 +250,8 @@ jobs:
 
       - name: 🐳 Install dependencies
         run: |
-          apt-get update 
-          apt-get install -y git
+          sudo apt-get update 
+          sudo apt-get install -y git
           cd flutter/gsmlg
           flutter pub get
 
