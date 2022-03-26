@@ -1,1 +1,0 @@
-package_name ENV["APP_IDENTIFIER"] # e.g. com.krausefx.app
