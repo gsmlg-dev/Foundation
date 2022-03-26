@@ -149,7 +149,7 @@ const Layout = ({children}, ref) => {
             京ICP备20014476号-2
           </span>
           <span>
-            Copyright © 2017-2021 GSMLG - Powered by GSMLG Web.
+            Copyright © 2017-2022 GSMLG - Powered by GSMLG Web.
           </span>
         </div>
       </Footer>
