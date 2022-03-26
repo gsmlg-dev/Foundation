@@ -1,6 +1,14 @@
 [
   {
     "author": "Gao",
+    "content": "\n因为随着项目越来越庞大, 慢慢的需要将项目的不同目录分离出去, 想要保留对应的目录提交记录.\n\n```bash\n# 克隆项目\ngit clone ...\n\n# 创建一个分支\ngit checkout -b newrepo\n\n# 使用git filter-branch过滤提交\ngit filter-branch --prune-empty --subdirectory-filter subdirectory newrepo\n\n# 分支被重建后, 只有对应的目录的提交和内容, 将分支提交到新的项目\ngit remote add newrepo url\ngit push new repo newrepo:main\n\n```\n\n执行完成后, 新的项目便导出成功了\n\n\n",
+    "date": "2022-03-25",
+    "id": 69,
+    "slug": "git-dir-to-repo",
+    "title": "Git 导出单个目录到一个新的项目"
+  },
+  {
+    "author": "Gao",
     "content": "## macOS 创建用户\n\nmacOS没有一般Unix/Linux的创建用户命令.\n\nmacOS用户都使用Directory Service实现.\n\n## 使用`dscl`\n\n`dscl`: Directory Service command line utility\n\n```\nsudo dscl . -create /Users/USERNAME_HERE\n# or\nsudo dscl localhost -create /Local/Default/Users/USERNAME_HERE\n```\n\n\n## 使用`sysadminctl`\n\n```\n/usr/sbin/sysadminctl -h\n\nsysadminctl -addUser <user name> \\\n    [-fullName <full name>] \\\n    [-UID <user ID>] \\\n    [-GID <group ID>] \\\n    [-shell <path to shell>] \\\n    [-password <user password>] \\\n    [-hint <user hint>] \\\n    [-home <full path to home>] \\\n    [-admin] [-roleAccount] \\\n    [-picture <full path to user image>] \\\n    (interactive] || -adminUser <administrator user name> \\\n    -adminPassword <administrator password>)\n```",
     "date": "2022-03-18",
     "id": 68,
