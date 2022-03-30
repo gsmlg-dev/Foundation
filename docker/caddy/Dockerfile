@@ -1,11 +1,11 @@
 ARG CADDY_VERSION="2.4.6"
 FROM caddy:${CADDY_VERSION}-builder AS builder
 
-ARG NETRC
+ARG USER
+ARG TOKEN
 
-RUN echo "${NETRC}" > ~/.netrc
-
-RUN xcaddy build \
+RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
+  && xcaddy build \
     --with github.com/mholt/caddy-l4 \
     --with github.com/caddy-dns/cloudflare \
     --with github.com/caddy-dns/route53 \

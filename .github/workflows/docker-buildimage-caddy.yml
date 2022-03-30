@@ -48,7 +48,8 @@ jobs:
           push: true
           build-args: |
             CADDY_VERSION=2.4.6
-            NETRC="machine github.com login gsmlg password ${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+            USER=gsmlg
+            TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
           tags: |
             docker.io/gsmlg/caddy:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/caddy:latest
@@ -87,9 +88,9 @@ jobs:
         env:
           GOOS: ${{ matrix.platforms.os }}
           GOARCH: ${{ matrix.platforms.arch }}
-          NETRC: machine github.com login gsmlg password ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |-
-          echo "$NETRC" > ~/.netrc
+          git config --global url."https://gsmlg:${TOKEN}@github.com".insteadOf "https://github.com"
           xcaddy build v2.4.6 \
             --output caddy_${GOOS}_${GOARCH} \
             --with github.com/mholt/caddy-l4 \
