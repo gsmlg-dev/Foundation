@@ -11,7 +11,8 @@ jobs:
   sematic-version:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.semantic.outputs.new_release_version }}
+      # version: ${{ steps.semantic.outputs.new_release_version }}
+      version: 1.5.8
     steps:
       -
         name: Checkout
