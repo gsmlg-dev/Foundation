@@ -2,7 +2,7 @@ FROM node:lts-alpine
 
 WORKDIR /snapdrop
 
-COPY . /snapdrop
+COPY ./server /snapdrop
 COPY ./entrypoint.sh /entrypoint.sh
 
 RUN apk update \
