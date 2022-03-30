@@ -1,11 +1,16 @@
 ARG CADDY_VERSION="2.4.5"
 FROM caddy:${CADDY_VERSION}-builder AS builder
 
+ARG NETRC
+
+RUN echo "${NETRC}" > ~/.netrc
+
 RUN xcaddy build \
     --with github.com/mholt/caddy-l4 \
     --with github.com/caddy-dns/cloudflare \
     --with github.com/caddy-dns/route53 \
     --with github.com/caddy-dns/vultr \
+    --with github.com/gsmlg-dev/caddy-dns-zdns \
     --with github.com/mholt/caddy-webdav
 
 FROM caddy:${CADDY_VERSION}
