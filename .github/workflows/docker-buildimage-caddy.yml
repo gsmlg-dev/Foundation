@@ -60,9 +60,10 @@ jobs:
         env:
           GOOS: ${{ matrix.platforms.os }}
           GOARCH: ${{ matrix.platforms.arch }}
+          USER: gsmlg
           TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |-
-          git config --global url."https://gsmlg:${TOKEN}@github.com".insteadOf "https://github.com"
+          echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc ;
           xcaddy build v2.4.6 \
             --output caddy_${GOOS}_${GOARCH} \
             --with github.com/mholt/caddy-l4 \

@@ -13,6 +13,7 @@ RUN echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc \
     --with github.com/gsmlg-dev/caddy-dns-zdns \
     --with github.com/mholt/caddy-webdav
 
+
 FROM caddy:${CADDY_VERSION}
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
