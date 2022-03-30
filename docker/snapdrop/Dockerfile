@@ -5,7 +5,7 @@ WORKDIR /snapdrop
 COPY . /snapdrop
 COPY ./entrypoint.sh /entrypoint.sh
 
-RUN RUN apk update \
+RUN apk update \
     && apk add nginx \
     && apk add nginx-mod-http-headers-more \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
