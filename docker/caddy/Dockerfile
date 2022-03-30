@@ -4,7 +4,7 @@ FROM caddy:${CADDY_VERSION}-builder AS builder
 ARG USER
 ARG TOKEN
 
-RUN echo "machine github.com login $USER password $TOKEN" > $HOME/.netrc \
+RUN echo "machine github.com login ${USER} password $TOKEN" > $HOME/.netrc \
   && XCADDY_DEBUG=1 xcaddy build \
     --with github.com/mholt/caddy-l4 \
     --with github.com/caddy-dns/cloudflare \
