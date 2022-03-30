@@ -12,10 +12,10 @@ RUN apk update \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && npm install \
     && rm -rf /usr/share/nginx/html \
-    && chmod +x /entrypoint \
+    && chmod +x /entrypoint.sh \
     && rm -rf /var/cache/apk/*
 
 COPY ./nginx.conf /etc/nginx/http.d/default.conf
 COPY ./client /usr/share/nginx/html
 
-CMD ["npm", "start"]
+ENTRYPOINT /entrypoint.sh
