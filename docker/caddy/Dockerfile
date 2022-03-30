@@ -4,7 +4,8 @@ FROM caddy:${CADDY_VERSION}-builder AS builder
 ARG USER
 ARG TOKEN
 
-RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
+RUN echo "machine github.com login $USER password $TOKEN" > $HOME/.netrc \
+  && git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
   && xcaddy build \
     --with github.com/mholt/caddy-l4 \
     --with github.com/caddy-dns/cloudflare \
