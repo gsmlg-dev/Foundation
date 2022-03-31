@@ -13,6 +13,7 @@ jobs:
     outputs:
       # version: ${{ steps.semantic.outputs.new_release_version }}
       version: 1.5.8
+      CADDY_VERSION: master
     steps:
       -
         name: Checkout
@@ -66,7 +67,7 @@ jobs:
           XCADDY_DEBUG: 1
         run: |
           echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc ;
-          xcaddy build v2.4.6 \
+          xcaddy build master \
             --output caddy_${GOOS}_${GOARCH} \
             --with github.com/mholt/caddy-l4 \
             --with github.com/caddy-dns/cloudflare \

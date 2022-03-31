@@ -5,7 +5,7 @@ ARG USER
 ARG TOKEN
 
 RUN echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc \
-  && XCADDY_DEBUG=1 xcaddy build \
+  && XCADDY_DEBUG=1 xcaddy build master \
     --with github.com/caddy-dns/cloudflare \
     --with github.com/caddy-dns/route53 \
     --with github.com/caddy-dns/vultr \
