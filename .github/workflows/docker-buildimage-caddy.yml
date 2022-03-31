@@ -67,18 +67,14 @@ jobs:
         env:
           GOOS: ${{ matrix.platforms.os }}
           GOARCH: ${{ matrix.platforms.arch }}
-          USER: gsmlg
+          USER: ${{ secrets.GIT_USER_ID }}
           TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           CADDY_VERSION: ${{ needs.sematic-version.outputs.caddy_version }}
+          CADDY_WITH: ${{ needs.sematic-version.outputs.caddy_with }}
         run: |
           echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc ;
           xcaddy build ${CADDY_VERSION} \
-            --output caddy_${GOOS}_${GOARCH} \
-            --with github.com/mholt/caddy-l4 \
-            --with github.com/caddy-dns/cloudflare \
-            --with github.com/mholt/caddy-webdav \
-            --with github.com/caddy-dns/route53 \
-            --with github.com/gsmlg-dev/caddy-dns-zdns
+            --output "caddy_${GOOS}_${GOARCH}" $CADDY_WITH
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -117,7 +113,7 @@ jobs:
           build-args: |
             CADDY_VERSION=${{ needs.sematic-version.outputs.caddy_version }}
             CADDY_WITH=${{ needs.sematic-version.outputs.caddy_with }}
-            USER=gsmlg
+            USER=${{ secrets.GIT_USER_ID }}
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
           tags: |
             docker.io/gsmlg/caddy:v${{ needs.sematic-version.outputs.version }}

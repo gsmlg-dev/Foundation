@@ -1,16 +1,12 @@
-ARG CADDY_VERSION="2.4.6"
 FROM caddy:builder-alpine AS builder
 
+ARG CADDY_VERSION
+ARG CADDY_WITH
 ARG USER
 ARG TOKEN
 
 RUN echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc \
-  && XCADDY_DEBUG=1 xcaddy build ${CADDY_VERSION} \
-    --with github.com/mholt/caddy-l4 \
-    --with github.com/caddy-dns/cloudflare \
-    --with github.com/caddy-dns/route53 \
-    --with github.com/caddy-dns/vultr \
-    --with github.com/gsmlg-dev/caddy-dns-zdns
+  && XCADDY_DEBUG=1 xcaddy build ${CADDY_VERSION} ${CADDY_WITH}
 
 
 FROM caddy:alpine
