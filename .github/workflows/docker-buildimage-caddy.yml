@@ -11,9 +11,8 @@ jobs:
   sematic-version:
     runs-on: ubuntu-latest
     outputs:
-      # version: ${{ steps.semantic.outputs.new_release_version }}
-      version: 1.5.8
-      CADDY_VERSION: master
+      version: ${{ steps.semantic.outputs.new_release_version }}
+      caddy_version: master
     steps:
       -
         name: Checkout
@@ -64,17 +63,16 @@ jobs:
           GOARCH: ${{ matrix.platforms.arch }}
           USER: gsmlg
           TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          XCADDY_DEBUG: 1
+          CADDY_VERSION: ${{ needs.sematic-version.outputs.caddy_version }}
         run: |
           echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc ;
-          xcaddy build master \
+          xcaddy build ${CADDY_VERSION} \
             --output caddy_${GOOS}_${GOARCH} \
             --with github.com/mholt/caddy-l4 \
             --with github.com/caddy-dns/cloudflare \
             --with github.com/mholt/caddy-webdav \
             --with github.com/caddy-dns/route53 \
-            --with github.com/gsmlg-dev/caddy-dns-zdns \
-            --with github.com/greenpau/caddy-auth-portal
+            --with github.com/gsmlg-dev/caddy-dns-zdns
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -111,7 +109,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            CADDY_VERSION=2.4.6
+            CADDY_VERSION=${{ needs.sematic-version.outputs.caddy_version }}
             USER=gsmlg
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
           tags: |
