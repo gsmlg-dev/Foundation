@@ -13,6 +13,12 @@ jobs:
     outputs:
       version: ${{ steps.semantic.outputs.new_release_version }}
       caddy_version: master
+      caddy_with: >
+         --with github.com/mholt/caddy-l4
+         --with github.com/caddy-dns/cloudflare
+         --with github.com/caddy-dns/route53
+         --with github.com/caddy-dns/vultr
+         --with github.com/gsmlg-dev/caddy-dns-zdns
     steps:
       -
         name: Checkout
@@ -109,7 +115,9 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
+            CADDY_BUILDER_VERSION=2.4.6
             CADDY_VERSION=${{ needs.sematic-version.outputs.caddy_version }}
+            CADDY_WITH=${{ needs.sematic-version.outputs.caddy_with }}
             USER=gsmlg
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
           tags: |
