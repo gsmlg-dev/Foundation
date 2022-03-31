@@ -1,6 +1,5 @@
 ARG CADDY_VERSION="2.4.6"
-ARG CADDY_BUILDER_VERSION="2.4.6"
-FROM caddy:${CADDY_BUILDER_VERSION}-builder AS builder
+FROM caddy:builder-alpine AS builder
 
 ARG USER
 ARG TOKEN
@@ -14,7 +13,7 @@ RUN echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc \
     --with github.com/gsmlg-dev/caddy-dns-zdns
 
 
-FROM caddy:${CADDY_VERSION}
+FROM caddy:alpine
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 

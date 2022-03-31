@@ -115,7 +115,6 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            CADDY_BUILDER_VERSION=2.4.6
             CADDY_VERSION=${{ needs.sematic-version.outputs.caddy_version }}
             CADDY_WITH=${{ needs.sematic-version.outputs.caddy_with }}
             USER=gsmlg
