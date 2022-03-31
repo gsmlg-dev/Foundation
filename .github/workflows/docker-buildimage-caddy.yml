@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
-          go-version: '^1.17.1'
+          go-version: '1.17.8'
       - run: go version
       - run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
       - 
@@ -63,6 +63,7 @@ jobs:
           GOARCH: ${{ matrix.platforms.arch }}
           USER: gsmlg
           TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          XCADDY_DEBUG: 1
         run: |
           echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc ;
           xcaddy build v2.4.6 \
