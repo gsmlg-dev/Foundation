@@ -25,6 +25,16 @@ defmodule GSMLG.Content do
     Repo.all(query)
   end
 
+  def list_blogs(args) do
+    IO.inspect(args)
+    query =
+      from p in Blog,
+        where: ^args,
+        order_by: [desc: p.id]
+
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single blog.
 

@@ -10,7 +10,14 @@ defmodule GSMLGWeb.Schema do
   query do
     @desc "Get all blogs"
     field :blogs, list_of(:blog) do
+      arg :author, :string
+      arg :date, :string
       resolve(&Resolvers.Content.list_blogs/3)
+    end
+
+    field :blog, :blog do
+      arg :id, non_null(:id)
+      resolve(&Resolvers.Content.find_blog/3)
     end
 
     @desc "Get all nodes"
