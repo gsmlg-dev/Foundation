@@ -11,7 +11,7 @@ defmodule GSMLGWeb.Schema do
     @desc "Get all blogs"
     field :blogs, list_of(:blog) do
       arg :author, :string
-      arg :date, :string
+      arg :date, :date
       resolve(&Resolvers.Content.list_blogs/3)
     end
 

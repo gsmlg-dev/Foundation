@@ -13,9 +13,6 @@ defmodule GSMLGWeb.Resolvers.Content do
   def convert_to_klist(map) do
     IO.inspect map
     Enum.map(map, fn({key, value}) ->
-      if (key == :date) do
-        value = Date.from_iso8601(value)
-      end
       {key, value}
     end)
   end
