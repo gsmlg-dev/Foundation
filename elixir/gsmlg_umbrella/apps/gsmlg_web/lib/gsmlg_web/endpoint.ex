@@ -1,5 +1,6 @@
 defmodule GSMLGWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :gsmlg_web
+  use Absinthe.Phoenix.Endpoint
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.

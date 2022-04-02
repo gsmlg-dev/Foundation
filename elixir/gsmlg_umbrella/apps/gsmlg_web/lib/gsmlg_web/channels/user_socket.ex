@@ -30,6 +30,9 @@ defmodule GSMLGWeb.UserSocket do
     IO.inspect(socket)
     IO.puts("Connect Info: ")
     IO.inspect(connect_info)
+    socket = Absinthe.Phoenix.Socket.put_options(socket, context: %{
+      current_user: "",
+    })
     {:ok, socket}
   end
 

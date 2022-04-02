@@ -43,6 +43,11 @@ config :gsmlg_web, GSMLGWeb.Endpoint,
   pubsub_server: GSMLG.PubSub,
   live_view: [signing_salt: "gmmaSSOy"]
 
+config :gsmlg_web, GSMLGWeb.Endpoint,
+  # ... other config
+  pubsub: [name: GSMLG.PubSub,
+           adapter: Phoenix.PubSub.PG2]
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.12.18",
