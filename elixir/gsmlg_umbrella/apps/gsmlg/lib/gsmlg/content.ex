@@ -27,6 +27,11 @@ defmodule GSMLG.Content do
     Repo.aggregate(query, :count)
   end
 
+  def last_updated_blogs() do
+    blog = GSMLG.Repo.one(from GSMLG.Content.Blog, limit: 1, order_by: [desc: :updated_at], select: [:updated_at]);
+    blog.updated_at
+  end
+
   @doc """
   Returns the list of blogs.
 
