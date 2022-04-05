@@ -1,3 +1,0 @@
-# GSMLG
-
-**TODO: Add description**
