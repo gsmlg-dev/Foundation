@@ -39,7 +39,7 @@ defmodule GSMLGWeb.MixProject do
     [
       {:phoenix, "~> 1.6.0", override: true},
       {:phoenix_ecto, "~> 4.4.0"},
-      {:phoenix_html, "~> 3.1.0"},
+      {:phoenix_html, "~> 3.2.0"},
       {:phoenix_live_reload, "~> 1.3.0", only: :dev},
       {:phoenix_live_view, "~> 0.17.0"},
       {:floki, ">= 0.32.0", only: :test},
@@ -52,9 +52,9 @@ defmodule GSMLGWeb.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:earmark, ">= 1.4.15"},
-      {:absinthe, "~> 1.6.0"},
+      {:absinthe, "~> 1.7.0"},
       {:absinthe_plug, "~> 1.5"},
-      {:absinthe_phoenix, "~> 1.6.0"},
+      {:absinthe_phoenix, "~> 2.0.0"},
     ]
   end
 

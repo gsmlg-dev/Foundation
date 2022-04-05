@@ -11,7 +11,7 @@ defmodule GSMLGWeb.Application do
       # Start the Telemetry supervisor
       GSMLGWeb.Telemetry,
       # Start the Endpoint (http/https)
-      GSMLGWeb.Endpoint
+      GSMLGWeb.Endpoint,
       # GraphQL subscriptions
       {Absinthe.Subscription, [GSMLGWeb.Endpoint]},
       # Start a worker by calling: GSMLGWeb.Worker.start_link(arg)
