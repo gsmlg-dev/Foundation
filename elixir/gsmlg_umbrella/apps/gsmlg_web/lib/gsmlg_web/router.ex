@@ -41,10 +41,10 @@ defmodule GSMLGWeb.Router do
     resources "/blogs", BlogController, except: [:new, :edit]
   end
 
-  forward "/graphiql", 
-    Absinthe.Plug.GraphiQL, 
-    schema: GSMLGWeb.Schema,
-    socket: GSMLGWeb.UserSocket
+  forward "/graphiql",
+          Absinthe.Plug.GraphiQL,
+          schema: GSMLGWeb.Schema,
+          socket: GSMLGWeb.UserSocket
 
   forward "/graphql", Absinthe.Plug, schema: GSMLGWeb.Schema
 

@@ -7,6 +7,25 @@ defmodule GSMLG.Content do
   alias GSMLG.Repo
 
   alias GSMLG.Content.Blog
+  @doc """
+  Returns the count of blogs.
+
+  ## Examples
+
+      iex> count_blogs()
+      [%Blog{}, ...]
+
+  """
+  def count_blogs do
+    Repo.aggregate(Blog, :count)
+  end
+  def count_blogs(args) do
+    query =
+      from b in Blog,
+        where: ^args
+
+    Repo.aggregate(query, :count)
+  end
 
   @doc """
   Returns the list of blogs.
@@ -19,18 +38,28 @@ defmodule GSMLG.Content do
   """
   def list_blogs do
     query =
-      from p in Blog,
-        order_by: [desc: p.id]
+      from b in Blog,
+        order_by: [desc: :id]
 
     Repo.all(query)
   end
 
   def list_blogs(args) do
-    IO.inspect(args)
     query =
-      from p in Blog,
+      from b in Blog,
         where: ^args,
-        order_by: [desc: p.id]
+        order_by: [desc: :id]
+
+    Repo.all(query)
+  end
+
+  def list_blogs_limit(args, limit, offset, order_by) do
+    query = cond do
+      Enum.count(args) == 0 and Enum.count(order_by) == 0 -> from b in Blog, limit: ^limit, offset: ^offset, order_by: [desc: :id]
+      Enum.count(args) == 0 -> from b in Blog, limit: ^limit, offset: ^offset, order_by: ^order_by
+      Enum.count(order_by) == 0 and Enum.count(args) > 0 -> from b in Blog, where: ^args, limit: ^limit, offset: ^offset, order_by: [desc: :id]
+      Enum.count(args) > 0 -> from b in Blog, where: ^args, limit: ^limit, offset: ^offset, order_by: ^order_by
+    end
 
     Repo.all(query)
   end
@@ -50,6 +79,11 @@ defmodule GSMLG.Content do
 
   """
   def get_blog!(id), do: Repo.get!(Blog, id)
+
+  def get_blog_by_slug(slug) do
+    query = from b in Blog, where: [slug: ^slug]
+    Repo.one(query)
+  end
 
   @doc """
   Creates a blog.
