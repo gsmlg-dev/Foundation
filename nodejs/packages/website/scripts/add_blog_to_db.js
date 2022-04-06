@@ -1,48 +1,39 @@
-import * as fs from 'fs/promises';
-import * as path from 'path';
-import axios from 'axios';
-
-import data from '../src/blogList.js';
+const fs = require('fs/promises');
+const { default: axios } = require('axios');
 
 const sleep = (n) => {
-    return new Promise((fulfill) => {
-        setTimeout(() => {
-            fulfill();
-        }, n);
-    });
+  return new Promise((fulfill) => {
+    setTimeout(() => {
+      fulfill();
+    }, n);
+  });
 };
 
 const main = async () => {
-    console.table(data);
+  const filePath = await fs.realpath(`${__dirname}/../data/blogs.json`);
+  const f = await fs.readFile(filePath);
+  const data = JSON.parse(f);
 
-    const blogs = data.reverse();
+  const blogs = data.reverse();
 
-    for (let b of blogs) {
-        try {
-            console.log(`Begin add blog: ${b.id} ${b.title}`);
-            const p = path.join(process.cwd(), 'data/blogs', `${b.name}.md`);
-            const c = await fs.readFile(p, { encoding: 'utf8' });
-            const d = {
-                ...b,
-                slug: b.name,
-                content: c,
-            };
+  for (let b of blogs) {
+    try {
+      console.log(`Begin add blog: ${b.id} ${b.title}`);
 
-            await axios({
-                method: 'post',
-                url: 'http://localhost:4000/api/blogs',
-                data: { blog: d },
-            });
+      await axios({
+        method: 'post',
+        url: 'http://localhost:4000/api/blogs',
+        data: { blog: b },
+      });
 
-            console.log(`Add blog done: ${b.id} ${b.title}`);
+      console.log(`Add blog done: ${b.id} ${b.title}`);
 
-            await sleep(1000);
-        } catch(e) {
-            console.error(e);
-            process.exit(1);
-        }
+      await sleep(1000);
+    } catch (e) {
+      console.error(e);
+      process.exit(1);
     }
-}
-
+  }
+};
 
 main();
