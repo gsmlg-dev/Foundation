@@ -1,6 +1,14 @@
 [
   {
     "author": "Gao",
+    "content": "## 操作原理\n使用`git filter-branch`重写提交历史\n\n\n## 执行方式\n\n设置脚本:\n\n```bash\n# 设置git alias 方便操作\ngit config --global alias.change-commits '!'\"f() { VAR=\\$1; OLD=\\$2; NEW=\\$3; shift 3; git filter-branch --env-filter \\\"if [[ \\\\\\\"\\$\\`echo \\$VAR\\`\\\\\\\" = '\\$OLD' ]]; then export \\$VAR='\\$NEW'; fi\\\" \\$@; }; f\"\n\n# 更换名字\ngit change-commits GIT_AUTHOR_NAME \"old name\" \"new name\"\n\n# 更换邮箱\ngit change-commits GIT_AUTHOR_EMAIL \"old@email.com\" \"new@email.com\" HEAD~10..HEAD\n\n### git config\n### change-commits=\"!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \\\"if [[ \\\\\\\"$`echo $VAR`\\\\\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\\\" \\$@; }; f\"\n\n\n```\n\n或者使用commit-filter\n```bash\ngit filter-branch --commit-filter '\n      if [ \"$GIT_AUTHOR_EMAIL\" = \"wrong_email@wrong_host.local\" ];\n      then\n              GIT_AUTHOR_NAME=\"Your Name Here (In Lights)\";\n              GIT_AUTHOR_EMAIL=\"correct_email@correct_host.com\";\n              git commit-tree \"$@\";\n      else\n              git commit-tree \"$@\";\n      fi' HEAD\n# 修改脚本可以一次修改多个名称\n```\n\n如果运行多次,会出现错误\n```text\nA previous backup already exists in refs/original/ In that case, re run it, with the new email, and add a -f before the --commit-filter.\n```\n\n这需要执行\n```bas\n# 删除backup\ngit update-ref -d refs/original/refs/heads/master\n# 恢复backup\ngit filter-branch -f --index-filter 'git rm --cached --ignore-unmatch Rakefile' HEAD\n```\n\n\n更复杂的配置, 需要关联tags\n\n```bash\n#!/bin/bash\n\ngit filter-branch --env-filter '\n\nOLD_EMAIL=\"oldEmail@xxx-MacBook-Pro.local\"\nCORRECT_NAME=\"yourName\"\nCORRECT_EMAIL=\"yourEmail\"\n\nif [ \"$GIT_COMMITTER_EMAIL\" = \"$OLD_EMAIL\" ]\nthen\n    export GIT_COMMITTER_NAME=\"$CORRECT_NAME\"\n    export GIT_COMMITTER_EMAIL=\"$CORRECT_EMAIL\"\nfi\nif [ \"$GIT_AUTHOR_EMAIL\" = \"$OLD_EMAIL\" ]\nthen\n    export GIT_AUTHOR_NAME=\"$CORRECT_NAME\"\n    export GIT_AUTHOR_EMAIL=\"$CORRECT_EMAIL\"\nfi\n' --tag-name-filter cat -- --branches --tags\n\n```\n\n\n",
+    "date": "2022-04-05",
+    "id": 70,
+    "slug": "git-filter-branch-user-email",
+    "title": "Git 修改所有提交用户的用户名和邮件"
+  },
+  {
+    "author": "Gao",
     "content": "\n因为随着项目越来越庞大, 慢慢的需要将项目的不同目录分离出去, 想要保留对应的目录提交记录.\n\n```bash\n# 克隆项目\ngit clone ...\n\n# 创建一个分支\ngit checkout -b newrepo\n\n# 使用git filter-branch过滤提交\ngit filter-branch --prune-empty --subdirectory-filter subdirectory newrepo\n\n# 分支被重建后, 只有对应的目录的提交和内容, 将分支提交到新的项目\ngit remote add newrepo url\ngit push new repo newrepo:main\n\n```\n\n执行完成后, 新的项目便导出成功了\n\n\n",
     "date": "2022-03-25",
     "id": 69,
