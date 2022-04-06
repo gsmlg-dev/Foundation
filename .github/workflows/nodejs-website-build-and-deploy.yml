@@ -67,22 +67,3 @@ jobs:
           repository-name: "gsmlg/gsmlg.github.io"
           token: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Update WEB_VERSION in elixir docker image 🐳
-        working-directory: 'elixir/gsmlg_umbrella'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          WEB_VERSION: ${{ steps.semantic.outputs.new_release_version }}
-        run: |
-          [[ -z "$WEB_VERSION" ]] && exit 252
-          sed "s;WEB_VERSION=[0-9]\+.[0-9]\+.[0-9]\+;WEB_VERSION=${WEB_VERSION};g" Dockerfile
-          sed -i "s;WEB_VERSION=[0-9]\+.[0-9]\+.[0-9]\+;WEB_VERSION=${WEB_VERSION};g" Dockerfile
-          git config --global user.email "action-bot@gsmlg.dev"
-          git config --global user.name "Action Bot"
-          git add Dockerfile
-          git commit -m "feat(elixir:gsmlg): Update website to version ${WEB_VERSION}."
-          git push -f origin main:next
-
