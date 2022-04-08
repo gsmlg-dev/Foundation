@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Suspense, useLayoutEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { useGLTF, Environment, Stage, OrbitControls } from '@react-three/drei'
 
@@ -19,7 +19,7 @@ function Model(props) {
   const { scene, nodes, materials } = useGLTF('/webgl/lambo.glb')
   // A layout effect executes after the jsx has "rendered" but before it is committed to screen by the host (threejs)
   // This is a good place to make adjustments
-  useLayoutEffect(() => {
+  useEffect(() => {
     scene.traverse((obj) => obj.type === 'Mesh' && (obj.receiveShadow = obj.castShadow = true))
     Object.assign(nodes.wheel003_020_2_Chrome_0.material, { metalness: 1, roughness: 0.4, color: new THREE.Color('black') })
     // Using the emissive colors is a nice trick to give textures a warm sheen

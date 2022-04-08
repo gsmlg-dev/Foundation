@@ -5,8 +5,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { Provider as DataProvider } from 'react-redux';
 import { Provider as PhoenixProvider } from 'phoenix-provider';
 
+import { store } from '../src/store';
 import getTheme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 
@@ -34,14 +36,16 @@ export default function MyApp(props: MyAppProps) {
         />
         <meta name="theme-color" content={theme.palette.primary.main} />
       </Head>
-      <PhoenixProvider url={'/socket'} options={{ params: {token: 'anonymous' }}}>
-        <StyledEngineProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </StyledEngineProvider>
-      </PhoenixProvider>
+      <DataProvider store={store}>
+        <PhoenixProvider url={'/socket'} options={{ params: {token: 'anonymous' }}}>
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </StyledEngineProvider>
+        </PhoenixProvider>
+      </DataProvider>
     </CacheProvider>
   );
 }

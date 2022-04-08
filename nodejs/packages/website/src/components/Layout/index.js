@@ -15,10 +15,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Badge from '@mui/material/Badge';
 
 import Link from 'next/link';
 
 import { useSocket } from 'phoenix-provider';
+import { useIncress, useCounterValue } from 'slices/counter';
 
 const RootSection = styled('section')((
   {
@@ -77,7 +79,11 @@ const Layout = ({children}, ref) => {
   }, []);
   const socket = useSocket();
   const [socketStatus, setSocketStatus] = React.useState({ color: 'transperant' });
+  const incress = useIncress();
+  const count = useCounterValue();
+
   React.useEffect(() => {
+    incress();
     if (socket) {
       const updateState = () => {
         const state = socket.connectionState();
@@ -123,7 +129,9 @@ const Layout = ({children}, ref) => {
             color="inherit"
             aria-label="Menu"
             size="large">
-            <MenuIcon />
+            <Badge badgeContent={count}>
+              <MenuIcon />
+            </Badge>
           </IconButton>
           <Typography type="title" color="inherit">
             {menus.map(({name, href}) => (
