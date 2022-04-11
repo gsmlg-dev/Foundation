@@ -26,4 +26,5 @@ export const useIncress = () => {
   const dispatch = useDispatch<AppDispatch>();
   return () => dispatch(counterSlice.actions.incress(1));
 };
+
 export const useCounterValue = () => useSelector((state : RootState) => state[counterSlice.name]);
