@@ -127,6 +127,7 @@ const rules = {
         'testing-library/prefer-wait-for': 'error',
         'testing-library/render-result-naming-convention': 'error',
         'testing-library/no-debugging-utils': 'off',
+        'testing-library/no-global-regexp-flag-in-query': 'off',
       }
     : null),
 }
