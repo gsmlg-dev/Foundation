@@ -1,6 +1,7 @@
 {
   "reject": [
     "arrify",
+    "cpy",
     "read-pkg-up",
     "slash"
   ]
