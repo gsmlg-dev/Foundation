@@ -42,7 +42,7 @@ test('resolveGsmlgScripts resolves to src/index.js when in the @gsmlg/scripts pa
 test('resolveGsmlgScripts resolves to @gsmlg/scripts if not in the @gsmlg/scripts package', () => {
   mockPkg({package: {name: 'not-@gsmlg/scripts'}})
   whichSyncMock.mockImplementationOnce(() => require.resolve('../'))
-  expect(require('../utils').resolveGsmlgScripts()).toBe('@gsmlg/scripts')
+  expect(require('../utils').resolveGsmlgScripts()).toBe('gsmlg-scripts')
 })
 
 test(`resolveBin resolves to the full path when it's not in $PATH`, () => {
