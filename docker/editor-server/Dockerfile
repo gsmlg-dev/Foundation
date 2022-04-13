@@ -34,6 +34,7 @@ RUN apt-get install -y -qq \
   nasm \
   bind9-dnsutils \
   knot-dnsutils \
+  cloc \
   locales \
   inotify-tools \
   iputils-ping net-tools \
