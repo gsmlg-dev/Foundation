@@ -24,7 +24,7 @@ function resolveGsmlgScripts() {
   ) {
     return require.resolve('./').replace(process.cwd(), '.')
   }
-  return resolveBin('@gsmlg/scripts')
+  return resolveBin('@gsmlg/scripts', { executable: 'gsmlg-scripts' })
 }
 
 // eslint-disable-next-line complexity
