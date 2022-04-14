@@ -1,7 +1,7 @@
-FROM docker.io/gsmlg/code-server:v4.1.0
+FROM docker.io/gsmlg/code-server:v4.2.0
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
-LABEL CODE_SERVER_VERSION=4.1.0
+LABEL CODE_SERVER_VERSION=4.2.0
 
 ARG VERSION
 LABEL VERSION=$VERSION
@@ -67,7 +67,6 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y -qq nodejs \
   && npm install -g npm \
   && npm install -g yarn \
-  && npm install -g cnpm --registry=https://registry.npmmirror.com \
   && npm install -g npm-check-updates \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
