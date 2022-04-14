@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
 
-ARG VERSION=4.1.0
+ARG VERSION=4.2.0
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
