@@ -27,6 +27,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
+      - name: 🪓 Remove Workspace package.json
+        working-directory: 'nodejs'
+        run: rm package.json
+
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
         with:
