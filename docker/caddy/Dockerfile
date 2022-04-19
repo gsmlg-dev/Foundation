@@ -4,8 +4,9 @@ ARG CADDY_VERSION
 ARG CADDY_WITH
 ARG USER
 ARG TOKEN
+ARG GOPRIVATE
 
-RUN echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc \
+RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
   && XCADDY_DEBUG=1 xcaddy build ${CADDY_VERSION} ${CADDY_WITH}
 
 

@@ -64,14 +64,18 @@ jobs:
           go-version: '1.17.8'
       - run: go version
       - run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+      - name: Configure git for private modules
+        env:
+          USER: ${{ secrets.GIT_USER_ID }}
+          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com"
       - 
         env:
           GOOS: ${{ matrix.platforms.os }}
           GOARCH: ${{ matrix.platforms.arch }}
-          USER: ${{ secrets.GIT_USER_ID }}
-          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           CADDY_VERSION: ${{ needs.sematic-version.outputs.caddy_version }}
           CADDY_WITH: ${{ needs.sematic-version.outputs.caddy_with }}
+          GOPRIVATE: github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
         run: |
           echo "machine github.com login ${USER} password ${TOKEN}" > $HOME/.netrc ;
           xcaddy build ${CADDY_VERSION} \
@@ -116,6 +120,7 @@ jobs:
             CADDY_WITH=${{ needs.sematic-version.outputs.caddy_with }}
             USER=${{ secrets.GIT_USER_ID }}
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
           tags: |
             docker.io/gsmlg/caddy:v${{ needs.sematic-version.outputs.version }}
             docker.io/gsmlg/caddy:latest
