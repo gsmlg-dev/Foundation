@@ -10,5 +10,5 @@ xcaddy build with
 --with github.com/caddy-dns/route53
 --with github.com/caddy-dns/vultr
 --with github.com/gsmlg-dev/caddy-dns-zdns
---with github.com/ss098/certmagic-s3
+--with github.com/gsmlg-dev/caddy-storage-s3
 ```
