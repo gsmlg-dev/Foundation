@@ -57,10 +57,10 @@ class RemarkElement extends LitElement {
   constructor() {
     super();
 
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     mermaid.initialize({
       startOnLoad: false,
-      theme: isDark ? 'dark' : 'default',
+      // theme: isDark ? 'dark' : 'default',
     });
     this._mid = this.id || `t${+new Date()}`;
     this._fragement = '';
