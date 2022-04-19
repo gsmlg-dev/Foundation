@@ -2,6 +2,7 @@ name: nodejs-lit-deploy-storybook
 on:
   push:
     paths:
+      - 'nodejs/packages/lit/.storybook/**'
       - 'nodejs/packages/lit/**.stories.ts'
       - '.github/workflows/nodejs-lit-deploy-storybook.yml'
     branches:
