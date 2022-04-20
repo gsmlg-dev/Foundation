@@ -11,87 +11,102 @@ My software foundation.
 
 This repo will include all my public software, scripts, configs and CI system.
 
+
 ## What is this repo?
 
 My github repo aggregation.
 
 I've manage too many repositories, that I have to combine them to one so that I can manage them easily.
 
+
 ## Repos
 
 - [nodejs](nodejs)
 
     - [scripts](nodejs/packages/scripts)
+
     gsmlg-scripts(@gsmlg/scripts) Support open source project build, format, lint, pre-commit, validate and typecheck.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-scripts-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-scripts-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/@gsmlg/scripts)](https://www.npmjs.com/package/@gsmlg/scripts)
 
     - [website](nodejs/packages/website)
+
     My website, now at gsmlg.github.io
-    TODO: Start my backend service.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-website-build-and-deploy.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-website-build-and-deploy.yml)
     [![npm version](https://badgen.net/npm/v/@gsmlg/website)](https://www.npmjs.com/package/@gsmlg/website)
 
     - [phoenix-provider](nodejs/packages/phoenix-provider)
+
     React Context Provider that provide a Phoenix socket.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-phoenix-provider-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-phoenix-provider-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/phoenix-provider)](https://www.npmjs.com/package/phoenix-provider)
 
     - [varian](nodejs/packages/varian)
+
     Data format validator.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-varian-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-varian-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/@gsmlg/varian)](https://www.npmjs.com/package/@gsmlg/varian)
 
     - [react](nodejs/packages/react)
+
     My react components and hooks.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-react-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-react-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/@gsmlg/react)](https://www.npmjs.com/package/@gsmlg/react)
 
-    [Demo gsmlg-dev/react](https://gsmlg-dev.github.io/react)
+    [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://gsmlg-dev.github.io/react)
 
     - [lit](nodejs/packages/lit)
+
     My lit html components.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-lit-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-lit-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/@gsmlg/lit)](https://www.npmjs.com/package/@gsmlg/lit)
 
-    [Demo gsmlg-dev/lit](https://gsmlg-dev.github.io/lit)
+    [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://gsmlg-dev.github.io/lit)
 
     - [eslint-config](nodejs/packages/eslint-config)
+
     My eslint config package.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-eslint-config-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-eslint-config-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/eslint-config-gsmlg)](https://www.npmjs.com/package/eslint-config-gsmlg)
 
     - [utils](nodejs/packages/utils)
+
     My utils function.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-utils-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-utils-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/@gsmlg/utils)](https://www.npmjs.com/package/@gsmlg/utils)
 
     - [visx](nodejs/packages/visx)
+
     My @visx charts.
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-visx-validate-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/nodejs-visx-validate-and-release.yml)
     [![npm version](https://badgen.net/npm/v/@gsmlg/visx)](https://www.npmjs.com/package/@gsmlg/visx)
 
-    [Demo gsmlg-dev/visx](https://gsmlg-dev.github.io/visx)
+    [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://gsmlg-dev.github.io/visx)
+
 
 - [golang](golang)
 
-    - [dingding-oapi](golang/dingding-oapi)
+    - [geoip2-server](golang/geoip2-server)
+
     Dingding go package that support ding message to ding group.
 
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/golang-dingding-oapi-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/golang-dingding-oapi-release.yml)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/golang-geoip2-server-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/golang-geoip2-server-release.yml)
 
-    - [hashdir](golang/hashdir)
+    - [pac-server](golang/pac-server)
+
     Get directory hash.
+
     TODO: Add ignore pattern.
+
 
 - [docker](docker)
 
@@ -218,6 +233,13 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/phoenix)](https://hub.docker.com/r/gsmlg/phoenix)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-phoenix.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-phoenix.yml)
 
+    - [snapdrop](docker/snapdrop)
+    My snapdrop project base image.
+    [Repo Link](https://hub.docker.com/r/gsmlg/snapdrop/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/snapdrop)](https://hub.docker.com/r/gsmlg/snapdrop)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-snapdrop.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-snapdrop.yml)
+
     - [squid](docker/squid)
     Proxy service.
     [Repo Link](https://hub.docker.com/r/gsmlg/squid/tags)
@@ -253,29 +275,19 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/zerotier-ui)](https://hub.docker.com/r/gsmlg/zerotier-ui)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-zerotier-ui.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-zerotier-ui.yml)
 
+
 - [rust](rust)
     - [chat](rust/chat)
     Rust Chat client use http comet technique. 
 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/rust-chat-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/rust-chat-release.yml)
 
-- [elixir](elixir)
-
-    - [gsmlg_umbrella](elixir/gsmlg_umbrella) 
-    My web site, it handles my daily affairs.
-    [Docker images](https://hub.docker.com/r/gsmlg/gsmlg.org/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/gsmlg.org)](https://hub.docker.com/r/gsmlg/gsmlg.org)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/elixir-gsmlg-build-and-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/elixir-gsmlg-build-and-release.yml)
 
 - [flutter](flutter)
 
-    - [gsmlg](flutter/gsmlg)
-    My app, it handles my daily affairs.
-
     - [mirror](flutter/mirror)
     Mirror, phone app, a magic mirror.
-    
+
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/flutter-mirror-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/flutter-mirror-release.yml)
 
 
@@ -298,7 +310,7 @@ and also need to add a `.release.yaml` file in directory like so:
 
 ```yaml
 extends: "semantic-release-monorepo"
-repositoryUrl: https://github.com/gsmlg-dev/Foundation
+repositoryUrl: https://github.com/gsmlg-dev/Foundation.git
 plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
