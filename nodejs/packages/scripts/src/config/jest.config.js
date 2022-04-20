@@ -17,7 +17,7 @@ const ignores = [
 const jestConfig = {
   roots: ['<rootDir>/src'],
   testEnvironment: ifAnyDep(
-    ['webpack', 'rollup', 'react', 'preact'],
+    ['webpack', 'rollup', 'react', 'preact', 'lit', 'lit-html', 'lit-element'],
     'jsdom',
     'node',
   ),
