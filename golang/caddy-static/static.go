@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package fileserver
+package staticfiles
 
 import (
 	"bytes"
@@ -30,11 +30,15 @@ import (
 	"time"
 
 	"github.com/caddyserver/caddy/v2"
+	"github.com/caddyserver/caddy/v2/caddyconfig/httpcaddyfile"
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
 	"go.uber.org/zap"
 )
 
+const DirectiveName = "static_site"
+
 func init() {
+	httpcaddyfile.RegisterHandlerDirective(DirectiveName, parseCaddyfile)
 	weakrand.Seed(time.Now().UnixNano())
 
 	caddy.RegisterModule(StaticSite{})
@@ -91,7 +95,7 @@ type StaticSite struct {
 // CaddyModule returns the Caddy module information.
 func (StaticSite) CaddyModule() caddy.ModuleInfo {
 	return caddy.ModuleInfo{
-		ID:  "http.handlers.static_site",
+		ID:  "http.handlers." + DirectiveName,
 		New: func() caddy.Module { return new(StaticSite) },
 	}
 }
@@ -445,6 +449,79 @@ func (fsrv *StaticSite) notFound(w http.ResponseWriter, r *http.Request, next ca
 		return next.ServeHTTP(w, r)
 	}
 	return caddyhttp.Error(http.StatusNotFound, nil)
+}
+
+// parseCaddyfile parses the file_server directive. It enables the static file
+// server and configures it with this syntax:
+//
+//    file_server [<matcher>] [browse] {
+//        hide          <files...>
+//        index         <files...>
+//        precompressed <formats...>
+//        status        <status>
+//        disable_canonical_uris
+//    }
+//
+func parseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error) {
+	var fsrv StaticSite
+
+	for h.Next() {
+		for h.NextBlock(0) {
+			switch h.Val() {
+			case "hide":
+				fsrv.Hide = h.RemainingArgs()
+				if len(fsrv.Hide) == 0 {
+					return nil, h.ArgErr()
+				}
+
+			case "index":
+				fsrv.IndexNames = h.RemainingArgs()
+				if len(fsrv.IndexNames) == 0 {
+					return nil, h.ArgErr()
+				}
+
+			case "status":
+				if !h.NextArg() {
+					return nil, h.ArgErr()
+				}
+				fsrv.StatusCode = caddyhttp.WeakString(h.Val())
+
+			case "disable_canonical_uris":
+				if h.NextArg() {
+					return nil, h.ArgErr()
+				}
+				falseBool := false
+				fsrv.CanonicalURIs = &falseBool
+
+			case "pass_thru":
+				if h.NextArg() {
+					return nil, h.ArgErr()
+				}
+				fsrv.PassThru = true
+
+			default:
+				return nil, h.Errf("unknown subdirective '%s'", h.Val())
+			}
+		}
+	}
+
+	// hide the Caddyfile (and any imported Caddyfiles)
+	if configFiles := h.Caddyfiles(); len(configFiles) > 0 {
+		for _, file := range configFiles {
+			file = filepath.Clean(file)
+			if !fileHidden(file, fsrv.Hide) {
+				// if there's no path separator, the file server module will hide all
+				// files by that name, rather than a specific one; but we want to hide
+				// only this specific file, so ensure there's always a path separator
+				if !strings.Contains(file, separator) {
+					file = "." + separator + file
+				}
+				fsrv.Hide = append(fsrv.Hide, file)
+			}
+		}
+	}
+
+	return &fsrv, nil
 }
 
 // calculateEtag produces a strong etag by default, although, for
