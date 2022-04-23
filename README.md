@@ -97,15 +97,15 @@ I've manage too many repositories, that I have to combine them to one so that I 
 
     - [geoip2-server](golang/geoip2-server)
 
-    Dingding go package that support ding message to ding group.
-
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/golang-geoip2-server-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/golang-geoip2-server-release.yml)
+    GeoIP2 server
 
     - [pac-server](golang/pac-server)
 
-    Get directory hash.
+    PAC (Proxy Auto-Config) file server.
 
-    TODO: Add ignore pattern.
+    - [caddy-static](golang/caddy-static)
+
+    A caddy module that build static site into caddy server.
 
 
 - [docker](docker)
