@@ -99,7 +99,7 @@ class RemarkElement extends LitElement {
         box.style.display = 'none';
       }
       const el = els[i];
-      const txt = contentEls[i].innerText;
+      const txt = contentEls[i].textContent ?? '';
       if (this.debug) {
         console.log(txt);
       }
