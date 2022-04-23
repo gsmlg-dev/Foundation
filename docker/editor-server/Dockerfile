@@ -93,6 +93,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/spf13/cobra-cli@latest \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gomobile@latest \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gobind@latest \
+  && /usr/local/go/bin/go install github.com/evanw/esbuild/cmd/esbuild@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
