@@ -17,7 +17,10 @@ package staticfiles
 import (
 	"bytes"
 	"embed"
+	"encoding/json"
+	"flag"
 	"fmt"
+	"log"
 	weakrand "math/rand"
 	"mime"
 	"net/http"
@@ -30,21 +33,50 @@ import (
 	"time"
 
 	"github.com/caddyserver/caddy/v2"
+	"github.com/caddyserver/caddy/v2/caddyconfig"
 	"github.com/caddyserver/caddy/v2/caddyconfig/httpcaddyfile"
+	caddycmd "github.com/caddyserver/caddy/v2/cmd"
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
+	"github.com/caddyserver/certmagic"
+
 	"go.uber.org/zap"
 )
 
 const DirectiveName = "static_site"
+const FlagName = "static-site"
 
 func init() {
 	httpcaddyfile.RegisterHandlerDirective(DirectiveName, parseCaddyfile)
 	weakrand.Seed(time.Now().UnixNano())
 
 	caddy.RegisterModule(StaticSite{})
+
+	caddycmd.RegisterCommand(caddycmd.Command{
+		Name:  FlagName,
+		Func:  cmdStaticSite,
+		Usage: "[--domain <example.com>] [--listen <addr>] [--access-log]",
+		Short: "Spins up a production-ready static server",
+		Long: `
+A simple but production-ready static server. Useful for quick deployments,
+demos, and development.
+
+The listener's socket address can be customized with the --listen flag.
+
+If a domain name is specified with --domain, the default listener address
+will be changed to the HTTPS port and the server will use HTTPS. If using
+a public domain, ensure A/AAAA records are properly configured before
+using this option.`,
+		Flags: func() *flag.FlagSet {
+			fs := flag.NewFlagSet(FlagName, flag.ExitOnError)
+			fs.String("domain", "", "Domain name at which to serve the files")
+			fs.String("listen", "", "The address to which to bind the listener")
+			fs.Bool("access-log", false, "Enable the access log")
+			return fs
+		}(),
+	})
 }
 
-// FileServer implements a static file server responder for Caddy.
+// StaticSite implements a static file server responder for Caddy.
 type StaticSite struct {
 	// A list of files or folders to hide; the file server will pretend as if
 	// they don't exist. Accepts globular patterns like `*.ext` or `/foo/*/bar`
@@ -206,9 +238,6 @@ func (fsrv *StaticSite) ServeHTTP(w http.ResponseWriter, r *http.Request, next c
 		fsrv.logger.Debug("no index file in directory",
 			zap.String("path", filename),
 			zap.Strings("index_filenames", fsrv.IndexNames))
-		// if fsrv.Browse != nil && !fileHidden(filename, filesToHide) {
-		// 	return fsrv.serveBrowse(root, filename, w, r, next)
-		// }
 		return fsrv.notFound(w, r, next)
 	}
 
@@ -542,6 +571,68 @@ func redirect(w http.ResponseWriter, r *http.Request, to string) error {
 	}
 	http.Redirect(w, r, to, http.StatusPermanentRedirect)
 	return nil
+}
+
+func cmdStaticSite(fs caddycmd.Flags) (int, error) {
+	caddy.TrapSignals()
+
+	domain := fs.String("domain")
+	listen := fs.String("listen")
+	accessLog := fs.Bool("access-log")
+
+	var handlers []json.RawMessage
+
+	handler := StaticSite{}
+
+	handlers = append(handlers, caddyconfig.JSONModuleObject(handler, "handler", DirectiveName, nil))
+
+	route := caddyhttp.Route{HandlersRaw: handlers}
+
+	if domain != "" {
+		route.MatcherSetsRaw = []caddy.ModuleMap{
+			{
+				"host": caddyconfig.JSON(caddyhttp.MatchHost{domain}, nil),
+			},
+		}
+	}
+
+	server := &caddyhttp.Server{
+		ReadHeaderTimeout: caddy.Duration(10 * time.Second),
+		IdleTimeout:       caddy.Duration(30 * time.Second),
+		MaxHeaderBytes:    1024 * 10,
+		Routes:            caddyhttp.RouteList{route},
+	}
+	if listen == "" {
+		if domain == "" {
+			listen = ":80"
+		} else {
+			listen = ":" + strconv.Itoa(certmagic.HTTPSPort)
+		}
+	}
+	server.Listen = []string{listen}
+	if accessLog {
+		server.Logs = &caddyhttp.ServerLogConfig{}
+	}
+
+	httpApp := caddyhttp.App{
+		Servers: map[string]*caddyhttp.Server{"static": server},
+	}
+
+	cfg := &caddy.Config{
+		Admin: &caddy.AdminConfig{Disabled: true},
+		AppsRaw: caddy.ModuleMap{
+			"http": caddyconfig.JSON(httpApp, nil),
+		},
+	}
+
+	err := caddy.Run(cfg)
+	if err != nil {
+		return caddy.ExitCodeFailedStartup, err
+	}
+
+	log.Printf("Caddy 2 serving static files on %s", listen)
+
+	select {}
 }
 
 // statusOverrideResponseWriter intercepts WriteHeader calls

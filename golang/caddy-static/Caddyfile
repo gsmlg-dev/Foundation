@@ -1,13 +1,9 @@
 {
 	# General Options
-	debug
-	http_port 10080
-	https_port 10443
+	# debug
 
 	# TLS Options
 	auto_https ignore_loaded_certs
-	email gsmlg.com@gmail.com
-
 	skip_install_trust
 
 	# Server Options
@@ -19,9 +15,19 @@
 	}
 }
 
+(common) {
+    header /* {
+        -Server
+    }
+}
+
 http://10.100.1.10:10180 {
   route {
       static_site
   }
+  log {
+    output stdout
+  }
+  import common
 }
 
