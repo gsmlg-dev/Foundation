@@ -41,18 +41,10 @@ class RemarkElement extends LitElement {
   @property({ type: Boolean, attribute: true, reflect: true })
   debug: boolean = false;
 
-  private _content: string | undefined = undefined;
-  set content(val: string | undefined) {
-    const oldVal = this._content;
-    this._content = val;
-    this.requestUpdate('content', oldVal);
-  }
-  get content() {
-    return this._content;
-  }
-
   private _mid: string;
   private _fragement: string;
+
+  private observer: MutationObserver;
 
   constructor() {
     super();
@@ -64,10 +56,15 @@ class RemarkElement extends LitElement {
     });
     this._mid = this.id || `t${+new Date()}`;
     this._fragement = '';
+
+    this.observer = new MutationObserver(() => {
+      this.requestUpdate();
+    });
+    this.observer.observe(this, {subtree: true, childList: true, attributes: true});
   }
 
-  private _generate() {
-    const content = this.content ?? this.innerHTML;
+  protected _generate() {
+    const content = this.innerHTML;
 
     return unified()
       .use(remarkParse)
@@ -82,7 +79,7 @@ class RemarkElement extends LitElement {
       });
   }
 
-  private _do_updated() {
+  protected updateMermaidChart() {
     const els: NodeListOf<HTMLElement> = this.renderRoot.querySelectorAll(
       'code.language-mermaid',
     );
@@ -121,15 +118,18 @@ class RemarkElement extends LitElement {
   }
 
   override updated() {
-    setTimeout(() => this._do_updated(), 1000 / 60);
+    requestAnimationFrame(() => this.updateMermaidChart());
   }
 
-  // override attributeChangedCallback(...args) {
-  //   if (this.debug) {
-  //     console.log(...args);
-  //   }
-  //   this.requestUpdate(...args);
-  // }
+  override attributeChangedCallback(name: string, old: string | null, value: string | null) {
+    super.attributeChangedCallback(name, old, value);
+    if (this.debug) {
+      console.log('attribute change: ', name, old, value);
+    }
+    if (name === 'debug') {
+      this.requestUpdate('debug', old);
+    }
+  }
 
   override render() {
     const md = this._generate();

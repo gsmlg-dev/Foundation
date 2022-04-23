@@ -12,13 +12,12 @@ export default {
 
 export interface RemarkElementProps {
   debug: boolean;
-  content?: string;
   innerHTML?: string;
 }
 
 // More on component templates: https://storybook.js.org/docs/web-components/writing-stories/introduction#using-args
-const Template: Story<RemarkElementProps> = ({ debug, content, innerHTML }) =>
-  html`<remark-element ?debug=${debug} .content=${content}
+const Template: Story<RemarkElementProps> = ({ debug, innerHTML }) =>
+  html`<remark-element ?debug=${debug}
     >${unsafeHTML(innerHTML)}</remark-element
   >`;
 
@@ -26,7 +25,7 @@ export const Basic = Template.bind({});
 // More on args: https://storybook.js.org/docs/web-components/writing-stories/args
 Basic.args = {
   debug: true,
-  content: `
+  innerHTML: `
 # RemarkElement
 Render *markdown*`,
 };
@@ -35,7 +34,7 @@ export const WithBlock = Template.bind({});
 
 WithBlock.args = {
   debug: true,
-  content: `
+  innerHTML: `
 ### JavaScript code
 
 \`\`\`js
@@ -51,7 +50,7 @@ export const WithChart = Template.bind({});
 
 WithChart.args = {
   debug: true,
-  content: `
+  innerHTML: `
 ### Mermaid Chart
 
 \`\`\`mermaid
@@ -72,7 +71,7 @@ WithInnerHTMLChart.args = {
 ### Mermaid Chart
 
 \`\`\`mermaid
-graph TD;
+graph LR;
     A-->B;
     A-->C;
     B-->D;
