@@ -64,7 +64,7 @@ class RemarkElement extends LitElement {
   }
 
   protected _generate() {
-    const content = this.innerHTML;
+    const content = this.textContent;
 
     return unified()
       .use(remarkParse)

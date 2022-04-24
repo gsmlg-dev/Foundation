@@ -75,7 +75,7 @@ export class InputAction extends LitElement {
   override render() {
     return html`
       <div class="form-group">
-          <input type="text" ${ref(this.inputRef)} .value=${this.inputRef.value?.value} ?disabled=${this.loading} />
+          <input type="text" ${ref(this.inputRef)} .value=${this.inputRef.value?.value ?? ''} ?disabled=${this.loading} />
           <button @click=${() => this.clickAction()} ?disabled=${this.loading}>
               ${this.loading ? this.actionSavingText : this.actionText}
           </button>
