@@ -1,27 +1,27 @@
-export { default as base64 } from './base64';
+export { base64 } from './base64';
 
-export { default as getByKey } from './getByKey';
+export { getByKey } from './getByKey';
 
-export { default as hexToRgb } from './hexToRgb';
+export { hexToRgb } from './hexToRgb';
 
-export { default as ip2long } from './ip2long';
+export { ip2long } from './ip2long';
 
-export { default as list2str } from './list2str';
+export { list2str } from './list2str';
 
-export { default as long2ip } from './long2ip';
+export { long2ip } from './long2ip';
 
-export { default as makeHash } from './makeHash';
+export { makeHash } from './makeHash';
 
-export { default as parseCmd } from './parseCmd';
+export { parseCmd } from './parseCmd';
 
-export { default as parseJWT } from './parseJWT';
+export { parseJWT } from './parseJWT';
 
-export { default as procData } from './procData';
+export { procData } from './procData';
 
-export { default as readFile } from './readFile';
+export { readAsBinaryString, readAsText} from './readFile';
 
-export { default as ucfirst } from './ucfirst';
+export { ucfirst } from './ucfirst';
 
-export { default as utf } from './utf';
+export { utf16to8, utf8to16 } from './utf';
 
-export { default as uuid } from './uuid';
+export { uuid } from './uuid';

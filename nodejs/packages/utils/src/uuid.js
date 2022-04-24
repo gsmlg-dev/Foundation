@@ -16,4 +16,6 @@ const createUUID = (function maker(uuidRegEx, uuidReplacer) {
   return v.toString(16);
 });
 
-export default createUUID;
+export const uuid = createUUID();
+
+export default uuid;

@@ -1,4 +1,4 @@
-const long2ip = (long) => {
+export const long2ip = (long) => {
   const l = Number(long);
   const a = (l >> 24) & 255;
   const b = (l >> 16) & 255;

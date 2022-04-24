@@ -222,9 +222,9 @@ function base64decode(str) {
   return out;
 }
 
-const Base64 = {
+export const base64 = {
   encode: base64encode,
   decode: base64decode,
 };
 
-module.exports = Base64;
+export default base64;

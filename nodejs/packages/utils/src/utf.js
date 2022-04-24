@@ -12,7 +12,7 @@
  * utf16 = utf16to8(utf8);
  */
 
-function utf16to8(str) {
+export function utf16to8(str) {
   let out, i, c;
 
   out = '';
@@ -33,7 +33,7 @@ function utf16to8(str) {
   return out;
 }
 
-function utf8to16(str) {
+export function utf8to16(str) {
   let out, i, c, char2, char3;
 
   out = '';
@@ -73,7 +73,3 @@ function utf8to16(str) {
 
   return out;
 }
-
-exports.utf16to8 = utf16to8;
-
-exports.utf8to16 = utf8to16;

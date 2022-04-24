@@ -1,4 +1,4 @@
-const ip2long = (ip) => {
+export const ip2long = (ip) => {
   const [a, b, c, d] = ip.split('.');
   const aa = Number(a) << 24;
   const bb = Number(b) << 16;

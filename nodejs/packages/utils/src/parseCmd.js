@@ -69,7 +69,7 @@ const arr2str = (arr = []) => {
   return text;
 };
 
-const parseCmd = (cmd) => {
+export const parseCmd = (cmd) => {
   if (typeof cmd === 'string') {
     return str2arr(cmd);
   }

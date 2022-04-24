@@ -1,5 +1,5 @@
 /* eslint-disable no-cond-assign, no-empty */
-export default (any, key, defaultValue = undefined) => {
+export const getByKey = (any, key, defaultValue = undefined) => {
   if (Array.isArray(key)) {
     let k;
     let val = any;
@@ -16,3 +16,5 @@ export default (any, key, defaultValue = undefined) => {
   }
   return defaultValue;
 };
+
+export default getByKey;

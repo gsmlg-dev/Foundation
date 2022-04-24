@@ -1,7 +1,7 @@
-import uuid from './uuid';
-import getByKey from './getByKey';
+import { uuid } from './uuid.js';
+import { getByKey } from './getByKey.js';
 
-export const procCollectionData = (payload, options = {}) => {
+export const procData = (payload, options = {}) => {
   let originData = getByKey(payload, ['response', 'data']) || [];
   if (options.generateID === true) {
     originData = originData.map((item) => {
@@ -23,4 +23,4 @@ export const procCollectionData = (payload, options = {}) => {
   return { data, list };
 };
 
-export default procCollectionData;
+export default procData;

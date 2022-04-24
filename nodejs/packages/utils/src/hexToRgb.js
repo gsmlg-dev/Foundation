@@ -5,7 +5,7 @@
 // // // Example: input = #999 => output = 153, 153, 153
 // // // Example: input = 999 => output = 153, 153, 153
 // #############################
-const hexToRgb = (ipt) => {
+export const hexToRgb = (ipt) => {
   let hexColor = ipt;
   if (ipt[0] === '#') hexColor = ipt.slice(1);
   const hexRegex = /[0-9A-Fa-f]/g;
