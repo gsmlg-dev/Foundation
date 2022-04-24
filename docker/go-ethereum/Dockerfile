@@ -1,6 +1,6 @@
 FROM golang:alpine
 
-LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG VERSION=v1.9.25
 ENV GO111MODULE=on

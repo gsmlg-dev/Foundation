@@ -1,6 +1,6 @@
 FROM debian:10
 
-LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 RUN apt-get update -qq \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nginx \

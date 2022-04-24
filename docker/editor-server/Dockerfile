@@ -1,6 +1,6 @@
 FROM docker.io/gsmlg/code-server:v4.2.0
 
-LABEL mantainer="GSMLG <gsmlg.com@gmail.com>"
+LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL CODE_SERVER_VERSION=4.2.0
 
 ARG VERSION
