@@ -4,7 +4,6 @@ import { customElement, property } from 'lit/decorators.js';
 
 @customElement('input-action')
 export class InputAction extends LitElement {
-
   static override styles = css`
     :root {
       width: inherit;
@@ -30,7 +29,9 @@ export class InputAction extends LitElement {
   method: string = 'GET';
 
   @property({ type: String, reflect: true, attribute: true })
-  csrfToken: string | null | undefined = document.querySelector("meta[name='csrf-token']")?.getAttribute("content");
+  csrfToken: string | null | undefined = document
+    .querySelector("meta[name='csrf-token']")
+    ?.getAttribute('content');
 
   @property({ type: String, reflect: true, attribute: true })
   url: string = '';
@@ -51,22 +52,24 @@ export class InputAction extends LitElement {
     this.loading = true;
     try {
       const body = JSON.stringify({
-        [this.name]: this.inputRef.value?.value
+        [this.name]: this.inputRef.value?.value,
       });
       const resp = await fetch(this.url, {
         method: this.method,
-        headers: this.csrfToken ? {
-          'x-csrf-token': this.csrfToken,
-          'content-type': 'application/json',
-        } : {
-          'content-type': 'application/json',
-        },
+        headers: this.csrfToken
+          ? {
+              'x-csrf-token': this.csrfToken,
+              'content-type': 'application/json',
+            }
+          : {
+              'content-type': 'application/json',
+            },
         body,
       });
-      const data = await resp.json();
+      const data: object = await resp.json();
       console.log(data);
       this.loading = false;
-    } catch (e) {
+    } catch (e: unknown) {
       console.error(e);
       this.loading = false;
     }
@@ -75,13 +78,16 @@ export class InputAction extends LitElement {
   override render() {
     return html`
       <div class="form-group">
-          <input type="text" ${ref(this.inputRef)} .value=${this.inputRef.value?.value ?? ''} ?disabled=${this.loading} />
-          <button @click=${() => this.clickAction()} ?disabled=${this.loading}>
-              ${this.loading ? this.actionSavingText : this.actionText}
-          </button>
+        <input
+          type="text"
+          ${ref(this.inputRef)}
+          .value=${this.inputRef.value?.value ?? ''}
+          ?disabled=${this.loading}
+        />
+        <button @click=${() => this.clickAction()} ?disabled=${this.loading}>
+          ${this.loading ? this.actionSavingText : this.actionText}
+        </button>
       </div>
     `;
   }
 }
-
-

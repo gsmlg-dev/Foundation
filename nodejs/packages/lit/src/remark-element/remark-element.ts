@@ -60,11 +60,11 @@ class RemarkElement extends LitElement {
     this.observer = new MutationObserver(() => {
       this.requestUpdate();
     });
-    this.observer.observe(this, {subtree: true, childList: true, attributes: true});
+    this.observer.observe(this, { subtree: true, childList: true, attributes: true });
   }
 
   protected _generate() {
-    const content = this.textContent;
+    const content = this.textContent ?? '';
 
     return unified()
       .use(remarkParse)
@@ -121,7 +121,11 @@ class RemarkElement extends LitElement {
     requestAnimationFrame(() => this.updateMermaidChart());
   }
 
-  override attributeChangedCallback(name: string, old: string | null, value: string | null) {
+  override attributeChangedCallback(
+    name: string,
+    old: string | null,
+    value: string | null,
+  ) {
     super.attributeChangedCallback(name, old, value);
     if (this.debug) {
       console.log('attribute change: ', name, old, value);

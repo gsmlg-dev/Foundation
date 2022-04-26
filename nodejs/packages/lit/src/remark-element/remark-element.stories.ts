@@ -17,9 +17,7 @@ export interface RemarkElementProps {
 
 // More on component templates: https://storybook.js.org/docs/web-components/writing-stories/introduction#using-args
 const Template: Story<RemarkElementProps> = ({ debug, innerHTML }) =>
-  html`<remark-element ?debug=${debug}
-    >${unsafeHTML(innerHTML)}</remark-element
-  >`;
+  html`<remark-element ?debug=${debug}>${unsafeHTML(innerHTML)}</remark-element>`;
 
 export const Basic = Template.bind({});
 // More on args: https://storybook.js.org/docs/web-components/writing-stories/args

@@ -15,7 +15,13 @@ export interface RemarkElementProps {
   actionSavingText: string;
 }
 
-const Template: Story<RemarkElementProps> = ({ name, url, method, actionText, actionSavingText }) =>
+const Template: Story<RemarkElementProps> = ({
+  name,
+  url,
+  method,
+  actionText,
+  actionSavingText,
+}) =>
   html`<input-action
     name=${name}
     url=${url}
