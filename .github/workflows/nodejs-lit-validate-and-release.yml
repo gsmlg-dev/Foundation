@@ -10,7 +10,7 @@ jobs:
   main:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
         node: [14, 16]
     runs-on: ${{ matrix.os }}
     steps:
@@ -27,9 +27,12 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: 🪓 Remove Workspace package.json
-        working-directory: 'nodejs'
-        run: rm package.json
+      - uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ matrix.node }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node }}-
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
@@ -40,11 +43,6 @@ jobs:
       - name: ▶️ Run validate script
         working-directory: 'nodejs/packages/lit'
         run: npm run validate
-
-      - name: ⬆️ Upload coverage report
-        uses: codecov/codecov-action@v1
-        with:
-          directory: 'nodejs/packages/lit/coverage/'
 
   release:
     needs: main
