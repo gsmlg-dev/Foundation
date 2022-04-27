@@ -1,4 +1,4 @@
-import parseCmd from '../parseCmd';
+import { parseCmd } from '../parseCmd';
 
 describe('test command parser', () => {
   const cmd = 'sh -C "while true; do date +%F\\ %T; done"';

@@ -87,6 +87,3 @@ export const parseCmd = (cmd) => {
 
 parseCmd.str2arr = str2arr;
 parseCmd.arr2str = arr2str;
-
-// module.exports = parseCmd;
-export default parseCmd;

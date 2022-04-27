@@ -18,7 +18,7 @@ export { parseJWT } from './parseJWT';
 
 export { procData } from './procData';
 
-export { readAsBinaryString, readAsText} from './readFile';
+export { readAsBinaryString, readAsText } from './readFile';
 
 export { ucfirst } from './ucfirst';
 
