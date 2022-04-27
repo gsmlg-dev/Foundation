@@ -25,6 +25,10 @@ export class JwtViewer extends LitElement {
       flex-direction: row;
       justify-content: flex-start;
       align-items: flex-start;
+      width: 100%;
+    }
+    .row:not(:last-child) {
+      border-bottom: 1px solid #64c2c7;
     }
     .row > label,
     .row > div {
