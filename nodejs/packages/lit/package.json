@@ -44,7 +44,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.17.9",
-    "@gsmlg/utils": "^0.0.0-semantically-released",
+    "@gsmlg/utils": "^1.0.0",
     "@types/mermaid": "^8.2.9",
     "lit": "^2.2.2",
     "lit-element": "^3.2.0",
