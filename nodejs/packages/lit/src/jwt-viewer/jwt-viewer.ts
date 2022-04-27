@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { parseJWT } from '@gsmlg/utils';
+import { parseJWT } from '@gsmlg/utils/src/parseJWT.js';
 
 type TokenType = {
   header: {
