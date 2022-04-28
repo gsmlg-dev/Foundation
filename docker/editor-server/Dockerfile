@@ -1,7 +1,9 @@
-FROM docker.io/gsmlg/code-server:v4.2.0
+ARG CODE_SERVER_VERSION=4.3.0
+FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
+ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
-LABEL CODE_SERVER_VERSION=4.2.0
+LABEL CODE_SERVER_VERSION=$CODE_SERVER_VERSION
 
 ARG VERSION
 LABEL VERSION=$VERSION
@@ -71,7 +73,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
-ARG GO_VERSION=1.18
+ARG GO_VERSION=1.18.1
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
@@ -132,7 +134,7 @@ RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.de
 RUN apt-get install -y -qq ruby-full
 
 # install kubectl
-ARG KUBECTL_VERSION=1.23.4
+ARG KUBECTL_VERSION=1.23.5
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
