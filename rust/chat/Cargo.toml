@@ -1,10 +1,12 @@
 [package]
 name = "chat"
 version = "0.1.0"
-authors = ["gsmlg <me@gsmlg.org>"]
+authors = ["Jonathan Gao <gsmlg.com@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-term = "0.4.6"
-rustyline = "5.0.2"
-reqwest = "0.9.19"
+term = "*"
+rustyline = "*"
+tokio = { version = "1", features = ["full"] }
+reqwest = "*"
+

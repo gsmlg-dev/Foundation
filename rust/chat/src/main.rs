@@ -6,35 +6,33 @@ use std::env;
 use std::thread;
 use rustyline::error::ReadlineError;
 use rustyline::Editor;
+use std::io::{self, Write};
 
-fn main () {
+#[tokio::main]
+
+async fn main () {
     let mut rl = Editor::<()>::new();
 
-    thread::spawn(move || {
+    thread::spawn(move || async {
         loop {
-            let mut resp = reqwest::get("http://[::]:12345/api/room/1").unwrap();
+            let resp = reqwest::get("https://httpbin.org/ip").await.unwrap();
+            println!("New message:");
+            io::stdout().flush().unwrap();
+
             let mut t = term::stdout().unwrap();
+
             if resp.status().is_success() {
-                let r = resp.copy_to(&mut t);
-                match r {
-                    Err(e) => println!("{:?}", e),
-                    _ => ()
-                }
+              t.fg(term::color::GREEN).unwrap();
+              let text = resp.text().await.unwrap();
+              writeln!(t, "{:?}", text).unwrap();
+              t.reset().unwrap();
             } else if resp.status().is_server_error() {
                 t.fg(term::color::RED).unwrap();
-                let r = write!(t, "Server error! Status: {:?}", resp.status());
-                match r {
-                    Err(e) => println!("{:?}", e),
-                    _ => ()
-                }
+                writeln!(t, "Server error! Status: {:?}", resp.status()).unwrap();
                 t.reset().unwrap();
             } else {
                 t.fg(term::color::CYAN).unwrap();
-                let r = write!(t, "Something else happened. Status: {:?}", resp.status());
-                match r {
-                    Err(e) => println!("{:?}", e),
-                    _ => ()
-                }
+                writeln!(t, "Something else happened. Status: {:?}", resp.status()).unwrap();
                 t.reset().unwrap();
             }
         }
@@ -42,6 +40,7 @@ fn main () {
 
     let args: Vec<String> = env::args().collect();
     let name = &args[1];
+    println!("Start Chat as {:?}", name);
     loop {
         let mut who = String::from(name);
         who.push_str(": ");
@@ -54,7 +53,7 @@ fn main () {
                 whom.push_str(&line.clone());
                 client.post("http://localhost:12345/room/1")
                     .body(whom)
-                    .send().unwrap();
+                    .send().await.unwrap();
             },
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");
@@ -65,7 +64,7 @@ fn main () {
                 break
             },
             Err(err) => {
-                println!("Error: {:?}", err);
+                eprintln!("Error: {:?}", err);
                 break
             }
         }

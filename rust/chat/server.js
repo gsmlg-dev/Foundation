@@ -11,7 +11,9 @@ const server = http.createServer((req, res) => {
     if (req.method === 'GET') {
         console.log('connected!');
         myEmitter.on('post', (data) => {
-            res.write(`${RED} ==>${NC}${GREEN} ${data}${NC}\n`);
+          reText = `${RED} ==>${NC}${GREEN} ${data}${NC}\n`;
+          console.log('Fired: ', reText);
+          res.write(reText);
         });
     } else if (req.method === 'POST') {
         let buffer = Buffer.from('');
@@ -20,9 +22,10 @@ const server = http.createServer((req, res) => {
             buffer = Buffer.concat([buffer, d]);
         });
         req.on('end', () => {
-            myEmitter.emit('post', buffer);
-            res.statusCode = 201;
-            res.end();
+          console.log("emit event: ", buffer);
+          myEmitter.emit('post', buffer);
+          res.statusCode = 201;
+          res.end();
         });
     } else {
         res.end();
