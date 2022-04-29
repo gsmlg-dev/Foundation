@@ -13,19 +13,17 @@ use std::io::{self, Write};
 async fn main () {
     let mut rl = Editor::<()>::new();
 
-    thread::spawn(move || async {
+    thread::spawn(move || {
         loop {
-            let resp = reqwest::get("https://httpbin.org/ip").await.unwrap();
-            println!("New message:");
-            io::stdout().flush().unwrap();
-
+            let mut resp = reqwest::blocking::get("http://localhost:12345/room/1").unwrap();
             let mut t = term::stdout().unwrap();
 
             if resp.status().is_success() {
-              t.fg(term::color::GREEN).unwrap();
-              let text = resp.text().await.unwrap();
-              writeln!(t, "{:?}", text).unwrap();
-              t.reset().unwrap();
+              let r = resp.copy_to(&mut t);
+              match r {
+                  Err(e) => println!("{:?}", e),
+                  _ => ()
+              }
             } else if resp.status().is_server_error() {
                 t.fg(term::color::RED).unwrap();
                 writeln!(t, "Server error! Status: {:?}", resp.status()).unwrap();

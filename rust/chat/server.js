@@ -7,10 +7,12 @@ const RED='\033[0;31m';
 const GREEN = '\033[0;32m';
 const NC='\033[0m';
 
-const server = http.createServer((req, res) => {
+const EVENT = 'POST_DATA';
+
+const server = http.createServer(async (req, res) => {
     if (req.method === 'GET') {
         console.log('connected!');
-        myEmitter.on('post', (data) => {
+        myEmitter.on(EVENT, (data) => {
           reText = `${RED} ==>${NC}${GREEN} ${data}${NC}\n`;
           console.log('Fired: ', reText);
           res.write(reText);
@@ -23,11 +25,12 @@ const server = http.createServer((req, res) => {
         });
         req.on('end', () => {
           console.log("emit event: ", buffer);
-          myEmitter.emit('post', buffer);
+          myEmitter.emit(EVENT, buffer);
           res.statusCode = 201;
           res.end();
         });
     } else {
+        console.log("Not support!!!");
         res.end();
     }
 });
