@@ -56,7 +56,7 @@ ARG ANTLR_VERSION=4.9.2
 RUN apt-get install -y default-jdk \
   && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
   && echo "#!/bin/bash" > /usr/local/bin/antlr \
-  && echo 'java -jar /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar "$@"' >> /usr/local/bin/antlr \
+  && echo "java -jar /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \"$@\"" >> /usr/local/bin/antlr \
   && chmod +x /usr/local/bin/antlr \
   && echo "#!/bin/bash" > /usr/local/bin/grun \
   && echo 'java org.antlr.v4.gui.TestRig "$@"' >> /usr/local/bin/grun \
