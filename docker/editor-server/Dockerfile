@@ -52,7 +52,7 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LC_ALL=$LANG
 
 # install jdk
-ARG ANTLR_VERSION=4.9.2
+ARG ANTLR_VERSION=4.10.1
 RUN apt-get install -y default-jdk \
   && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
   && echo "#!/bin/bash" > /usr/local/bin/antlr \
