@@ -11,4 +11,4 @@ RUN apk add --update git curl jq bash \
 
 ENV NODE_PATH=/usr/local/lib/node_modules
 
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/bash", "-c"]
