@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.3.0
+ARG CODE_SERVER_VERSION=4.4.0
 FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -73,11 +73,10 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
-ARG GO_VERSION=1.18.1
+ARG GO_VERSION=1.18.2
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
-ENV GOPROXY=https://goproxy.io,direct
 RUN export ARCH=`dpkg --print-architecture`; \
   export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"; \
   curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}" \
@@ -152,10 +151,13 @@ RUN curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 # install flutter deps
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
 
-# install cli53
+# install cli53 gsmlg-cli
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfL https://github.com/barnybug/cli53/releases/download/0.8.18/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
-  && chmod +x /usr/local/bin/cli53
+  && chmod +x /usr/local/bin/cli53 \
+  && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/download/v1.4.1/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
+  && chmod +x /usr/local/bin/gsmlg-cli
+
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
