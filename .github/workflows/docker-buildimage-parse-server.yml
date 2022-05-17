@@ -9,16 +9,17 @@ on:
 
 jobs:
   build-image:
+    strategy:
+      matrix:
+        version: ["5.2.1"]
     runs-on: ubuntu-latest
-    outputs:
-      version: '5.2.1'
     steps:
       -
         name: Checkout
         uses: actions/checkout@v3
         with:
           repository: 'parse-community/parse-server'
-          ref: ${{ outputs.version }}
+          ref: ${{ matrix.version }}
           path: 'parse-server'
       -
         name: Set up QEMU
@@ -41,9 +42,6 @@ jobs:
           file: parse-server/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          build-args: |
-            VERSION=${{ outputs.version }}
           tags: |
-            docker.io/gsmlg/parse-server:v${{ outputs.version }}
+            docker.io/gsmlg/parse-server:v${{ matrix.version }}
             docker.io/gsmlg/parse-server:latest
-
