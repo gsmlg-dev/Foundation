@@ -160,7 +160,8 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && chmod +x /usr/local/bin/gsmlg-cli
 
 # install supabase
-RUN wget https://github.com/supabase/cli/releases/download/v0.26.0/supabase_0.26.0_linux_amd64.deb -P /tmp/ \
+RUN export ARCH=`dpkg --print-architecture`; \
+  wget https://github.com/supabase/cli/releases/download/v0.26.0/supabase_0.26.0_linux_${ARCH}.deb -P /tmp/ \
   && dpkg -i /tmp/supabase_0.26.0_linux_amd64.deb
 
 # clean cache install
