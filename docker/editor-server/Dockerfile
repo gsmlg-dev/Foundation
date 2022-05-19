@@ -159,6 +159,9 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/download/v1.4.1/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
   && chmod +x /usr/local/bin/gsmlg-cli
 
+# install supabase
+RUN wget https://github.com/supabase/cli/releases/download/v0.26.0/supabase_0.26.0_linux_amd64.deb -P /tmp/ \
+  && dpkg -i supabase_0.26.0_linux_amd64.deb
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
