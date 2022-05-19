@@ -70,6 +70,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && npm install -g npm \
   && npm install -g yarn \
   && npm install -g npm-check-updates \
+  && npm install -g @aws-amplify/cli \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
