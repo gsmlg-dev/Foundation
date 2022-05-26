@@ -1,4 +1,4 @@
-/* eslint-disable no-cond-assign, no-empty, max-depth */
+/* eslint-disable no-empty */
 export const setByKey = (any, key, value) => {
   if (Array.isArray(key)) {
     let val = any;
@@ -9,10 +9,10 @@ export const setByKey = (any, key, value) => {
 
         if (isLast) {
           val[k] = value;
+        } else if (val[k] == null) {
+          val[k] = {};
+          val = val[k];
         } else {
-          if (val[k] == null) {
-            val[k] = {};
-          }
           val = val[k];
         }
       }
