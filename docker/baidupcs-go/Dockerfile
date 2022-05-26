@@ -19,6 +19,8 @@ ENV VERSION=$VERSION
 
 COPY --from=builder /app/baidupcs-go /usr/local/bin/baidupcs-go
 
+RUN apk add --update bash curl jq
+
 VOLUME ["/data"]
 
 CMD ["-h"]
