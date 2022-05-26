@@ -17,6 +17,9 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v3
+      -
+        name: Checkout
+        uses: actions/checkout@v3
         with:
           repository: 'qjfoidnh/BaiduPCS-Go'
           ref: ${{ matrix.version }}
