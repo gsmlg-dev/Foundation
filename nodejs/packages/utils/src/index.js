@@ -25,3 +25,5 @@ export { ucfirst } from './ucfirst';
 export { utf16to8, utf8to16 } from './utf';
 
 export { uuid } from './uuid';
+
+export { parseSearch } from './parseSearch';
