@@ -22,12 +22,16 @@ jobs:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
+
+      - name: 🪓 Remove Workspace package.json
+        working-directory: 'nodejs'
+        run: rm package.json
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
@@ -55,7 +59,7 @@ jobs:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v2
