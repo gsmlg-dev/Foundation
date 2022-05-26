@@ -1,6 +1,5 @@
 FROM golang:alpine as builder
 
-
 ARG VERSION=v3.8.7
 ENV GO111MODULE=on
 
