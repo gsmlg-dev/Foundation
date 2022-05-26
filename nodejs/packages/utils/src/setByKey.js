@@ -1,4 +1,4 @@
-/* eslint-disable no-cond-assign, no-empty */
+/* eslint-disable no-cond-assign, no-empty, max-depth */
 export const setByKey = (any, key, value) => {
   if (Array.isArray(key)) {
     let val = any;
