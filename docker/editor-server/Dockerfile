@@ -106,7 +106,8 @@ RUN apt-get install -y python3 python3-pip \
   && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
   && python get-pip.py \
   && python -m pip install ansible \
-  && python -m pip install awscli
+  && python -m pip install awscli \
+  && python -m pip install pipenv
 
 # install rust
 ARG RUSTPATH=/opt/rust
