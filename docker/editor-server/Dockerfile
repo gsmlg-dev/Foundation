@@ -168,7 +168,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
 # install terraform
 RUN export TARGET_DIR=/tmp/terraform \
   && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
-  && cd $TARGET_DIR && go install
+  && cd $TARGET_DIR && /usr/local/go/bin/go install
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
