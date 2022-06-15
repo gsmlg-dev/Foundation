@@ -165,6 +165,11 @@ RUN export ARCH=`dpkg --print-architecture`; \
   wget https://github.com/supabase/cli/releases/download/v0.26.0/supabase_0.26.0_linux_${ARCH}.deb -P /tmp/ \
   && dpkg -i /tmp/supabase_0.26.0_linux_${ARCH}.deb
 
+# install terraform
+RUN export TARGET_DIR=/tmp/terraform \
+  && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
+  && cd $TARGET_DIR && go install
+
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
 
