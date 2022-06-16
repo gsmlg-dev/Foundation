@@ -40,7 +40,8 @@ RUN apt-get install -y -qq \
   locales \
   inotify-tools \
   iputils-ping net-tools \
-  apache2-utils
+  apache2-utils \
+  clang cmake ninja-build pkg-config libgtk-3-dev
 
 # Gen locale
 ARG LANG=en_US.UTF-8
@@ -128,11 +129,11 @@ RUN apt-get install -y php-cli
 RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
   && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
   && apt-get update \
-  && apt-get install -y -qq esl-erlang \
-  && apt-get install -y -qq elixir
+  && apt-get install -y esl-erlang \
+  && apt-get install -y elixir
 
 # install ruby
-RUN apt-get install -y -qq ruby-full
+RUN apt-get install -y ruby-full
 
 # install kubectl
 ARG KUBECTL_VERSION=1.23.5
@@ -149,9 +150,6 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install helm
 RUN curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# install flutter deps
-RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev
 
 # install cli53 gsmlg-cli
 RUN export ARCH=`dpkg --print-architecture`; \
