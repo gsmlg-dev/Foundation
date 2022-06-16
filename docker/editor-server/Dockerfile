@@ -129,7 +129,7 @@ RUN apt-get install -y php-cli
 RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
   && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
   && apt-get update \
-  && apt-get install -y esl-erlang \
+  && apt-get install -y esl-erlang || apt-get install -y erlang \
   && apt-get install -y elixir
 
 # install ruby
