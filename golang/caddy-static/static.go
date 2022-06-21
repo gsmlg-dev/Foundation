@@ -241,6 +241,48 @@ func (fsrv *StaticSite) ServeHTTP(w http.ResponseWriter, r *http.Request, next c
 	// if the request mapped to a directory, see if
 	// there is an index file we can serve
 	var implicitIndexFile bool
+	if info.IsDir() && len(fsrv.IndexNames) > 0 {
+		for _, indexPage := range fsrv.IndexNames {
+			indexPage := repl.ReplaceAll(indexPage, "")
+			indexPath := caddyhttp.SanitizedPathJoin(filename, indexPage)
+			if fileHidden(indexPath, filesToHide) {
+				// pretend this file doesn't exist
+				fsrv.logger.Debug("hiding index file",
+					zap.String("filename", indexPath),
+					zap.Strings("files_to_hide", filesToHide))
+				continue
+			}
+
+			opF, err := buildFs.Open(indexPath)
+			if err != nil {
+				continue
+			}
+			indexInfo, _ := opF.Stat()
+
+			// don't rewrite the request path to append
+			// the index file, because we might need to
+			// do a canonical-URL redirect below based
+			// on the URL as-is
+
+			// we've chosen to use this index file,
+			// so replace the last file info and path
+			// with that of the index file
+			info = indexInfo
+			filename = indexPath
+			implicitIndexFile = true
+			fsrv.logger.Debug("located index file", zap.String("filename", filename))
+			break
+		}
+	}
+
+	// if still referencing a directory, delegate
+	// to browse or return an error
+	if info.IsDir() {
+		fsrv.logger.Debug("no index file in directory",
+			zap.String("path", filename),
+			zap.Strings("index_filenames", fsrv.IndexNames))
+		return fsrv.notFound(w, r, next)
+	}
 
 	// one last check to ensure the file isn't hidden (we might
 	// have changed the filename from when we last checked)
