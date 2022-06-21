@@ -1,18 +1,4 @@
-// Copyright 2015 Matthew Holt and The Caddy Authors
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-package staticfiles
+package staticsite
 
 import (
 	"bytes"
@@ -20,6 +6,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io/fs"
 	"log"
 	weakrand "math/rand"
 	"mime"
@@ -98,6 +85,9 @@ type StaticSite struct {
 	// The names of files to try as index files if a folder is requested.
 	IndexNames []string `json:"index_names,omitempty"`
 
+	// Append suffix to request filename if origin name is not exists.
+	SuffixNames []string `json:"suffix_names,omitempty"`
+
 	// Enables file listings if a directory was requested and no index
 	// file is present.
 	// Browse *Browse `json:"browse,omitempty"`
@@ -138,6 +128,9 @@ func (fsrv *StaticSite) Provision(ctx caddy.Context) error {
 
 	if fsrv.IndexNames == nil {
 		fsrv.IndexNames = defaultIndexNames
+	}
+	if fsrv.SuffixNames == nil {
+		fsrv.SuffixNames = defaultSuffixNames
 	}
 
 	// for hide paths that are static (i.e. no placeholders), we can transform them into
@@ -185,7 +178,57 @@ func (fsrv *StaticSite) ServeHTTP(w http.ResponseWriter, r *http.Request, next c
 			zap.String("FileSystem", fmt.Sprintf("%v", buildFs)))
 		err = mapDirOpenError(err, filename)
 		if os.IsNotExist(err) {
-			return fsrv.notFound(w, r, next)
+			var info fs.FileInfo
+			if len(fsrv.IndexNames) > 0 {
+				for _, indexPage := range fsrv.IndexNames {
+					indexPage := repl.ReplaceAll(indexPage, "")
+					indexPath := caddyhttp.SanitizedPathJoin(filename, indexPage)
+					if fileHidden(indexPath, filesToHide) {
+						// pretend this file doesn't exist
+						fsrv.logger.Debug("hiding index file",
+							zap.String("filename", indexPath),
+							zap.Strings("files_to_hide", filesToHide))
+						continue
+					}
+
+					opF, err = buildFs.Open(indexPath)
+					if err != nil {
+						continue
+					}
+					info, _ = opF.Stat()
+					filename = indexPath
+					// implicitIndexFile = true
+					fsrv.logger.Debug("located index file", zap.String("filename", filename))
+					break
+				}
+			}
+			if info == nil && strings.HasSuffix(filename, "/") == false {
+				suffixList := []string{"html", "htm", "txt"}
+				for _, suffix := range suffixList {
+					suffix := repl.ReplaceAll(suffix, "")
+					filePath := fmt.Sprintf("%s.%s", filename, suffix)
+					if fileHidden(filePath, filesToHide) {
+						// pretend this file doesn't exist
+						fsrv.logger.Debug("hiding index file",
+							zap.String("filename", filePath),
+							zap.Strings("files_to_hide", filesToHide))
+						continue
+					}
+
+					opF, err = buildFs.Open(filePath)
+					if err != nil {
+						continue
+					}
+					info, _ = opF.Stat()
+					filename = filePath
+					// implicitIndexFile = true
+					fsrv.logger.Debug("located file with suffix", zap.String("filename", filename), zap.String("suffix", suffix))
+					break
+				}
+			}
+			if info == nil {
+				return fsrv.notFound(w, r, next)
+			}
 		} else if os.IsPermission(err) {
 			return caddyhttp.Error(http.StatusForbidden, err)
 		}
@@ -198,48 +241,6 @@ func (fsrv *StaticSite) ServeHTTP(w http.ResponseWriter, r *http.Request, next c
 	// if the request mapped to a directory, see if
 	// there is an index file we can serve
 	var implicitIndexFile bool
-	if info.IsDir() && len(fsrv.IndexNames) > 0 {
-		for _, indexPage := range fsrv.IndexNames {
-			indexPage := repl.ReplaceAll(indexPage, "")
-			indexPath := caddyhttp.SanitizedPathJoin(filename, indexPage)
-			if fileHidden(indexPath, filesToHide) {
-				// pretend this file doesn't exist
-				fsrv.logger.Debug("hiding index file",
-					zap.String("filename", indexPath),
-					zap.Strings("files_to_hide", filesToHide))
-				continue
-			}
-
-			opF, err := buildFs.Open(indexPath)
-			if err != nil {
-				continue
-			}
-			indexInfo, _ := opF.Stat()
-
-			// don't rewrite the request path to append
-			// the index file, because we might need to
-			// do a canonical-URL redirect below based
-			// on the URL as-is
-
-			// we've chosen to use this index file,
-			// so replace the last file info and path
-			// with that of the index file
-			info = indexInfo
-			filename = indexPath
-			implicitIndexFile = true
-			fsrv.logger.Debug("located index file", zap.String("filename", filename))
-			break
-		}
-	}
-
-	// if still referencing a directory, delegate
-	// to browse or return an error
-	if info.IsDir() {
-		fsrv.logger.Debug("no index file in directory",
-			zap.String("path", filename),
-			zap.Strings("index_filenames", fsrv.IndexNames))
-		return fsrv.notFound(w, r, next)
-	}
 
 	// one last check to ensure the file isn't hidden (we might
 	// have changed the filename from when we last checked)
@@ -254,7 +255,7 @@ func (fsrv *StaticSite) ServeHTTP(w http.ResponseWriter, r *http.Request, next c
 	// slash convention: if a directory, trailing slash; if a file, no
 	// trailing slash - not enforcing this can break relative hrefs
 	// in HTML (see https://github.com/caddyserver/caddy/issues/2741)
-	if fsrv.CanonicalURIs == nil || *fsrv.CanonicalURIs {
+	if info == nil && (fsrv.CanonicalURIs == nil || *fsrv.CanonicalURIs) {
 		// Only redirect if the last element of the path (the filename) was not
 		// rewritten; if the admin wanted to rewrite to the canonical path, they
 		// would have, and we have to be very careful not to introduce unwanted
@@ -480,10 +481,10 @@ func (fsrv *StaticSite) notFound(w http.ResponseWriter, r *http.Request, next ca
 	return caddyhttp.Error(http.StatusNotFound, nil)
 }
 
-// parseCaddyfile parses the file_server directive. It enables the static file
+// parseCaddyfile parses the static_site directive. It enables the static file
 // server and configures it with this syntax:
 //
-//    file_server [<matcher>] [browse] {
+//    static_site [<matcher>] [browse] {
 //        hide          <files...>
 //        index         <files...>
 //        precompressed <formats...>
@@ -493,6 +494,8 @@ func (fsrv *StaticSite) notFound(w http.ResponseWriter, r *http.Request, next ca
 //
 func parseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error) {
 	var fsrv StaticSite
+
+	fsrv.PassThru = true
 
 	for h.Next() {
 		for h.NextBlock(0) {
@@ -509,6 +512,12 @@ func parseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error)
 					return nil, h.ArgErr()
 				}
 
+			case "suffix":
+				fsrv.SuffixNames = h.RemainingArgs()
+				if len(fsrv.SuffixNames) == 0 {
+					return nil, h.ArgErr()
+				}
+
 			case "status":
 				if !h.NextArg() {
 					return nil, h.ArgErr()
@@ -522,11 +531,11 @@ func parseCaddyfile(h httpcaddyfile.Helper) (caddyhttp.MiddlewareHandler, error)
 				falseBool := false
 				fsrv.CanonicalURIs = &falseBool
 
-			case "pass_thru":
+			case "no_pass_thru":
 				if h.NextArg() {
 					return nil, h.ArgErr()
 				}
-				fsrv.PassThru = true
+				fsrv.PassThru = false
 
 			default:
 				return nil, h.Errf("unknown subdirective '%s'", h.Val())
@@ -649,7 +658,9 @@ func (wr statusOverrideResponseWriter) WriteHeader(int) {
 	wr.ResponseWriter.WriteHeader(wr.code)
 }
 
-var defaultIndexNames = []string{"index.html", "index.txt"}
+var defaultIndexNames = []string{"index.html", "index.htm", "index.txt"}
+
+var defaultSuffixNames = []string{"html", "htm", "txt"}
 
 const (
 	minBackoff, maxBackoff = 2, 5
