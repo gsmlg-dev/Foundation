@@ -10,6 +10,7 @@ import (
 	"log"
 	weakrand "math/rand"
 	"mime"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -41,7 +42,7 @@ func init() {
 	caddycmd.RegisterCommand(caddycmd.Command{
 		Name:  FlagName,
 		Func:  cmdStaticSite,
-		Usage: "[--domain <example.com>] [--listen <addr>] [--access-log]",
+		Usage: "[--domain <example.com>] [--listen <addr>] [--access-log] [--backend <addr>]",
 		Short: "Spins up a production-ready static server",
 		Long: `
 A simple but production-ready static server. Useful for quick deployments,
@@ -57,6 +58,7 @@ using this option.`,
 			fs := flag.NewFlagSet(FlagName, flag.ExitOnError)
 			fs.String("domain", "", "Domain name at which to serve the files")
 			fs.String("listen", "", "The address to which to bind the listener")
+			fs.String("backend", "", "The backend address will forward non match request to")
 			fs.Bool("access-log", false, "Enable the access log")
 			return fs
 		}(),
@@ -630,12 +632,36 @@ func cmdStaticSite(fs caddycmd.Flags) (int, error) {
 	domain := fs.String("domain")
 	listen := fs.String("listen")
 	accessLog := fs.Bool("access-log")
+	backend := fs.String("backend")
 
 	var handlers []json.RawMessage
 
-	handler := StaticSite{}
+	handler := StaticSite{
+		PassThru: backend != "",
+	}
 
 	handlers = append(handlers, caddyconfig.JSONModuleObject(handler, "handler", DirectiveName, nil))
+
+	if backend != "" {
+
+		toAddr, toScheme, err := parseUpstreamDialAddress(backend)
+		if err != nil {
+			return caddy.ExitCodeFailedStartup, fmt.Errorf("invalid backend address %s: %v", backend, err)
+		}
+
+		// proceed to build the handler and server
+		ht := reverseproxy.HTTPTransport{}
+		if toScheme == "https" {
+			ht.TLS = new(reverseproxy.TLSConfig)
+			ht.TLS.InsecureSkipVerify = true
+		}
+
+		handler := reverseproxy.Handler{
+			TransportRaw: caddyconfig.JSONModuleObject(ht, "protocol", "http", nil),
+			Upstreams:    reverseproxy.UpstreamPool{{Dial: toAddr}},
+		}
+		handlers = append(handlers, caddyconfig.JSONModuleObject(handler, "handler", "reverse_proxy", nil))
+	}
 
 	route := caddyhttp.Route{HandlersRaw: handlers}
 
@@ -684,6 +710,94 @@ func cmdStaticSite(fs caddycmd.Flags) (int, error) {
 	log.Printf("Caddy 2 serving static files on %s", listen)
 
 	select {}
+}
+
+// parseUpstreamDialAddress parses configuration inputs for
+// the dial address, including support for a scheme in front
+// as a shortcut for the port number, and a network type,
+// for example 'unix' to dial a unix socket.
+//
+// TODO: the logic in this function is kind of sensitive, we
+// need to write tests before making any more changes to it
+func parseUpstreamDialAddress(upstreamAddr string) (string, string, error) {
+	var network, scheme, host, port string
+
+	if strings.Contains(upstreamAddr, "://") {
+		// we get a parsing error if a placeholder is specified
+		// so we return a more user-friendly error message instead
+		// to explain what to do instead
+		if strings.Contains(upstreamAddr, "{") {
+			return "", "", fmt.Errorf("due to parsing difficulties, placeholders are not allowed when an upstream address contains a scheme")
+		}
+
+		toURL, err := url.Parse(upstreamAddr)
+		if err != nil {
+			return "", "", fmt.Errorf("parsing upstream URL: %v", err)
+		}
+
+		// there is currently no way to perform a URL rewrite between choosing
+		// a backend and proxying to it, so we cannot allow extra components
+		// in backend URLs
+		if toURL.Path != "" || toURL.RawQuery != "" || toURL.Fragment != "" {
+			return "", "", fmt.Errorf("for now, URLs for proxy upstreams only support scheme, host, and port components")
+		}
+
+		// ensure the port and scheme aren't in conflict
+		urlPort := toURL.Port()
+		if toURL.Scheme == "http" && urlPort == "443" {
+			return "", "", fmt.Errorf("upstream address has conflicting scheme (http://) and port (:443, the HTTPS port)")
+		}
+		if toURL.Scheme == "https" && urlPort == "80" {
+			return "", "", fmt.Errorf("upstream address has conflicting scheme (https://) and port (:80, the HTTP port)")
+		}
+		if toURL.Scheme == "h2c" && urlPort == "443" {
+			return "", "", fmt.Errorf("upstream address has conflicting scheme (h2c://) and port (:443, the HTTPS port)")
+		}
+
+		// if port is missing, attempt to infer from scheme
+		if toURL.Port() == "" {
+			var toPort string
+			switch toURL.Scheme {
+			case "", "http", "h2c":
+				toPort = "80"
+			case "https":
+				toPort = "443"
+			}
+			toURL.Host = net.JoinHostPort(toURL.Hostname(), toPort)
+		}
+
+		scheme, host, port = toURL.Scheme, toURL.Hostname(), toURL.Port()
+	} else {
+		// extract network manually, since caddy.ParseNetworkAddress() will always add one
+		if idx := strings.Index(upstreamAddr, "/"); idx >= 0 {
+			network = strings.ToLower(strings.TrimSpace(upstreamAddr[:idx]))
+			upstreamAddr = upstreamAddr[idx+1:]
+		}
+		var err error
+		host, port, err = net.SplitHostPort(upstreamAddr)
+		if err != nil {
+			host = upstreamAddr
+		}
+		// we can assume a port if only a hostname is specified, but use of a
+		// placeholder without a port likely means a port will be filled in
+		if port == "" && !strings.Contains(host, "{") {
+			port = "80"
+		}
+	}
+
+	// for simplest possible config, we only need to include
+	// the network portion if the user specified one
+	if network != "" {
+		return caddy.JoinNetworkAddress(network, host, port), scheme, nil
+	}
+
+	// if the host is a placeholder, then we don't want to join with an empty port,
+	// because that would just append an extra ':' at the end of the address.
+	if port == "" && strings.Contains(host, "{") {
+		return host, scheme, nil
+	}
+
+	return net.JoinHostPort(host, port), scheme, nil
 }
 
 // statusOverrideResponseWriter intercepts WriteHeader calls
