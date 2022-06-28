@@ -155,7 +155,7 @@ RUN curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfL https://github.com/barnybug/cli53/releases/download/0.8.18/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
   && chmod +x /usr/local/bin/cli53 \
-  && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/download/v1.4.1/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
+  && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/download/v1.5.0/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
   && chmod +x /usr/local/bin/gsmlg-cli
 
 # install supabase

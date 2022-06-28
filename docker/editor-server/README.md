@@ -14,10 +14,10 @@ Mount data volume at `/home/coder` to serve persistent data.
 
 Add more language environments
 
-- [ ] Erlang
-- [ ] Elixir
-- [ ] PHP
-- [ ] Ruby
-- [ ] Golang
+- [x] Erlang
+- [x] Elixir
+- [x] PHP
+- [x] Ruby
+- [x] Golang
 
 
