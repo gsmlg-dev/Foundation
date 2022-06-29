@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gsmlg-dev/Foundation/golang/gsmlg/geoip2"
+	"github.com/gsmlg-dev/gsmlg-golang/geoip2"
 )
 
 var (
@@ -33,7 +33,9 @@ func pacHandler(w http.ResponseWriter, r *http.Request) {
 	ip := net.ParseIP(ipStr[1:])
 	fmt.Printf("Query IP %s\n", ipStr[1:])
 	record, _ := db.City(ip)
-	s, _ := json.Marshal(record)
+	lang := "en"
+	c := geoip2.ProduceCity(record, lang)
+	s, _ := json.Marshal(c)
 	l := len(s)
 
 	w.Header().Set("Content-Type", "application/json")
