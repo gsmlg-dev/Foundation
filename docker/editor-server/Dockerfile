@@ -136,7 +136,7 @@ RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.de
 RUN apt-get install -y ruby-full
 
 # install kubectl
-ARG KUBECTL_VERSION=1.23.5
+ARG KUBECTL_VERSION=1.24.2
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
@@ -160,13 +160,14 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install supabase
 RUN export ARCH=`dpkg --print-architecture`; \
-  wget https://github.com/supabase/cli/releases/download/v0.26.0/supabase_0.26.0_linux_${ARCH}.deb -P /tmp/ \
-  && dpkg -i /tmp/supabase_0.26.0_linux_${ARCH}.deb
+  wget https://github.com/supabase/cli/releases/download/v0.28.1/supabase_0.28.1_linux_${ARCH}.deb -P /tmp/ \
+  && dpkg -i /tmp/supabase_0.28.1_linux_${ARCH}.deb
 
 # install terraform
 RUN export TARGET_DIR=/tmp/terraform \
   && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
-  && cd $TARGET_DIR && /usr/local/go/bin/go install
+  && cd $TARGET_DIR && /usr/local/go/bin/go install \
+  && chown -R coder:coder "${GOPATH}"
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
