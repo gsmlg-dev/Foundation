@@ -13,7 +13,7 @@ RUN apk add --update git curl jq bash \
 
 ENV NODE_PATH=/usr/local/lib/node_modules
 
-COPY --from kanico /kaniko/executor /kaniko/executor
+COPY --from=kanico /kaniko/executor /kaniko/executor
 ENV DOCKER_CONFIG=/kaniko/.docker/
 RUN mkdir -p /kaniko/.docker/
 
