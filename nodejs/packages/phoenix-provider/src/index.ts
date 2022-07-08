@@ -11,7 +11,7 @@ const PhoenixContext = React.createContext<PhoenixContentState>({ socket: null }
 interface ProviderProps {
   url: string;
   options?: SocketConnectOption;
-  children?: React.ReactChild | React.ReactChildren;
+  children?: React.ReactNode;
 }
 
 export const Provider: React.FC<ProviderProps> = ({
@@ -62,7 +62,7 @@ export const usePresence = (topic: string) => {
   const presence = React.useMemo(() => {
     if (!channel) return null;
     return new Presence(channel);
-  }, [topic, channel]);
+  }, [channel]);
 
   return presence;
 };
