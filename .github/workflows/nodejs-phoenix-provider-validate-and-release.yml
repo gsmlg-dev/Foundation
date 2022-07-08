@@ -24,10 +24,6 @@ jobs:
         with:
           node-version: 16
 
-      - name: 🪓 Remove Workspace package.json
-        working-directory: 'nodejs'
-        run: rm package.json
-
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
         with:
