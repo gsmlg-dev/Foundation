@@ -21,7 +21,10 @@ const jestConfig = {
     'jsdom',
     'node',
   ),
-  testURL: 'http://localhost',
+  // docs @ https://jestjs.io/docs/configuration#testenvironmentoptions-object
+  testEnvironmentOptions: {
+    url: 'http://localhost',
+  },
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
   modulePaths: ['<rootDir>/src', 'shared', '<rootDir>/tests'],
   collectCoverageFrom: ['src/**/*.+(js|jsx|ts|tsx)'],
