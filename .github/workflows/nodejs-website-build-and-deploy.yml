@@ -29,6 +29,7 @@ jobs:
         with:
           useLockFile: false
           working-directory: "nodejs/packages/website"
+          install-command: npm install --force
 
       - name: 🏗 Run build script
         working-directory: "nodejs/packages/website"
