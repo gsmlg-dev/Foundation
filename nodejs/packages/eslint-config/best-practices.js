@@ -19,6 +19,7 @@ module.exports = {
     'no-caller': 'error',
     'no-case-declarations': 'error',
     'no-constructor-return': 'error',
+    'no-constant-binary-expression': 'error',
     'no-div-regex': 'error',
     'no-else-return': 'off',
     'no-empty-function': 'off', // we're all grown ups here...
