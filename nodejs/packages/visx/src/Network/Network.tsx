@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { DefaultNode, Graph } from '@visx/network';
 
 export type NetworkProps = {
@@ -8,8 +8,8 @@ export type NetworkProps = {
   }
   width: number;
   height: number;
-  Node?: React.ComponentType<any>;
-  Link?: React.ComponentType<any>;
+  Node?: any;
+  Link?: any;
   backgroundColor: string;
   [x: string]: any;
 };
