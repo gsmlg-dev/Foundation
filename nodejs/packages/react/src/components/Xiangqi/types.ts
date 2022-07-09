@@ -1,5 +1,5 @@
 /* --- STATE --- */
-import { ReactChildren, ReactChild } from 'react';
+import * as React from 'react';
 
 export enum ChessColor {
   Black = 'black',
@@ -63,7 +63,7 @@ export interface SquareProps {
   pieces: PieceShape[];
   movePiece: (item: PieceShape, pos: PositionShape) => void;
   kill: () => void;
-  children: ReactChild | ReactChildren | null;
+  children: React.ReactNode | null;
   readonly: boolean;
   darkMode: boolean;
 }
