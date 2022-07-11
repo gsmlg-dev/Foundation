@@ -3,7 +3,7 @@
   "version": "0.0.0-semantically-released",
   "description": "Provide phoenix socket and channel by React Context.",
   "engines": {
-    "node": ">=12",
+    "node": ">=14",
     "npm": ">=6",
     "yarn": ">=1"
   },
@@ -47,6 +47,8 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "react": "^17.0.2"
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
   }
 }
