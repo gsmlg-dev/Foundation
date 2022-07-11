@@ -39,17 +39,17 @@ export default function Overlay({ fill }) {
         怨灵修之浩荡兮，终不察夫民心。
         */}
         <text fill="#E8B059" style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={48} fontWeight="bold" letterSpacing="0em">
-          <tspan x={40} y={257.909} children={'Jonathan G. :'} />
+          <tspan x={40} y={257.909} children={'Jonathan Gao:'} />
         </text>
         <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={12} fontWeight="bold" letterSpacing="0em">
           <tspan x={40} y={270.909} />
         </text>
         <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={32} fontWeight="bold" letterSpacing="0em">
-          <tspan x={40} y={321.909} children="No matter who you are or what you have done, Just do it." />
-          <tspan x={40} y={372.909} children="The Laws of Thermodynamics are reality." />
-          <tspan x={40} y={423.909} children="Whatever you have see, just indicate the truth." />
-          <tspan x={40} y={474.909} children="Be wise enough to see the world by you wisdom." />
-          <tspan x={40} y={525.909} children="Acquire lore through your eye." />
+          <tspan x={40} y={321.909} children="Nothing is impossiable!" />
+          <tspan x={40} y={372.909} children="The Laws of Thermodynamics are undeniable." />
+          <tspan x={40} y={423.909} children="Whatever it had done, just indicate the truth." />
+          <tspan x={40} y={474.909} children="Be wise enough, then see with your wisdom." />
+          <tspan x={40} y={525.909} children="Acquire knowledgement from everything." />
         </text>
       </a.svg>
     </div>

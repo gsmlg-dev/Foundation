@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { createSlice } from "@reduxjs/toolkit";
 import { filter, map, delay } from "rxjs/operators";
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +25,7 @@ export const epic = action$ => {
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useIncress = () => {
   const dispatch = useDispatch<AppDispatch>();
-  return () => dispatch(counterSlice.actions.incress(1));
+  return useCallback(() => dispatch(counterSlice.actions.incress(1)), []);
 };
 
 export const useCounterValue = () => useSelector((state : RootState) => state[counterSlice.name]);
