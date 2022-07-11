@@ -69,7 +69,6 @@ const menus = [
   {name: 'Blog', href: '/blogs'},
   {name: 'Presentation', href: '/presentations'},
   {name: 'Tool', href: '/tools'},
-  {name: 'Game', href: '/games'},
 ];
 
 const Layout = ({children}, ref) => {
