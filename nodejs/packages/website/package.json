@@ -44,7 +44,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gsmlg/scripts": "^1.7.2",
+    "@gsmlg/scripts": "^1.17.0",
     "@types/node": "^18.0.3",
     "@types/react": "^18.0.15",
     "axios": "^0.27.2",
