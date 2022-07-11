@@ -113,7 +113,7 @@ const Layout = ({children}, ref) => {
         socket.off(list);
       };
     }
-  }, [socket]);
+  }, [socket, incress]);
 
   const requestPerm = React.useCallback(() => {
     Notification.requestPermission();

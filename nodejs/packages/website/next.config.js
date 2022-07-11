@@ -1,5 +1,6 @@
 // next.config.js
 // next-transpile-modules --save-dev
+
 const withTM = require('next-transpile-modules')([
   'three',
   'react-markdown',
@@ -7,6 +8,9 @@ const withTM = require('next-transpile-modules')([
   'rehype-highlight',
   'remark-mermaidjs',
   'puppeteer',
+  'react-dnd',
+  'react-dnd-html5-backend',
+  'react-dnd-touch-backend',
 ]);
 
 module.exports = {
