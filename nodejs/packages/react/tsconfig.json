@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "target": "es2017",
+    "target": "es2020",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,8 +19,6 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "src/utils/__tests__/RenderCount.test.js",
-    "src/utils/RenderCount.js"
   ],
-  "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.tsx"]
+  "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.tsx", "**/__tests__/*"]
 }
