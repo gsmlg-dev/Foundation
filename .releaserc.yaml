@@ -1,4 +1,4 @@
-repositoryUrl: https://github.com/gsmlg/Foundation
+repositoryUrl: https://github.com/gsmlg/Foundation.git
 plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
