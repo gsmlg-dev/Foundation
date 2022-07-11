@@ -20,5 +20,5 @@
     "**/*.ts",
     "**/*.tsx",
   ],
-  "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.tsx", "**/__tests__/*.test.ts", "**/__tests__/*.test.tsx"]
+  "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.tsx"]
 }
