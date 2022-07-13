@@ -12,12 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.semantic.outputs.new_release_version }}
-      caddy_version: v2.5.1
+      caddy_version: v2.5.2
+      go_build_flags: "-ldflags '-w -s -X github.com/gsmlg-dev/caddy-admin-ui.compileUnixTime=1657724882'"
       caddy_with: >
          --with github.com/caddy-dns/cloudflare
          --with github.com/caddy-dns/route53
          --with github.com/gsmlg-dev/caddy-dns-zdns
          --with github.com/gsmlg-dev/caddy-storage-s3
+         --with github.com/gsmlg-dev/caddy-admin-ui@main
     steps:
       -
         name: Checkout
@@ -74,6 +76,8 @@ jobs:
           CADDY_VERSION: ${{ needs.sematic-version.outputs.caddy_version }}
           CADDY_WITH: ${{ needs.sematic-version.outputs.caddy_with }}
           GOPRIVATE: github.com/gsmlg-dev,gsmlg.dev
+          CGO_ENABLED: "0"
+          XCADDY_GO_BUILD_FLAGS: ${{ needs.sematic-version.outputs.go_build_flags }}
         run: |
           xcaddy build ${CADDY_VERSION} --output "caddy_${GOOS}_${GOARCH}" $CADDY_WITH
       - name: Upload binaries to release
@@ -117,6 +121,8 @@ jobs:
             USER=${{ secrets.GIT_USER_ID }}
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
             GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
+            CGO_ENABLED=0
+            XCADDY_GO_BUILD_FLAGS="${{ needs.sematic-version.outputs.go_build_flags }}"
           tags: |
             docker.io/gsmlg/caddy:v${{ needs.sematic-version.outputs.version }}
             docker.io/gsmlg/caddy:latest
