@@ -16,13 +16,18 @@ const Template: ComponentStory<typeof Bar> = (args) => <Bar {...args} />;
 export const Sample = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Sample.args = {
-  width: 600,
-  height: 600,
+  width: 400,
+  height: 400,
+  total: 100,
+  value: 85,
+  label: 'Files',
 };
 
 export const SampleWithStyle = Template.bind({});
 SampleWithStyle.args = {
-  width: 800,
-  height: 800,
-  backgroundColor: '#111111',
+  width: 400,
+  height: 400,
+  total: 100,
+  value: 85,
+  label: 'Data Usage'
 };

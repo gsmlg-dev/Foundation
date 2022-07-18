@@ -2,7 +2,7 @@ import * as React from 'react';
 import Pie, { PieArcDatum } from '@visx/shape/lib/shapes/Pie';
 import { Group } from '@visx/group';
 
-const defaultMargin = { top: 20, right: 20, bottom: 20, left: 20 };
+const defaultMargin = { top: 16, right: 16, bottom: 16, left: 16 };
 
 export type AnnulusProps = {
   width: number;
