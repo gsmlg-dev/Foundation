@@ -24,7 +24,7 @@ Sample.args = {
 export const SampleWithLabel = Template.bind({});
 SampleWithLabel.args = {
   width: 400,
-  height: 400,
+  height: 440,
   total: 100,
   value: 85,
   outerLabel: 'Data Usage'
