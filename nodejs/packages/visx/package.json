@@ -51,6 +51,7 @@
     "@visx/group": "2.10.0",
     "@visx/hierarchy": "2.10.0",
     "@visx/network": "^2.10.0",
+    "@visx/responsive": "^2.10.0",
     "@visx/shape": "2.11.1",
     "d3-hierarchy": "3.1.2",
     "d3-shape": "^3.1.0",
