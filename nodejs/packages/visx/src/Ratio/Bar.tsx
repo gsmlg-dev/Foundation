@@ -36,7 +36,7 @@ export const Bar = ({
   valueColor,
 }: BarProps) => {
   const innerWidth = width - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom;
+  // const innerHeight = height - margin.top - margin.bottom;
 
   const barWidth = (value / total) * innerWidth;
   const fontHeight = fontSize * 0.3;
@@ -44,10 +44,10 @@ export const Bar = ({
   return (
     <svg width={width} height={height}>
       <Group top={margin.top} left={margin.left}>
-        <text color={labelColor} fontSize={fontSize} textAnchor={"start"}>
+        <text color={labelColor} fontSize={fontSize} textAnchor="start">
           {label}
         </text>
-        <text x={innerWidth} color={valueColor ?? labelColor} fontSize={valueFontSize ?? fontSize} textAnchor={"end"}>
+        <text x={innerWidth} color={valueColor ?? labelColor} fontSize={valueFontSize ?? fontSize} textAnchor="end">
           {`${value} / ${total}`}
         </text>
         <VisxBar

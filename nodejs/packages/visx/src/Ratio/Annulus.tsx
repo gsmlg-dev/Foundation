@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Pie, { PieArcDatum } from '@visx/shape/lib/shapes/Pie';
+import Pie from '@visx/shape/lib/shapes/Pie';
 import { Group } from '@visx/group';
 
 const defaultMargin = { top: 16, right: 16, bottom: 16, left: 16 };
@@ -16,8 +16,8 @@ export type AnnulusProps = {
   secondaryColor?: string;
   innerLabelColor?: string;
   outerLabelColor?: string;
-  innerLabelFontSize?: string;
-  outerLabelFontSize?: string;
+  innerLabelFontSize?: number;
+  outerLabelFontSize?: number;
 };
 
 export const Annulus = ({
@@ -42,10 +42,9 @@ export const Annulus = ({
   const centerX = innerWidth / 2;
   const top = centerY + margin.top;
   const left = centerX + margin.left;
-  const pieSortValues = (a, b) => b - a;
 
   const data = [
-    { label: "Main", value: value },
+    { label: "Main", value },
     { label: "Others", value: total - value }
   ];
   const colors = {
@@ -69,7 +68,7 @@ export const Annulus = ({
           {(pie) => {
             return pie.arcs.map((arc, index) => {
               const { label } = arc.data;
-              const arcPath = pie.path(arc);
+              const arcPath = pie.path(arc) as string | undefined;
               const arcFill = colors[label];
               return (
                 <g key={`arc-${label}-${index}`}>
@@ -79,13 +78,13 @@ export const Annulus = ({
             });
           }}
         </Pie>
-        <text color={innerLabelColor} y={f1 / 2} fontSize={f1} textAnchor={"middle"}>
+        <text color={innerLabelColor} y={f1 / 2} fontSize={f1} textAnchor="middle">
           {innerLabel ? innerLabel : `${value} / ${total}`}
         </text>
       </Group>
-      {outerLabel != null ? (
+      {outerLabel ? (
         <Group top={height - margin.bottom} left={left}>
-          <text color={outerLabelColor} fontSize={f2} textAnchor={"middle"}>
+          <text color={outerLabelColor} fontSize={f2} textAnchor="middle">
             {outerLabel}
           </text>
         </Group>
