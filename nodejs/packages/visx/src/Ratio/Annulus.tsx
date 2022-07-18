@@ -37,12 +37,12 @@ export const Annulus = ({
 }: AnnulusProps) => {
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
-  const radius = Math.min(innerWidth, innerHeight) / 2;
-  const centerY = innerHeight / 2;
+  let radius = Math.min(innerWidth, innerHeight) / 2;
+  let centerY = innerHeight / 2;
   const centerX = innerWidth / 2;
   const top = centerY + margin.top;
   const left = centerX + margin.left;
-
+  
   const data = [
     { label: "Main", value },
     { label: "Others", value: total - value }
@@ -51,9 +51,14 @@ export const Annulus = ({
     Main: primaryColor,
     Others: secondaryColor,
   };
-
+  
   const f1 = innerLabelFontSize ? innerLabelFontSize : width * 0.1;
   const f2 = outerLabelFontSize ? outerLabelFontSize : width * 0.1;
+  
+  if (outerLabel) {
+    radius = radius - f2 / 2;
+    centerY = centerY - f2;
+  }
 
   return (
     <svg width={width} height={height}>
@@ -83,7 +88,7 @@ export const Annulus = ({
         </text>
       </Group>
       {outerLabel ? (
-        <Group top={height - margin.bottom} left={left}>
+        <Group top={top + radius + f2} left={left}>
           <text color={outerLabelColor} fontSize={f2} textAnchor="middle">
             {outerLabel}
           </text>
