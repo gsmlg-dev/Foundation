@@ -44,10 +44,10 @@ export const Bar = ({
   return (
     <svg width={width} height={height}>
       <Group top={margin.top} left={margin.left}>
-        <text color={labelColor} fontSize={fontSize} textAnchor="start">
+        <text fill={labelColor} fontSize={fontSize} textAnchor="start">
           {label}
         </text>
-        <text x={innerWidth} color={valueColor ?? labelColor} fontSize={valueFontSize ?? fontSize} textAnchor="end">
+        <text x={innerWidth} fill={valueColor ?? labelColor} fontSize={valueFontSize ?? fontSize} textAnchor="end">
           {`${value} / ${total}`}
         </text>
         <VisxBar
