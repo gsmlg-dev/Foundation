@@ -13,7 +13,7 @@ jobs:
     outputs:
       version: ${{ steps.semantic.outputs.new_release_version }}
       caddy_version: v2.5.2
-      go_build_flags: "-ldflags '-w -s -X github.com/gsmlg-dev/caddy-admin-ui.compileUnixTime=1657724882'"
+      go_build_flags: "-ldflags '-w -s -X github.com/gsmlg-dev/caddy-admin-ui.compileUnixTime=1658247558'"
       caddy_with: >
          --with github.com/caddy-dns/cloudflare
          --with github.com/caddy-dns/route53

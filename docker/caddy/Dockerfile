@@ -6,7 +6,7 @@ ARG USER
 ARG TOKEN
 ARG GOPRIVATE
 ARG CGO_ENABLED
-ARG XCADDY_GO_BUILD_FLAGS="-ldflags \"-w -s -X github.com/gsmlg-dev/caddy-admin-ui.compileUnixTime=$(date +%s)\""
+ARG XCADDY_GO_BUILD_FLAGS="-ldflags \"-w -s -X github.com/gsmlg-dev/caddy-admin-ui.compileUnixTime=1658247558\""
 
 RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
   && XCADDY_DEBUG=1 xcaddy build ${CADDY_VERSION} ${CADDY_WITH}
