@@ -1,0 +1,2 @@
+export { BouncingText } from './BouncingText';
+
