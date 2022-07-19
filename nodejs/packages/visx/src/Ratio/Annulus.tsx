@@ -80,7 +80,7 @@ export const Annulus = ({
             return pie.arcs.map((arc, index) => {
               const { label } = arc.data;
               const arcPath = pie.path(arc) as string | undefined;
-              const arcFill = colors[label];
+              const arcFill = colors[label] as string | undefined;
               return (
                 <g key={`arc-${label}-${index}`}>
                   <path d={arcPath} fill={arcFill} />

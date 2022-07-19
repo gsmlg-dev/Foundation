@@ -6,7 +6,7 @@ import { pointRadial } from 'd3-shape';
 import getLinkComponent from './getLinkComponent';
 
 function useForceUpdate() {
-  const [, setValue] = useState<number>(0);
+  const [, setValue] = useState<number>(0); // eslint-disable-line react/hook-use-state
   return () => setValue((value) => value + 1); // update state to force render
 }
 

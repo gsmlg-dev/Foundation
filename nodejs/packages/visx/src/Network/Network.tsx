@@ -28,7 +28,11 @@ export interface CustomLink {
   [x: string]: any;
 }
 
-const DefaultLink = ({ link: { source, target, dashed } }) => (
+interface DefaultLinkArgs {
+  link: CustomLink;
+}
+
+const DefaultLink = ({ link: { source, target, dashed } }: DefaultLinkArgs) => (
   <line
     x1={source.x}
     y1={source.y}
@@ -56,8 +60,8 @@ export const Network : React.FC<NetworkProps> = ({
         graph={data}
         top={20}
         left={100}
-        nodeComponent={Node}
-        linkComponent={Link}
+        nodeComponent={Node} // eslint-disable-line @typescript-eslint/no-unsafe-assignment
+        linkComponent={Link} // eslint-disable-line @typescript-eslint/no-unsafe-assignment
       />
     </svg>
   );
