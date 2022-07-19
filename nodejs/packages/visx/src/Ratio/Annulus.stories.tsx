@@ -26,6 +26,7 @@ SampleWithLabel.args = {
   width: 400,
   height: 440,
   total: 100,
-  value: 85,
+  value: 39,
+  ringWidth: 15,
   outerLabel: 'Data Usage'
 };

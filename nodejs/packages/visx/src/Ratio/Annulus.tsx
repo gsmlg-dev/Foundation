@@ -8,6 +8,8 @@ export type AnnulusProps = {
   width: number;
   height: number;
   margin?: typeof defaultMargin;
+  radius?: number;
+  ringWidth?: number;
   total: number;
   value: number;
   innerLabel?: string;
@@ -27,6 +29,8 @@ export const Annulus = ({
   value,
   innerLabel,
   outerLabel,
+  radius,
+  ringWidth,
   innerLabelFontSize,
   outerLabelFontSize,
   margin = defaultMargin,
@@ -37,12 +41,13 @@ export const Annulus = ({
 }: AnnulusProps) => {
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
-  let radius = Math.min(innerWidth, innerHeight) / 2;
+  radius = radius ?? Math.min(innerWidth, innerHeight) / 2;
+  let innerRadius = ringWidth ? radius - ringWidth : radius * 0.66
   let centerY = innerHeight / 2;
   const centerX = innerWidth / 2;
   const top = centerY + margin.top;
   const left = centerX + margin.left;
-  
+
   const data = [
     { label: "Main", value },
     { label: "Others", value: total - value }
@@ -57,6 +62,7 @@ export const Annulus = ({
   
   if (outerLabel) {
     radius = radius - f2 / 2;
+    innerRadius = innerRadius - f2 / 2;
     centerY = centerY - f2;
   }
 
@@ -67,7 +73,7 @@ export const Annulus = ({
           data={data}
           pieValue={(d) => d.value}
           outerRadius={radius}
-          innerRadius={radius * 0.6}
+          innerRadius={innerRadius}
           pieSortValues={null}
         >
           {(pie) => {
