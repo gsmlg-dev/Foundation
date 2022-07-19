@@ -28,6 +28,8 @@ SampleWithStyle.args = {
   width: 400,
   height: 400,
   total: 100,
-  value: 85,
-  label: 'Data Usage'
+  value: 63,
+  label: 'Data Usage',
+  barHeight: 15,
+  barRadius: 0,
 };

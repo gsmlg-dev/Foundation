@@ -13,6 +13,7 @@ export type BarProps = {
   fontSize?: number;
   valueFontSize?: number;
   barHeight?: number;
+  barRadius?: number;
   label?: string;
   labelColor?: string;
   primaryColor?: string;
@@ -27,6 +28,7 @@ export const Bar = ({
   value,
   label,
   barHeight = 30,
+  barRadius = 2,
   margin = defaultMargin,
   primaryColor = 'rgba(250, 173, 20, 1)',
   secondaryColor = '#f5f6fa',
@@ -56,7 +58,7 @@ export const Bar = ({
           width={innerWidth}
           height={barHeight}
           fill={secondaryColor}
-          rx={4}
+          rx={barRadius}
         />
         <VisxBar
           x={0}
@@ -64,7 +66,7 @@ export const Bar = ({
           width={barWidth}
           height={barHeight}
           fill={primaryColor}
-          rx={4}
+          rx={barRadius}
         />
       </Group>
     </svg>
