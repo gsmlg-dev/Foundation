@@ -5,10 +5,18 @@ import { css, keyframes } from '@emotion/react'
 
 interface BouncingTextProps {
   duration?: number;
+  delay?: number;
+  easingFunc?: string;
   children: React.ReactNode;
 }
 
-export const BouncingText: React.FC<BouncingTextProps> = ({ duration = 1000, children, ...props }) => {
+export const BouncingText: React.FC<BouncingTextProps> = ({ 
+  duration = 1000,
+  easingFunc = 'ease',
+  delay = 0,
+  children,
+  ...props
+}) => {
   const bounce = keyframes`
     from, 20%, 53%, 80%, to {
       transform: translate3d(0,0,0);
@@ -28,14 +36,14 @@ export const BouncingText: React.FC<BouncingTextProps> = ({ duration = 1000, chi
   `;
 
   const _duration = `${duration}ms`;
-
+  const _delay = `${delay}ms`;
 
   return (
     <span
       {...props}
       css={css`
         display: inline-block;
-        animation: ${bounce} ${_duration} ease infinite;
+        animation: ${bounce} ${_duration} ${easingFunc} ${_delay} infinite;
       `}
     >
       {children}

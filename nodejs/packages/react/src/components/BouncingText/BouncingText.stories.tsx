@@ -21,3 +21,5 @@ Sample.args = {
   duration: 1000,
   children: 'Y2J, Best IN the World!'
 };
+
+// cubic-bezier(x1, y1, x2, y2)
