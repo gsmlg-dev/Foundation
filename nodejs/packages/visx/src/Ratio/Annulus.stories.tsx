@@ -28,5 +28,7 @@ SampleWithLabel.args = {
   total: 100,
   value: 39,
   ringWidth: 15,
-  outerLabel: 'Data Usage'
+  outerLabel: 'Data Usage',
+  outerLabelColor: 'rgba(231, 102, 67, 0.85)',
+  primaryColor: '#03DAC6',
 };

@@ -89,13 +89,13 @@ export const Annulus = ({
             });
           }}
         </Pie>
-        <text color={innerLabelColor} y={f1 / 2} fontSize={f1} textAnchor="middle">
+        <text fill={innerLabelColor} y={f1 / 2} fontSize={f1} textAnchor="middle">
           {innerLabel ? innerLabel : `${value} / ${total}`}
         </text>
       </Group>
       {outerLabel ? (
         <Group top={top + radius + f2} left={left}>
-          <text color={outerLabelColor} fontSize={f2} textAnchor="middle">
+          <text fill={outerLabelColor} fontSize={f2} textAnchor="middle">
             {outerLabel}
           </text>
         </Group>
