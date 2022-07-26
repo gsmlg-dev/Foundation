@@ -39,7 +39,7 @@ export default function Overlay({ fill }) {
         怨灵修之浩荡兮，终不察夫民心。
         */}
         <text fill="#E8B059" style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={48} fontWeight="bold" letterSpacing="0em">
-          <tspan x={40} y={257.909} children={'Jonathan Gao:'} />
+          <tspan x={40} y={257.909} children={'Wisper:'} />
         </text>
         <text style={{ whiteSpace: 'pre' }} fontFamily="Inter" fontSize={12} fontWeight="bold" letterSpacing="0em">
           <tspan x={40} y={270.909} />
