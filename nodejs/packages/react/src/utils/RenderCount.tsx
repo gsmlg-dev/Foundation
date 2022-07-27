@@ -15,15 +15,15 @@ const Circle = styled.i<{ size: number }>`
   background: #eee;
 `;
 
-interface Props {
+interface RenderCountProps {
   size?: number;
 }
 
-export const RenderCount: React.FC<Props> = ({ size }) => {
+export const RenderCount: React.FC<RenderCountProps> = (props) => {
   const counter = React.useRef(0);
   counter.current += 1;
   const count = counter.current;
-  return <Circle size={size ?? 30}>{count}</Circle>;
+  return <Circle size={props.size ?? 30}>{count}</Circle>;
 };
 
 export default RenderCount;
