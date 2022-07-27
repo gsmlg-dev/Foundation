@@ -22,6 +22,9 @@
     "crypto-js": "^4.1.1"
   },
   "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
