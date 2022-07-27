@@ -55,3 +55,24 @@ export const getState = (state, keyPath) => {
   }
   return getState(subState, keyPath);
 }
+
+export const updateStateIn = (state = {}, keyPath = [], fn) => {
+  if (typeof keyPath === 'string') {
+    keyPath = [keyPath];
+  }
+  const key = keyPath.shift();
+  if (keyPath.length === 0) {
+    return {
+      ...state,
+      [key]: fn(state[key]),
+    };
+  }
+  let subState = state[key] ?? {};
+  if (typeof subState !== 'object') {
+    subState = {};
+  }
+  return {
+    ...state,
+    [key]: updateStateIn(subState, keyPath, fn),
+  };
+};

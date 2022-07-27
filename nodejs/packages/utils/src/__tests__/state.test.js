@@ -1,4 +1,4 @@
-import { updateState, removeState, getState } from '../state';
+import { updateState, removeState, getState, updateStateIn } from '../state';
 
 
 describe('test updateState', () => {
@@ -74,9 +74,28 @@ describe('test getState', () => {
 
   it('should getState by keyPath array and value not defined', () => {
     const state = {};
-    const value = getState(state, ['name', 'alias']);
+    const value = getState(state, ['name', 'list']);
 
     expect(value).toBeUndefined();
   });
 
 });
+
+
+describe('test updateStateIn', () => {
+  it('should updateStateIn by keyPath array add new data', () => {
+    const state = { name: [] };
+    const newState = updateStateIn(state, ['name', 'alias'], (_) => ['Josh', 'James']);
+
+    expect(newState).toEqual({name: {alias: ['Josh', 'James']}});
+    expect(newState).not.toBe(state);
+  });
+
+  it('should updateStateIn by keyPath array update exists data', () => {
+    const state = { name: [1,2,3,4,5] };
+    const newState = updateStateIn(state, ['name'], (l) => l?.filter((n) => n % 2 === 0));
+
+    expect(newState).toEqual({name: [2,4]});
+    expect(newState).not.toBe(state);
+  });
+})
