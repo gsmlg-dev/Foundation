@@ -79,6 +79,13 @@ describe('test getState', () => {
     expect(value).toBeUndefined();
   });
 
+  it('should getState by keyPath array with default value', () => {
+    const state = {};
+    const value = getState(state, ['name', 'list'], 'Jonathan');
+
+    expect(value).toEqual('Jonathan');
+  });
+
 });
 
 

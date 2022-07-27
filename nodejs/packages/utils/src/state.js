@@ -41,19 +41,19 @@ export const removeState = (state = {}, keyPath = []) => {
   };
 };
 
-export const getState = (state, keyPath) => {
+export const getState = (state, keyPath, defaultValue) => {
   if (typeof keyPath === 'string') {
     keyPath = [keyPath];
   }
   const key = keyPath.shift();
   let subState = state[key] ?? {};
   if (keyPath.length === 0) {
-    return state[key];
+    return state[key] ?? defaultValue;
   }
   if (typeof subState !== 'object') {
     subState = {};
   }
-  return getState(subState, keyPath);
+  return getState(subState, keyPath, defaultValue);
 }
 
 export const updateStateIn = (state = {}, keyPath = [], fn) => {
