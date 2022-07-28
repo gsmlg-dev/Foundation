@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ARG VERSION=4.4.0
+ARG VERSION=4.5.1
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive

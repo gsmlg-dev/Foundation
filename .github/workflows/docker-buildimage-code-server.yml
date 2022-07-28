@@ -35,8 +35,8 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=4.4.0
+            VERSION=4.5.1
           tags: |
-            docker.io/gsmlg/code-server:v4.4.0
+            docker.io/gsmlg/code-server:v4.5.1
             docker.io/gsmlg/code-server:latest
 
