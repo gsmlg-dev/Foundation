@@ -148,7 +148,7 @@ func (fsrv *StaticSite) Provision(ctx caddy.Context) error {
 	return nil
 }
 
-//go:embed build/*
+//go:embed all:build/*
 var buildFs embed.FS
 
 func (fsrv *StaticSite) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
@@ -273,6 +273,32 @@ func (fsrv *StaticSite) ServeHTTP(w http.ResponseWriter, r *http.Request, next c
 			filename = indexPath
 			implicitIndexFile = true
 			fsrv.logger.Debug("located index file", zap.String("filename", filename))
+			break
+		}
+	}
+
+	// if still dir try to find out if it is a file with suffix
+	if info.IsDir() && !strings.HasSuffix(filename, "/") {
+		suffixList := fsrv.SuffixNames
+		for _, suffix := range suffixList {
+			suffix := repl.ReplaceAll(suffix, "")
+			filePath := fmt.Sprintf("%s.%s", filename, suffix)
+			if fileHidden(filePath, filesToHide) {
+				// pretend this file doesn't exist
+				fsrv.logger.Debug("hiding index file",
+					zap.String("filename", filePath),
+					zap.Strings("files_to_hide", filesToHide))
+				continue
+			}
+
+			opF, err = buildFs.Open(filePath)
+			if err != nil {
+				continue
+			}
+			info, _ = opF.Stat()
+			filename = filePath
+			// implicitIndexFile = true
+			fsrv.logger.Debug("located file with suffix", zap.String("filename", filename), zap.String("suffix", suffix))
 			break
 		}
 	}
