@@ -68,10 +68,9 @@ ARG NODEJS_VERSION=16
 ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y -qq nodejs \
-  && corepack enable \
-  && corepack prepare pnpm@7.9.5 --activate \
   && npm install -g npm \
   && npm install -g yarn \
+  && npm install -g pnpm \
   && npm install -g npm-check-updates \
   && npm install -g @microsoft/rush \
   && npm install -g @aws-amplify/cli \
