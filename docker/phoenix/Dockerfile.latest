@@ -15,4 +15,4 @@ RUN apt-get update \
     && mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-c"]

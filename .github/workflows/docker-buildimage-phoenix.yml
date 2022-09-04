@@ -38,7 +38,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
           push: true
           build-args: |
-            ELIXIR_VERSION=1.13.3
-            PHOENIX_VERSION=1.6.6
+            ELIXIR_VERSION=1.13.4
+            PHOENIX_VERSION=1.6.11
           tags: |
             docker.io/gsmlg/phoenix:${{ matrix.type }}

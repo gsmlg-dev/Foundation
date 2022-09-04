@@ -18,4 +18,4 @@ RUN apk update \
     && rm -rf /var/cache/apk/*
 
 
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/bash", "-c"]
