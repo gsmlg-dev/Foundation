@@ -35,10 +35,11 @@ jobs:
         with:
           context: docker/phoenix/
           file: docker/phoenix/Dockerfile.${{ matrix.type }}
-          platforms: linux/amd64,linux/arm64/v8,linux/arm/v7
+          platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            ELIXIR_VERSION=1.13.4
-            PHOENIX_VERSION=1.6.11
+            ELIXIR_VERSION=1.14.0
+            PHOENIX_VERSION=1.6.12
           tags: |
+            docker.io/gsmlg/phoenix:1.6.12-${{ matrix.type }}
             docker.io/gsmlg/phoenix:${{ matrix.type }}
