@@ -13,13 +13,13 @@ jobs:
       matrix:
         type:
           - base: "latest"
-            platforms: linux/amd64,linux/arm64/v8
+            platforms: linux/amd64
             tag: 1.6.12
           - base: "alpine"
             platforms: linux/amd64
             tag: 1.6.12-alpine
           - base: "slim"
-            platforms: linux/amd64,linux/arm64/v8
+            platforms: linux/amd64
             tag: 1.6.12-slim
     runs-on: ubuntu-latest
     steps:
