@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: docker/phoenix/
-          file: docker/phoenix/Dockerfile.${{ matrix.type }}
+          file: docker/phoenix/Dockerfile.${{ matrix.type.base }}
           platforms: ${{ matrix.type.platforms }}
           push: true
           build-args: |
