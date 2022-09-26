@@ -11,7 +11,16 @@ jobs:
   build-image:
     strategy:
       matrix:
-        type: ["latest", "alpine", "slim"]
+        type:
+          - base: "latest"
+            platforms: linux/amd64,linux/arm64/v8
+            tag: 1.6.12
+          - base: "alpine"
+            platforms: linux/amd64
+            tag: 1.6.12-alpine
+          - base: "slim"
+            platforms: linux/amd64,linux/arm64/v8
+            tag: 1.6.12-slim
     runs-on: ubuntu-latest
     steps:
       -
@@ -35,11 +44,11 @@ jobs:
         with:
           context: docker/phoenix/
           file: docker/phoenix/Dockerfile.${{ matrix.type }}
-          platforms: linux/amd64,linux/arm64/v8
+          platforms: ${{ matrix.type.platforms }}
           push: true
           build-args: |
             ELIXIR_VERSION=1.14.0
             PHOENIX_VERSION=1.6.12
           tags: |
-            docker.io/gsmlg/phoenix:1.6.12-${{ matrix.type }}
-            docker.io/gsmlg/phoenix:${{ matrix.type }}
+            docker.io/gsmlg/phoenix:${{ matrix.type.tag }}
+            docker.io/gsmlg/phoenix:${{ matrix.type.base }}
