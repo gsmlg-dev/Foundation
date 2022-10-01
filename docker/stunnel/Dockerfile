@@ -1,9 +1,11 @@
-FROM alpine:3.14
+FROM alpine:3.16
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV PROXY_MODE=master \
     PROXY_SERVER="" \
+    PROXY_TARGET="localhost:3128" \
+    VERIFY_CHAIN="no" \
     PRIVATE_KEY=/etc/stunnel/pkey.pem \
     CERTIFICATE=/etc/stunnel/cert.pem
 

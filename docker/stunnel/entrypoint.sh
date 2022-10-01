@@ -5,7 +5,7 @@ set -e
 CHOWN=$(/usr/bin/which chown)
 STUNNEL=$(/usr/bin/which stunnel)
 
-# Ensure permissions are set correctly on the Squid cache + log dir.
+# Ensure permissions are set correctly on the stunnel run dir.
 mkdir -p /run/stunnel
 "$CHOWN" -R stunnel:stunnel /run/stunnel
 
@@ -14,6 +14,8 @@ KEY=/etc/stunnel/pkey.pem
 
 PROXY_MODE=${PROXY_MODE:-master}
 PROXY_SERVER=${PROXY_SERVER}
+PROXY_TARGET=${PROXY_TARGET}
+VERIFY_CHAIN=${VERIFY_CHAIN:-yes}
 PRIVATE_KEY=${PRIVATE_KEY:-$KEY}
 CERTIFICATE=${CERTIFICATE:-$CERT}
 
@@ -46,7 +48,7 @@ socket = r:TCP_NODELAY=1
 
 [https]
 accept = 443
-connect = localhost:3128
+connect = PROXY_TARGET
 TIMEOUTclose = 0
 
 EOF
