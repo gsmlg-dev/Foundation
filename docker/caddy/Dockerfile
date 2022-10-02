@@ -6,7 +6,7 @@ ARG USER
 ARG TOKEN
 ARG GOPRIVATE
 ARG CGO_ENABLED
-ARG XCADDY_GO_BUILD_FLAGS
+ARG XCADDY_GO_BUILD_FLAGS="-ldflags '-w s'"
 ARG XCADDY_DEBUG=1
 
 RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com"
