@@ -107,12 +107,11 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install python
 RUN apt-get install -y python3 python3-pip \
-  && update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1 \
   && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-  && python get-pip.py \
-  && python -m pip install ansible \
-  && python -m pip install awscli \
-  && python -m pip install pipenv
+  && python3 get-pip.py \
+  && python3 -m pip install ansible \
+  && python3 -m pip install awscli \
+  && python3 -m pip install pipenv
 
 # install rust
 ARG RUSTPATH=/opt/rust
