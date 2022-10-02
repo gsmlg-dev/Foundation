@@ -48,7 +48,7 @@ socket = r:TCP_NODELAY=1
 
 [https]
 accept = 443
-connect = PROXY_TARGET
+connect = ${PROXY_TARGET}
 TIMEOUTclose = 0
 
 EOF
@@ -79,7 +79,7 @@ socket = r:TCP_NODELAY=1
 [http]
 client = yes
 accept = 80
-connect = $PROXY_SERVER
+connect = ${PROXY_SERVER}
 TIMEOUTclose = 0
 verifyChain = ${VERIFY_CHAIN}
 
