@@ -1,9 +1,7 @@
-FROM alpine:3.14
+FROM alpine:3.16
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-RUN apk update \
-    && apk add curl ca-certificates jq \
-    && rm -rf /var/cache/apk/*
+RUN apk add --no-cache curl ca-certificates jq \
 
 ENTRYPOINT ["/usr/bin/curl"]
