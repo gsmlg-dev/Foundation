@@ -1,9 +1,28 @@
 #!/usr/bin/env bash
 # shellcheck disable=2016 disable=1091 disable=2059
 
-version="2021-11-08"
+version="2022-08-22"
 
 # Notes:
+#   2022-08-22 - Fix 10.10 issue with Ubuntu 22.04 and Debian 11
+#   2022-08-15 - Update MariaDB to 10.9, add support for 10.10
+#   2022-08-09 - Add RHEL/Rocky 9
+#   2022-07-27 - Remove Debian 9 Stretch
+#   2022-06-14 - Add --skip-verify option for skipping version verification
+#   2022-06-13 - Handle case where invalid os+server combo, but Maxscale OK
+#   2022-06-06 - Add function to test for known invalid os+server combinations
+#   2022-06-03 - Update MariaDB to 10.8, add support for 10.9
+#   2022-06-02 - Look up current MariaDB versions
+#   2022-06-01 - Add --skip-eol-check and --skip-os-eol-check options for
+#                testing old eol versions of mariadb
+#   2022-05-31 - move all repos to dlm.mariadb.com
+#   2022-05-03 - Add Rocky 8 to usage/help output, Remove CentOS 8
+#   2022-04-21 - add Ubuntu 22.04 LTS "jammy"
+#   2022-02-08 - Adjust repo pinning for Ubuntu/Debian, update MariaDB to 10.7
+#   2022-01-31 - Verify that server version is valid
+#   2022-01-18 - Add aarch64 RHEL/SLES repositories
+#   2021-12-10 - Update keyring URL
+#   2021-11-18 - Update default URL of script
 #   2021-11-08 - Add support for 10.7
 #   2021-08-02 - Add Debian 11 Bullseye & aarch64/arm64 MaxScale repositories
 #   2021-07-30 - Remove Ubuntu 16.04 Xenial
@@ -46,26 +65,33 @@ version="2021-11-08"
 # This script will identify the OS distribution and version, make sure it's
 # supported, and set up the appropriate MariaDB software repositories.
 
-supported="The MariaDB Repository supports these Linux OSs, on x86_64 only:
-    * RHEL/CentOS 7 & 8 (rhel)
-    * Ubuntu 18.04 LTS (bionic), & 20.04 LTS (focal)
-    * Debian 9 (stretch), 10 (buster), & 11 (bullseye)
-    * SLES 12 & 15 (sles)"
+supported="# The MariaDB Repository only supports these distributions:
+#    * RHEL/Rocky 8 & 9 (rhel)
+#    * RHEL/CentOS 7 (rhel)
+#    * Ubuntu 18.04 LTS (bionic), 20.04 LTS (focal), and 22.04 LTS (jammy)
+#    * Debian 10 (buster), & 11 (bullseye)
+#    * SLES 12 & 15 (sles)"
 
-otherplatforms="See https://mariadb.com/kb/en/mariadb/mariadb-package-repository-setup-and-usage/#platform-support"
+otherplatforms="# See https://mariadb.com/kb/en/mariadb/mariadb-package-repository-setup-and-usage/#platform-support"
 
-mariadb_server_version=mariadb-10.6
-mariadb_server_version_real=mariadb-10.6
+url_base="dlm.mariadb.com"
+url_mariadb_repo="https://${url_base}/repo/mariadb-server"
+mariadb_server_version=mariadb-10.9
+mariadb_server_version_real=mariadb-10.9
 mariadb_maxscale_version=latest
 write_to_stdout=0
 skip_key_import=0
 skip_maxscale=0
 skip_server=0
 skip_tools=0
+skip_verify=0
 skip_check_installed=0
+skip_eol_check=0
+skip_os_eol_check=0
 extra_options=""
+version_info=""
 
-usage="Usage: curl -LsS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | bash -s -- [OPTIONS]
+usage="Usage: curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | bash -s -- [OPTIONS]
 
     https://mariadb.com/kb/en/mariadb/mariadb-package-repository-setup-and-usage/
 
@@ -84,11 +110,14 @@ Options:
                             Override the default MariaDB MaxScale version.
                             By default, the script will use '$mariadb_maxscale_version'.
 
-    --os-type=<type>        Override detection of OS type. Acceptable values include
-                            'debian', 'ubuntu', 'rhel', and 'sles'.
+    --os-type=<type>        Override detection of OS type. Acceptable values
+                            include 'debian', 'ubuntu', 'rhel', & sles'.
 
-    --os-version=<version>  Override detection of OS version. Acceptable values depend
-                            on the OS type you specify.
+    --os-version=<version>  Override detection of OS version. Acceptable values
+                            depend on the OS type you specify.
+
+    --arch=<architecture>   Override detection of CPU architecture. Acceptable
+                            values are 'x86_64', 'aarch64', 'amd64', & 'arm64'.
 
     --skip-key-import       Skip importing GPG signing keys.
 
@@ -98,7 +127,15 @@ Options:
 
     --skip-tools            Skip the 'Tools' repository.
 
+    --skip-verify           Skip verification of MariaDB Server versions.
+                            Use with caution as this can lead to an invalid
+                            repository configuration file being created.
+
     --skip-check-installed  Skip tests for required prerequisites for this script.
+
+    --skip-eol-check        Skip tests for versions being past their EOL date
+
+    --skip-os-eol-check     Skip tests for operating system versions being past EOL date
 
     --write-to-stdout       Write output to stdout instead of to the OS's
                             repository configuration. This will also skip
@@ -115,20 +152,115 @@ os_version=
 key_ids=( 0x8167EE24 0xE3C94F49 0xcbcb082a1bb943db 0xf1656f24c74cd1d8 0x135659e928c12247 )
 # These GPG URLs are used to fetch GPG keys on RHEL and SLES
 key_urls=(
-    https://downloads.mariadb.com/MariaDB/MariaDB-Server-GPG-KEY
-    https://downloads.mariadb.com/MaxScale/MariaDB-MaxScale-GPG-KEY
-    https://downloads.mariadb.com/Tools/MariaDB-Enterprise-GPG-KEY
+    https://supplychain.mariadb.com/MariaDB-Server-GPG-KEY
+    https://supplychain.mariadb.com/MariaDB-MaxScale-GPG-KEY
+    https://supplychain.mariadb.com/MariaDB-Enterprise-GPG-KEY
 )
 
 msg(){
     type=$1 #${1^^}
     shift
-    printf "[$type] %s\n" "$@" >&2
+    printf "# [$type] %s\n" "$@" >&2
 }
 
 error(){
     msg error "$@"
     exit 1
+}
+
+cap()
+{
+  printf '%s' "$1" | head -c 1 | tr [:lower:] [:upper:]
+  printf '%s' "$1" | tail -c '+2'
+}
+
+verify_server_os_combo() {
+  local failed=0
+  local not_available="MariaDB Server ${mariadb_server_version_real} is not available for $(cap ${os_type}) $(cap ${os_version})"
+  case $mariadb_server_version_real in
+    *10.1[0-1]*) ;; # need to handle 10.10+
+    *10.[0-4]*) case ${os_version} in jammy|bullseye) failed=1 ;; esac ;;
+    *10.5*) case ${os_version} in jammy) failed=1 ;; esac ;;
+  esac
+  if (( $failed ))
+  then
+    # This verify_server_os_combo function only runs if MariaDB is not being
+    # skipped. If Maxscale is being skipped then we return an error, otherwise
+    # we just return a warning and skip configuring the Server repo.
+    if ((skip_maxscale))
+    then
+      error "${not_available}"
+    else
+      msg warning "${not_available}, skipping..."
+      skip_server=1
+    fi
+  fi
+}
+
+verify_mariadb_server_version() {
+  if (($skip_eol_check)); then
+    rx='^(mariadb-){0,1}(10+\.[0-9]|10+\.10|10+\.[0-9]+\.[1-9]{0,1}[0-9]{1}|10+\.10+\.[1-9]{1})$'
+  else
+    rx='^(mariadb-){0,1}(10+\.[3-9]|10+\.10|10+\.[3-9]+\.[1-9]{0,1}[0-9]{1}|10+\.10+\.[1-9]{1})$'
+  fi
+  if [[ $@ =~ $rx ]] ; then
+    case $os_type in
+      ubuntu|debian)
+        verify_url="${url_mariadb_repo}/${mariadb_server_version_real}/repo/${os_type}/dists/${os_version}/Release"
+        ;;
+      rhel)
+        verify_url="${url_mariadb_repo}/${mariadb_server_version_real}/yum/rhel/${os_version}/${arch}/repodata/repomd.xml"
+        ;;
+      sles)
+        verify_url="${url_mariadb_repo}/${mariadb_server_version_real}/yum/sles/${os_version}/x86_64/repodata/repomd.xml"
+        ;;
+    esac
+    error_log=$(mktemp)
+    http_status_code=$(curl -LsS --stderr ${error_log} -o /dev/null -I -w "%{http_code}" ${verify_url})
+    return_code="$?"
+    error_output=$(cat ${error_log})
+    rm -f ${error_log}
+
+    case ${http_status_code} in
+      200)
+        msg info "MariaDB Server version ${mariadb_server_version_real} is valid"
+        ;;
+      403|404)
+        get_version_info_server
+        error "MariaDB Server version ${mariadb_server_version_real} is not working.
+#         Please verify that the version is correct.
+#${version_info}"
+        ;;
+      *)
+        error_message="Problem encountered while trying to verify the MariaDB Server version:"
+        if [[ "${return_code}" -gt "0" ]]; then
+          get_version_info_server
+          error "${error_message}
+          $error_output ${version_info}"
+        else
+          get_version_info_server
+          error "${error_message}
+          Unexpected HTTP response code '${http_status_code}' ${version_info}"
+        fi
+        ;;
+    esac
+  else
+    get_version_info_server
+    error "MariaDB Server version ${mariadb_server_version_real} is not valid. ${version_info}"
+  fi
+}
+
+get_version_info_server() {
+  if [[ "${version_info}" = "" ]]; then
+    latest_versions_server=$(curl -s https://dlm.mariadb.com/rest/releases/mariadb_server/)
+
+    version_info="
+#         The latest MariaDB Server versions are:
+#             ${latest_versions_server}
+#
+#         More information on MariaDB releases is available at:
+#             https://mariadb.com/kb/en/release-notes/"
+  fi
 }
 
 version(){
@@ -184,12 +316,21 @@ while :; do
         --skip-server)
             skip_server=1
             ;;
+        --skip-verify)
+            skip_verify=1
+            ;;
         --skip-tools)
             skip_tools=1
             ;;
         --skip-check-installed)
           skip_check_installed=1
           ;;
+        --skip-eol-check)
+	  skip_eol_check=1
+	  ;;
+        --skip-os-eol-check)
+	  skip_os_eol_check=1
+	  ;;
 
         --os-type)
             if [[ -n $2 ]] && [[ $2 != --* ]]; then
@@ -203,6 +344,33 @@ while :; do
             os_type=${1#*=}
             ;;
         --os-type=)
+            error "The $1 option requires an argument"
+            ;;
+
+        --arch)
+            if [[ -n $2 ]] && [[ $2 != --* ]]; then
+                os_type=$2
+                shift
+            else
+                error "The $1 option requires an argument"
+            fi
+            ;;
+        --arch=?*)
+            arch=${1#*=}
+            # normalize arch names
+            case $arch in
+              amd64|x86_64)
+                arch='x86_64'
+                ;;
+              aarch64|arm64)
+                arch='aarch64'
+                ;;
+              *)
+                error "You set arch=$arch but valid architectures are: x86_64 (amd64) and aarch64 (arm64)"
+                ;;
+            esac
+            ;;
+        --arch=)
             error "The $1 option requires an argument"
             ;;
 
@@ -235,6 +403,11 @@ while :; do
     esac
     shift
 done
+
+# We accept setting os-type to centos or rocky, but we normalize it to 'rhel'
+case ${os_type} in
+  centos|rocky*) os_type='rhel' ;;
+esac
 
 open_outfile(){
     unset outfile
@@ -284,13 +457,13 @@ identify_os(){
         os_type=rhel
         el_version=$(rpm -qa '(oraclelinux|sl|redhat|centos|fedora|rocky|alma)*release(|-server)' --queryformat '%{VERSION}')
         case $el_version in
-            5*) os_version=5 ; error "RHEL/CentOS 5 is no longer supported" "$supported" ;;
-            6*) os_version=6 ; error "RHEL/CentOS 6 is no longer supported" "$supported" ;;
+            5*) os_version=5 ; ((skip_os_eol_check)) || error "RHEL/CentOS 5 is no longer supported" "$supported" ;;
+            6*) os_version=6 ; ((skip_os_eol_check)) || error "RHEL/CentOS 6 is no longer supported" "$supported" ;;
             7*) os_version=7 ;;
             8*) os_version=8 ; extra_options="module_hotfixes = 1" ;;
+            9*) os_version=9 ; extra_options="module_hotfixes = 1" ;;
              *) error "Detected RHEL or compatible but version ($el_version) is not supported." "$supported"  "$otherplatforms" ;;
          esac
-         if [[ $arch == aarch64 ]] && [[ $os_version != 7 ]]; then error "Only RHEL/CentOS 7 are supported for ARM64. Detected version: '$os_version'"; fi
     elif [[ -e /etc/os-release ]]
     then
         . /etc/os-release
@@ -300,7 +473,7 @@ identify_os(){
                 os_type=debian
                 debian_version=$(< /etc/debian_version)
                 case $debian_version in
-                    9*) os_version=stretch ;;
+                    9*) os_version=stretch ; ((skip_os_eol_check)) || error "Debian 8 'stretch' has reached End of Life and is no longer supported" "$supported" ;;
                     10*) os_version=buster ;;
                     11*) os_version=bullseye ;;
                      *) error "Detected Debian but version ($debian_version) is not supported." "$supported"  "$otherplatforms" ;;
@@ -311,11 +484,11 @@ identify_os(){
                 . /etc/lsb-release
                 os_version=$DISTRIB_CODENAME
                 case $os_version in
-                    precise ) error 'Ubuntu version 12.04 LTS has reached End of Life and is no longer supported.' ;;
-                    trusty ) error 'Ubuntu version 14.04 LTS has reached End of Life and is no longer supported.' ;;
-                    xenial ) error 'Ubuntu version 16.04 LTS has reached End of Life and is no longer supported.' ;;
-                    bionic ) extra_options=" lang=none target-=CNF" ;;
-                    focal ) ;;
+                    precise ) ((skip_os_eol_check)) || error 'Ubuntu version 12.04 LTS has reached End of Life and is no longer supported.' ;;
+                    trusty  ) ((skip_os_eol_check)) || error 'Ubuntu version 14.04 LTS has reached End of Life and is no longer supported.' ;;
+                    xenial  ) ((skip_os_eol_check)) || error 'Ubuntu version 16.04 LTS has reached End of Life and is no longer supported.' ;;
+                    bionic  ) extra_options=" lang=none target-=CNF" ;;
+                    focal|jammy ) ;;
                     *) error "Detected Ubuntu but version ($os_version) is not supported." "Only Ubuntu LTS releases are supported."  "$otherplatforms" ;;
                 esac
                 if [[ $arch == aarch64 ]]
@@ -323,8 +496,8 @@ identify_os(){
                     case $os_version in
                         xenial ) ;;
                         bionic ) extra_options=" lang=none target-=CNF" ;;
-                        focal ) ;;
-                        *) error "Only Ubuntu 16/xenial, 18/bionic, and 20/focal are supported for ARM64. Detected version: '$os_version'" ;;
+                        focal|jammy ) ;;
+                        *) error "Only 18.04/bionic, 20.04/focal, & 22.04/jammy are supported for ARM64. Detected version: '$os_version'" ;;
                     esac
                 fi
                 ;;
@@ -336,7 +509,6 @@ identify_os(){
                     12|15) ;;
                     *) error "Detected SLES but version ($os_version) is not supported."  "$otherplatforms" ;;
                 esac
-                if [[ $arch == aarch64 ]]; then error "SLES is not currently supported for ARM64"; fi
                 ;;
         esac
     fi
@@ -362,7 +534,7 @@ check_installed() {
           need_to_install=true
         fi
         ;;
-      rhel|centos)
+      rhel)
         if { yum list installed "${package}" ; } &>/dev/null ; then
           need_to_install=false
         else
@@ -450,10 +622,16 @@ else
     mariadb_server_version=mariadb-$mariadb_server_version
 fi
 
+mariadb_server_version_real=$mariadb_server_version_num
+
 # If we're writing the repository info to stdout, let's not try to import the signing keys.
 ((write_to_stdout)) && skip_key_import=1
 
-arch=$(uname -m)
+if [[ ! $arch ]]
+then
+  arch=$(uname -m)
+fi
+
 case $arch in
     x86_64) ;;
     aarch64) skip_tools=1;;
@@ -463,24 +641,30 @@ esac
 if [[ $os_type ]] && [[ $os_version ]]
 then
     # Both were given on the command line, so we'll just try using those.
-    msg info "Skipping OS detection and using OS type '$os_type' and version '$os_version' given on the command line"
+    msg info "Skipping OS detection and using OS type '$os_type' and version '$os_version' as given on the command line"
     # We're skipping OS detection, so set extra_options to the correct value
-    # for RHEL/CentOS 8
+    # for RHEL
      case $os_version in
-       7*|8*)
+       7*|8*|9*)
          if [ $os_type = 'rhel' ] ; then
            case $os_version in
              7*) os_version=7 ;;
              8*) os_version=8 ; extra_options="module_hotfixes = 1" ;;
+             9*) os_version=9 ; extra_options="module_hotfixes = 1" ;;
+           esac
+         elif [ $os_type = 'debian' ] ; then
+           case $os_version in
+             7) os_version='wheezy' ; ((skip_os_eol_check)) || msg warning "Debian 7 'wheezy' has reached End of Life and is no longer supported." "$supported" ;;
+             8) os_version='jessie' ; ((skip_os_eol_check)) || msg warning "Debian 8 'jessie' has reached End of Life and is no longer supported." "$supported" ;;
+             9) os_version='stretch' ; ((skip_os_eol_check)) || msg warning "Debian 9 'stretch' has reached End of Life and is no longer supported" "$supported" ;;
            esac
          else
            error "--os-version='$os_version' is only valid if --os-type='rhel', you gave '$os_type'" "$supported"
          fi
          ;;
-      9|10)
+      10|11)
         if [ $os_type = 'debian' ] ; then
           case $os_version in
-            9) os_version='stretch' ;;
             10) os_version='buster' ;;
             11) os_version='bullseye' ;;
           esac
@@ -498,7 +682,7 @@ then
           error "--os-version='$os_version' is only valid if --os-type='sles', you gave '$os_type'" "$supported"
         fi
         ;;
-      xenial|bionic|focal)
+      xenial|bionic|focal|jammy)
         if [ $os_type != 'ubuntu' ] ; then
           error "--os-version='$os_version' is only valid if --os-type='ubuntu', you gave '$os_type'" "$supported"
         fi
@@ -513,9 +697,26 @@ then
 
 elif [[ $os_type ]] || [[ $os_version ]]
 then
-error "The MariaDB Repository only support RHEL/CentOS 7 for ARM64 platforms (detected version $os_version)"    error 'If you give either --os-type or --os-version, you must give both.'
+error 'If you give either --os-type or --os-version, you must give both.'
 else
     identify_os
+fi
+
+# Handle various aarch64 repositories
+if [[ "$arch" = 'aarch64' ]] ; then
+  case $os_version in
+    7)
+      ((skip_maxscale)) || msg info "Skipping MariaDB MaxScale as RHEL 7 does not have aarch64 packages available."
+      ((skip_maxscale)) || skip_maxscale=1
+      ;;
+    12)
+      error "There are no aarch64 packages available for MariaDB Server or MariaDB MaxScale for SLES 12."
+      ;;
+    15)
+      ((skip_server)) || msg warning "Skipping MariaDB Server as there are no aarch64 packages available."
+      ((skip_server)) || skip_server=1
+      ;;
+  esac
 fi
 
 if (($skip_check_installed))
@@ -529,51 +730,56 @@ case $os_version in
 esac
 fi
 
+# To support old versions for testing purposes which are not on dlm.mariadb.com
 case ${mariadb_server_version} in
-  *10.6*|*10.7*)
-    url_mariadb_repo="https://dlm.mariadb.com/repo/mariadb-server"
-    mariadb_server_version_real=$mariadb_server_version_num
-    ;;
-  *)
-    url_mariadb_repo="https://downloads.mariadb.com/MariaDB"
+  *10.0*|*10.1*|*10.2*)
+    url_base="downloads.mariadb.com"
+    url_mariadb_repo="https://${url_base}/MariaDB"
     mariadb_server_version_real=$mariadb_server_version
     ;;
 esac
 
-rhel_repo_server="[mariadb-main]
+rhel_repo_server="
+[mariadb-main]
 name = MariaDB Server
-baseurl = ${url_mariadb_repo}/%s/yum/rhel/%s/x86_64
+baseurl = ${url_mariadb_repo}/%s/yum/rhel/%s/%s
 gpgkey = file:///etc/pki/rpm-gpg/MariaDB-Server-GPG-KEY
 gpgcheck = 1
 enabled = 1
 %s"
-rhel_repo_maxscale='[mariadb-maxscale]
+rhel_repo_maxscale='
+[mariadb-maxscale]
 # To use the latest stable release of MaxScale, use "latest" as the version
 # To use the latest beta (or stable if no current beta) release of MaxScale, use "beta" as the version
 name = MariaDB MaxScale
-baseurl = https://dlm.mariadb.com/repo/maxscale/%s/yum/rhel/%s/x86_64
+baseurl = https://dlm.mariadb.com/repo/maxscale/%s/yum/rhel/%s/%s
 gpgkey = file:///etc/pki/rpm-gpg/MariaDB-MaxScale-GPG-KEY
 gpgcheck = 1
 enabled = 1'
-rhel_repo_tools='[mariadb-tools]
+rhel_repo_tools='
+[mariadb-tools]
 name = MariaDB Tools
 baseurl = https://downloads.mariadb.com/Tools/rhel/%s/x86_64
 gpgkey = file:///etc/pki/rpm-gpg/MariaDB-Enterprise-GPG-KEY
 gpgcheck = 1
 enabled = 1'
 
-deb_repo_server="# MariaDB Server
+deb_repo_server="
+# MariaDB Server
 # To use a different major version of the server, or to pin to a specific minor version, change URI below.
 deb [arch=amd64,arm64] ${url_mariadb_repo}/%s/repo/%s %s main"
 deb_repo_server_debug="deb [arch=amd64,arm64${extra_options}] ${url_mariadb_repo}/%s/repo/%s %s main/debug"
-deb_repo_maxscale='# MariaDB MaxScale
+deb_repo_maxscale='
+# MariaDB MaxScale
 # To use the latest stable release of MaxScale, use "latest" as the version
 # To use the latest beta (or stable if no current beta) release of MaxScale, use "beta" as the version
-deb [arch=amd64] https://dlm.mariadb.com/repo/maxscale/%s/%s %s main'
-deb_repo_tools='# MariaDB Tools
+deb [arch=amd64,arm64] https://dlm.mariadb.com/repo/maxscale/%s/%s %s main'
+deb_repo_tools='
+# MariaDB Tools
 deb [arch=amd64] http://downloads.mariadb.com/Tools/%s %s main'
 
-sles_repo_server="[mariadb-server]
+sles_repo_server="
+[mariadb-server]
 name = MariaDB Server
 baseurl = ${url_mariadb_repo}/%s/yum/sles/%s/x86_64
 gpgkey = file:///etc/pki/trust/MariaDB-Server-GPG-KEY
@@ -582,18 +788,20 @@ type=rpm-md
 enabled = 1
 autorefresh=1
 priority=10"
-sles_repo_maxscale='[mariadb-maxscale]
+sles_repo_maxscale='
+[mariadb-maxscale]
 # To use the latest stable release of MaxScale, use "latest" as the version
 # To use the latest beta (or stable if no current beta) release of MaxScale, use "beta" as the version
 name = MariaDB MaxScale
-baseurl = https://dlm.mariadb.com/repo/maxscale/%s/yum/sles/%s/x86_64
+baseurl = https://dlm.mariadb.com/repo/maxscale/%s/yum/sles/%s/%s
 gpgkey = file:///etc/pki/trust/MariaDB-MaxScale-GPG-KEY
 enabled = 1
 autorefresh=1
 gpgcheck = 1
 type=rpm-md
 priority=10'
-sles_repo_tools='[mariadb-tools]
+sles_repo_tools='
+[mariadb-tools]
 name = MariaDB Tools
 baseurl = https://downloads.mariadb.com/Tools/sles/%s/x86_64
 gpgkey = file:///etc/pki/trust/MariaDB-Enterprise-GPG-KEY
@@ -608,8 +816,15 @@ open_outfile "$os_type"
 # If we're not writing to stdout, try to remove the mariadb-enterprise-repository package
 ((write_to_stdout)) || remove_mdbe_repo
 
+
+# Before we get into creating the configuration file, check the combination of
+# MariaDB version and OS
+((skip_server)) || verify_server_os_combo
+
 case $os_type in
     ubuntu|debian)
+        # should be a valid version, so verify it is so
+        ((skip_server)) || ((skip_verify)) || verify_mariadb_server_version $mariadb_server_version_real
         # If we are not writing to stdout, create an apt preferences file to give our 
         # packages the highest possible priority
         if ((write_to_stdout))
@@ -618,7 +833,7 @@ case $os_type in
         else
             printf '%s\n' \
             'Package: *'\
-            'Pin: origin downloads.mariadb.com'\
+            "Pin: origin ${url_base}"\
             'Pin-Priority: 1000'\
             > /etc/apt/preferences.d/mariadb-enterprise.pref
         fi
@@ -636,9 +851,9 @@ case $os_type in
         if ! ((skip_key_import))
         then
             msg info 'Adding trusted package signing keys...' 
-            if curl -LsSO https://downloads.mariadb.com/MariaDB/mariadb-keyring-2019.gpg
+            if curl -LsSO https://supplychain.mariadb.com/mariadb-keyring-2019.gpg
             then
-                if curl -LsS https://downloads.mariadb.com/MariaDB/mariadb-keyring-2019.gpg.sha256 | sha256sum -c --quiet
+                if curl -LsS https://supplychain.mariadb.com/mariadb-keyring-2019.gpg.sha256 | sha256sum -c --quiet
                 then
                     msg info 'Running apt-get update...'
                     if mv mariadb-keyring-2019.gpg /etc/apt/trusted.gpg.d/ &&
@@ -661,9 +876,10 @@ case $os_type in
         fi
         ;;
     rhel)
+        ((skip_server)) || ((skip_verify)) || verify_mariadb_server_version $mariadb_server_version_real
         {
-            ((skip_server)) || printf "$rhel_repo_server\n\n" "$mariadb_server_version_real" "$os_version" "$extra_options"
-            ((skip_maxscale)) || printf "$rhel_repo_maxscale\n\n" "$mariadb_maxscale_version" "$os_version"
+            ((skip_server)) || printf "$rhel_repo_server\n\n" "$mariadb_server_version_real" "$os_version" "$arch" "$extra_options"
+            ((skip_maxscale)) || printf "$rhel_repo_maxscale\n\n" "$mariadb_maxscale_version" "$os_version" "$arch"
             ((skip_tools)) || printf "$rhel_repo_tools\n" "$os_version"
         } >&4
         ((write_to_stdout)) || msg info "Repository file successfully written to $outfile"
@@ -683,9 +899,10 @@ case $os_type in
         ((write_to_stdout)) || clean_package_cache yum
         ;;
     sles)
+        ((skip_server)) || ((skip_verify)) || verify_mariadb_server_version $mariadb_server_version_real
         {
             ((skip_server)) || printf "$sles_repo_server\n\n" "$mariadb_server_version_real" "$os_version"
-            ((skip_maxscale)) || printf "$sles_repo_maxscale\n\n" "$mariadb_maxscale_version" "$os_version"
+            ((skip_maxscale)) || printf "$sles_repo_maxscale\n\n" "$mariadb_maxscale_version" "$os_version" "$arch"
             ((skip_tools)) || printf "$sles_repo_tools\n" "$os_version"
         } >&4
         ((write_to_stdout)) || msg info "Repository file successfully written to $outfile"
