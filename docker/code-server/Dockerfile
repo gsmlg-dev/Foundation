@@ -1,8 +1,8 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ARG VERSION=4.5.1
+ARG VERSION=4.7.1
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
