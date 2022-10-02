@@ -1,9 +1,11 @@
-FROM debian:10
+FROM debian:11
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update -qq \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq nginx \
+    && apt-get install -y -qq nginx \
     && mkdir /etc/nginx/sites \
     && rm -rf /etc/nginx/sites-enabled \
     && rm -rf /etc/nginx/sites-available \
