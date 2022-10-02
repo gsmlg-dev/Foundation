@@ -11,7 +11,7 @@ jobs:
   build-image:
     strategy:
       matrix:
-        version: ["10.5", "10.6", "10.7"]
+        version: ["10.7", "10.8", "10.9"]
     runs-on: ubuntu-latest
     steps:
       -

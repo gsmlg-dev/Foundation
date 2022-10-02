@@ -1,10 +1,10 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG TZ="Asia/Shanghai"
-ARG MARIADB_VERSION="10.7"
+ARG MARIADB_VERSION="10.9"
 
 # Install prerequisites
 RUN apt update && apt-get install -y curl ca-certificates
