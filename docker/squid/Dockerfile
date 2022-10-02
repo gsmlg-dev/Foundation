@@ -1,13 +1,10 @@
-FROM alpine:3.14
+FROM alpine:3.16
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV SQUID_WAIT=5
 
-RUN apk update \
-    && apk add curl \
-    && apk add squid \
-    && rm -rf /var/cache/apk/*
+RUN apk add --no-cache curl squid
 
 COPY squid.conf passwords /etc/squid/
 

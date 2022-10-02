@@ -16,7 +16,7 @@ sub vcl_init {
 sub vcl_recv {
 	# force the host header to match the backend (not all backends need it,
 	# but example.com does)
-	set req.http.host = "example.com";
+	set req.http.host = "cdn.skypack.dev";
 	# set the backend
-	set req.backend_hint = d.backend("example.com");
+	set req.backend_hint = d.backend("cdn.skypack.dev");
 }
