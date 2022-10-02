@@ -6,10 +6,12 @@ ARG USER
 ARG TOKEN
 ARG GOPRIVATE
 ARG CGO_ENABLED
-ARG XCADDY_GO_BUILD_FLAGS="-ldflags \"-w -s -X github.com/gsmlg-dev/caddy-admin-ui.compileUnixTime=1658247558\""
+ARG XCADDY_GO_BUILD_FLAGS="-ldflags \"-w -s -X github.com/gsmlg-dev/caddy-admin-ui.compileUnixTime=1664728720\""
+ARG XCADDY_DEBUG=1
 
-RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
-  && XCADDY_DEBUG=1 xcaddy build ${CADDY_VERSION} ${CADDY_WITH}
+RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com"
+
+RUN xcaddy build ${CADDY_VERSION} ${CADDY_WITH}
 
 FROM caddy:alpine
 
