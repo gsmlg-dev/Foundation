@@ -35,9 +35,9 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            ARG ZT_UI_COMMIT=9d417a93cde92b86ae5d22169e9e10dcbb189e5a
-            ARG ZT_UI_VERSION=1.0.21
+            ARG ZT_UI_COMMIT=d6f05af126bd879da886ea23a42de995fcb22309
+            ARG ZT_UI_VERSION=1.5.0
           tags: |
-            gsmlg/zerotier-ui:v1.0.21
+            gsmlg/zerotier-ui:v1.5.0
             gsmlg/zerotier-ui:latest
 

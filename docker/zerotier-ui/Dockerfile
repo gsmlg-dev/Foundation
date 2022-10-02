@@ -1,15 +1,15 @@
-ARG ZT_UI_COMMIT=9d417a93cde92b86ae5d22169e9e10dcbb189e5a
-ARG ZT_UI_VERSION=1.0.21
+ARG ZT_UI_COMMIT=d6f05af126bd879da886ea23a42de995fcb22309
+ARG ZT_UI_VERSION=1.5.0
 
 
-FROM alpine:3.14 AS source
+FROM alpine:3.16 AS source
 
 RUN apk add --update git \
     && git clone https://github.com/dec0dOS/zero-ui.git /src \
     && git -C /src checkout -f ${ZT_UI_COMMIT}
 
 
-FROM node:16-alpine as build-stage
+FROM node:lts-alpine as build-stage
 
 ENV INLINE_RUNTIME_CHUNK=false
 ENV GENERATE_SOURCEMAP=false
@@ -24,7 +24,7 @@ RUN yarn install \
     && yarn run build
 
 
-FROM node:16-alpine
+FROM node:lts-alpine
 
 ARG ZT_UI_VERSION
 
