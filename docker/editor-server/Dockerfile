@@ -1,9 +1,9 @@
-ARG CODE_SERVER_VERSION=4.5.1
+ARG CODE_SERVER_VERSION=4.7.1
 FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL CODE_SERVER_VERSION=$CODE_SERVER_VERSION
+LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG VERSION
 LABEL VERSION=$VERSION
@@ -157,15 +157,10 @@ RUN curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 
 # install cli53 gsmlg-cli
 RUN export ARCH=`dpkg --print-architecture`; \
-  curl -sSfL https://github.com/barnybug/cli53/releases/download/0.8.18/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
+  curl -sSfL https://github.com/barnybug/cli53/releases/latest/download/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
   && chmod +x /usr/local/bin/cli53 \
-  && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/download/v1.5.0/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
+  && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/latest/download/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
   && chmod +x /usr/local/bin/gsmlg-cli
-
-# install supabase
-RUN export ARCH=`dpkg --print-architecture`; \
-  wget https://github.com/supabase/cli/releases/download/v0.28.1/supabase_0.28.1_linux_${ARCH}.deb -P /tmp/ \
-  && dpkg -i /tmp/supabase_0.28.1_linux_${ARCH}.deb
 
 # install terraform
 RUN export TARGET_DIR=/tmp/terraform \
