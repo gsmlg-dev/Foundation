@@ -9,7 +9,7 @@ WORKDIR /app
 
 RUN go build -ldflags "-X main.Version=${VERSION} -s -w" -o baidupcs-go
 
-FROM alpine:3.14
+FROM alpine:3.16
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
