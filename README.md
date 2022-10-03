@@ -47,6 +47,13 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/antlr)](https://hub.docker.com/r/gsmlg/antlr)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-antlr.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-antlr.yml)
 
+    - [baidupcs-go](docker/baidupcs-go)
+    Baidu Cloud Disk conmandline tools.
+    [Repo Link](https://hub.docker.com/r/gsmlg/baidupcs-go/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/baidupcs-go)](https://hub.docker.com/r/gsmlg/baidupcs-go)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-baidupcs-go.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-baidupcs-go.yml)
+
     - [caddy](docker/caddy)
     Caddy reverse proxy server, multi architecture at github release.
     [Repo Link](https://hub.docker.com/r/gsmlg/caddy/tags)
@@ -60,6 +67,13 @@ I've manage too many repositories, that I have to combine them to one so that I 
 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/code-server)](https://hub.docker.com/r/gsmlg/code-server)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-code-server.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-code-server.yml)
+
+    - [couchdb](docker/couchdb)
+    Couchdb Server.
+    [Repo Link](https://hub.docker.com/r/gsmlg/couchdb/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/couchdb)](https://hub.docker.com/r/gsmlg/couchdb)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-couchdb.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-couchdb.yml)
 
     - [curl](docker/curl)
     Minimal curl base on alpine.
@@ -188,6 +202,13 @@ I've manage too many repositories, that I have to combine them to one so that I 
 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/unbound)](https://hub.docker.com/r/gsmlg/unbound)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-unbound.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-unbound.yml)
+
+    - [varnish](docker/varnish)
+    Varnish Cache server.
+    [Repo Link](https://hub.docker.com/r/gsmlg/varnish/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/varnish)](https://hub.docker.com/r/gsmlg/varnish)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-varnish.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-varnish.yml)
 
     - [zerotier](docker/zerotier)
     Open source network switch.
