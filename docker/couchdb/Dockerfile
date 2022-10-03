@@ -15,4 +15,4 @@ ENV COUCHDB_USER=gsmlg \
 # 9100: CouchDB cluster communication port
 EXPOSE 5984 4369 9100
 
-VOLUME ["/opt/couchdb/data", "/opt/couchdb/etc/local.d"]
+VOLUME ["/opt/couchdb/data", "/opt/couchdb/log", "/opt/couchdb/etc/local.d"]
