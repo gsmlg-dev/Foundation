@@ -8,7 +8,7 @@ ENV COUCHDB_USER=gsmlg \
     COUCHDB_PASSWORD=gsmlg \
     COUCHDB_SECRET=couchdb_secret \
     NODENAME=couchdb-server \
-    ERL_FLAGS="-setcookie \"¯\_(ツ)_/¯\""
+    COUCHDB_ERLANG_COOKIE="¯\_(ツ)_/¯"
 
 # 5984: Main CouchDB endpoint
 # 4369: Erlang portmap daemon (epmd)
