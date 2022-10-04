@@ -9,10 +9,20 @@ LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
 RUN apt-get update \
-    && apt-get install -y figlet npm \
+    && apt-get install -y figlet jq \
     && mix local.rebar --force \
     && mix local.hex --force \
     && mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
+# install nodejs
+ARG NODEJS_VERSION=16
+ENV NODE_PATH=/usr/lib/node_modules
+RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
+  && apt-get install -y -qq nodejs \
+  && npm install -g npm \
+  && npm install -g yarn \
+  && npm install -g pnpm \
+  && npm install -g npm-check-updates \
+  && npm install -g @microsoft/rush
 
 ENTRYPOINT ["/bin/bash", "-c"]
