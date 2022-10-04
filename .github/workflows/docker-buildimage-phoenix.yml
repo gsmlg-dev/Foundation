@@ -16,7 +16,7 @@ jobs:
             platforms: linux/amd64,linux/arm64/v8
             tag: 1.6.12
           - base: "alpine"
-            platforms: linux/amd64
+            platforms: linux/amd64,linux/arm64/v8
             tag: 1.6.12-alpine
     runs-on: ubuntu-latest
     steps:
