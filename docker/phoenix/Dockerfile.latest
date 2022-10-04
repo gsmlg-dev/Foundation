@@ -9,7 +9,7 @@ LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
 RUN apt-get update \
-    && apt-get install -y figlet jq \
+    && apt-get install -y jq \
     && mix local.rebar --force \
     && mix local.hex --force \
     && mix archive.install --force hex phx_new ${PHOENIX_VERSION}
