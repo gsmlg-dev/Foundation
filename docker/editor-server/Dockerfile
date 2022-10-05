@@ -162,10 +162,10 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && chmod +x /usr/local/bin/gsmlg-cli
 
 # install terraform
-# RUN export TARGET_DIR=/tmp/terraform \
-#   && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
-#   && cd $TARGET_DIR && /usr/local/go/bin/go install \
-#   && chown -R coder:coder "${GOPATH}"
+RUN export TARGET_DIR=/tmp/terraform \
+  && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
+  && cd $TARGET_DIR && /usr/local/go/bin/go install \
+  && chown -R coder:coder "${GOPATH}"
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
