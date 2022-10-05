@@ -107,6 +107,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install python
 RUN apt-get install -y python3 python3-pip \
+  && update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 \
   && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
   && python3 get-pip.py \
   && python3 -m pip install ansible \
@@ -129,9 +130,7 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
 RUN apt-get install -y php-cli
 
 # install erlang and elixir
-RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
-  && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
-  && apt-get update \
+RUN apt-get update \
   && apt-get install -y erlang \
   && apt-get install -y elixir
 
