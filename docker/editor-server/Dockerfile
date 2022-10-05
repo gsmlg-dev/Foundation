@@ -129,8 +129,10 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
 RUN apt-get install -y php-cli
 
 # install erlang and elixir
-RUN apt-get update \
-  && apt-get install -y erlang \
+RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
+  && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
+  && apt-get update \
+  && apt-get install -y esl-erlang \
   && apt-get install -y elixir
 
 # install ruby
@@ -160,10 +162,10 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && chmod +x /usr/local/bin/gsmlg-cli
 
 # install terraform
-RUN export TARGET_DIR=/tmp/terraform \
-  && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
-  && cd $TARGET_DIR && /usr/local/go/bin/go install \
-  && chown -R coder:coder "${GOPATH}"
+# RUN export TARGET_DIR=/tmp/terraform \
+#   && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
+#   && cd $TARGET_DIR && /usr/local/go/bin/go install \
+#   && chown -R coder:coder "${GOPATH}"
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
