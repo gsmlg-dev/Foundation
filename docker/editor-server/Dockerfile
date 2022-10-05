@@ -53,7 +53,7 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LC_ALL=$LANG
 
 # install jdk
-ARG ANTLR_VERSION=4.10.1
+ARG ANTLR_VERSION=4.11.1
 RUN apt-get install -y default-jdk \
   && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
   && echo "#!/bin/bash" > /usr/local/bin/antlr \
@@ -77,7 +77,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
-ARG GO_VERSION=1.18.5
+ARG GO_VERSION=1.19.2
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
@@ -107,7 +107,6 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install python
 RUN apt-get install -y python3 python3-pip \
-  && update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 \
   && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
   && python3 get-pip.py \
   && python3 -m pip install ansible \
@@ -138,7 +137,7 @@ RUN apt-get update \
 RUN apt-get install -y ruby-full
 
 # install kubectl
-ARG KUBECTL_VERSION=1.24.2
+ARG KUBECTL_VERSION=1.25.2
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
