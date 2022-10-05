@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM debian:11
 
 LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
