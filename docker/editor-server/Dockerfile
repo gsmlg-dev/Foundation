@@ -123,7 +123,8 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
-  && chown -R coder:coder "${RUSTPATH}"
+  && chown -R coder:coder "${RUSTPATH}" \
+  && cargo install difftastic
 
 # install php
 RUN apt-get install -y php-cli
