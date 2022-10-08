@@ -1,3 +1,3 @@
-FROM rabbitmq:3.8-management
+FROM rabbitmq:management-alpine
 
 RUN rabbitmq-plugins enable --offline rabbitmq_mqtt rabbitmq_federation_management rabbitmq_stomp
