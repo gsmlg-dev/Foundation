@@ -52,6 +52,14 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LANG=$LANG \
     && update-locale LC_ALL=$LANG
 
+# Now using ASDF manage packages
+ARG ASDF_DIR=/opt/asdf
+ARG ASDF_DATA_DIR=/opt/asdf-data
+ENV ASDF_DIR=$ASDF_DIR
+ENV ASDF_DATA_DIR=$ASDF_DATA_DIR
+RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.10.2 \
+  && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/zsh/zshrc"
+
 # install jdk
 ARG ANTLR_VERSION=4.11.1
 RUN apt-get install -y default-jdk \
@@ -130,11 +138,15 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
 RUN apt-get install -y php-cli
 
 # install erlang and elixir
-RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
-  && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
-  && apt-get update \
-  && apt-get install -y esl-erlang \
-  && apt-get install -y elixir
+RUN source $ASDF_DIR/asdf.sh \
+  && asdf plugin-add erlang \
+  && asdf plugin-add elixir \
+  && asdf install erlang 25.0.4 \
+  && asdf install elixir 1.14.0-otp-25 \
+  && asdf global erlang 25.0.4 \
+  && asdf global elixir 1.14.0-otp-25 \
+  && mix local.hex --force \
+  && mix local.rebar --force
 
 # install ruby
 RUN apt-get install -y ruby-full
