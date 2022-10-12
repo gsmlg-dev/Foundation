@@ -62,7 +62,7 @@ RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.10.2 \
   && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/zsh/zshrc"
 
 # install erlang and elixir
-RUN source $ASDF_DIR/asdf.sh \
+RUN bash -c "source $ASDF_DIR/asdf.sh \
   && asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git \
   && asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git \
   && asdf install erlang 25.0.4 \
@@ -70,7 +70,7 @@ RUN source $ASDF_DIR/asdf.sh \
   && asdf global erlang 25.0.4 \
   && asdf global elixir 1.14.0-otp-25 \
   && mix local.hex --force \
-  && mix local.rebar --force
+  && mix local.rebar --force"
 
 # install jdk
 ARG ANTLR_VERSION=4.11.1
