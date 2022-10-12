@@ -58,7 +58,19 @@ ARG ASDF_DATA_DIR=/opt/asdf-data
 ENV ASDF_DIR=$ASDF_DIR
 ENV ASDF_DATA_DIR=$ASDF_DATA_DIR
 RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.10.2 \
+  && touch $ASDF_DIR/asdf_updates_disabled \
   && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/zsh/zshrc"
+
+# install erlang and elixir
+RUN source $ASDF_DIR/asdf.sh \
+  && asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git \
+  && asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git \
+  && asdf install erlang 25.0.4 \
+  && asdf install elixir 1.14.0-otp-25 \
+  && asdf global erlang 25.0.4 \
+  && asdf global elixir 1.14.0-otp-25 \
+  && mix local.hex --force \
+  && mix local.rebar --force
 
 # install jdk
 ARG ANTLR_VERSION=4.11.1
@@ -137,17 +149,6 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
 # install php
 RUN apt-get install -y php-cli
 
-# install erlang and elixir
-RUN source $ASDF_DIR/asdf.sh \
-  && asdf plugin-add erlang \
-  && asdf plugin-add elixir \
-  && asdf install erlang 25.0.4 \
-  && asdf install elixir 1.14.0-otp-25 \
-  && asdf global erlang 25.0.4 \
-  && asdf global elixir 1.14.0-otp-25 \
-  && mix local.hex --force \
-  && mix local.rebar --force
-
 # install ruby
 RUN apt-get install -y ruby-full
 
@@ -179,6 +180,10 @@ RUN export TARGET_DIR=/tmp/terraform \
   && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
   && cd $TARGET_DIR && /usr/local/go/bin/go install \
   && chown -R coder:coder "${GOPATH}"
+
+# change asdf
+RUN chown -R coder:coder $ASDF_DIR \
+  && chown -R coder:coder $ASDF_DATA_DIR
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
