@@ -2,7 +2,7 @@ FROM golang:alpine as builder
 
 ARG CGO_ENABLED=0
 
-COPY echo.go /go
+COPY log_forwarder.go /go
 
 RUN  go build -o log-forwarder log_forwarder.go
 
