@@ -133,7 +133,7 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/kubectl)](https://hub.docker.com/r/gsmlg/kubectl)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-kubectl.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-kubectl.yml)
 
-    - [kubectl](docker/log-forwarder)
+    - [log-forwarder](docker/log-forwarder)
     Forward log to couchdb.
     [Repo Link](https://hub.docker.com/r/gsmlg/log-forwarder/tags)
 
