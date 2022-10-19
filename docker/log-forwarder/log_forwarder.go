@@ -12,9 +12,9 @@ import (
 
 // Server ...
 type Server struct {
-	host   string
-	port   string
-	target string
+	Host   string
+	Port   string
+	Target string
 }
 
 // Client ...
@@ -23,25 +23,9 @@ type Client struct {
 	target string
 }
 
-// Config ...
-type Config struct {
-	Host   string
-	Port   string
-	Target string
-}
-
-// New ...
-func New(config *Config) *Server {
-	return &Server{
-		host:   config.Host,
-		port:   config.Port,
-		target: config.Target,
-	}
-}
-
 // Run ...
 func (server *Server) Run() {
-	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", server.host, server.port))
+	listener, err := net.Listen("tcp", fmt.Sprintf("%s:%s", server.Host, server.Port))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -55,7 +39,7 @@ func (server *Server) Run() {
 
 		client := &Client{
 			conn:   conn,
-			target: server.target,
+			target: server.Target,
 		}
 		go client.handleRequest()
 	}
@@ -74,19 +58,18 @@ func (client *Client) handleRequest() {
 		m := strings.NewReader(string(message))
 		_, err1 := http.Post(client.target, "application/json", m)
 		if err1 != nil {
-			fmt.Fprintf(os.Stderr, "ERR: %v\n%s", err1, m)
+			fmt.Fprintf(os.Stderr, "ERR: %s\r\n%v\r\n%s", client.target, err1, m)
 		}
 		client.conn.Write([]byte("Log received and forwarded. \n"))
 	}
 }
 
 func main() {
-	host := getAddr()
-	port := getPort()
-	server := New(&Config{
-		Host: host,
-		Port: port,
-	})
+	server := &Server{
+		Host:   getAddr(),
+		Port:   getPort(),
+		Target: getTarget(),
+	}
 	server.Run()
 }
 
