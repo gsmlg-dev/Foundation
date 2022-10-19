@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 

@@ -2,7 +2,7 @@ FROM gsmlg/curl:latest AS builder
 
 ARG KUBE_VERSION="1.22"
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 # install kubectl
 RUN export A=`arch`; \
@@ -27,7 +27,7 @@ FROM alpine
 
 ARG KUBE_VERSION="1.22"
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL kubernetes_version="${KUBE_VERSION}"
 
 COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl

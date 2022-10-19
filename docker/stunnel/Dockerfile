@@ -1,6 +1,6 @@
 FROM alpine:3.16
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV PROXY_MODE=master \
     PROXY_SERVER="" \

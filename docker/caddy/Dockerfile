@@ -16,7 +16,7 @@ FROM caddy:alpine
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 WORKDIR "/srv"
 

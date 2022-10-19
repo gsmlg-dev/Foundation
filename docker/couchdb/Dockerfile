@@ -2,7 +2,7 @@ FROM couchdb:3.2.2
 
 # Document https://github.com/apache/couchdb-docker/blob/master/README.md
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV COUCHDB_USER=gsmlg \
     COUCHDB_PASSWORD=gsmlg \

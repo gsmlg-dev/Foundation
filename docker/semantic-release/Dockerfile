@@ -2,7 +2,7 @@ FROM gcr.io/kaniko-project/executor:latest as kanico
 
 FROM node:lts-alpine
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 RUN apk add --no-cache git curl jq bash \
   && npm install --location=global semantic-release \

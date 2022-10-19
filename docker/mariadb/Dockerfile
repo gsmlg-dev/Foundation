@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG TZ="Asia/Shanghai"

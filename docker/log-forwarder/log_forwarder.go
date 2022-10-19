@@ -55,7 +55,7 @@ func (client *Client) handleRequest() {
 		}
 		fmt.Print(message)
 		// fmt.Printf("Message incoming: %s", string(message))
-		m := strings.NewReader(string(message))
+		m := strings.NewReader(message)
 		_, err1 := http.Post(client.target, "application/json", m)
 		if err1 != nil {
 			fmt.Fprintf(os.Stderr, "ERR: %s\r\n%v\r\n%s", client.target, err1, m)

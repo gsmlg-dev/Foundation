@@ -8,7 +8,7 @@ RUN  go build -o log-forwarder log_forwarder.go
 
 FROM scratch
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV ADDR=0.0.0.0\
   PORT=3396 \

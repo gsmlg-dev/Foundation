@@ -3,7 +3,7 @@ FROM elixir:${ELIXIR_VERSION}
 
 ARG PHOENIX_VERSION="1.6"
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"

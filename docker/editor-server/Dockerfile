@@ -3,7 +3,7 @@ FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
 LABEL CODE_SERVER_VERSION=$CODE_SERVER_VERSION
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG VERSION
 LABEL VERSION=$VERSION

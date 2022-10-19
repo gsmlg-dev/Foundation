@@ -1,6 +1,6 @@
 FROM ubuntu:20.04 as builder
 
-LABEL mantainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
