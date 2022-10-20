@@ -10,9 +10,10 @@ FROM scratch
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ENV ADDR=0.0.0.0\
+ENV ADDR=127.0.0.1 \
   PORT=3396 \
-  TARGET="http://couch:couch@couch1.log-target.dev:5984/web-log"
+  TARGET="http://couch:couch@couch1.log-target.dev:5984/web-log" \
+  SILENT 
 
 COPY --from=builder /go/log-forwarder /log-forwarder
 
