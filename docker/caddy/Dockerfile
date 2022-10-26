@@ -4,8 +4,8 @@ ARG CADDY_VERSION=v2.6.2
 ARG CADDY_WITH
 ARG USER
 ARG TOKEN
-ARG GOPRIVATE
-ARG CGO_ENABLED
+ARG GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
+ARG CGO_ENABLED=0
 ARG XCADDY_DEBUG=1
 
 RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com"
