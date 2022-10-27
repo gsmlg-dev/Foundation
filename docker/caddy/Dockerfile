@@ -4,7 +4,7 @@ ARG CADDY_VERSION=v2.6.2
 ARG CADDY_WITH
 ARG USER
 ARG TOKEN
-ARG GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
+ARG GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang
 ARG CGO_ENABLED=0
 ARG XCADDY_DEBUG=1
 
