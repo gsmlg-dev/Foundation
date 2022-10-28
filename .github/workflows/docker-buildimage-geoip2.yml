@@ -39,3 +39,7 @@ jobs:
           tags: gsmlg/geoip2:latest
           build-args: |
             LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}
+            USER=${{ secrets.GIT_USER_ID }}
+            TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang
+            CGO_ENABLED=0

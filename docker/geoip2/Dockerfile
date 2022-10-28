@@ -9,13 +9,17 @@ RUN curl -vL "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite
 
 FROM golang:alpine as builder
 
+ARG USER
+ARG TOKEN
+ARG GOPRIVATE
 ARG CGO_ENABLED=0
 
 WORKDIR /app
 
 COPY . /app
 
-RUN ls -Al && go build -o geoip2 -trimpath geoip2.go
+RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
+  && go build -o geoip2 -trimpath geoip2.go
 
 FROM scratch
 
