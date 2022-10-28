@@ -15,7 +15,7 @@ COPY ./geoip2.go /go/
 COPY ./go.mod /go/
 COPY ./go.sum /go/
 
-RUN go build -o geoip2 geoip2.go
+RUN go get && go build -o geoip2 geoip2.go
 
 FROM scratch
 
