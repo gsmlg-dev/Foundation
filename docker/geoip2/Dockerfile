@@ -11,11 +11,11 @@ FROM golang:alpine as builder
 
 ARG CGO_ENABLED=0
 
-WORKDIR /go
+WORKDIR /app
 
-COPY ./geoip2.go /go/
-COPY ./go.mod /go/
-COPY ./go.sum /go/
+COPY ./geoip2.go /app/geoip2.go
+COPY ./go.mod /app/go.mod
+COPY ./go.sum /app/go.sum
 
 RUN go get && go build -o geoip2 -trimpath geoip2.go
 
@@ -24,7 +24,7 @@ FROM scratch
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 COPY --from=downloader /GeoLite2-City.mmdb /GeoLite2-City.mmdb
-COPY --from=builder /go/geoip2 /geoip2
+COPY --from=builder /app/geoip2 /geoip2
 
 CMD ["-h"]
 ENTRYPOINT [ "/geoip2" ]
