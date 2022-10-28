@@ -18,7 +18,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN git config --global url."https://${USER}:${TOKEN}@github.com".insteadOf "https://github.com" \
+RUN echo "machine github.com login ${USER} password ${TOKEN}" >> $HOME/.netrc \
   && go build -o geoip2 -trimpath geoip2.go
 
 FROM scratch
