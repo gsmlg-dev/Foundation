@@ -39,6 +39,17 @@ func pacHandler(w http.ResponseWriter, r *http.Request) {
 	ip := net.ParseIP(ipStr)
 	fmt.Printf("Query IP %s\n", ipStr)
 	record, _ := db.City(ip)
+	/**
+	  Supported languages:
+	    pt-BR
+	    en
+	    ja
+	    ru
+	    fr
+	    es
+	    zh-CN
+	    de
+	*/
 	lang := "en"
 	qlang := r.URL.Query().Get("lang")
 	if qlang != "" {
@@ -51,6 +62,7 @@ func pacHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Content-Length", fmt.Sprintf("%d", l))
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Supported-Languages", "pt-BR,en,ja,ru,fr,es,zh-CN,de")
 
 	pacReader := bytes.NewReader(s)
 	io.Copy(w, pacReader)
