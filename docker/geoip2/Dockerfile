@@ -13,11 +13,9 @@ ARG CGO_ENABLED=0
 
 WORKDIR /app
 
-COPY ./geoip2.go /app/geoip2.go
-COPY ./go.mod /app/go.mod
-COPY ./go.sum /app/go.sum
+COPY . /app
 
-RUN go get && go build -o geoip2 -trimpath geoip2.go
+RUN ls -Al && go build -o geoip2 -trimpath geoip2.go
 
 FROM scratch
 
