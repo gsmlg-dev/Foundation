@@ -4,7 +4,7 @@ ARG LICENSE
 
 WORKDIR /
 
-RUN curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${LICENSE}&suffix=tar.gz" -o db.tar.gz \
+RUN curl -vL "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${LICENSE}&suffix=tar.gz" -o db.tar.gz \
   && tar zxf db.tar.gz --strip-components 1
 
 FROM golang:alpine as builder
@@ -19,7 +19,7 @@ FROM scratch
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-COPY --from downloader /GeoLite2-City.mmdb /GeoLite2-City.mmdb
+COPY --from=downloader /GeoLite2-City.mmdb /GeoLite2-City.mmdb
 COPY --from=builder /go/geoip2 /geoip2
 
 CMD ["-h"]
