@@ -40,6 +40,10 @@ func pacHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Query IP %s\n", ipStr)
 	record, _ := db.City(ip)
 	lang := "en"
+	qlang := r.URL.Query().Get("lang")
+	if qlang != "" {
+		lang = qlang
+	}
 	c := geoip2.ProduceCity(record, lang)
 	s, _ := json.Marshal(c)
 	l := len(s)
