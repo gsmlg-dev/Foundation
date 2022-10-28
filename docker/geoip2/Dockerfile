@@ -11,11 +11,13 @@ FROM golang:alpine as builder
 
 ARG CGO_ENABLED=0
 
+WORKDIR /go
+
 COPY ./geoip2.go /go/
 COPY ./go.mod /go/
 COPY ./go.sum /go/
 
-RUN go get && go build -o geoip2 geoip2.go
+RUN go get && go build -o geoip2 -trimpath geoip2.go
 
 FROM scratch
 
