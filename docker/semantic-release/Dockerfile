@@ -11,6 +11,7 @@ RUN apk add --no-cache git curl jq bash \
     @semantic-release/exec \
     @semantic-release/gitlab \
     @semantic-release/commit-analyzer \
+    @semantic-release/release-notes-generator \
     semantic-release-monorepo \
   && npm install --location=global @microsoft/rush pnpm
 
