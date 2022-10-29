@@ -3,6 +3,8 @@ github.com/gsmlg-dev/gsmlg-golang v1.4.2 h1:1lFlu7P2ZEe1WV4HMvOZf8eW3VJI5XpggyIN
 github.com/gsmlg-dev/gsmlg-golang v1.4.2/go.mod h1:1liXCkfnvAYF08ScivKG0+VXWc93g3SqV05hJGW1Pdw=
 github.com/gsmlg-dev/gsmlg-golang v1.4.4 h1:QWMXNaXYa0gjVcB8C2AeczSh2+2mMAQ4oUyBLV5L6fw=
 github.com/gsmlg-dev/gsmlg-golang v1.4.4/go.mod h1:1liXCkfnvAYF08ScivKG0+VXWc93g3SqV05hJGW1Pdw=
+github.com/gsmlg-dev/gsmlg-golang v1.4.5 h1:ptc42Ec2Q+gARGdRfygYh2c7FvdvNfauBk98V9bLHQo=
+github.com/gsmlg-dev/gsmlg-golang v1.4.5/go.mod h1:1liXCkfnvAYF08ScivKG0+VXWc93g3SqV05hJGW1Pdw=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/stretchr/testify v1.8.0 h1:pSgiaMZlXftHpm5L7V1+rVB+AZJydKsMxsQBIJw4PKk=
 golang.org/x/sys v0.0.0-20220627191245-f75cf1eec38b h1:2n253B2r0pYSmEV+UNCQoPfU/FiaizQEK5Gu4Bq4JE8=

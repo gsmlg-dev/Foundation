@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"embed"
 	_ "embed"
 	"encoding/json"
 	"flag"
@@ -69,14 +68,12 @@ func pacHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 //go:embed GeoLite2-City.mmdb
-var efs embed.FS
+var dbBuffer []byte
 
 func main() {
 	flag.Parse()
 
-	dbFile, _ := efs.Open("GeoLite2-City.mmdb")
-
-	db, _ = geoip2.ReadFile(dbFile)
+	db, _ = geoip2.ReadBuffer(dbBuffer)
 	defer db.Close()
 
 	if ips != "" {

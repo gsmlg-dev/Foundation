@@ -16,7 +16,9 @@ ARG CGO_ENABLED=0
 
 WORKDIR /app
 
-COPY . /app
+COPY ./embed /app
+
+COPY --from=downloader /GeoLite2-City.mmdb /app/GeoLite2-City.mmdb
 
 RUN echo "machine github.com login ${USER} password ${TOKEN}" >> $HOME/.netrc \
   && go build -o geoip2 -trimpath geoip2.go
@@ -25,7 +27,6 @@ FROM scratch
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-COPY --from=downloader /GeoLite2-City.mmdb /GeoLite2-City.mmdb
 COPY --from=builder /app/geoip2 /geoip2
 
 CMD ["-h"]
