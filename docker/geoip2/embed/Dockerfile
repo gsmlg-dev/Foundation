@@ -16,7 +16,7 @@ ARG CGO_ENABLED=0
 
 WORKDIR /app
 
-COPY ./embed /app
+COPY . /app
 
 COPY --from=downloader /GeoLite2-City.mmdb /app/GeoLite2-City.mmdb
 
