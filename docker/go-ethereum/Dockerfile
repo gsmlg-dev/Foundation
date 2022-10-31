@@ -1,14 +1,23 @@
-FROM golang:alpine
+FROM golang:alpine as builder
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG VERSION=v1.9.25
-ENV GO111MODULE=on
+ARG GO111MODULE=on
+ARG CGO_ENABLED=0
 
-RUN apk update \
-    && apk add git gcc musl-dev linux-headers
+WORKDIR /
 
-RUN go get -d github.com/ethereum/go-ethereum@${VERSION}
+RUN apk add --update git curl make gcc musl-dev linux-headers \
+  && curl -sL "https://github.com/ethereum/go-ethereum/archive/refs/tags/v${VERSION}.tar.gz" -o /archive.tgz \
+  && tar zxf archive.tgz --strip-components=1 -C /src \
+  && cd /src && make all
 
-RUN cd /go/pkg/mod/github.com/ethereum/go-ethereum@${VERSION} && go install ./...
+FROM alpine:3.16
 
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL VERSION="$VERSION"
+
+COPY --from=builder /src/build/bin /usr/local/bin
+
+CMD ["geth"]
