@@ -9,8 +9,9 @@ ARG CGO_ENABLED=0
 WORKDIR /
 
 RUN apk add --update git curl make gcc musl-dev linux-headers \
-  && curl -sL "https://github.com/ethereum/go-ethereum/archive/refs/tags/v${VERSION}.tar.gz" -o /archive.tgz \
-  && tar zxf archive.tgz --strip-components=1 -C /src \
+  && curl -sL "https://github.com/ethereum/go-ethereum/archive/refs/tags/v${VERSION}.tar.gz" -o /archive.tar.gz \
+  && mkdir /src \
+  && tar zxf /archive.tar.gz --strip-components=1 -C /src \
   && cd /src && make all
 
 FROM alpine:3.16
