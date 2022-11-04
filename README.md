@@ -23,10 +23,6 @@ I've manage too many repositories, that I have to combine them to one so that I 
 
 - [golang](golang)
 
-    - [geoip2-server](golang/geoip2-server)
-
-    GeoIP2 server
-
     - [pac-server](golang/pac-server)
 
     PAC (Proxy Auto-Config) file server.
@@ -118,6 +114,13 @@ I've manage too many repositories, that I have to combine them to one so that I 
 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/editor-server)](https://hub.docker.com/r/gsmlg/editor-server)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-editor-server.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-editor-server.yml)
+
+    - [geoip2](docker/geoip2)
+    My GeoIP2 server image.
+    [Repo Link](https://hub.docker.com/r/gsmlg/geoip2/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/geoip2)](https://hub.docker.com/r/gsmlg/geoip2)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-geoip2.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-geoip2.yml)
 
     - [go-ethereum](docker/go-ethereum)
     Golang implementation of the Ethereum.
