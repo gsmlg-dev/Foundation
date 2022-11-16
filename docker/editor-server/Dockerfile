@@ -84,7 +84,7 @@ RUN apt-get install -y default-jdk \
   && chmod +x /usr/local/bin/grun
 
 # install nodejs
-ARG NODEJS_VERSION=16
+ARG NODEJS_VERSION=18
 ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y -qq nodejs \
