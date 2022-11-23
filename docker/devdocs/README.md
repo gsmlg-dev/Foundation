@@ -137,12 +137,19 @@ Download docs
 # cd /devdocs
 bundle exec thor docs:download --all
 # download docs to /devdocs/public/docs
+bundle exec thor assets:clean
 bundle exec thor assets:compile
 # compile assets to /devdocs/public/assets
 ```
 
-Crontab
+## Update docs
+
+It's better to run update every month by `thor docs:download --all`
 
 ```
-thor updates:check
+# must setup github token or will fail cause connection limit
+# Check
+thor updates:check --github-token=$GITHUB_TOKEN
+# Update
+thor docs:download --installed
 ```
