@@ -10,7 +10,7 @@ RUN apk --update add git \
 
 FROM ruby:2.7.4
 
-LABEL maintainer="GSMLG < me@gsmlg.org >"
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV LANG=C.UTF-8
 ENV ENABLE_SERVICE_WORKER=true
