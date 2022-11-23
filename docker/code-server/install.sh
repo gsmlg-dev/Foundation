@@ -131,6 +131,11 @@ Or, if you don't want/need a background service you can run:
 EOF
 }
 
+echo_coder_postinstall() {
+  echoh
+  echoh "Deploy code-server for your team with Coder: https://github.com/coder/coder"
+}
+
 main() {
   if [ "${TRACE-}" ]; then
     set -x
@@ -243,6 +248,7 @@ main() {
   if [ "$METHOD" = standalone ]; then
     if has_standalone; then
       install_standalone
+      echo_coder_postinstall
       exit 0
     else
       echoerr "There are no standalone releases for $ARCH"
@@ -286,6 +292,8 @@ main() {
       npm_fallback install_standalone
       ;;
   esac
+
+  echo_coder_postinstall
 }
 
 parse_arg() {
@@ -364,7 +372,7 @@ install_rpm() {
 
   fetch "https://github.com/coder/code-server/releases/download/v$VERSION/code-server-$VERSION-$ARCH.rpm" \
     "$CACHE_DIR/code-server-$VERSION-$ARCH.rpm"
-  sudo_sh_c rpm -i "$CACHE_DIR/code-server-$VERSION-$ARCH.rpm"
+  sudo_sh_c rpm -U "$CACHE_DIR/code-server-$VERSION-$ARCH.rpm"
 
   echo_systemd_postinstall rpm
 }
@@ -482,7 +490,7 @@ os() {
 # - amzn, centos, rhel, fedora, ... -> fedora
 # - opensuse-{leap,tumbleweed} -> opensuse
 # - alpine -> alpine
-# - arch -> arch
+# - arch, manjaro, endeavouros, ... -> arch
 #
 # Inspired by https://github.com/docker/docker-install/blob/26ff363bcf3b3f5a00498ac43694bf1c7d9ce16c/install.sh#L111-L120.
 distro() {
@@ -496,7 +504,7 @@ distro() {
       . /etc/os-release
       if [ "${ID_LIKE-}" ]; then
         for id_like in $ID_LIKE; do
-          case "$id_like" in debian | fedora | opensuse)
+          case "$id_like" in debian | fedora | opensuse | arch)
             echo "$id_like"
             return
             ;;
@@ -553,15 +561,17 @@ sh_c() {
 sudo_sh_c() {
   if [ "$(id -u)" = 0 ]; then
     sh_c "$@"
+  elif command_exists doas; then
+    sh_c "doas $*"
   elif command_exists sudo; then
     sh_c "sudo $*"
   elif command_exists su; then
-    sh_c "su - -c '$*'"
+    sh_c "su root -c '$*'"
   else
     echoh
     echoerr "This script needs to run the following command as root."
     echoerr "  $*"
-    echoerr "Please install sudo or su."
+    echoerr "Please install doas, sudo, or su."
     exit 1
   fi
 }

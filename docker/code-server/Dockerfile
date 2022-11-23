@@ -2,10 +2,11 @@ FROM debian:11
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ARG VERSION=4.7.1
+ARG VERSION=4.8.3
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
+ENV CODE_SERVER_VERSION=$VERSION
 
 RUN apt update \
   && apt install -y curl ca-certificates zsh sudo \
