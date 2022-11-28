@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.7.1
+ARG CODE_SERVER_VERSION=4.8.3
 FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -94,6 +94,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && npm install -g npm-check-updates \
   && npm install -g @microsoft/rush \
   && npm install -g @aws-amplify/cli \
+  && npm install -g ts-node \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
@@ -121,6 +122,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gomobile@latest \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gobind@latest \
   && /usr/local/go/bin/go install github.com/evanw/esbuild/cmd/esbuild@latest \
+  && /usr/local/go/bin/go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
