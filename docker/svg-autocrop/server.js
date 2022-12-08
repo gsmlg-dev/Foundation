@@ -10,10 +10,10 @@ app.use(express.json())
 
 app.post('/api/svg-autocrop', async (req, res, next) => {
   try {
-  const { code } = req.body;
-  const output = await autoCropSvg(code);
-  const skipRiskyTransformations = output.skipRiskyTransformations;
-  res.json({ output: output.result, skipRiskyTransformations });
+    const { code } = req.body;
+    const output = await autoCropSvg(code);
+    const skipRiskyTransformations = output.skipRiskyTransformations;
+    res.json({ output: output.result, skipRiskyTransformations });
   } catch(e) {
     res.status(500).json({ error: e });
   }
