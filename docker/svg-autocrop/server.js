@@ -15,7 +15,6 @@ app.post('/api/svg-autocrop', async (req, res, next) => {
     const skipRiskyTransformations = output.skipRiskyTransformations;
     res.json({ output: output.result, skipRiskyTransformations });
   } catch(e) {
-    console.error(e);
     res.status(500).json({ error: e?.message });
   }
 });
