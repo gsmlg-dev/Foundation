@@ -8,7 +8,7 @@ const app = express()
 app.use(logger('tiny'))
 app.use(express.json())
 
-app.post('/api/svg-autoscrop', async (req, res, next) => {
+app.post('/api/svg-autocrop', async (req, res, next) => {
   try {
   const { code } = req.body;
   const output = await autoCropSvg(code);
