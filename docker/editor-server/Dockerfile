@@ -145,8 +145,9 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
-  && chown -R coder:coder "${RUSTPATH}" \
-  && /opt/rust/bin/cargo install difftastic
+  && /opt/rust/bin/cargo install difftastic \
+  && /opt/rust/bin/cargo install cargo-generate \
+  && chown -R coder:coder "${RUSTPATH}"
 
 # install php
 RUN apt-get install -y php-cli
