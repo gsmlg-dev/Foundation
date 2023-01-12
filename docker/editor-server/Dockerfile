@@ -148,6 +148,7 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && /opt/rust/bin/rustup target add wasm32-unknown-unknown \
   && /opt/rust/bin/cargo install difftastic \
   && /opt/rust/bin/cargo install cargo-generate \
+  && /opt/rust/bin/cargo install wasm-pack \
   && /opt/rust/bin/cargo install trunk wasm-bindgen-cli \
   && chown -R coder:coder "${RUSTPATH}"
 
