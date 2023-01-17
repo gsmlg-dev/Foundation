@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'DustinBrett/daedalOS'
-          ref: DustinBrett/daedalOS
+          ref: main
           path: 'docker/daedalos/'
       -
         name: Build and push
