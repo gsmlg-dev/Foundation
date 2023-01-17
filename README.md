@@ -185,6 +185,27 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/phoenix)](https://hub.docker.com/r/gsmlg/phoenix)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-phoenix.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-phoenix.yml)
 
+    - [python](docker/python)
+    My Python docker base image.
+    [Repo Link](https://hub.docker.com/r/gsmlg/python/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/python)](https://hub.docker.com/r/gsmlg/python)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-python.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-python.yml)
+
+    - [python](docker/rabbitmq)
+    My RabbitMQ docker image.
+    [Repo Link](https://hub.docker.com/r/gsmlg/rabbitmq/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/rabbitmq)](https://hub.docker.com/r/gsmlg/rabbitmq)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-rabbitmq.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-rabbitmq.yml)
+
+    - [python](docker/semantic-release)
+    My semantic-release docker image, with kanico image builder, and plugins: gitlab, git and monorepo.
+    [Repo Link](https://hub.docker.com/r/gsmlg/semantic-release/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/semantic-release)](https://hub.docker.com/r/gsmlg/semantic-release)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-semantic-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-semantic-release.yml)
+
     - [snapdrop](docker/snapdrop)
     My snapdrop project base image.
     [Repo Link](https://hub.docker.com/r/gsmlg/snapdrop/tags)
@@ -205,6 +226,20 @@ I've manage too many repositories, that I have to combine them to one so that I 
 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/stunnel)](https://hub.docker.com/r/gsmlg/stunnel)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-stunnel.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-stunnel.yml)
+
+    - [svg-autocrop](docker/svg-autocrop)
+    Optimize svg with headless browser.
+    [Repo Link](https://hub.docker.com/r/gsmlg/svg-autocrop/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/svg-autocrop)](https://hub.docker.com/r/gsmlg/svg-autocrop)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-svg-autocrop.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-svg-autocrop.yml)
+
+    - [stunnel](docker/tinyproxy)
+    Proxy server tinyproxy.
+    [Repo Link](https://hub.docker.com/r/gsmlg/tinyproxy/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/tinyproxy)](https://hub.docker.com/r/gsmlg/tinyproxy)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-tinyproxy.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-tinyproxy.yml)
 
     - [unbound](docker/unbound)
     Encrypt connection service.
