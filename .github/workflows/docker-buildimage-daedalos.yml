@@ -20,7 +20,7 @@ jobs:
         with:
           repository: 'DustinBrett/daedalOS'
           ref: main
-          path: 'docker/daedalos/'
+          path: 'daedalos/'
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -37,7 +37,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: docker/daedalos/
+          context: daedalos/
           file: docker/daedalos/Dockerfile
           platforms: linux/amd64
           push: true
