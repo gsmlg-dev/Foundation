@@ -78,6 +78,13 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/curl)](https://hub.docker.com/r/gsmlg/curl)
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-curl.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-curl.yml)
 
+    - [daedalos](docker/daedalos)
+    Desktop environment in the browser.
+    [Repo Link](https://hub.docker.com/r/gsmlg/daedalos/tags)
+
+    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/daedalos)](https://hub.docker.com/r/gsmlg/daedalos)
+    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-daedalos.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-daedalos.yml)
+
     - [dell-openmanage](docker/dell-openmanage)
     Dell openmanage package. Use to automate manage server through iDrac base on centos 7.
     [Repo Link](https://hub.docker.com/r/gsmlg/dell-openmanage/tags)

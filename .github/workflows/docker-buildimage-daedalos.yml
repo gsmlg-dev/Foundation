@@ -1,0 +1,30 @@
+name: docker-buildimage-daedalos
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docker/daedalos/**'
+      - '.github/workflows/docker-buildimage-daedalos.yml'
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: 'DustinBrett/daedalOS'
+          ref: DustinBrett/daedalOS
+          path: 'docker/daedalos/'
+      -
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: docker/daedalos/
+          file: docker/daedalos/Dockerfile
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: gsmlg/daedalos:latest
+
