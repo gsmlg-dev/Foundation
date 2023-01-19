@@ -1,8 +1,5 @@
 FROM quay.io/keycloak/keycloak:latest as builder
 
-# Features
-ENV KC_FEATURES="authorization,account2,account-api,admin-fine-grained-authz,admin-api,admin,admin2,docker,impersonation,openshift-integration,scripts,token-exchange,web-authn,client-policies,ciba,map-storage,par,declarative-user-profile,dynamic-scopes,client-secret-rotation,step-up-authentication,recovery-codes,update-email,js-adapter,preview"
-
 # Cache set to local, if run a cluster, use `ispn` instead
 ENV KC_CACHE=local
 
