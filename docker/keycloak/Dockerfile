@@ -1,5 +1,11 @@
 FROM quay.io/keycloak/keycloak:latest as builder
 
+# Features
+ENV KC_FEATURES="authorization,account2,account-api,admin-fine-grained-authz,admin-api,admin,admin2,docker,impersonation,openshift-integration,scripts,token-exchange,web-authn,client-policies,ciba,map-storage,par,declarative-user-profile,dynamic-scopes,client-secret-rotation,step-up-authentication,recovery-codes,update-email,js-adapter,preview"
+
+# Cache set to local, if run a cluster, use `ispn` instead
+ENV KC_CACHE=local
+
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
@@ -12,6 +18,13 @@ ENV KC_HTTP_ENABLED=true
 
 # Default proxy
 ENV KC_PROXY=edge
+
+# Log
+ENV KC_LOG_CONSOLE_OUTPUT=json
+
+# Default user
+ENV KEYCLOAK_ADMIN=admin
+ENV KEYCLOAK_ADMIN_PASSWORD=change_me
 
 WORKDIR /opt/keycloak
 
@@ -26,13 +39,10 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 # change these values to point to a running postgres instance
-ENV KC_DB_URL=<DBURL>
-ENV KC_DB_USERNAME=<DBUSERNAME>
-ENV KC_DB_PASSWORD=<DBPASSWORD>
+ENV KC_DB_URL=<jdbc:mariadb://localhost:3306/keycloak>
+ENV KC_DB_USERNAME=<keycloak>
+ENV KC_DB_PASSWORD=<keycloak_pwd>
 
-ENV KC_HOSTNAME=localhost
-
-ENV KEYCLOAK_ADMIN=admin 
-ENV KEYCLOAK_ADMIN_PASSWORD=change_me
+ENV KC_HOSTNAME=keycloak
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
