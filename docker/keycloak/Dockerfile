@@ -1,27 +1,30 @@
 FROM quay.io/keycloak/keycloak:latest as builder
 
+# Features
+ARG KC_FEATURES="authorization,account2,account-api,admin-fine-grained-authz,admin-api,admin2,impersonation,web-authn,client-policies,ciba,map-storage,par,declarative-user-profile,dynamic-scopes,step-up-authentication"
+
 # Cache set to local, if run a cluster, use `ispn` instead
-ENV KC_CACHE=local
+ARG KC_CACHE=local
 
 # Enable health and metrics support
-ENV KC_HEALTH_ENABLED=true
-ENV KC_METRICS_ENABLED=true
+ARG KC_HEALTH_ENABLED=true
+ARG KC_METRICS_ENABLED=true
 
 # Configure a database vendor
-ENV KC_DB=mariadb
+ARG KC_DB=mariadb
 
 # Enable http
-ENV KC_HTTP_ENABLED=true
+ARG KC_HTTP_ENABLED=true
 
 # Default proxy
-ENV KC_PROXY=edge
+ARG KC_PROXY=edge
 
 # Log
-ENV KC_LOG_CONSOLE_OUTPUT=json
+ARG KC_LOG_CONSOLE_OUTPUT=json
 
 # Default user
-ENV KEYCLOAK_ADMIN=admin
-ENV KEYCLOAK_ADMIN_PASSWORD=change_me
+ARG KEYCLOAK_ADMIN=admin
+ARG KEYCLOAK_ADMIN_PASSWORD=change_me
 
 WORKDIR /opt/keycloak
 
