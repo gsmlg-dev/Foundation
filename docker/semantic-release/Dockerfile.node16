@@ -21,7 +21,7 @@ COPY --from=kanico /kaniko/executor /kaniko/executor
 ENV DOCKER_CONFIG=/kaniko/.docker/
 RUN mkdir -p /kaniko/.docker/
 
-RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /usr/bin/mc \
+RUN wget https://dl.min.io/client/mc/release/linux-$(case "$(arch)" in "x86_64") echo amd64 ;; "aarch64") echo arm64 ;; *) "unknown" ;; esac)/mc -O /usr/bin/mc \
   && chmod +x /usr/bin/mc
 
 ENTRYPOINT ["/bin/bash", "-c"]
