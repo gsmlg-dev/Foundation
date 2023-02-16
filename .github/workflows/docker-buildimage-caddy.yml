@@ -41,7 +41,9 @@ jobs:
         with:
           working_directory: docker/caddy
           extends: |
-             semantic-release-monorepo
+            semantic-release-monorepo
+          extra_plugins: |
+            @semantic-release/exec
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
