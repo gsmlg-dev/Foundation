@@ -28,12 +28,20 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v3
+      - name: Create package.json
+        run: |
+          cat <<EOF > docker/caddy/package.json
+          {
+            "name": "caddy"
+          }
+          EOF
       - name: 🚀 Release
-        uses: gsmlg/semantic-release-action@v3
+        uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
-          release_name: caddy
-          working-directory: docker/caddy
+          working_directory: docker/caddy
+          extends: |
+             semantic-release-monorepo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
