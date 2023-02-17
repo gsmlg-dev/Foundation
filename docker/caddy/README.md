@@ -14,4 +14,6 @@ xcaddy build with
 --with github.com/caddyserver/cache-handler
 --with github.com/caddyserver/replace-response
 --with github.com/greenpau/caddy-security
+--with github.com/mholt/caddy-ratelimit
+--with github.com/mholt/caddy-webdav
 ```
