@@ -16,7 +16,7 @@ RUN apk add --no-cache git curl jq bash \
   && npm install --location=global @microsoft/rush pnpm
 
 # Now using ASDF manage packages
-RUN apk add --no-cache clang clang-dev 
+RUN apk add --no-cache clang clang-dev openssl-dev make autoconf ncurses-dev gcc g++
 ARG ASDF_DIR=/opt/asdf
 ARG ASDF_DATA_DIR=/opt/asdf-data
 ENV ASDF_DIR=$ASDF_DIR
