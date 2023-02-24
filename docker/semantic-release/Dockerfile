@@ -5,11 +5,11 @@ FROM node:lts-alpine
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 RUN apk add --no-cache git curl jq bash \
-  && npm install --location=global semantic-release \
+  && npm install --location=global semantic-release@19 \
     @semantic-release/changelog \
     @semantic-release/git \
     @semantic-release/exec \
-    @semantic-release/gitlab \
+    @semantic-release/gitlab@9 \
     @semantic-release/commit-analyzer \
     @semantic-release/release-notes-generator \
     semantic-release-monorepo \
