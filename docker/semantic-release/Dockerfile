@@ -15,6 +15,27 @@ RUN apk add --no-cache git curl jq bash \
     semantic-release-monorepo \
   && npm install --location=global @microsoft/rush pnpm
 
+# Now using ASDF manage packages
+ARG ASDF_DIR=/opt/asdf
+ARG ASDF_DATA_DIR=/opt/asdf-data
+ENV ASDF_DIR=$ASDF_DIR
+ENV ASDF_DATA_DIR=$ASDF_DATA_DIR
+RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.11.2 \
+  && touch $ASDF_DIR/asdf_updates_disabled \
+  && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/bash/bashrc"
+
+# install erlang and elixir
+RUN bash -c "source $ASDF_DIR/asdf.sh \
+  && asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git \
+  && asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git \
+  && asdf install erlang latest \
+  && asdf install elixir latest \
+  && asdf global erlang latest \
+  && asdf global elixir latest \
+  && mix local.hex --force \
+  && mix local.rebar --force"
+
+
 ENV NODE_PATH=/usr/local/lib/node_modules
 
 COPY --from=kanico /kaniko/executor /kaniko/executor
