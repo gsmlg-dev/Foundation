@@ -27,7 +27,7 @@ jobs:
         id: semantic
         with:
           release_name: editor-server
-          working-directory: 'docker/editor-server'
+          working_directory: 'docker/editor-server'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
