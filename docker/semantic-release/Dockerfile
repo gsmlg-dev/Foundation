@@ -15,7 +15,7 @@ RUN apk add --no-cache git curl jq bash \
     semantic-release-monorepo \
   && npm install --location=global @microsoft/rush pnpm
 
-RUN RUN apk add --no-cache clang
+RUN apk add --no-cache clang
 
 # Now using ASDF manage packages
 ARG ASDF_DIR=/opt/asdf
