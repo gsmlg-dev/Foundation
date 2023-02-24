@@ -16,7 +16,7 @@ RUN apk add --no-cache git curl jq bash \
   && npm install --location=global @microsoft/rush pnpm
 
 # install erlang and elixir
-RUN apk add --no-cache erlang elixir && bash -c "mix local.hex --force && mix local.rebar --force"
+RUN apk add --no-cache erlang elixir && mix local.hex --force && mix local.rebar --force
 
 ENV NODE_PATH=/usr/local/lib/node_modules
 
