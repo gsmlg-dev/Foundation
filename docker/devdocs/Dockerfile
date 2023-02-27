@@ -8,7 +8,7 @@ WORKDIR /devdocs
 RUN apk --update add git \
     && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs
 
-FROM ruby:2.7.4
+FROM ruby:3.2.1
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
@@ -25,7 +25,8 @@ RUN apt-get update \
 COPY --from=downloader /devdocs/Gemfile /devdocs/Gemfile.lock /devdocs/Rakefile /devdocs/
 
 RUN bundle config set system 'true' \
-    && bundle install --system \
+    && bundle config set --local system 'true' \
+    && bundle install \
     && rm -rf ~/.gem /root/.bundle/cache /usr/local/bundle/cache
 
 COPY --from=downloader /devdocs /devdocs
