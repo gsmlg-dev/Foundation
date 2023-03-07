@@ -13,7 +13,8 @@ RUN apk add --no-cache git curl jq bash \
     @semantic-release/commit-analyzer \
     @semantic-release/release-notes-generator \
     semantic-release-monorepo \
-  && npm install --location=global @microsoft/rush pnpm
+  && npm install --location=global @microsoft/rush pnpm \
+  && chown -R root:root /usr/local/lib/node_modules
 
 # install erlang and elixir
 RUN apk add --no-cache erlang elixir
