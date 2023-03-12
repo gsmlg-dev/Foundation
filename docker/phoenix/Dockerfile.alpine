@@ -1,7 +1,7 @@
-ARG ELIXIR_VERSION="1.14"
+ARG ELIXIR_VERSION="1.14.3"
 FROM elixir:${ELIXIR_VERSION}-alpine
 
-ARG PHOENIX_VERSION="1.6"
+ARG PHOENIX_VERSION="1.7.1"
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
