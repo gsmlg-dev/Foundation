@@ -46,7 +46,7 @@ Usage:
       Sets the prefix used by standalone release archives. Defaults to ~/.local
       The release is unarchived into ~/.local/lib/code-server-X.X.X
       and the binary symlinked into ~/.local/bin/code-server
-      To install system wide pass ---prefix=/usr/local
+      To install system wide pass --prefix=/usr/local
 
   --rsh <bin>
       Specifies the remote shell for remote installation. Defaults to ssh.
@@ -387,7 +387,7 @@ install_aur() {
   if [ ! "${DRY_RUN-}" ]; then
     cd "$CACHE_DIR/code-server-aur"
   fi
-  sh_c makepkg -si
+  sh_c makepkg -si --noconfirm
 
   echo_systemd_postinstall AUR
 }

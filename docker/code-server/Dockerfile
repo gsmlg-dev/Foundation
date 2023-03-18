@@ -2,20 +2,21 @@ FROM debian:11
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ARG VERSION=4.8.3
+ARG VERSION=4.11.0
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 ENV CODE_SERVER_VERSION=$VERSION
 
-RUN apt update \
-  && apt install -y curl ca-certificates zsh sudo \
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt install -y curl ca-certificates zsh sudo gpg \
   && useradd coder --create-home --shell $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder 
 
 COPY install.sh /tmp/install.sh
 
-RUN /tmp/install.sh --prefix=/usr/local --version $VERSION
+RUN /tmp/install.sh --method standalone --prefix=/usr/local --version $VERSION
 
 RUN rm -rf /root/.cache && rm -rf /tmp/*
 
