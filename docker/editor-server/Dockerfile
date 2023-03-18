@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.8.3
+ARG CODE_SERVER_VERSION=4.11.0
 FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -41,7 +41,13 @@ RUN apt-get install -y -qq \
   inotify-tools \
   iputils-ping net-tools \
   apache2-utils \
-  clang cmake ninja-build pkg-config libgtk-3-dev
+  clang cmake ninja-build pkg-config libgtk-3-dev \
+  lsof \
+  apt-file \
+  whois \
+  geoip-bin geoip-database
+
+RUN apt-file update 
 
 # Gen locale
 ARG LANG=en_US.UTF-8
@@ -57,7 +63,7 @@ ARG ASDF_DIR=/opt/asdf
 ARG ASDF_DATA_DIR=/opt/asdf-data
 ENV ASDF_DIR=$ASDF_DIR
 ENV ASDF_DATA_DIR=$ASDF_DATA_DIR
-RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.10.2 \
+RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.11.3 \
   && touch $ASDF_DIR/asdf_updates_disabled \
   && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/zsh/zshrc"
 
@@ -73,7 +79,7 @@ RUN bash -c "source $ASDF_DIR/asdf.sh \
   && mix local.rebar --force"
 
 # install jdk
-ARG ANTLR_VERSION=4.11.1
+ARG ANTLR_VERSION=4.12.0
 RUN apt-get install -y default-jdk \
   && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
   && echo "#!/bin/bash" > /usr/local/bin/antlr \
@@ -98,7 +104,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
-ARG GO_VERSION=1.19.2
+ARG GO_VERSION=1.20.2
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
@@ -146,6 +152,12 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
   && /opt/rust/bin/rustup target add wasm32-unknown-unknown \
+  && /opt/rust/bin/rustup target add x86_64-unknown-freebsd \
+  && /opt/rust/bin/rustup target add x86_64-apple-darwin \
+  && /opt/rust/bin/rustup target add x86_64-pc-windows-msvc \
+  && /opt/rust/bin/rustup target add aarch64-apple-darwin \
+  && /opt/rust/bin/rustup target add aarch64-apple-ios \
+  && /opt/rust/bin/rustup target add aarch64-linux-android \
   && /opt/rust/bin/cargo install difftastic \
   && /opt/rust/bin/cargo install cargo-generate \
   && /opt/rust/bin/cargo install wasm-pack \
@@ -159,7 +171,7 @@ RUN apt-get install -y php-cli
 RUN apt-get install -y ruby-full
 
 # install kubectl
-ARG KUBECTL_VERSION=1.25.2
+ARG KUBECTL_VERSION=1.26.3
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
