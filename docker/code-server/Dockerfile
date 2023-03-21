@@ -12,9 +12,10 @@ RUN apt-get update \
   && apt-get upgrade -y \
   && apt install -y curl ca-certificates zsh sudo gpg \
   && useradd coder --create-home --shell $(which zsh) \
-  && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder 
+  && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 
 COPY install.sh /tmp/install.sh
+COPY duskmoon /etc/duskmoon
 
 RUN /tmp/install.sh --method standalone --prefix=/usr/local --version $VERSION
 
@@ -23,5 +24,5 @@ RUN rm -rf /root/.cache && rm -rf /tmp/*
 WORKDIR /home/coder
 USER coder
 
-ENTRYPOINT ["/usr/bin/code-server"]
-CMD ["--disable-update-check", "--bind-addr", "0.0.0.0:8080", "--disable-telemetry"]
+ENTRYPOINT ["/usr/local/bin/code-server"]
+CMD ["--disable-update-check", "--bind-addr", "0.0.0.0:8080", "--disable-telemetry", "--app-name", "GSMLG.DEV","--welcome-text", "MAY THE FORCE BE WITH YOU"]
