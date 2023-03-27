@@ -174,7 +174,7 @@ RUN apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev 
   && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.8-stable.tar.xz \
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
-  && rm -f fluttr.tar.xz
+  && rm -f flutter.tar.xz
 
 # install kubectl
 ARG KUBECTL_VERSION=1.26.3
