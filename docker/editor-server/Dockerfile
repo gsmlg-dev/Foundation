@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.11.0
+ARG CODE_SERVER_VERSION=4.12.0
 FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get upgrade -y
 
 # install useful packages
 RUN apt-get install -y -qq \
-  git \
+  git git-lfs \
   gnupg \
   lsb-release \
   silversearcher-ag \
@@ -44,7 +44,9 @@ RUN apt-get install -y -qq \
   lsof \
   apt-file \
   whois \
-  geoip-bin geoip-database
+  geoip-bin geoip-database \
+  iproute2 \
+  iptables
 
 RUN apt-file update 
 
@@ -138,7 +140,9 @@ RUN apt-get install -y python3 python3-pip \
   && python3 get-pip.py \
   && python3 -m pip install ansible \
   && python3 -m pip install awscli \
-  && python3 -m pip install pipenv
+  && python3 -m pip install pipenv \
+  && python3 -m pip install huggingface_hub \
+  && python3 -m pip install jupyterlab
 
 # install rust
 ARG RUSTPATH=/opt/rust
