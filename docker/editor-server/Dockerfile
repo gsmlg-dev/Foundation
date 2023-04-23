@@ -50,7 +50,8 @@ RUN apt-get install -y -qq \
   whois \
   geoip-bin geoip-database \
   iproute2 \
-  iptables
+  iptables \
+  libncurses6 libncurses-dev
 
 RUN apt-file update 
 
