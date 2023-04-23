@@ -72,10 +72,10 @@ RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.11.3 \
 RUN bash -c "source $ASDF_DIR/asdf.sh \
   && asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git \
   && asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git \
-  && asdf install erlang latest \
-  && asdf install elixir latest \
-  && asdf global erlang latest \
-  && asdf global elixir latest \
+  && asdf install erlang 25.3 \
+  && asdf install elixir 1.14.3 \
+  && asdf global erlang 25.3 \
+  && asdf global elixir 1.14.3 \
   && mix local.hex --force \
   && mix local.rebar --force"
 
