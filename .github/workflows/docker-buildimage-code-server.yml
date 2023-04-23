@@ -24,8 +24,9 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASSWD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
         name: Build and push
         uses: docker/build-push-action@v3
@@ -37,6 +38,6 @@ jobs:
           build-args: |
             VERSION=4.12.0
           tags: |
-            docker.io/gsmlg/code-server:v4.12.0
-            docker.io/gsmlg/code-server:latest
+            ghcr.io/gsmlg/code-server:v4.12.0
+            ghcr.io/gsmlg/code-server:latest
 
