@@ -1,9 +1,13 @@
 ARG CODE_SERVER_VERSION=4.12.0
-FROM docker.io/gsmlg/code-server:v$CODE_SERVER_VERSION
+FROM ghcr.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
 LABEL CODE_SERVER_VERSION=$CODE_SERVER_VERSION
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
+
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/tree/main/docker/editor-server"
+LABEL org.opencontainers.image.description="Jonathan Gao's personal code-server, with his common dev envrionment."
+LABEL org.opencontainers.image.licenses=MIT
 
 ARG VERSION
 LABEL VERSION=$VERSION
