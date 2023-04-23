@@ -51,7 +51,7 @@ RUN apt-get install -y -qq \
   geoip-bin geoip-database \
   iproute2 \
   iptables \
-  libncurses6 libncurses-dev xsltproc fop libxml2-utils
+  libncurses6 libncurses-dev xsltproc fop libxml2-utils libwxbase3.0-dev wx3.0-headers
 
 RUN apt-file update 
 
