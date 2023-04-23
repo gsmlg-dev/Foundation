@@ -2,7 +2,7 @@ FROM debian:11
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ARG VERSION=4.11.0
+ARG VERSION=4.12.0
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
