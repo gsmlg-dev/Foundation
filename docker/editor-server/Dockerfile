@@ -51,7 +51,8 @@ RUN apt-get install -y -qq \
   geoip-bin geoip-database \
   iproute2 \
   iptables \
-  libncurses6 libncurses-dev xsltproc fop libxml2-utils libwxbase3.0-dev wx3.0-headers libwxgtk-webview3.0-gtk3-dev openjdk-17-jdk-headless
+  libncurses6 libncurses-dev xsltproc fop libxml2-utils libwxbase3.0-dev wx3.0-headers libwxgtk-webview3.0-gtk3-dev \
+  openjdk-17-jdk-headless libltdl7 libodbc1 libsctp1
 
 RUN apt-file update 
 
@@ -86,7 +87,7 @@ RUN bash -c "source $ASDF_DIR/asdf.sh \
 
 # install jdk
 ARG ANTLR_VERSION=4.12.0
-RUN apt-get install -y default-jdk \
+RUN apt-get install -y -qq default-jdk \
   && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
   && echo "#!/bin/bash" > /usr/local/bin/antlr \
   && echo "java -jar /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \"$@\"" >> /usr/local/bin/antlr \
@@ -140,7 +141,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && chown -R coder:coder "${GOPATH}"
 
 # install python
-RUN apt-get install -y python3 python3-pip \
+RUN apt-get install -y -qq python3 python3-pip \
   && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
   && python3 get-pip.py \
   && python3 -m pip install ansible \
@@ -173,13 +174,13 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && chown -R coder:coder "${RUSTPATH}"
 
 # install php
-RUN apt-get install -y php-cli
+RUN apt-get install -y -qq php-cli
 
 # install ruby
-RUN apt-get install -y ruby-full
+RUN apt-get install -y -qq ruby-full
 
 # install flutter
-RUN apt-get install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
+RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
   && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.8-stable.tar.xz \
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
