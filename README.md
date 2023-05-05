@@ -284,14 +284,6 @@ I've manage too many repositories, that I have to combine them to one so that I 
     [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/rust-chat-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/rust-chat-release.yml)
 
 
-- [flutter](flutter)
-
-    - [mirror](flutter/mirror)
-    Mirror, phone app, a magic mirror.
-
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/flutter-mirror-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/flutter-mirror-release.yml)
-
-
 ## Use sementic release
 
 If a dir is develop by me, can use @gsmlg/semantic-release-action, like so:
