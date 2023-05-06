@@ -31,7 +31,8 @@ RUN apt-get install -y -qq \
   silversearcher-ag \
   tzdata \
   make \
-  gcc pkg-config libssl-dev libcrypto++-dev \
+  gcc g++ pkg-config \
+  libssl-dev libcrypto++-dev \
   vim \
   zip unzip xz-utils \
   wget aria2 \
@@ -51,8 +52,7 @@ RUN apt-get install -y -qq \
   geoip-bin geoip-database \
   iproute2 \
   iptables \
-  libncurses6 libncurses-dev xsltproc fop libxml2-utils libwxbase3.0-dev wx3.0-headers libwxgtk-webview3.0-gtk3-dev \
-  openjdk-17-jdk-headless libltdl7 libodbc1 libsctp1 unixodbc unixodbc-dev odbc-mariadb odbc-postgresql \
+  build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk \
   emscripten
 
 RUN apt-file update 
