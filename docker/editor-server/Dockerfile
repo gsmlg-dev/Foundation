@@ -80,9 +80,9 @@ RUN bash -c "source $ASDF_DIR/asdf.sh \
   && asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git \
   && asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git \
   && asdf install erlang 25.3 \
-  && asdf install elixir 1.14.3 \
+  && asdf install elixir 1.14.4-otp-25 \
   && asdf global erlang 25.3 \
-  && asdf global elixir 1.14.3 \
+  && asdf global elixir 1.14.4-otp-25 \
   && mix local.hex --force \
   && mix local.rebar --force"
 
