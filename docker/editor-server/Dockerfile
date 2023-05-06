@@ -52,7 +52,8 @@ RUN apt-get install -y -qq \
   iproute2 \
   iptables \
   libncurses6 libncurses-dev xsltproc fop libxml2-utils libwxbase3.0-dev wx3.0-headers libwxgtk-webview3.0-gtk3-dev \
-  openjdk-17-jdk-headless libltdl7 libodbc1 libsctp1
+  openjdk-17-jdk-headless libltdl7 libodbc1 libsctp1 \
+  emscripten
 
 RUN apt-file update 
 
@@ -177,7 +178,7 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
 RUN apt-get install -y -qq php-cli
 
 # install ruby
-RUN apt-get install -y -qq ruby-full
+RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
