@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.12.0
+ARG CODE_SERVER_VERSION=4.14.1
 FROM ghcr.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -183,10 +183,12 @@ RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote
 
 # install flutter
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
-  && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.8-stable.tar.xz \
+  && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.5-stable.tar.xz \
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
-  && rm -f flutter.tar.xz
+  && rm -f flutter.tar.xz \
+  && /opt/flutter/bin/dart pub global activate mason_cli \
+  && /opt/flutter/bin/flutter pub global activate flutterpi_tool
 
 # install kubectl
 ARG KUBECTL_VERSION=1.26.3
