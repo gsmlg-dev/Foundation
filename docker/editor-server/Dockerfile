@@ -109,6 +109,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && npm install -g npm-check-updates \
   && npm install -g @microsoft/rush \
   && npm install -g @aws-amplify/cli \
+  && npm install -g @openapitools/openapi-generator-cli \
   && npm install -g ts-node \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
