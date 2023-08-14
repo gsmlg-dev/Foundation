@@ -36,8 +36,8 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=4.14.1
+            VERSION=4.16.1
           tags: |
-            ghcr.io/gsmlg/code-server:v4.14.1
+            ghcr.io/gsmlg/code-server:v4.16.1
             ghcr.io/gsmlg/code-server:latest
 
