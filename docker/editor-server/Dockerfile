@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.14.1
+ARG CODE_SERVER_VERSION=4.16.1
 FROM ghcr.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -54,7 +54,8 @@ RUN apt-get install -y -qq \
   iptables \
   build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk \
   clang-format clang-tidy clang-tools clang clangd libc++-dev libc++1 libc++abi-dev libc++abi1 libclang-dev libclang1 liblldb-dev libllvm-ocaml-dev libomp-dev libomp5 lld lldb llvm-dev llvm-runtime llvm python3-clang automake autoconf libncurses5-dev \
-  emscripten
+  emscripten \
+  android-tools-adb android-tools-fastboot
 
 RUN apt-file update 
 
@@ -72,7 +73,7 @@ ARG ASDF_DIR=/opt/asdf
 ARG ASDF_DATA_DIR=/opt/asdf-data
 ENV ASDF_DIR=$ASDF_DIR
 ENV ASDF_DATA_DIR=$ASDF_DATA_DIR
-RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.11.3 \
+RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.12.0 \
   && touch $ASDF_DIR/asdf_updates_disabled \
   && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/zsh/zshrc"
 
@@ -80,10 +81,10 @@ RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.11.3 \
 RUN bash -c "source $ASDF_DIR/asdf.sh \
   && asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git \
   && asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git \
-  && asdf install erlang 25.3 \
-  && asdf install elixir 1.14.4-otp-25 \
-  && asdf global erlang 25.3 \
-  && asdf global elixir 1.14.4-otp-25 \
+  && asdf install erlang 26.0 \
+  && asdf install elixir 1.15.4-otp-26 \
+  && asdf global erlang 26.0 \
+  && asdf global elixir 1.15.4-otp-26 \
   && mix local.hex --force \
   && mix local.rebar --force"
 
@@ -114,7 +115,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
 # install golang
-ARG GO_VERSION=1.20.2
+ARG GO_VERSION=1.20.7
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
@@ -151,7 +152,8 @@ RUN apt-get install -y -qq python3 python3-pip \
   && python3 -m pip install awscli \
   && python3 -m pip install pipenv \
   && python3 -m pip install huggingface_hub \
-  && python3 -m pip install jupyterlab
+  && python3 -m pip install jupyterlab \
+  && python3 -m pip install cargo-lambda
 
 # install rust
 ARG RUSTPATH=/opt/rust
@@ -189,7 +191,8 @@ RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblz
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
   && rm -f flutter.tar.xz \
   && /opt/flutter/bin/dart pub global activate mason_cli \
-  && /opt/flutter/bin/flutter pub global activate flutterpi_tool
+  && /opt/flutter/bin/flutter pub global activate flutterpi_tool \
+  && /opt/flutter/bin/flutter pub global activate melos
 
 # install kubectl
 ARG KUBECTL_VERSION=1.26.3
