@@ -237,7 +237,8 @@ RUN mkdir -p $ANDROID_SDK_ROOT \
   && unzip /tmp/cmdlinetools.zip \
   && yes | cmdline-tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT \
   && echo 'export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin:$ANDROID_SDK_ROOT/platform-tools' | tee -a "/etc/zsh/zshrc" \
-  && yes | cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install 'platform-tools' 'platforms;android-32' 'build-tools;32.0.0'
+  && yes | cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install 'cmdline-tools;latest' 'platform-tools' 'platforms;android-32' 'build-tools;32.0.0' \
+  && yes | /opt/flutter/bin/flutter doctor --android-licenses
 
 # change permision
 RUN chown -R coder:coder /opt
