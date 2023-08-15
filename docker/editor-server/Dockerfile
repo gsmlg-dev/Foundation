@@ -55,9 +55,10 @@ RUN apt-get install -y -qq \
   build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk \
   clang-format clang-tidy clang-tools clang clangd libc++-dev libc++1 libc++abi-dev libc++abi1 libclang-dev libclang1 liblldb-dev libllvm-ocaml-dev libomp-dev libomp5 lld lldb llvm-dev llvm-runtime llvm python3-clang automake autoconf libncurses5-dev \
   emscripten \
-  android-tools-adb android-tools-fastboot
+  android-tools-adb android-tools-fastboot \
+  mandoc
 
-RUN apt-file update 
+RUN apt-file update
 
 # Gen locale
 ARG LANG=en_US.UTF-8
@@ -110,7 +111,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && npm install -g npm-check-updates \
   && npm install -g @microsoft/rush \
   && npm install -g @aws-amplify/cli \
-  && npm install -g @openapitools/openapi-generator-cli \
+  && npm install -g @openapitools/openapi-generator-cli && openapi-generator-cli --version \
   && npm install -g ts-node \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv"
 
@@ -185,14 +186,17 @@ RUN apt-get install -y -qq php-cli
 RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
+ARG PUB_CACHE=/opt/flutter/.pub
+ENV PUB_CACHE=/opt/flutter/.pub
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
   && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.6-stable.tar.xz \
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
+  && echo 'export PATH="$PATH":"/opt/flutter/.pub/bin"' | tee -a "/etc/zsh/zshrc" \
   && rm -f flutter.tar.xz \
   && /opt/flutter/bin/dart pub global activate mason_cli \
-  && /opt/flutter/bin/flutter pub global activate flutterpi_tool \
-  && /opt/flutter/bin/flutter pub global activate melos
+  && /opt/flutter/bin/dart pub global activate flutterpi_tool \
+  && /opt/flutter/bin/dart pub global activate melos
 
 # install kubectl
 ARG KUBECTL_VERSION=1.26.3
