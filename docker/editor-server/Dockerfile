@@ -114,8 +114,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && npm install -g @openapitools/openapi-generator-cli \
   && npm install -g ts-node \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv" \
-  && /usr/bin/node /usr/lib/node_modules/@openapitools/openapi-generator-cli/main.js
-
+  && /usr/bin/node /usr/lib/node_modules/@openapitools/openapi-generator-cli/main.js version
 
 # install golang
 ARG GO_VERSION=1.20.7
