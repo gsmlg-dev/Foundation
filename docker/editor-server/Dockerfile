@@ -228,9 +228,8 @@ RUN export TARGET_DIR=/tmp/terraform \
   && cd $TARGET_DIR && /usr/local/go/bin/go install \
   && chown -R coder:coder "${GOPATH}"
 
-# change asdf
-RUN chown -R coder:coder $ASDF_DIR \
-  && chown -R coder:coder $ASDF_DATA_DIR
+# change permision
+RUN chown -R coder:coder /opt
 
 # clean cache install
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
