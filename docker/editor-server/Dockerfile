@@ -55,7 +55,7 @@ RUN apt-get install -y -qq \
   build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk \
   clang-format clang-tidy clang-tools clang clangd libc++-dev libc++1 libc++abi-dev libc++abi1 libclang-dev libclang1 liblldb-dev libllvm-ocaml-dev libomp-dev libomp5 lld lldb llvm-dev llvm-runtime llvm python3-clang automake autoconf libncurses5-dev \
   emscripten \
-  android-tools-adb android-tools-fastboot \
+  openjdk-17-jdk \
   mandoc
 
 RUN apt-file update
@@ -227,6 +227,17 @@ RUN export TARGET_DIR=/tmp/terraform \
   && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
   && cd $TARGET_DIR && /usr/local/go/bin/go install \
   && chown -R coder:coder "${GOPATH}"
+
+# install android sdk
+ARG ANDROID_SDK_ROOT=/opt/android-sdk
+ENV ANDROID_SDK_ROOT=/opt/android-sdk
+RUN mkdir -p $ANDROID_SDK_ROOT \
+  && cd $ANDROID_SDK_ROOT \
+  && curl -sSfL https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -o /tmp/cmdlinetools.zip \
+  && unzip /tmp/cmdlinetools.zip \
+  && yes | cmdline-tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT \
+  && echo 'export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin:$ANDROID_SDK_ROOT/platform-tools' | tee -a "/etc/zsh/zshrc" \
+  && yes | cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install 'platform-tools' 'platforms;android-32' 'build-tools;32.0.0'
 
 # change permision
 RUN chown -R coder:coder /opt
