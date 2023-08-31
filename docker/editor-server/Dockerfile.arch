@@ -39,10 +39,6 @@ RUN pacman -S --noconfirm \
     clang cmake pkg-config \
     xz
 
-# Install yay AUR helper
-RUN git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin \
-    && cd /tmp/yay-bin && makepkg -si
-
 # Gen locale
 ARG LANG=en_US.UTF-8
 ENV LANG=$LANG
