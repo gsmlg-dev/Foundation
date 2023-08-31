@@ -46,15 +46,14 @@ ENV LC_ALL=$LANG
 RUN locale-gen && echo "LANG=$LANG" | tee /etc/locale.conf
 
 # install nodejs
-ARG NODEJS_VERSION=18
-ENV NODE_PATH=/usr/lib/node_modules
+ARG NODE_PATH=/usr/lib/node_modules
+ENV NODE_PATH=$NODE_PATH
 RUN pacman -Syyu --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates \
     && npm install -g @microsoft/rush \
     && npm install -g @aws-amplify/cli \
     && npm install -g @openapitools/openapi-generator-cli \
     && npm install -g ts-node \
-    && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv" \
-    && /usr/bin/node /usr/lib/node_modules/@openapitools/openapi-generator-cli/main.js version
+    && echo "export NODE_PATH=$NODE_PATH" | tee -a "/etc/zsh/zshenv"
 
 # install golang
 ARG GO111MODULE=on
