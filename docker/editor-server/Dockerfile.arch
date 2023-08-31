@@ -81,13 +81,7 @@ RUN pacman -Syyu --noconfirm go \
   && chown -R coder:coder "${GOPATH}"
 
 # install python
-RUN pacman -Syyu --noconfirm python python-pip \
-  && pip install ansible \
-  && pip install awscli \
-  && pip install pipenv \
-  && pip install huggingface_hub \
-  && pip install jupyterlab \
-  && pip install cargo-lambda
+RUN pacman -Syyu --noconfirm python python-pip
 
 # install rust
 ARG RUSTPATH=/opt/rust
