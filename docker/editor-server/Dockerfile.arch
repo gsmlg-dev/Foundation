@@ -56,8 +56,7 @@ RUN pacman -Syyu --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates
     && npm install -g @microsoft/rush \
     && echo "export NODE_PATH=$NODE_PATH" | tee -a "/etc/zsh/zshenv"
 
-RUN yay -Syyu --noconfirm \
-    aws-amplify-cli ts-node
+RUN yay -Syyu --noconfirm ts-node
 
 # install golang
 ARG GO111MODULE=on
