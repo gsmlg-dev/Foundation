@@ -1,0 +1,173 @@
+ARG CODE_SERVER_VERSION=4.16.1
+FROM ghcr.io/gsmlg/code-server:v${CODE_SERVER_VERSION}-arch
+
+ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
+LABEL CODE_SERVER_VERSION=$CODE_SERVER_VERSION
+LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
+
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/tree/main/docker/editor-server"
+LABEL org.opencontainers.image.description="Jonathan Gao's personal code-server base on archlinux, with his common dev envrionment."
+LABEL org.opencontainers.image.licenses=MIT
+
+ARG VERSION
+LABEL VERSION=$VERSION
+ENV EDITOR_VERSION=$VERSION
+
+ENV container=docker
+ENV TZ=Asia/Shanghai
+
+USER root
+
+# update package list
+RUN pacman -Syyu --noconfirm
+
+# install useful packages
+RUN pacman -S --noconfirm \
+    base-devel \
+    git git-lfs \
+    gnupg \
+    the_silver_searcher jq \
+    wget aria2 \
+    zip unzip \
+    vim \
+    tzdata \
+    nasm \
+    cloc \
+    inotify-tools \
+    net-tools \
+    iptables \
+    clang cmake pkg-config \
+    xz
+
+# Install yay AUR helper
+RUN git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin \
+    && cd /tmp/yay-bin && makepkg -si
+
+# Gen locale
+ARG LANG=en_US.UTF-8
+ENV LANG=$LANG
+ENV LC_ALL=$LANG
+RUN locale-gen && echo "LANG=$LANG" | tee /etc/locale.conf
+
+# install nodejs
+ARG NODEJS_VERSION=18
+ENV NODE_PATH=/usr/lib/node_modules
+RUN pacman -Syyu --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates \
+    && npm install -g @microsoft/rush \
+    && npm install -g @aws-amplify/cli \
+    && npm install -g @openapitools/openapi-generator-cli \
+    && npm install -g ts-node \
+    && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv" \
+    && /usr/bin/node /usr/lib/node_modules/@openapitools/openapi-generator-cli/main.js version
+
+# install golang
+ARG GO111MODULE=on
+ARG GOPATH=/opt/go
+ENV GOPATH=$GOPATH
+RUN pacman -Syyu --noconfirm go \
+  && echo "export PATH=\${PATH}:${GOPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export GOPATH=${GOPATH}" | tee -a "/etc/zsh/zshenv" \
+  && go install golang.org/x/tools/gopls@latest \
+  && go install honnef.co/go/tools/cmd/staticcheck@latest \
+  && go install github.com/go-delve/delve/cmd/dlv@latest && ln -s /opt/go/bin/dlv /opt/go/bin/dlv-dap \
+  && go install github.com/ramya-rao-a/go-outline@latest \
+  && go install golang.org/x/tools/cmd/goimports@latest \
+  && go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
+  && go install github.com/minio/mc@latest \
+  && go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
+  && go install github.com/go-delve/delve/cmd/dlv@latest \
+  && go install github.com/spf13/cobra-cli@latest \
+  && go install golang.org/x/mobile/cmd/gomobile@latest \
+  && go install golang.org/x/mobile/cmd/gobind@latest \
+  && go install github.com/evanw/esbuild/cmd/esbuild@latest \
+  && go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
+  && go env -w GO111MODULE=on \
+  && go env -w GOPROXY=https://goproxy.io,direct \
+  && chown -R coder:coder "${GOPATH}"
+
+# install python
+RUN pacman -Syyu --noconfirm python python-pip \
+  && pip install ansible \
+  && pip install awscli \
+  && pip install pipenv \
+  && pip install huggingface_hub \
+  && pip install jupyterlab \
+  && pip install cargo-lambda
+
+# install rust
+ARG RUSTPATH=/opt/rust
+ENV RUSTUP_HOME=${RUSTPATH}
+ENV CARGO_HOME=${RUSTPATH}
+RUN export RUSTUP_HOME=${RUSTPATH} \
+  && export CARGO_HOME=${RUSTPATH} \
+  && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
+  && /opt/rust/bin/rustup target add wasm32-unknown-unknown \
+  && /opt/rust/bin/rustup target add x86_64-unknown-freebsd \
+  && /opt/rust/bin/rustup target add x86_64-apple-darwin \
+  && /opt/rust/bin/rustup target add x86_64-pc-windows-msvc \
+  && /opt/rust/bin/rustup target add aarch64-apple-darwin \
+  && /opt/rust/bin/rustup target add aarch64-apple-ios \
+  && /opt/rust/bin/rustup target add aarch64-linux-android \
+  && /opt/rust/bin/cargo install difftastic \
+  && /opt/rust/bin/cargo install cargo-generate \
+  && /opt/rust/bin/cargo install wasm-pack \
+  && /opt/rust/bin/cargo install trunk wasm-bindgen-cli \
+  && chown -R coder:coder "${RUSTPATH}"
+
+# install php
+RUN pacman -Syyu --noconfirm php
+
+# install ruby
+RUN pacman -Syyu --noconfirm ruby && gem install bundler jekyll jekyll-remote-theme
+
+# install flutter
+ARG PUB_CACHE=/opt/flutter/.pub
+ENV PUB_CACHE=/opt/flutter/.pub
+RUN  pacman -Syyu --noconfirm gtk3 \
+  && yay -Syyu --noconfirm flutter \
+  && dart pub global activate mason_cli \
+  && dart pub global activate flutterpi_tool \
+  && dart pub global activate melos
+
+# install kubectl
+RUN pacman -Syyu --noconfirm kubectl
+
+# install skaffold
+RUN pacman -Syyu --noconfirm skaffold
+
+# install helm
+RUN pacman -Syyu --noconfirm helm
+
+# install cli53
+RUN pacman -Syyu --noconfirm cli53
+
+# install terraform
+RUN pacman -Syyu --noconfirm terraform
+
+# install android sdk
+ARG ANDROID_SDK_ROOT=/opt/android-sdk
+ENV ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT
+RUN mkdir -p $ANDROID_SDK_ROOT \
+  && cd $ANDROID_SDK_ROOT \
+  && curl -sSfL https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -o /tmp/cmdlinetools.zip \
+  && unzip /tmp/cmdlinetools.zip \
+  && yes | cmdline-tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT \
+  && echo 'export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin:$ANDROID_SDK_ROOT/platform-tools' | tee -a "/etc/zsh/zshrc" \
+  && yes | cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install 'cmdline-tools;latest' 'platform-tools' 'platforms;android-32' 'build-tools;32.0.0' \
+  && yes | flutter doctor --android-licenses
+
+# install gsmlg-cli
+RUN export ARCH=amd64; \
+  && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/latest/download/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
+  && chmod +x /usr/local/bin/gsmlg-cli
+
+# change permision
+RUN chown -R coder:coder /opt
+
+# clean cache install
+RUN rm -rf /var/cache/* && rm -rf /tmp/*
+
+USER coder

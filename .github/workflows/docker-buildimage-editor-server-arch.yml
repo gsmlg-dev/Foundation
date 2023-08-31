@@ -1,15 +1,15 @@
-name: docker-buildimage-editor-server
+name: docker-buildimage-editor-server-arch
 
 on:
   push:
     branches: [ main ]
     paths:
-      - "docker/editor-server/Dockerfile"
-      - ".github/workflows/docker-buildimage-editor-server.yml"
+      - "docker/editor-server/Dockerfile.arch"
+      - ".github/workflows/docker-buildimage-editor-server-arch.yml"
 
 jobs:
   build-image:
-    runs-on: ubuntu-latest-m
+    runs-on: ubuntu-latest
 
     steps:
       - name: 🛑 Cancel Previous Runs
@@ -58,11 +58,11 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: docker/editor-server/
-          file: docker/editor-server/Dockerfile
+          file: docker/editor-server/Dockerfile.arch
           platforms: linux/amd64
           push: true
           build-args: |
             VERSION=${{ steps.semantic.outputs.new_release_version }}
           tags: |
-            ghcr.io/gsmlg/editor-server:v${{ steps.semantic.outputs.new_release_version }}
-            ghcr.io/gsmlg/editor-server:latest
+            ghcr.io/gsmlg/editor-server:v${{ steps.semantic.outputs.new_release_version }}-arch
+            ghcr.io/gsmlg/editor-server:arch
