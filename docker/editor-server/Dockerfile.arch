@@ -84,30 +84,6 @@ RUN pacman -Syyu --noconfirm go \
 # install python
 RUN pacman -Syyu --noconfirm python python-pip
 
-# install rust
-ARG RUSTPATH=/opt/rust
-ARG RUSTUP_HOME=/opt/rust
-ARG CARGO_HOME=/opt/rust
-ENV RUSTUP_HOME=${RUSTPATH}
-ENV CARGO_HOME=${RUSTPATH}
-RUN echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
-  && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
-  && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
-  && pacman -Syyu --noconfirm rustup \
-  && rustup default stable \
-  && rustup target add wasm32-unknown-unknown \
-  && rustup target add x86_64-unknown-freebsd \
-  && rustup target add x86_64-apple-darwin \
-  && rustup target add x86_64-pc-windows-msvc \
-  && rustup target add aarch64-apple-darwin \
-  && rustup target add aarch64-apple-ios \
-  && rustup target add aarch64-linux-android \
-  && cargo install difftastic \
-  && cargo install cargo-generate \
-  && cargo install wasm-pack \
-  && cargo install trunk wasm-bindgen-cli \
-  && chown -R coder:coder "${RUSTPATH}"
-
 # install php
 RUN pacman -Syyu --noconfirm php
 
@@ -117,8 +93,7 @@ RUN pacman -Syyu --noconfirm ruby && gem install bundler jekyll jekyll-remote-th
 # install flutter
 ARG PUB_CACHE=/opt/flutter/.pub
 ENV PUB_CACHE=/opt/flutter/.pub
-RUN  pacman -Syyu --noconfirm gtk3 \
-  && yay -Syyu --noconfirm flutter \
+RUN yay -Syyu --noconfirm flutter dart \
   && dart pub global activate mason_cli \
   && dart pub global activate flutterpi_tool \
   && dart pub global activate melos
