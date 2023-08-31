@@ -37,7 +37,12 @@ RUN pacman -S --noconfirm \
     net-tools \
     iptables \
     clang cmake pkg-config \
-    xz
+    xz \
+    minio-client \
+    xcaddy-bin \
+    esbuild \
+    openapi-generator \
+    aws-cli-v2
 
 # Gen locale
 ARG LANG=en_US.UTF-8
@@ -50,10 +55,10 @@ ARG NODE_PATH=/usr/lib/node_modules
 ENV NODE_PATH=$NODE_PATH
 RUN pacman -Syyu --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates \
     && npm install -g @microsoft/rush \
-    && npm install -g @aws-amplify/cli \
-    && npm install -g @openapitools/openapi-generator-cli \
-    && npm install -g ts-node \
     && echo "export NODE_PATH=$NODE_PATH" | tee -a "/etc/zsh/zshenv"
+
+RUN yay -Syyu --noconfirm \
+    aws-amplify-cli ts-node
 
 # install golang
 ARG GO111MODULE=on
@@ -68,14 +73,11 @@ RUN pacman -Syyu --noconfirm go \
   && go install github.com/ramya-rao-a/go-outline@latest \
   && go install golang.org/x/tools/cmd/goimports@latest \
   && go install google.golang.org/protobuf/cmd/protoc-gen-go@latest \
-  && go install github.com/minio/mc@latest \
   && go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
   && go install github.com/go-delve/delve/cmd/dlv@latest \
   && go install github.com/spf13/cobra-cli@latest \
   && go install golang.org/x/mobile/cmd/gomobile@latest \
   && go install golang.org/x/mobile/cmd/gobind@latest \
-  && go install github.com/evanw/esbuild/cmd/esbuild@latest \
-  && go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
   && go env -w GO111MODULE=on \
   && go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
@@ -92,18 +94,19 @@ ENV CARGO_HOME=${RUSTPATH}
 RUN echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
-  && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
-  && /opt/rust/bin/rustup target add wasm32-unknown-unknown \
-  && /opt/rust/bin/rustup target add x86_64-unknown-freebsd \
-  && /opt/rust/bin/rustup target add x86_64-apple-darwin \
-  && /opt/rust/bin/rustup target add x86_64-pc-windows-msvc \
-  && /opt/rust/bin/rustup target add aarch64-apple-darwin \
-  && /opt/rust/bin/rustup target add aarch64-apple-ios \
-  && /opt/rust/bin/rustup target add aarch64-linux-android \
-  && /opt/rust/bin/cargo install difftastic \
-  && /opt/rust/bin/cargo install cargo-generate \
-  && /opt/rust/bin/cargo install wasm-pack \
-  && /opt/rust/bin/cargo install trunk wasm-bindgen-cli \
+  && pacman -Sssy rustup \
+  && rustup default stable \
+  && rustup target add wasm32-unknown-unknown \
+  && rustup target add x86_64-unknown-freebsd \
+  && rustup target add x86_64-apple-darwin \
+  && rustup target add x86_64-pc-windows-msvc \
+  && rustup target add aarch64-apple-darwin \
+  && rustup target add aarch64-apple-ios \
+  && rustup target add aarch64-linux-android \
+  && cargo install difftastic \
+  && cargo install cargo-generate \
+  && cargo install wasm-pack \
+  && cargo install trunk wasm-bindgen-cli \
   && chown -R coder:coder "${RUSTPATH}"
 
 # install php
