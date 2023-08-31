@@ -39,7 +39,6 @@ RUN pacman -S --noconfirm \
     clang cmake pkg-config \
     xz \
     minio-client \
-    xcaddy-bin \
     esbuild \
     openapi-generator \
     aws-cli-v2
@@ -81,6 +80,8 @@ RUN pacman -Syyu --noconfirm go \
   && go env -w GO111MODULE=on \
   && go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
+
+RUN yay -Syyu --noconfirm xcaddy-bin
 
 # install python
 RUN pacman -Syyu --noconfirm python python-pip
