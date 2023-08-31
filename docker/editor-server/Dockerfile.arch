@@ -93,7 +93,7 @@ ENV CARGO_HOME=${RUSTPATH}
 RUN echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
-  && pacman -Sssy rustup \
+  && pacman -Syyu rustup \
   && rustup default stable \
   && rustup target add wasm32-unknown-unknown \
   && rustup target add x86_64-unknown-freebsd \
