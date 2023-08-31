@@ -1,4 +1,4 @@
-FROM debian:11
+FROM debian:12
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
