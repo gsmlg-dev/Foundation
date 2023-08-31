@@ -76,11 +76,10 @@ RUN pacman -Syyu --noconfirm go \
   && go install github.com/spf13/cobra-cli@latest \
   && go install golang.org/x/mobile/cmd/gomobile@latest \
   && go install golang.org/x/mobile/cmd/gobind@latest \
+  && go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
   && go env -w GO111MODULE=on \
   && go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
-
-RUN yay -Syyu --noconfirm xcaddy-bin
 
 # install python
 RUN pacman -Syyu --noconfirm python python-pip
