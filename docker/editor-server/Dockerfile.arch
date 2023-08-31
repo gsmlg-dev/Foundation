@@ -95,7 +95,6 @@ ARG PUB_CACHE=/opt/flutter/.pub
 ENV PUB_CACHE=/opt/flutter/.pub
 RUN yay -Syyu --noconfirm flutter dart \
   && dart pub global activate mason_cli \
-  && dart pub global activate flutterpi_tool \
   && dart pub global activate melos
 
 # install kubectl
