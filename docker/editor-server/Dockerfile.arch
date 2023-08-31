@@ -85,11 +85,11 @@ RUN pacman -Syyu --noconfirm python python-pip
 
 # install rust
 ARG RUSTPATH=/opt/rust
+ARG RUSTUP_HOME=/opt/rust
+ARG CARGO_HOME=/opt/rust
 ENV RUSTUP_HOME=${RUSTPATH}
 ENV CARGO_HOME=${RUSTPATH}
-RUN export RUSTUP_HOME=${RUSTPATH} \
-  && export CARGO_HOME=${RUSTPATH} \
-  && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+RUN echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
