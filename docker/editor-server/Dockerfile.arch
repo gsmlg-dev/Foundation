@@ -108,7 +108,9 @@ RUN pacman -Syyu --noconfirm skaffold
 RUN pacman -Syyu --noconfirm helm
 
 # install cli53
-RUN yay -Syyu --noconfirm cli53
+RUN export ARCH=amd64; \
+  curl -sSfL https://github.com/barnybug/cli53/releases/latest/download/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
+  && chmod +x /usr/local/bin/cli53
 
 # install terraform
 RUN pacman -Syyu --noconfirm terraform
