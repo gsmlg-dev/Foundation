@@ -58,10 +58,7 @@ RUN aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_releas
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
   && echo 'export PATH="$PATH":"/opt/flutter/.pub/bin"' | tee -a "/etc/zsh/zshrc" \
-  && rm -f flutter.tar.xz \
-  && /opt/flutter/bin/dart pub global activate mason_cli \
-  && /opt/flutter/bin/dart pub global activate flutterpi_tool \
-  && /opt/flutter/bin/dart pub global activate melos
+  && rm -f flutter.tar.xz
 
 # install cli53 gsmlg-cli
 RUN export ARCH=`dpkg --print-architecture`; \
