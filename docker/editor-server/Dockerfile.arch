@@ -26,6 +26,7 @@ RUN pacman -Syyu --noconfirm
 # install useful packages
 RUN pacman -S --noconfirm \
     base-devel \
+    openssh \
     git git-lfs \
     gnupg \
     the_silver_searcher jq \
