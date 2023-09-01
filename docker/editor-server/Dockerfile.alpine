@@ -50,15 +50,11 @@ RUN apk add clang llvm
 
 RUN apk add python3
 
-# install flutter
+# install dart and flutter
 ARG FLUTTER_VERSION=3.13.2
 ARG PUB_CACHE=/opt/flutter/.pub
 ENV PUB_CACHE=/opt/flutter/.pub
-RUN aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz \
-  && tar xf flutter.tar.xz -C /opt \
-  && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
-  && echo 'export PATH="$PATH":"/opt/flutter/.pub/bin"' | tee -a "/etc/zsh/zshrc" \
-  && rm -f flutter.tar.xz
+RUN apk add flutter dart
 
 # install cli53 gsmlg-cli
 ARG ARCH=amd64
