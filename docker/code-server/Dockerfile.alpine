@@ -21,10 +21,9 @@ RUN apk update && apk add curl ca-certificates zsh sudo gpg bash \
   && adduser coder -D -s $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 
-COPY install.sh /tmp/install.sh
 COPY duskmoon /etc/duskmoon
 
-RUN /tmp/install.sh --method standalone --prefix=/usr/local --version $VERSION
+RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --method standalone --prefix=/usr/local --version $VERSION
 
 RUN rm -rf /root/.cache && rm -rf /tmp/*
 
