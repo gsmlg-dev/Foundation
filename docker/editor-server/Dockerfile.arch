@@ -92,7 +92,7 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && pacman -S --noconfirm rustup \
-  && rustup target default \
+  && rustup default stable \
   && rustup target add wasm32-unknown-unknown \
   && cargo install difftastic \
   && cargo install cargo-generate \
