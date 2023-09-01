@@ -58,8 +58,6 @@ RUN pacman -Syyu --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates
     && npm install -g @microsoft/rush \
     && echo "export NODE_PATH=$NODE_PATH" | tee -a "/etc/zsh/zshenv"
 
-RUN yay -Syyu --noconfirm ts-node
-
 # install golang
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
@@ -83,6 +81,24 @@ RUN pacman -Syyu --noconfirm go \
   && go env -w GOPROXY=https://goproxy.io,direct \
   && chown -R coder:coder "${GOPATH}"
 
+# install rust
+ARG RUSTPATH=/opt/rust
+ENV RUSTUP_HOME=${RUSTPATH}
+ENV CARGO_HOME=${RUSTPATH}
+RUN export RUSTUP_HOME=${RUSTPATH} \
+  && export CARGO_HOME=${RUSTPATH} \
+  && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && pacman -Syyu --noconfirm rustup \
+  && rustup target default \
+  && rustup target add wasm32-unknown-unknown \
+  && cargo install difftastic \
+  && cargo install cargo-generate \
+  && cargo install wasm-pack \
+  && cargo install trunk wasm-bindgen-cli \
+  && chown -R coder:coder "${RUSTPATH}"
+
 # install python
 RUN pacman -Syyu --noconfirm python python-pip
 
@@ -92,13 +108,16 @@ RUN pacman -Syyu --noconfirm jdk17-openjdk
 # install php
 RUN pacman -Syyu --noconfirm php
 
+# install php
+RUN pacman -Syyu --noconfirm erlang elixir
+
 # install ruby
 RUN pacman -Syyu --noconfirm ruby && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
 ARG PUB_CACHE=/opt/flutter/.pub
 ENV PUB_CACHE=/opt/flutter/.pub
-RUN yay -Syyu --noconfirm flutter dart \
+RUN pacman -Syyu --noconfirm flutter dart \
   && echo "export PATH=\"\$PATH\":\"$PUB_CACHE/bin\"" | tee -a "/etc/zsh/zshenv" \
   && dart pub global activate mason_cli \
   && dart pub global activate melos
