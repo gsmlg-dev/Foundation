@@ -12,7 +12,7 @@ ENV LC_ALL C
 ENV CODE_SERVER_VERSION=$VERSION
 
 RUN apk add --update curl ca-certificates zsh sudo gpg \
-  && adduser coder -s $(which zsh) \
+  && adduser coder -D -s $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 
 COPY install.sh /tmp/install.sh
