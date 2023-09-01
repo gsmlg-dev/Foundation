@@ -16,7 +16,7 @@ RUN printf "[archlinuxcn]\nServer=https://repo.archlinuxcn.org/\$arch\n" >> /etc
     pacman -Syyu --noconfirm archlinuxcn-keyring && \
     pacman -S --noconfirm yay
 
-RUN pacman -Syyu --noconfirm curl ca-certificates zsh sudo \
+RUN pacman -S --noconfirm curl ca-certificates zsh sudo openssh git \
   && useradd coder --create-home --shell $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 

@@ -55,7 +55,7 @@ RUN locale-gen
 # install nodejs
 ARG NODE_PATH=/usr/lib/node_modules
 ENV NODE_PATH=$NODE_PATH
-RUN pacman -Syyu --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates \
+RUN pacman -S --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates \
     && npm install -g @microsoft/rush \
     && echo "export NODE_PATH=$NODE_PATH" | tee -a "/etc/zsh/zshenv"
 
@@ -63,7 +63,7 @@ RUN pacman -Syyu --noconfirm nodejs-lts-hydrogen npm pnpm yarn npm-check-updates
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
-RUN pacman -Syyu --noconfirm go \
+RUN pacman -S --noconfirm go \
   && echo "export PATH=\${PATH}:${GOPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export GOPATH=${GOPATH}" | tee -a "/etc/zsh/zshenv" \
   && go install golang.org/x/tools/gopls@latest \
@@ -91,7 +91,7 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
   && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
-  && pacman -Syyu --noconfirm rustup \
+  && pacman -S --noconfirm rustup \
   && rustup target default \
   && rustup target add wasm32-unknown-unknown \
   && cargo install difftastic \
@@ -101,43 +101,43 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && chown -R coder:coder "${RUSTPATH}"
 
 # install python
-RUN pacman -Syyu --noconfirm python python-pip
+RUN pacman -S --noconfirm python python-pip
 
 # install java
-RUN pacman -Syyu --noconfirm jdk17-openjdk
+RUN pacman -S --noconfirm jdk17-openjdk
 
 # install php
-RUN pacman -Syyu --noconfirm php
+RUN pacman -S --noconfirm php
 
 # install php
-RUN pacman -Syyu --noconfirm erlang elixir
+RUN pacman -S --noconfirm erlang elixir
 
 # install ruby
-RUN pacman -Syyu --noconfirm ruby && gem install bundler jekyll jekyll-remote-theme
+RUN pacman -S --noconfirm ruby && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
 ARG PUB_CACHE=/opt/flutter/.pub
 ENV PUB_CACHE=/opt/flutter/.pub
-RUN pacman -Syyu --noconfirm flutter dart \
+RUN pacman -S --noconfirm flutter dart \
   && echo "export PATH=\"\$PATH\":\"$PUB_CACHE/bin\"" | tee -a "/etc/zsh/zshenv" \
   && dart pub global activate mason_cli \
   && dart pub global activate melos
 
 # install kubectl
-RUN pacman -Syyu --noconfirm kubectl
+RUN pacman -S --noconfirm kubectl
 
 # install skaffold
-RUN pacman -Syyu --noconfirm skaffold
+RUN pacman -S --noconfirm skaffold
 
 # install helm
-RUN pacman -Syyu --noconfirm helm
+RUN pacman -S --noconfirm helm
 
 # install cli53
 RUN curl -sSfL https://github.com/barnybug/cli53/releases/latest/download/cli53-linux-${ARCH} -o /usr/local/bin/cli53 \
   && chmod +x /usr/local/bin/cli53
 
 # install terraform
-RUN pacman -Syyu --noconfirm terraform
+RUN pacman -S --noconfirm terraform
 
 # install gsmlg-cli
 RUN curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/latest/download/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
