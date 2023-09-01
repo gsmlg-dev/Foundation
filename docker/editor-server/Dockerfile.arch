@@ -47,7 +47,7 @@ RUN pacman -S --noconfirm \
 ARG LANG=en_US.UTF-8
 ENV LANG=$LANG
 ENV LC_ALL=$LANG
-RUN locale-gen && echo "LANG=$LANG" | tee /etc/locale.conf
+RUN locale-gen
 
 # install nodejs
 ARG NODE_PATH=/usr/lib/node_modules
@@ -117,18 +117,6 @@ RUN export ARCH=amd64; \
 
 # install terraform
 RUN pacman -Syyu --noconfirm terraform
-
-# install android sdk
-ARG ANDROID_SDK_ROOT=/opt/android-sdk
-ENV ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT
-RUN mkdir -p $ANDROID_SDK_ROOT \
-  && cd $ANDROID_SDK_ROOT \
-  && curl -sSfL https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -o /tmp/cmdlinetools.zip \
-  && unzip /tmp/cmdlinetools.zip \
-  && yes | cmdline-tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT \
-  && echo 'export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin:$ANDROID_SDK_ROOT/platform-tools' | tee -a "/etc/zsh/zshrc" \
-  && yes | cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install 'cmdline-tools;latest' 'platform-tools' 'platforms;android-32' 'build-tools;32.0.0' \
-  && yes | flutter doctor --android-licenses
 
 # install gsmlg-cli
 RUN export ARCH=amd64; \
