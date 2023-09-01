@@ -25,12 +25,14 @@ RUN apk update
 
 # install useful packages
 RUN apk add \
+  bash \
   git git-lfs \
   gnupg \
   the_silver_searcher \
   tzdata \
   build-base \
-  aria2 curl wget
+  aria2 curl wget \
+  xz
 
 RUN apk add nodejs-lts npm yarn
 
