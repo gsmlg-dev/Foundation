@@ -26,7 +26,6 @@ RUN pacman -Syyu --noconfirm
 # install useful packages
 RUN pacman -S --noconfirm \
     base-devel \
-    openssh \
     git git-lfs \
     gnupg \
     the_silver_searcher jq \
@@ -49,8 +48,7 @@ RUN pacman -S --noconfirm \
 # Gen locale
 ARG LANG=en_US.UTF-8
 ENV LANG=$LANG
-ENV LC_ALL=$LANG
-RUN locale-gen
+RUN echo LANG=$LANG | tee /etc/locale.conf && locale-gen
 
 # install nodejs
 ARG NODE_PATH=/usr/lib/node_modules
@@ -109,7 +107,7 @@ RUN pacman -S --noconfirm jdk17-openjdk
 # install php
 RUN pacman -S --noconfirm php
 
-# install php
+# install erlang and elixir
 RUN pacman -S --noconfirm erlang elixir
 
 # install ruby
