@@ -39,7 +39,6 @@ func pacHandler(w http.ResponseWriter, r *http.Request) {
 	if len(ipStr) > 39 {
 		w.WriteHeader(http.StatusRequestURITooLong)
 	    w.Write([]byte("414 Request-URI Too Long - The URL provided is too long for the server."))
-		w.Close()
 		return;
 	}
 	ip := net.ParseIP(ipStr)
