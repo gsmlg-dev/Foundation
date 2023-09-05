@@ -28,6 +28,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWD }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
         name: Build and push
         uses: docker/build-push-action@v3
@@ -36,7 +42,9 @@ jobs:
           file: docker/geoip2/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: gsmlg/geoip2:latest
+          tags: |
+            gsmlg/geoip2:latest
+            ghcr.io/gsmlg/geoip2:latest
           build-args: |
             LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}
             USER=${{ secrets.GIT_USER_ID }}
@@ -51,7 +59,9 @@ jobs:
           file: docker/geoip2/embed/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: gsmlg/geoip2:embed
+          tags: |
+            gsmlg/geoip2:embed
+            ghcr.io/gsmlg/geoip2:embed
           build-args: |
             LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}
             USER=${{ secrets.GIT_USER_ID }}
