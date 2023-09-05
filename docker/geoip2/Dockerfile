@@ -7,7 +7,7 @@ WORKDIR /
 RUN curl -vL "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${LICENSE}&suffix=tar.gz" -o db.tar.gz \
   && tar zxf db.tar.gz --strip-components 1
 
-FROM golang:1.21 as builder
+FROM golang:1.20 as builder
 
 ARG USER
 ARG TOKEN

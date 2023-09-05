@@ -1,6 +1,6 @@
 module github.com/gsmlg-dev/Foundation/docker/geoip2
 
-go 1.21
+go 1.20
 
 require github.com/gsmlg-dev/gsmlg-golang v1.4.5
 
