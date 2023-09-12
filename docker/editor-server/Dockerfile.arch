@@ -43,7 +43,9 @@ RUN pacman -S --noconfirm \
     minio-client \
     esbuild \
     openapi-generator \
-    aws-cli-v2
+    aws-cli-v2 \
+    ninja libayatana-appindicator libappindicator-gtk glu \
+    libsecret jsoncpp
 
 # Gen locale
 ARG LANG=en_US.UTF-8
