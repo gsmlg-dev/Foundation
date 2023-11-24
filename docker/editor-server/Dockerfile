@@ -56,6 +56,7 @@ RUN apt-get install -y -qq \
   clang llvm \
   emscripten \
   openjdk-17-jdk \
+  libwxbase3.0-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libwxgtk-media3.0-gtk3-dev \
   mandoc
 
 RUN apt-file update
