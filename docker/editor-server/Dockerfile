@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.16.1
+ARG CODE_SERVER_VERSION=4.19.0
 FROM ghcr.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -79,15 +79,11 @@ RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.12.0 \
   && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/zsh/zshrc"
 
 # install erlang and elixir
-RUN bash -c "source $ASDF_DIR/asdf.sh \
-  && asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git \
-  && asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git \
-  && asdf install erlang 26.0 \
-  && asdf install elixir 1.15.4-otp-26 \
-  && asdf global erlang 26.0 \
-  && asdf global elixir 1.15.4-otp-26 \
-  && mix local.hex --force \
-  && mix local.rebar --force"
+RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
+  && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
+  && apt-get update \
+  && apt-get install -y esl-erlang \
+  && apt-get install -y elixir
 
 # install jdk
 ARG ANTLR_VERSION=4.12.0
@@ -101,7 +97,7 @@ RUN apt-get install -y -qq default-jdk \
   && chmod +x /usr/local/bin/grun
 
 # install nodejs
-ARG NODEJS_VERSION=18
+ARG NODEJS_VERSION=20
 ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y -qq nodejs \
@@ -117,7 +113,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && /usr/bin/node /usr/lib/node_modules/@openapitools/openapi-generator-cli/main.js version
 
 # install golang
-ARG GO_VERSION=1.20.7
+ARG GO_VERSION=1.21.4
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
@@ -190,7 +186,7 @@ RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote
 ARG PUB_CACHE=/opt/flutter/.pub
 ENV PUB_CACHE=/opt/flutter/.pub
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
-  && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.6-stable.tar.xz \
+  && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.9-stable.tar.xz \
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
   && echo 'export PATH="$PATH":"/opt/flutter/.pub/bin"' | tee -a "/etc/zsh/zshrc" \
@@ -221,24 +217,6 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && chmod +x /usr/local/bin/cli53 \
   && curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/latest/download/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli \
   && chmod +x /usr/local/bin/gsmlg-cli
-
-# install terraform
-RUN export TARGET_DIR=/tmp/terraform \
-  && git clone https://github.com/hashicorp/terraform.git $TARGET_DIR \
-  && cd $TARGET_DIR && /usr/local/go/bin/go install \
-  && chown -R coder:coder "${GOPATH}"
-
-# install android sdk
-ARG ANDROID_SDK_ROOT=/opt/android-sdk
-ENV ANDROID_SDK_ROOT=/opt/android-sdk
-RUN mkdir -p $ANDROID_SDK_ROOT \
-  && cd $ANDROID_SDK_ROOT \
-  && curl -sSfL https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -o /tmp/cmdlinetools.zip \
-  && unzip /tmp/cmdlinetools.zip \
-  && yes | cmdline-tools/bin/sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT \
-  && echo 'export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin:$ANDROID_SDK_ROOT/platform-tools' | tee -a "/etc/zsh/zshrc" \
-  && yes | cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install 'cmdline-tools;latest' 'platform-tools' 'platforms;android-32' 'build-tools;32.0.0' \
-  && yes | /opt/flutter/bin/flutter doctor --android-licenses
 
 # change permision
 RUN chown -R coder:coder /opt
