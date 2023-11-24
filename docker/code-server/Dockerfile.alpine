@@ -17,7 +17,7 @@ https://dl-cdn.alpinelinux.org/alpine/edge/community
 https://dl-cdn.alpinelinux.org/alpine/edge/testing
 EOF
 
-RUN apk update && apk add curl ca-certificates zsh sudo gpg bash \
+RUN apk update && apk add curl ca-certificates zsh sudo gpg bash nodejs npm \
   && adduser coder -D -s $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 
