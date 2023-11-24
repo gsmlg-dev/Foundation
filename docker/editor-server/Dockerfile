@@ -56,7 +56,6 @@ RUN apt-get install -y -qq \
   clang llvm \
   emscripten \
   openjdk-17-jdk \
-  libwxbase3.0-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libwxgtk-media3.0-gtk3-dev \
   mandoc
 
 RUN apt-file update
@@ -71,9 +70,8 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LC_ALL=$LANG
 
 # install erlang and elixir
-RUN echo "deb [trusted=yes] http://binaries.erlang-solutions.com/debian bullseye contrib" > "/etc/apt/sources.list.d/erlang-solutions.list" \
-  && apt-get update \
-  && apt-get install -y esl-erlang \
+RUN apt-get update \
+  && apt-get install -y erlang \
   && apt-get install -y elixir
 
 # install jdk
