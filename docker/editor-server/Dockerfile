@@ -70,7 +70,7 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LC_ALL=$LANG
 
 # install erlang and elixir
-RUN echo "deb http://binaries.erlang-solutions.com/debian bullseye contrib" > "/etc/apt/sources.list.d/erlang-solutions.list" \
+RUN echo "deb [trusted=yes] http://binaries.erlang-solutions.com/debian bullseye contrib" > "/etc/apt/sources.list.d/erlang-solutions.list" \
   && apt-get update \
   && apt-get install -y esl-erlang \
   && apt-get install -y elixir
