@@ -133,12 +133,12 @@ RUN export ARCH=`dpkg --print-architecture`; \
 
 # install python
 RUN apt-get install -y -qq python3 python3-pip python3-full \
-  && python3 -m pip install ansible \
-  && python3 -m pip install awscli \
-  && python3 -m pip install pipenv \
-  && python3 -m pip install huggingface_hub \
-  && python3 -m pip install jupyterlab \
-  && python3 -m pip install cargo-lambda
+  && python3 -m pip install --break-system-packages ansible \
+  && python3 -m pip install --break-system-packages awscli \
+  && python3 -m pip install --break-system-packages pipenv \
+  && python3 -m pip install --break-system-packages huggingface_hub \
+  && python3 -m pip install --break-system-packages jupyterlab \
+  && python3 -m pip install --break-system-packages cargo-lambda
 
 # install rust
 ARG RUSTPATH=/opt/rust
