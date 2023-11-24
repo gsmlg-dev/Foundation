@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-image:
-    runs-on: ubuntu-latest-m
+    runs-on: ubuntu-latest
 
     steps:
       - name: 🛑 Cancel Previous Runs
