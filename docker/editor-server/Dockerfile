@@ -132,9 +132,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && chown -R coder:coder "${GOPATH}"
 
 # install python
-RUN apt-get install -y -qq python3 python3-pip \
-  && cd /tmp && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-  && python3 get-pip.py \
+RUN apt-get install -y -qq python3 python3-pip python3-full \
   && python3 -m pip install ansible \
   && python3 -m pip install awscli \
   && python3 -m pip install pipenv \
