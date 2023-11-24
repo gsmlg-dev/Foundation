@@ -36,9 +36,9 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=4.16.1
+            VERSION=4.19.0
           tags: |
-            ghcr.io/gsmlg/code-server:v4.16.1
+            ghcr.io/gsmlg/code-server:v4.19.0
             ghcr.io/gsmlg/code-server:latest
 
   build-image-arch:
@@ -69,9 +69,9 @@ jobs:
           platforms: linux/amd64
           push: true
           build-args: |
-            VERSION=4.16.1
+            VERSION=4.19.0
           tags: |
-            ghcr.io/gsmlg/code-server:v4.16.1-arch
+            ghcr.io/gsmlg/code-server:v4.19.0-arch
             ghcr.io/gsmlg/code-server:arch
 
   build-image-alpine:
@@ -102,8 +102,8 @@ jobs:
           platforms: linux/amd64
           push: true
           build-args: |
-            VERSION=4.16.1
+            VERSION=4.19.0
           tags: |
-            ghcr.io/gsmlg/code-server:v4.16.1-alpine
+            ghcr.io/gsmlg/code-server:v4.19.0-alpine
             ghcr.io/gsmlg/code-server:alpine
 
