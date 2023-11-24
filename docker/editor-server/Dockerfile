@@ -69,15 +69,6 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LANG=$LANG \
     && update-locale LC_ALL=$LANG
 
-# Now using ASDF manage packages
-ARG ASDF_DIR=/opt/asdf
-ARG ASDF_DATA_DIR=/opt/asdf-data
-ENV ASDF_DIR=$ASDF_DIR
-ENV ASDF_DATA_DIR=$ASDF_DATA_DIR
-RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.12.0 \
-  && touch $ASDF_DIR/asdf_updates_disabled \
-  && echo "source $ASDF_DIR/asdf.sh" | tee -a "/etc/zsh/zshrc"
-
 # install erlang and elixir
 RUN curl -sSLf https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb -o /tmp/erlang-solutions_2.0_all.deb \
   && dpkg -i /tmp/erlang-solutions_2.0_all.deb \
