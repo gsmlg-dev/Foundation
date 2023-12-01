@@ -11,7 +11,7 @@ jobs:
   build-image:
     strategy:
       matrix:
-        version: ["v3.8.7"]
+        version: ["v3.9.5"]
     runs-on: ubuntu-latest
     steps:
       -
