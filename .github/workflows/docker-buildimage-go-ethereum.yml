@@ -25,8 +25,9 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PASSWD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
         name: Build and push
         uses: docker/build-push-action@v3
@@ -36,7 +37,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=v1.10.25
+            VERSION=v1.13.5
           tags: |
-            gsmlg/go-ethereum:latest
-            gsmlg/go-ethereum:v1.10.25
+            ghcr.io/gsmlg/go-ethereum:latest
+            ghcr.io/gsmlg/go-ethereum:v1.13.5
