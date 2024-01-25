@@ -1,7 +1,7 @@
-ARG ELIXIR_VERSION="1.14.3"
+ARG ELIXIR_VERSION="1.16"
 FROM elixir:${ELIXIR_VERSION}
 
-ARG PHOENIX_VERSION="1.7.1"
+ARG PHOENIX_VERSION="1.7.10"
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
@@ -13,11 +13,11 @@ RUN mix local.hex --force
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
 # install nodejs
-ARG NODEJS_VERSION=16
+ARG NODEJS_VERSION=20
 ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get update \
-  && apt-get install gcc g++ make -y \
+  && apt-get install clang make -y \
   && apt-get install -y nodejs
 
 
