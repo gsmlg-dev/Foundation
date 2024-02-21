@@ -36,12 +36,12 @@ jobs:
           push: true
           tags: gsmlg/semantic-release:latest
       -
-        name: Build and push node-16
+        name: Build and push node-18
         uses: docker/build-push-action@v3
         with:
           context: docker/semantic-release/
-          file: docker/semantic-release/Dockerfile.node16
+          file: docker/semantic-release/Dockerfile.node18
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: gsmlg/semantic-release:node-16
+          tags: gsmlg/semantic-release:node-18
 
