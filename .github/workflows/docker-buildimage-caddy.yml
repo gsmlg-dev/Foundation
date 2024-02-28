@@ -38,7 +38,7 @@ jobs:
           }
           EOF
       - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v3
+        uses: cycjimmy/semantic-release-action@v4
         id: semantic
         with:
           working_directory: docker/caddy
