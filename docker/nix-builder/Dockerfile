@@ -4,4 +4,4 @@ COPY ./nix.conf /etc/nix/nix.conf
 
 RUN nix-channel --update
 
-RUN nix-build -A pythonFull '<nixpkgs>'
+RUN nix-build buildImage.nix
