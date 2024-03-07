@@ -41,6 +41,7 @@ jobs:
           extra_plugins: |
             @semantic-release/exec
         env:
+          NPM_CONFIG_AUDIT: "false"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
