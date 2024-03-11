@@ -41,15 +41,13 @@ jobs:
             "name": "caddy"
           }
           EOF
+      - name: 🏗 Run install semantic-release
+        working-directory: docker/caddy
+        run: npm install --save-dev semantic-release-monorepo semantic-release @semantic-release/exec
       - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v4
+        working-directory: docker/caddy
         id: semantic
-        with:
-          working_directory: docker/caddy
-          extends: |
-            semantic-release-monorepo
-          extra_plugins: |
-            @semantic-release/exec
+        run: npx semantic-release --extends semantic-release-monorepo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
