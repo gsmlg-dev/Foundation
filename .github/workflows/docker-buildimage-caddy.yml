@@ -29,7 +29,11 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Create package.json
         run: |
           cat <<EOF > docker/caddy/package.json
@@ -75,7 +79,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup golang
         uses: actions/setup-go@v3
         with:
@@ -111,7 +115,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
