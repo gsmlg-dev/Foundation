@@ -8,18 +8,18 @@ LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
-RUN apt-get install -y git
-RUN mix local.rebar --force
-RUN mix archive.install github hexpm/hex branch latest
-RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
-
 # install nodejs
 ARG NODEJS_VERSION=20
 ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get update \
-  && apt-get install clang make -y \
+  && apt-get install clang make git -y \
   && apt-get install -y nodejs
+
+RUN mix local.rebar --force
+RUN mix archive.install github hexpm/hex branch latest
+RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
+
 
 
 ENTRYPOINT ["/bin/bash", "-c"]
