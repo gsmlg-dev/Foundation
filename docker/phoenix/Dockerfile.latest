@@ -9,7 +9,7 @@ LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
 RUN mix local.rebar --force
-RUN mix local.hex --force
+RUN mix archive.install github hexpm/hex branch latest
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
 # install nodejs
