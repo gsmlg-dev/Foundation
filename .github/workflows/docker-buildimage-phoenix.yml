@@ -13,10 +13,10 @@ jobs:
       matrix:
         type:
           - base: "latest"
-            platforms: linux/amd64
+            platforms: linux/amd64,linux/arm64
             tag: 1.7.10
           - base: "alpine"
-            platforms: linux/amd64
+            platforms: linux/amd64,linux/arm64
             tag: 1.7.10-alpine
     runs-on: ubuntu-latest
     steps:
