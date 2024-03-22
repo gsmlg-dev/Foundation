@@ -14,10 +14,10 @@ jobs:
         type:
           - base: "latest"
             platforms: linux/amd64,linux/arm64
-            tag: 1.7.10
+            tag: 1.7.11
           - base: "alpine"
             platforms: linux/amd64,linux/arm64
-            tag: 1.7.10-alpine
+            tag: 1.7.11-alpine
     runs-on: ubuntu-latest
     steps:
       -
@@ -45,7 +45,7 @@ jobs:
           push: true
           build-args: |
             ELIXIR_VERSION=1.15
-            PHOENIX_VERSION=1.7.10
+            PHOENIX_VERSION=1.7.11
           tags: |
             docker.io/gsmlg/phoenix:${{ matrix.type.tag }}
             docker.io/gsmlg/phoenix:${{ matrix.type.base }}
