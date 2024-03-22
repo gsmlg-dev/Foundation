@@ -8,10 +8,11 @@ LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
+RUN apk --force-broken-world --no-cache add git
 RUN mix local.rebar --force
 RUN mix archive.install github hexpm/hex branch latest
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
-RUN apk --force-broken-world --no-cache add make bash figlet curl git nodejs npm
+RUN apk --force-broken-world --no-cache add make bash figlet curl nodejs npm
 
 ENTRYPOINT ["/bin/bash", "-c"]
