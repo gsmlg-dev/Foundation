@@ -1,6 +1,5 @@
 ARG ELIXIR_VERSION="1.16"
-# FROM elixir:${ELIXIR_VERSION}
-FROM docker.io/hexpm/elixir:1.16.2-erlang-26.2.3-ubuntu-jammy-20240125
+FROM elixir:${ELIXIR_VERSION}
 
 ARG PHOENIX_VERSION="1.7.10"
 
@@ -20,6 +19,6 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
 RUN mix local.rebar --force
 RUN mix local.hex --force
 RUN mix archive.install --force github hexpm/hex tag v2.0.6 || echo ">>>>>>>>>>>>>>>> failed"
-RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
+RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION} || echo ">>>>>>>>>>>>>>>> failed"
 
 ENTRYPOINT ["/bin/bash", "-c"]
