@@ -19,7 +19,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
 
 RUN mix local.rebar --force
 RUN mix local.hex --force
-RUN mix archive.install --force github hexpm/hex branch latest
+# RUN mix archive.install --force github hexpm/hex branch latest
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
 ENTRYPOINT ["/bin/bash", "-c"]
