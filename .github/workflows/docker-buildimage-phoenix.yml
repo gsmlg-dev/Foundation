@@ -44,7 +44,7 @@ jobs:
           platforms: ${{ matrix.type.platforms }}
           push: true
           build-args: |
-            ELIXIR_VERSION=1.16
+            ELIXIR_VERSION=1.15
             PHOENIX_VERSION=1.7.10
           tags: |
             docker.io/gsmlg/phoenix:${{ matrix.type.tag }}
