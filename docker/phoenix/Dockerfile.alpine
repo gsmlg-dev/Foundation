@@ -1,6 +1,5 @@
 ARG ELIXIR_VERSION="1.16"
-# FROM elixir:${ELIXIR_VERSION}-alpine
-FROM docker.io/hexpm/elixir:1.16.2-erlang-26.2.3-alpine-3.19.1
+FROM elixir:${ELIXIR_VERSION}-alpine
 
 ARG PHOENIX_VERSION="1.7.10"
 
