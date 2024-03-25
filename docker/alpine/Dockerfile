@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.19
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
