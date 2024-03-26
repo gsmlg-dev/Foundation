@@ -36,7 +36,7 @@ func pacHandler(w http.ResponseWriter, r *http.Request) {
 	cl := fmt.Sprintf("%d", len(pac))
 	w.Header().Set("Content-Length", cl)
 
-	pac = bytes.Replace(pac, []byte("SOCKS5 127.0.0.1:1080"), []byte(proxyServer), 1)
+	pac = bytes.Replace(pac, []byte("SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080"), []byte(proxyServer), 1)
 
 	pacReader := bytes.NewReader(pac)
 	io.Copy(w, pacReader)
