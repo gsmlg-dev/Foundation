@@ -1,0 +1,105 @@
+name: docker-buildimage-caddy
+
+on:
+  schedule:
+    - cron: '15 3 * * 0'
+  push:
+    branches: [ main ]
+    paths:
+      - 'golang/pac-server/**'
+      - '.github/workflows/build-pac-server.yml'
+
+jobs:
+  build-pac-server:
+    runs-on: ubuntu-latest
+    needs: [ sematic-version ]
+    strategy:
+      matrix:
+        platforms:
+          - os: linux
+            arch: amd64
+          - os: darwin
+            arch: amd64
+          - os: freebsd
+            arch: amd64
+          - os: windows
+            arch: amd64
+          - os: linux
+            arch: arm64
+          - os: android
+            arch: arm64
+          - os: darwin
+            arch: arm64
+          - os: windows
+            arch: arm64
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup golang
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.22.1'
+      - name: ⚙️ Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install curl make
+      - name: updated gfwlist.pac
+        working-directory: golang/pac-server
+        run: make download
+      - name: Build pac-server
+        working-directory: golang/pac-server
+        env:
+          GOOS: ${{ matrix.platforms.os }}
+          GOARCH: ${{ matrix.platforms.arch }}
+          CGO_ENABLED: "0"
+        run: |
+          make build
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: golang/pac-server/pac-server
+          asset_name: pac-server_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
+          tag: pac-server-release
+          make_latest: false
+          overwrite: true
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWD }}
+      -
+        name: Login to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      -
+        name: Build and push
+        id: build
+        uses: docker/build-push-action@v3
+        with:
+          context: golang/pac-server/
+          file: golang/pac-server/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: |
+            CGO_ENABLED=0
+          tags: |
+            docker.io/gsmlg/pac-server:latest
+            ghcr.io/gsmlg/pac-server:latest
