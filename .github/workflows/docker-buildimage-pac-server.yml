@@ -1,4 +1,4 @@
-name: docker-buildimage-caddy
+name: docker-buildimage-pac-server
 
 on:
   schedule:
