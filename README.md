@@ -28,11 +28,20 @@ I've manage too many repositories, that I have to combine them to one so that I 
     PAC (Proxy Auto-Config) file server.
 
     Download:
-          https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_${GOOS}_${GOARCH}
+  
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_linux_amd64
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_linux_arm64
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_darwin_amd64
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_darwin_arm64
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_windows_amd64
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_windows_arm64
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_freebsd_amd64
+        https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_android_arm64
 
     Docker:
-          docker.io/gsmlg/pac-server:latest
-          ghcr.io/gsmlg/pac-server:latest
+  
+        docker.io/gsmlg/pac-server:latest
+        ghcr.io/gsmlg/pac-server:latest
 
     - [caddy-static](golang/caddy-static)
 
