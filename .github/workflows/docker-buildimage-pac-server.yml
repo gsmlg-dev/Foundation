@@ -7,7 +7,7 @@ on:
     branches: [ main ]
     paths:
       - 'golang/pac-server/**'
-      - '.github/workflows/build-pac-server.yml'
+      - '.github/workflows/docker-buildimage-pac-server.yml'
 
 jobs:
   build-pac-server:
