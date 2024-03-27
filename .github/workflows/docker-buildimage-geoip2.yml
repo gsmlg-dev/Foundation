@@ -68,8 +68,9 @@ jobs:
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
             GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang
             CGO_ENABLED=0
-      - uses: ethomson/send-tweet-action@v1
+      - uses: gsmlg-dev/send-tweet-v2-action@v1
         with:
+          bearer-token: ${{ secrets.TWITTER_BEARER_TOKEN }}
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
