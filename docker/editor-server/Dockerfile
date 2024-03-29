@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.19.0
+ARG CODE_SERVER_VERSION=4.22.1
 FROM ghcr.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
@@ -70,9 +70,7 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LC_ALL=$LANG
 
 # install erlang and elixir
-RUN apt-get update \
-  && apt-get install -y erlang \
-  && apt-get install -y elixir
+RUN apt-get install -y erlang-dev elixir
 
 # install jdk
 ARG ANTLR_VERSION=4.12.0
@@ -170,20 +168,22 @@ RUN apt-get install -y -qq php-cli
 RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
-ARG PUB_CACHE=/opt/flutter/.pub
-ENV PUB_CACHE=/opt/flutter/.pub
+ARG FLUTTER_VERSION=3.19.5
+ARG PUB_CACHE=/opt/flutter/pub-cache
+ENV PUB_CACHE=${PUB_CACHE}
+ENV FLUTTER_VERSION=${FLUTTER_VERSION}
 RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
-  && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.13.9-stable.tar.xz \
+  && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz \
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
-  && echo 'export PATH="$PATH":"/opt/flutter/.pub/bin"' | tee -a "/etc/zsh/zshrc" \
+  && echo 'export PATH="$PATH":"${PUB_CACHE}/bin"' | tee -a "/etc/zsh/zshrc" \
   && rm -f flutter.tar.xz \
   && /opt/flutter/bin/dart pub global activate mason_cli \
-  && /opt/flutter/bin/dart pub global activate flutterpi_tool \
+  && /opt/flutter/bin/dart pub global activate vscode_ext_cli \
   && /opt/flutter/bin/dart pub global activate melos
 
 # install kubectl
-ARG KUBECTL_VERSION=1.26.3
+ARG KUBECTL_VERSION=1.28.7
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \

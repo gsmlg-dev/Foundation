@@ -13,15 +13,15 @@ jobs:
 
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
+        uses: styfle/cancel-workflow-action@0.12.1
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Create package.json
         run: |
@@ -44,19 +44,39 @@ jobs:
           NPM_CONFIG_AUDIT: "false"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      -
+        name: check if a new release has been created
+        run: |
+          echo "New release version is ${{ steps.semantic.outputs.new_release_version }}"
+          if [ -z "${{ steps.semantic.outputs.new_release_version }}" ]; then
+            echo "No new release. Exiting..."
+            exit 78
+          fi
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWD }}
+      - 
+        name: Login to Github Container Registry
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      -
+        name: Set build date
+        id: build-date
+        run: |
+          echo "ym=$(date +%Y-%m)" >> $GITHUB_OUTPUT
+          echo "date=$(date +%F)" >> $GITHUB_OUTPUT
 
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: docker/editor-server/
           file: docker/editor-server/Dockerfile
@@ -67,3 +87,5 @@ jobs:
           tags: |
             ghcr.io/gsmlg/editor-server:v${{ steps.semantic.outputs.new_release_version }}
             ghcr.io/gsmlg/editor-server:latest
+            docker.io/gsmlg/editor-server:v${{ steps.semantic.outputs.new_release_version }}
+            docker.io/gsmlg/editor-server:latest
