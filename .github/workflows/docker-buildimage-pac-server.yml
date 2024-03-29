@@ -105,5 +105,7 @@ jobs:
             DATE=${{ steps.build-date.outputs.date }}
             CGO_ENABLED=0
           tags: |
+            docker.io/gsmlg/pac-server:${{ steps.build-date.outputs.date }}
+            ghcr.io/gsmlg/pac-server:${{ steps.build-date.outputs.date }}
             docker.io/gsmlg/pac-server:latest
             ghcr.io/gsmlg/pac-server:latest
