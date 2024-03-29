@@ -3,9 +3,9 @@ repositoryUrl: https://github.com/gsmlg/Foundation
 plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
-  - - "@semantic-release/exec"
-    - "prepareCmd" : "echo ${nextRelease.version}"
-      "publishCmd" : "echo pubhlish editor server ${nextRelease.version}"
+  - - '@semantic-release/exec'
+    - prepareCmd : echo "new_release_version=${nextRelease.version}" >> $GITHUB_OUTPUT
+      publishCmd : "echo pubhlish editor server ${nextRelease.version}"
   - '@semantic-release/github'
 branches:
   - +([0-9])?(.{+([0-9]),x}).x

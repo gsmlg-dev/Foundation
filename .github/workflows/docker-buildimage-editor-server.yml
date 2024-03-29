@@ -30,20 +30,17 @@ jobs:
             "name": "editor-server"
           }
           EOF
-
+      - name: 🏗 Run install semantic-release
+        working-directory: docker/caddy
+        run: npm install --save-dev semantic-release-monorepo semantic-release @semantic-release/exec
       - name: 🚀 Release
-        uses: cycjimmy/semantic-release-action@v3
+        working-directory: docker/caddy
         id: semantic
-        with:
-          working_directory: docker/editor-server
-          extends: |
-            semantic-release-monorepo
-          extra_plugins: |
-            @semantic-release/exec
+        run: npx semantic-release --extends semantic-release-monorepo
         env:
-          NPM_CONFIG_AUDIT: "false"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GOPRIVATE: github.com/gsmlg-dev/gsmlg-golang
       -
         name: check if a new release has been created
         run: |
