@@ -1,4 +1,6 @@
-FROM node:16-alpine
+FROM node:21-alpine
+
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN apk add --no-cache git
 
@@ -8,4 +10,4 @@ COPY . .
 RUN yarn
 RUN yarn build
 
-CMD yarn start
+CMD yarn serve
