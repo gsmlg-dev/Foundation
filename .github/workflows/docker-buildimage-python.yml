@@ -62,5 +62,5 @@ jobs:
             VERSION=${{ matrix.version }}
           tags: |
             docker.io/gsmlg/python:v${{ matrix.version }}
-            ghcr.io/gsmlg/python:v{{ matrix.version }}
+            ghcr.io/gsmlg/python:v${{ matrix.version }}
 
