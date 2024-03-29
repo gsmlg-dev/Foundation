@@ -47,7 +47,7 @@ jobs:
           file: docker/squid/Dockerfile
           platforms: linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6
           push: true
-          tags:
+          tags: |
             docker.io/gsmlg/squid:${{ steps.build-date.outputs.ym }}
             ghcr.io/gsmlg/squid:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/squid:latest
