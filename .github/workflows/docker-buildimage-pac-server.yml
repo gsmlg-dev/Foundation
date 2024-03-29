@@ -89,6 +89,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
+        name: Set build date
+        id: build-date
+        run: echo "date=$(date +%F)" >> $GITHUB_OUTPUT
+      -
         name: Build and push
         id: build
         uses: docker/build-push-action@v5
@@ -98,7 +102,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           build-args: |
-            DATE=$(date +%F)
+            DATE=${{ steps.build-date.outputs.date }}
             CGO_ENABLED=0
           tags: |
             docker.io/gsmlg/pac-server:latest
