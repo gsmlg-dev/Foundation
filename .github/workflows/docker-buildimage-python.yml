@@ -21,7 +21,6 @@ jobs:
           - "3.12"
           - "3.13-rc"
           - "3"
-          - "latest"
     runs-on: ubuntu-latest
     steps:
       -
