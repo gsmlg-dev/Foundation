@@ -91,7 +91,7 @@ jobs:
       -
         name: Build and push
         id: build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: golang/pac-server/
           file: golang/pac-server/Dockerfile
