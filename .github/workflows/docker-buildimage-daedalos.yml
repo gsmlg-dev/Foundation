@@ -50,7 +50,7 @@ jobs:
           platforms: linux/amd64, linux/arm64
           push: true
           tags: |
-            docker.io/gsmlg/daedalOS:latest
-            ghcr.io/gsmlg/daedalOS:latest
+            docker.io/gsmlg/daedalos:latest
+            ghcr.io/gsmlg/daedalos:latest
 
 
