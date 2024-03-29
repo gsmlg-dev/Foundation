@@ -38,8 +38,8 @@ jobs:
         name: Set build date
         id: build-date
         run: |
-          echo "ym=$(date +%Y-%M)" >> $GITHUB_OUTPUT
-          echo "date=$(date +%Y-%M)" >> $GITHUB_OUTPUT
+          echo "ym=$(date +%Y-%m)" >> $GITHUB_OUTPUT
+          echo "date=$(date +%F)" >> $GITHUB_OUTPUT
       -
         name: Build and push
         uses: docker/build-push-action@v5
