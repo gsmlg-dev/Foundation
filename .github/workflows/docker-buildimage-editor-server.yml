@@ -23,6 +23,10 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Create package.json
         run: |
           cat <<EOF > docker/editor-server/package.json
@@ -31,10 +35,10 @@ jobs:
           }
           EOF
       - name: 🏗 Run install semantic-release
-        working-directory: docker/caddy
+        working-directory: docker/editor-server
         run: npm install --save-dev semantic-release-monorepo semantic-release @semantic-release/exec
       - name: 🚀 Release
-        working-directory: docker/caddy
+        working-directory: docker/editor-server
         id: semantic
         run: npx semantic-release --extends semantic-release-monorepo
         env:
