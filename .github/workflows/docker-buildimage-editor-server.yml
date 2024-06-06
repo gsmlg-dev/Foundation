@@ -85,6 +85,8 @@ jobs:
           push: true
           build-args: |
             VERSION=latest
+            BUILD_MONTH=${{ steps.build-date.outputs.ym }}
+            BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             ghcr.io/gsmlg/editor-server:latest
             docker.io/gsmlg/editor-server:latest
