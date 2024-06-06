@@ -11,7 +11,7 @@ LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 RUN apk --force-broken-world --no-cache add make bash figlet git curl nodejs npm
 
 RUN mix local.rebar --force
-RUN mix archive.install --force github hexpm/hex tag v2.0.6
+RUN mix local.hex --force
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
 ENTRYPOINT ["/bin/bash", "-c"]

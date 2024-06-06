@@ -17,7 +17,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y nodejs
 
 RUN mix local.rebar --force
-RUN mix archive.install --force github hexpm/hex tag v2.0.6
+RUN mix local.hex --force
 RUN mix archive.install --force hex phx_new ${PHOENIX_VERSION}
 
 ENTRYPOINT ["/bin/bash", "-c"]

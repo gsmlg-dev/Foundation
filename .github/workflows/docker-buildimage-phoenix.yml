@@ -14,10 +14,10 @@ jobs:
         type:
           - base: "latest"
             platforms: linux/amd64,linux/arm64
-            tag: 1.7.11
+            tag: 1.7.12
           - base: "alpine"
             platforms: linux/amd64,linux/arm64
-            tag: 1.7.11-alpine
+            tag: 1.7.12-alpine
     runs-on: ubuntu-latest
     steps:
       -
@@ -35,6 +35,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWD }}
+      - 
+        name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
         name: Build and push
         uses: docker/build-push-action@v3
@@ -44,8 +51,10 @@ jobs:
           platforms: ${{ matrix.type.platforms }}
           push: true
           build-args: |
-            ELIXIR_VERSION=1.15
-            PHOENIX_VERSION=1.7.11
+            ELIXIR_VERSION=1.16
+            PHOENIX_VERSION=1.7.12
           tags: |
             docker.io/gsmlg/phoenix:${{ matrix.type.tag }}
             docker.io/gsmlg/phoenix:${{ matrix.type.base }}
+            ghcr.io/gsmlg/phoenix:${{ matrix.type.tag }}
+            ghcr.io/gsmlg/phoenix:${{ matrix.type.base }}
