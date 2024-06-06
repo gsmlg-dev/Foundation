@@ -1,8 +1,8 @@
-ARG ZT_UI_COMMIT=d6f05af126bd879da886ea23a42de995fcb22309
-ARG ZT_UI_VERSION=1.5.0
+ARG ZT_UI_COMMIT=00592d9ad498c2ddb0569def3d65aff88773e55f
+ARG ZT_UI_VERSION=1.5.8
 
 
-FROM alpine:3.16 AS source
+FROM alpine:3.20 AS source
 
 RUN apk add --update git \
     && git clone https://github.com/dec0dOS/zero-ui.git /src \

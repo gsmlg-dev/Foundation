@@ -13,22 +13,29 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       -
         name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWD }}
+      - 
+        name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
         name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: docker/zerotier/
           file: docker/zerotier/Dockerfile
@@ -40,6 +47,7 @@ jobs:
             ZT_COMMIT=651f45fe29155c462f4e56dd74f4a347f6861d0d
             ZT_VERSION=1.10.1
           tags: |
-            gsmlg/zerotier:v1.10.1
-            gsmlg/zerotier:latest
-
+            docker.io/gsmlg/zerotier:v1.10.1
+            docker.io/gsmlg/zerotier:latest
+            ghcr.io/gsmlg/zerotier:v1.10.1
+            ghcr.io/gsmlg/zerotier:latest
