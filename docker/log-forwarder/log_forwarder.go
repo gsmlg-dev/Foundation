@@ -60,7 +60,7 @@ func (client *Client) handleRequest() {
 		m := strings.NewReader(message)
 		_, err1 := http.Post(client.target, "application/json", m)
 		if err1 != nil {
-			fmt.Fprintf(os.Stderr, "ERR: %s\r\n%v\r\n%s", client.target, err1, m)
+			fmt.Fprintf(os.Stderr, "ERR: %s\r\n%v\r\n%s", client.target, err1, message)
 		}
 		if _, t := os.LookupEnv("SILENT"); t == false {
 			client.conn.Write([]byte("Log received and forwarded. \n"))

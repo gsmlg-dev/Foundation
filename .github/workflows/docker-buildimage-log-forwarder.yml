@@ -13,10 +13,10 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - 
         name: 🚀 Release
         uses: gsmlg/semantic-release-action@v3
@@ -29,22 +29,30 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       -
         name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWD }}
+      - 
+        name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
         name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: docker/log-forwarder/
           file: docker/log-forwarder/Dockerfile
           platforms: linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6
           push: true
           tags: |
-            gsmlg/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
-            gsmlg/log-forwarder:latest
-
+            docker.io/gsmlg/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
+            docker.io/gsmlg/log-forwarder:latest
+            ghcr.io/gsmlg/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
+            ghcr.io/gsmlg/log-forwarder:latest
