@@ -51,7 +51,7 @@ jobs:
             VERSION=4.89.1
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
-            ghcr.io/gsmlg/code-server:v4.89.1
+            ghcr.io/gsmlg/code-server:v4.90.3
             ghcr.io/gsmlg/code-server:latest
-            docker.io/gsmlg/code-server:v4.89.1
+            docker.io/gsmlg/code-server:v4.90.3
             docker.io/gsmlg/code-server:latest
