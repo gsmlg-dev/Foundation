@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.semantic.outputs.new_release_version }}
-      caddy_version: v2.7.6
+      caddy_version: v2.8.4
       go_build_flags: "-trimpath -ldflags '-w s'"
       caddy_with: >
          --with github.com/caddy-dns/cloudflare
@@ -23,6 +23,7 @@ jobs:
          --with github.com/gsmlg-dev/caddy-oauth2
          --with github.com/caddyserver/cache-handler
          --with github.com/caddyserver/replace-response
+         --with github.com/caddyserver/forwardproxy
          --with github.com/greenpau/caddy-security
          --with github.com/mholt/caddy-ratelimit
          --with github.com/mholt/caddy-webdav

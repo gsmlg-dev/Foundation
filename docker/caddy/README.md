@@ -1,6 +1,6 @@
 # Build Caddy
 
-caddy verison `v2.7.4`
+caddy verison `v2.8.4`
 
 xcaddy build with
 
@@ -13,6 +13,7 @@ xcaddy build with
 --with github.com/gsmlg-dev/caddy-oauth2
 --with github.com/caddyserver/cache-handler
 --with github.com/caddyserver/replace-response
+--with github.com/caddyserver/forwardproxy
 --with github.com/greenpau/caddy-security
 --with github.com/mholt/caddy-ratelimit
 --with github.com/mholt/caddy-webdav
