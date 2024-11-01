@@ -185,12 +185,14 @@ RUN aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_releas
   && /opt/flutter/bin/dart pub global activate vscode_ext_cli \
   && /opt/flutter/bin/dart pub global activate melos
 
-# install kubectl
-# ARG KUBECTL_VERSION=1.30.6
-# RUN export ARCH=`dpkg --print-architecture`; \
-#   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
-#   && chmod +x kubectl \
-#   && mv kubectl /usr/local/bin/kubectl
+# install kubectl v1.31.2
+ARG KUBECTL_VERSION
+RUN export ARCH=`dpkg --print-architecture` \
+  && export KUBECTL_LATEST_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) \
+  && export KUBECTL_VERSION=${KUBECTL_VERSION:-$KUBECTL_LATEST_VERSION} \
+  && curl -sSfLo kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
+  && chmod +x kubectl \
+  && mv kubectl /usr/local/bin/kubectl
 
 # install skaffold
 RUN export ARCH=`dpkg --print-architecture`; \
