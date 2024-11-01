@@ -183,7 +183,6 @@ RUN aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_releas
   && rm -f flutter.tar.xz \
   && /opt/flutter/bin/dart pub global activate mason_cli \
   && /opt/flutter/bin/dart pub global activate vscode_ext_cli \
-  && /opt/flutter/bin/dart pub global activate translate_arb_cli \
   && /opt/flutter/bin/dart pub global activate melos
 
 # install kubectl
