@@ -6,20 +6,13 @@ LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/t
 LABEL org.opencontainers.image.description="Code-Server running on top of alpine"
 LABEL org.opencontainers.image.licenses=MIT
 
-ARG VERSION=4.19.0
+ARG VERSION=4.93.1
 ENV container docker
 ENV LC_ALL C
 ENV CODE_SERVER_VERSION=$VERSION
 
-RUN cat <<EOF > /etc/apk/repositories
-https://dl-cdn.alpinelinux.org/alpine/edge/main
-https://dl-cdn.alpinelinux.org/alpine/edge/community
-https://dl-cdn.alpinelinux.org/alpine/edge/testing
-EOF
-
 RUN apk update && apk add curl ca-certificates zsh sudo gpg bash nodejs npm \
   && apk add alpine-sdk bash libstdc++ libc6-compat \
-  && npm config set python python3 \
   && adduser coder -D -s $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 
