@@ -1,5 +1,5 @@
 ARG CODE_SERVER_VERSION=4.93.1
-FROM ghcr.io/gsmlg/code-server:v$CODE_SERVER_VERSION
+FROM ghcr.io/gsmlg-dev/code-server:v$CODE_SERVER_VERSION
 
 ARG BUILD_DATE
 ARG BUILD_MONTH
