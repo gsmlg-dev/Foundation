@@ -6,7 +6,11 @@ LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/t
 LABEL org.opencontainers.image.description="Code-Server running on top of debian"
 LABEL org.opencontainers.image.licenses=MIT
 
-ARG VERSION=4.90.3
+ARG VERSION=4.93.1
+ARG container=docker
+ARG LC_ALL=C
+ARG DEBIAN_FRONTEND=noninteractive
+
 ENV container docker
 ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
