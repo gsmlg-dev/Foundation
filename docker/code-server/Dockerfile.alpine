@@ -12,13 +12,13 @@ ENV LC_ALL C
 ENV CODE_SERVER_VERSION=$VERSION
 
 RUN apk update && apk add curl ca-certificates zsh sudo gpg bash nodejs npm \
-  && apk add alpine-sdk bash libstdc++ libc6-compat \
+  && apk add alpine-sdk libstdc++ libc6-compat python3 \
   && adduser coder -D -s $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 
 COPY duskmoon /etc/duskmoon
 
-RUN npm install --global code-server
+RUN npm install --global --unsafe-perm code-server
 
 RUN rm -rf /root/.cache && rm -rf /tmp/*
 
