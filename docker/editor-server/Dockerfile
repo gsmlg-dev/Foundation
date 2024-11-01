@@ -74,7 +74,7 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LC_ALL=$LANG
 
 # install nix
-sh <(curl -L https://nixos.org/nix/install) --no-daemon
+RUN sh <(curl -L https://nixos.org/nix/install) --no-daemon
 
 # install erlang and elixir
 RUN apt-get install -y erlang-dev elixir erlang-xmerl
