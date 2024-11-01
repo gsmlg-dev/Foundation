@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.89.1
+ARG CODE_SERVER_VERSION=4.93.1
 FROM ghcr.io/gsmlg/code-server:v$CODE_SERVER_VERSION
 
 ARG BUILD_DATE
@@ -73,8 +73,11 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
     && update-locale LANG=$LANG \
     && update-locale LC_ALL=$LANG
 
+# install nix
+sh <(curl -L https://nixos.org/nix/install) --no-daemon
+
 # install erlang and elixir
-RUN apt-get install -y erlang-dev elixir
+RUN apt-get install -y erlang-dev elixir erlang-xmerl
 
 # install jdk
 ARG ANTLR_VERSION=4.12.0
@@ -97,14 +100,16 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && npm install -g pnpm \
   && npm install -g npm-check-updates \
   && npm install -g @microsoft/rush \
-  && npm install -g @aws-amplify/cli \
   && npm install -g @openapitools/openapi-generator-cli \
   && npm install -g ts-node \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv" \
   && /usr/bin/node /usr/lib/node_modules/@openapitools/openapi-generator-cli/main.js version
 
+# install deno
+RUN curl -fsSL https://deno.land/install.sh | sh
+
 # install golang
-ARG GO_VERSION=1.22.1
+ARG GO_VERSION=1.22.8
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
@@ -130,8 +135,28 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install github.com/evanw/esbuild/cmd/esbuild@latest \
   && /usr/local/go/bin/go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
-  && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.io,direct \
+  && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.gsmlg.dev,direct \
   && chown -R coder:coder "${GOPATH}"
+
+# install rust
+ARG RUSTPATH=/opt/rust
+ENV RUSTUP_HOME=${RUSTPATH}
+ENV CARGO_HOME=${RUSTPATH}
+RUN export RUSTUP_HOME=${RUSTPATH} \
+  && export CARGO_HOME=${RUSTPATH} \
+  && echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" \
+  && echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
+  && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
+  && /opt/rust/bin/rustup target add wasm32-unknown-unknown \
+  && /opt/rust/bin/rustup target add x86_64-apple-darwin \
+  && /opt/rust/bin/rustup target add aarch64-apple-darwin \
+  && /opt/rust/bin/cargo install difftastic \
+  && /opt/rust/bin/cargo install cargo-generate \
+  && /opt/rust/bin/cargo install wasm-pack \
+  && /opt/rust/bin/cargo install trunk wasm-bindgen-cli \
+  && /opt/rust/bin/cargo install mdbook \
+  && chown -R coder:coder "${RUSTPATH}"
 
 # install python
 RUN apt-get install -y -qq python3 python3-pip python3-full \
@@ -148,7 +173,7 @@ RUN apt-get install -y -qq php-cli
 RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
-ARG FLUTTER_VERSION=3.22.1
+ARG FLUTTER_VERSION=3.24.4
 ARG PUB_CACHE=/opt/flutter/pub-cache
 ENV PUB_CACHE=${PUB_CACHE}
 ENV FLUTTER_VERSION=${FLUTTER_VERSION}
@@ -164,7 +189,7 @@ RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblz
   && /opt/flutter/bin/dart pub global activate melos
 
 # install kubectl
-ARG KUBECTL_VERSION=1.30.1
+ARG KUBECTL_VERSION=1.30.6
 RUN export ARCH=`dpkg --print-architecture`; \
   curl -sSfLo kubectl "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl" \
   && chmod +x kubectl \
