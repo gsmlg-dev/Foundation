@@ -60,7 +60,8 @@ RUN apt-get install -y -qq \
   clang llvm \
   emscripten \
   openjdk-17-jdk \
-  mandoc
+  mandoc \
+  cmake ninja-build libgtk-3-dev liblzma-dev libglu1-mesa
 
 RUN apt-file update
 
@@ -175,8 +176,7 @@ ARG FLUTTER_VERSION=3.24.4
 ARG PUB_CACHE=/opt/flutter/pub-cache
 ENV PUB_CACHE=${PUB_CACHE}
 ENV FLUTTER_VERSION=${FLUTTER_VERSION}
-RUN apt-get install -y -qq clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libglu1-mesa \
-  && aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz \
+RUN aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz \
   && tar xf flutter.tar.xz -C /opt \
   && echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshrc" \
   && echo 'export PATH="$PATH":"${PUB_CACHE}/bin"' | tee -a "/etc/zsh/zshrc" \
