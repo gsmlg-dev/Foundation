@@ -105,9 +105,6 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv" \
   && /usr/bin/node /usr/lib/node_modules/@openapitools/openapi-generator-cli/main.js version
 
-# install deno
-RUN curl -fsSL https://deno.land/install.sh | sh
-
 # install golang
 ARG GO_VERSION=1.22.8
 ARG GO111MODULE=on
@@ -156,6 +153,7 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && /opt/rust/bin/cargo install wasm-pack \
   && /opt/rust/bin/cargo install trunk wasm-bindgen-cli \
   && /opt/rust/bin/cargo install mdbook \
+  && /opt/rust/bin/cargo install deno --locked \
   && chown -R coder:coder "${RUSTPATH}"
 
 # install python
