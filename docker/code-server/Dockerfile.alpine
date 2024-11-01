@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.20
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
@@ -18,17 +18,19 @@ https://dl-cdn.alpinelinux.org/alpine/edge/testing
 EOF
 
 RUN apk update && apk add curl ca-certificates zsh sudo gpg bash nodejs npm \
+  && apk add alpine-sdk bash libstdc++ libc6-compat \
+  && npm config set python python3 \
   && adduser coder -D -s $(which zsh) \
   && echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 
 COPY duskmoon /etc/duskmoon
 
-RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --method standalone --prefix=/usr/local --version $VERSION
+RUN npm install --global code-server
 
 RUN rm -rf /root/.cache && rm -rf /tmp/*
 
 WORKDIR /home/coder
 USER coder
 
-ENTRYPOINT ["/usr/local/bin/code-server"]
+ENTRYPOINT ["code-server"]
 CMD ["--disable-update-check", "--bind-addr", "0.0.0.0:8080", "--disable-telemetry", "--app-name", "GSMLG.DEV","--welcome-text", "MAY THE FORCE BE WITH YOU"]
