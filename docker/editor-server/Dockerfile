@@ -147,8 +147,6 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
   && /opt/rust/bin/rustup target add wasm32-unknown-unknown \
-  && /opt/rust/bin/rustup target add x86_64-apple-darwin \
-  && /opt/rust/bin/rustup target add aarch64-apple-darwin \
   && /opt/rust/bin/cargo install difftastic \
   && /opt/rust/bin/cargo install cargo-generate \
   && /opt/rust/bin/cargo install wasm-pack \
