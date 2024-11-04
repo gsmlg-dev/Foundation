@@ -132,6 +132,7 @@ RUN export ARCH=`dpkg --print-architecture`; \
   && /usr/local/go/bin/go install golang.org/x/mobile/cmd/gobind@latest \
   && /usr/local/go/bin/go install github.com/evanw/esbuild/cmd/esbuild@latest \
   && /usr/local/go/bin/go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest \
+  && /usr/local/go/bin/go clean -modcache \
   && /usr/local/go/bin/go env -w GO111MODULE=on \
   && /usr/local/go/bin/go env -w GOPROXY=https://goproxy.gsmlg.dev,direct \
   && chown -R coder:coder "${GOPATH}"
@@ -153,6 +154,7 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && /opt/rust/bin/cargo install trunk wasm-bindgen-cli \
   && /opt/rust/bin/cargo install mdbook \
   && /opt/rust/bin/cargo install deno --locked \
+  && /opt/rust/bin/cargo clean \
   && chown -R coder:coder "${RUSTPATH}"
 
 # install python
