@@ -43,7 +43,7 @@ jobs:
           echo "date=$(date +%F)" >> $GITHUB_OUTPUT
       -
         name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: docker/stunnel/
           file: docker/stunnel/Dockerfile
@@ -51,7 +51,7 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/stunnel:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg/stunnel:${{ steps.build-date.outputs.ym }}
+            ghcr.io/gsmlg-dev/stunnel:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/stunnel:latest
-            ghcr.io/gsmlg/stunnel:latest
+            ghcr.io/gsmlg-dev/stunnel:latest
 

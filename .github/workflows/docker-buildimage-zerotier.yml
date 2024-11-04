@@ -49,5 +49,5 @@ jobs:
           tags: |
             docker.io/gsmlg/zerotier:v1.10.1
             docker.io/gsmlg/zerotier:latest
-            ghcr.io/gsmlg/zerotier:v1.10.1
-            ghcr.io/gsmlg/zerotier:latest
+            ghcr.io/gsmlg-dev/zerotier:v1.10.1
+            ghcr.io/gsmlg-dev/zerotier:latest

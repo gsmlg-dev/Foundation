@@ -51,7 +51,7 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/rabbitmq:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg/rabbitmq:${{ steps.build-date.outputs.ym }}
+            ghcr.io/gsmlg-dev/rabbitmq:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/rabbitmq:latest
-            ghcr.io/gsmlg/rabbitmq:latest
+            ghcr.io/gsmlg-dev/rabbitmq:latest
 

@@ -1,4 +1,4 @@
-FROM golang:alpine as builder
+FROM docker.io/golang:alpine as builder
 
 COPY echo.go /go
 

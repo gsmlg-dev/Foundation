@@ -54,5 +54,5 @@ jobs:
           tags: |
             docker.io/gsmlg/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/log-forwarder:latest
-            ghcr.io/gsmlg/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
-            ghcr.io/gsmlg/log-forwarder:latest
+            ghcr.io/gsmlg-dev/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
+            ghcr.io/gsmlg-dev/log-forwarder:latest

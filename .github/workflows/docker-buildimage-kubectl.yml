@@ -82,6 +82,6 @@ jobs:
             KUBE_VERSION=${{ matrix.version }}
           tags: |
             docker.io/gsmlg/kubectl:v${{ matrix.version }}
-            ghcr.io/gsmlg/kubectl:v${{ matrix.version }}
+            ghcr.io/gsmlg-dev/kubectl:v${{ matrix.version }}
 
 

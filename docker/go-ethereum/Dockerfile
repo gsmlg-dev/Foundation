@@ -12,7 +12,7 @@ RUN apk add --update git curl make gcc musl-dev linux-headers \
   && tar zxf /archive.tar.gz --strip-components=1 -C /src \
   && cd /src && make all
 
-FROM alpine:3.18
+FROM alpine:3.20
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL VERSION="$VERSION"

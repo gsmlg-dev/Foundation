@@ -51,7 +51,7 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/unbound:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg/unbound:${{ steps.build-date.outputs.ym }}
+            ghcr.io/gsmlg-dev/unbound:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/unbound:latest
-            ghcr.io/gsmlg/unbound:latest
+            ghcr.io/gsmlg-dev/unbound:latest
 

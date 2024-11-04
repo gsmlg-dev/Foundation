@@ -49,9 +49,9 @@ jobs:
           push: true
           tags: |
             gsmlg/geoip2:${{ steps.build-date.outputs.date }}
-            ghcr.io/gsmlg/geoip2:${{ steps.build-date.outputs.date }}
+            ghcr.io/gsmlg-dev/geoip2:${{ steps.build-date.outputs.date }}
             gsmlg/geoip2:latest
-            ghcr.io/gsmlg/geoip2:latest
+            ghcr.io/gsmlg-dev/geoip2:latest
           build-args: |
             LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}
             USER=${{ secrets.GIT_USER_ID }}
@@ -69,9 +69,9 @@ jobs:
           push: true
           tags: |
             gsmlg/geoip2:embed-${{ steps.build-date.outputs.date }}
-            ghcr.io/gsmlg/geoip2:embed-${{ steps.build-date.outputs.date }}
+            ghcr.io/gsmlg-dev/geoip2:embed-${{ steps.build-date.outputs.date }}
             gsmlg/geoip2:embed
-            ghcr.io/gsmlg/geoip2:embed
+            ghcr.io/gsmlg-dev/geoip2:embed
           build-args: |
             LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}
             USER=${{ secrets.GIT_USER_ID }}
@@ -91,7 +91,7 @@ jobs:
 
       #         - docker.io/gsmlg/geoip2:latest
       #         - docker.io/gsmlg/geoip2:embed
-      #         - ghcr.io/gsmlg/geoip2:latest
-      #         - ghcr.io/gsmlg/geoip2:embed
+      #         - ghcr.io/gsmlg-dev/geoip2:latest
+      #         - ghcr.io/gsmlg-dev/geoip2:embed
 
       #       * Image with embed tag load data in memory.

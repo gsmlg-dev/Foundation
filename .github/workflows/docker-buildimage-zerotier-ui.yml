@@ -47,5 +47,5 @@ jobs:
           tags: |
             docker.io/gsmlg/zerotier-ui:v1.5.8
             docker.io/gsmlg/zerotier-ui:latest
-            ghcr.io/gsmlg/zerotier-ui:v1.5.8
-            ghcr.io/gsmlg/zerotier-ui:latest
+            ghcr.io/gsmlg-dev/zerotier-ui:v1.5.8
+            ghcr.io/gsmlg-dev/zerotier-ui:latest

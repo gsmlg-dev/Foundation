@@ -17,23 +17,23 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'qjfoidnh/BaiduPCS-Go'
           ref: ${{ matrix.version }}
           path: 'docker/baidupcs-go/src'
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - 
         name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -41,7 +41,7 @@ jobs:
       -
         name: Build and push
         id: build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: docker/baidupcs-go/
           file: docker/baidupcs-go/Dockerfile
@@ -51,5 +51,5 @@ jobs:
             GO111MODULE=on
             VERSION=${{ matrix.version }}
           tags: |
-            ghcr.io/gsmlg/baidupcs-go:${{ matrix.version }}
-            ghcr.io/gsmlg/baidupcs-go:latest
+            ghcr.io/gsmlg-dev/baidupcs-go:${{ matrix.version }}
+            ghcr.io/gsmlg-dev/baidupcs-go:latest

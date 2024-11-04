@@ -51,6 +51,6 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/varnish:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg/varnish:${{ steps.build-date.outputs.ym }}
+            ghcr.io/gsmlg-dev/varnish:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/varnish:latest
-            ghcr.io/gsmlg/varnish:latest
+            ghcr.io/gsmlg-dev/varnish:latest

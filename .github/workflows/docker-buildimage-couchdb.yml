@@ -54,4 +54,6 @@ jobs:
           tags: |
             docker.io/gsmlg/couchdb:3
             docker.io/gsmlg/couchdb:latest
+            ghcr.io/gsmlg-dev/couchdb:3
+            ghcr.io/gsmlg-dev/couchdb:latest
 

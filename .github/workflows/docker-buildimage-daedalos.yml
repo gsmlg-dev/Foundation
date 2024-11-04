@@ -51,6 +51,6 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/daedalos:latest
-            ghcr.io/gsmlg/daedalos:latest
+            ghcr.io/gsmlg-dev/daedalos:latest
 
 

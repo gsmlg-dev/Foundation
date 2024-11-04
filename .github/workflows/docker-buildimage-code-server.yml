@@ -8,7 +8,7 @@ on:
       - '.github/workflows/docker-buildimage-code-server.yml'
 
 jobs:
-  build-image:
+  build-code-server-image:
     runs-on: ubuntu-latest
     steps:
       -

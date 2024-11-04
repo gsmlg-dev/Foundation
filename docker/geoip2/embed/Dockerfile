@@ -1,4 +1,4 @@
-FROM gsmlg/curl as downloader
+FROM docker.io/gsmlg/curl as downloader
 
 ARG LICENSE
 
@@ -7,7 +7,7 @@ WORKDIR /
 RUN curl -vL "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${LICENSE}&suffix=tar.gz" -o db.tar.gz \
   && tar zxf db.tar.gz --strip-components 1
 
-FROM golang:1.20 as builder
+FROM golang:1.22 as builder
 
 ARG USER
 ARG TOKEN

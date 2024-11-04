@@ -49,7 +49,7 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/squid:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg/squid:${{ steps.build-date.outputs.ym }}
+            ghcr.io/gsmlg-dev/squid:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/squid:latest
-            ghcr.io/gsmlg/squid:latest
+            ghcr.io/gsmlg-dev/squid:latest
 

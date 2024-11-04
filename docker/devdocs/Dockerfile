@@ -8,7 +8,7 @@ WORKDIR /devdocs
 RUN apk --update add git \
     && git clone --depth=1 --branch=main --single-branch https://github.com/freeCodeCamp/devdocs.git /devdocs
 
-FROM ruby:3.3.2
+FROM ruby:3.3.5
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 

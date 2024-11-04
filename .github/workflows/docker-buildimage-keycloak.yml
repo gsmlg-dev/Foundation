@@ -51,6 +51,6 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/keycloak:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg/keycloak:${{ steps.build-date.outputs.ym }}
+            ghcr.io/gsmlg-dev/keycloak:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/keycloak:latest
-            ghcr.io/gsmlg/keycloak:latest
+            ghcr.io/gsmlg-dev/keycloak:latest

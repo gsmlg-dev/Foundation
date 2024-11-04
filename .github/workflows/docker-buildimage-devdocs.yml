@@ -54,6 +54,6 @@ jobs:
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             docker.io/gsmlg/devdocs:${{ steps.build-date.outputs.date }}
-            ghcr.io/gsmlg/devdocs:${{ steps.build-date.outputs.date }}
+            ghcr.io/gsmlg-dev/devdocs:${{ steps.build-date.outputs.date }}
             docker.io/gsmlg/devdocs:latest
-            ghcr.io/gsmlg/devdocs:latest
+            ghcr.io/gsmlg-dev/devdocs:latest

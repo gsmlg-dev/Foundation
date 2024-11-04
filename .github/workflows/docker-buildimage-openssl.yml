@@ -50,8 +50,8 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ghcr.io/gsmlg/openssl:${{ steps.build-date.outputs.ym }}
+            ghcr.io/gsmlg-dev/openssl:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/openssl:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg/openssl:latest
+            ghcr.io/gsmlg-dev/openssl:latest
             docker.io/gsmlg/openssl:latest
 

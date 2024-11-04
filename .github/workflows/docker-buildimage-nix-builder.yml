@@ -43,5 +43,5 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/nix-builder:latest
-            ghcr.io/gsmlg/nix-builder:latest
+            ghcr.io/gsmlg-dev/nix-builder:latest
 

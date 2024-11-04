@@ -63,7 +63,7 @@ jobs:
           tag: pac-server-release
           make_latest: false
           overwrite: true
-  build-image:
+  build-pac-server-image:
     runs-on: ubuntu-latest
     steps:
       -
@@ -106,6 +106,6 @@ jobs:
             CGO_ENABLED=0
           tags: |
             docker.io/gsmlg/pac-server:${{ steps.build-date.outputs.date }}
-            ghcr.io/gsmlg/pac-server:${{ steps.build-date.outputs.date }}
+            ghcr.io/gsmlg-dev/pac-server:${{ steps.build-date.outputs.date }}
             docker.io/gsmlg/pac-server:latest
-            ghcr.io/gsmlg/pac-server:latest
+            ghcr.io/gsmlg-dev/pac-server:latest
