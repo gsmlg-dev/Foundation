@@ -81,15 +81,15 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
 RUN apt-get install -y erlang-dev elixir erlang-xmerl
 
 # install jdk
-# ARG ANTLR_VERSION=4.12.0
-# RUN apt-get install -y -qq default-jdk \
-#   && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
-#   && echo "#!/bin/bash" > /usr/local/bin/antlr \
-#   && echo "java -jar /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \"$@\"" >> /usr/local/bin/antlr \
-#   && chmod +x /usr/local/bin/antlr \
-#   && echo "#!/bin/bash" > /usr/local/bin/grun \
-#   && echo 'java org.antlr.v4.gui.TestRig "$@"' >> /usr/local/bin/grun \
-#   && chmod +x /usr/local/bin/grun
+ARG ANTLR_VERSION=4.12.0
+RUN apt-get install -y -qq default-jdk \
+  && curl -sSLf https://www.antlr.org/download/antlr-${ANTLR_VERSION}-complete.jar -o /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \
+  && echo "#!/bin/bash" > /usr/local/bin/antlr \
+  && echo "java -jar /usr/local/lib/antlr-${ANTLR_VERSION}-complete.jar \"$@\"" >> /usr/local/bin/antlr \
+  && chmod +x /usr/local/bin/antlr \
+  && echo "#!/bin/bash" > /usr/local/bin/grun \
+  && echo 'java org.antlr.v4.gui.TestRig "$@"' >> /usr/local/bin/grun \
+  && chmod +x /usr/local/bin/grun
 
 # install nodejs
 ARG NODEJS_VERSION=20

@@ -8,8 +8,8 @@ on:
       - ".github/workflows/docker-buildimage-editor-server.yml"
 
 jobs:
-  build-image:
-    runs-on: ubuntu-latest
+  build-editor-server-image:
+    runs-on: ubuntu-latest-m
 
     steps:
       - name: 🛑 Cancel Previous Runs
@@ -91,3 +91,5 @@ jobs:
           tags: |
             ghcr.io/gsmlg-dev/editor-server:latest
             docker.io/gsmlg/editor-server:latest
+            ghcr.io/gsmlg-dev/editor-server:v4.93.1
+            docker.io/gsmlg/editor-server:v4.93.1
