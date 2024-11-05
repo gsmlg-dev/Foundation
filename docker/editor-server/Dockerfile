@@ -78,7 +78,7 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
 # RUN curl -sSfL https://nixos.org/nix/install > /tmp/install.sh && sh /tmp/install.sh --no-daemon
 
 # install erlang and elixir
-RUN apt-get install -y erlang-dev elixir erlang-xmerl
+RUN apt-get install -y erlang-dev elixir erlang-xmerl erlang-os-mon erlang-idna erlang-mnesia rebar rebar3
 
 # install jdk
 ARG ANTLR_VERSION=4.12.0
