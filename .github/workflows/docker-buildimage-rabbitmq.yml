@@ -2,7 +2,7 @@ name: docker-buildimage-rabbitmq
 
 on:
   schedule:
-    - cron: '0 4 1 * *'
+    - cron: '0 8 1 * *'
   push:
     branches: [ main ]
     paths:
