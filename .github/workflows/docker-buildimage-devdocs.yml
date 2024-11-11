@@ -22,7 +22,12 @@ jobs:
         with:
           repository: freeCodeCamp/devdocs
           ref: main
-          path: 'devdocs/'
+          path: devdocs
+      -
+        name: Get ruby version
+        id: ruby-version
+        run: |
+          echo ruby-version=$(cat devdocs/Gemfile | grep '^ruby' | cut -d"'" -f2) >> $GITHUB_OUTPUT
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -43,11 +48,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
-        name: Get ruby version
-        id: ruby-version
-        run: |
-          echo ruby_version=$(cat devdocs/Gemfile | grep '^ruby' | cut -d"'" -f2) >> $GITHUB_OUTPUT
-      -
         name: Set build date
         id: build-date
         run: |
@@ -64,7 +64,7 @@ jobs:
           build-args: |
             BUILD_MONTH=${{ steps.build-date.outputs.ym }}
             BUILD_DATE=${{ steps.build-date.outputs.date }}
-            RUBY_VERSION=${{ steps.ruby-version.outputs.ruby_version }}
+            RUBY_VERSION=${{ steps.ruby-version.outputs.ruby-version }}
           tags: |
             docker.io/gsmlg/devdocs:${{ steps.build-date.outputs.date }}
             ghcr.io/gsmlg-dev/devdocs:${{ steps.build-date.outputs.date }}
