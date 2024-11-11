@@ -64,9 +64,9 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            BUILD_MONTH=${{ steps.build-date.outputs.ym }}
-            BUILD_DATE=${{ steps.build-date.outputs.date }}
-            RUBY_VERSION=${{ steps.ruby-version.outputs.ruby-version }}
+            "BUILD_MONTH=${{ steps.build-date.outputs.ym }}"
+            "BUILD_DATE=${{ steps.build-date.outputs.date }}"
+            "RUBY_VERSION=${{ steps.ruby-version.outputs.ruby-version }}"
           tags: |
             docker.io/gsmlg/devdocs:${{ steps.build-date.outputs.date }}
             ghcr.io/gsmlg-dev/devdocs:${{ steps.build-date.outputs.date }}
