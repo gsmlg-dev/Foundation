@@ -22,12 +22,12 @@ jobs:
         with:
           repository: freeCodeCamp/devdocs
           ref: main
-          path: devdocs
+          path: docker/devdocs/devdocs
       -
         name: Get ruby version
         id: ruby-version
         run: |
-          RUBY_VERSION=$(cat devdocs/Gemfile | grep '^ruby' | cut -d"'" -f2)
+          RUBY_VERSION=$(cat docker/devdocs/devdocs/Gemfile | grep '^ruby' | cut -d"'" -f2)
           echo "current ruby version: $RUBY_VERSION"
           echo ruby-version=$RUBY_VERSION >> $GITHUB_OUTPUT
       -
