@@ -10,7 +10,7 @@ on:
       - '.github/workflows/docker-buildimage-varnish.yml'
 
 jobs:
-  build-image:
+  build-varnish-image:
     runs-on: ubuntu-latest
     steps:
       -
@@ -49,6 +49,9 @@ jobs:
           file: docker/varnish/Dockerfile
           platforms: linux/amd64, linux/arm64
           push: true
+          build-args: |
+            BUILD_MONTH=${{ steps.build-date.outputs.ym }}
+            BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             docker.io/gsmlg/varnish:${{ steps.build-date.outputs.ym }}
             ghcr.io/gsmlg-dev/varnish:${{ steps.build-date.outputs.ym }}
