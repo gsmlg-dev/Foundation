@@ -4,9 +4,6 @@ LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
 LABEL org.opencontainers.image.source.path="docker/curl"
 
-RUN apk add --no-cache curl ca-certificates jq
-
-RUN curl https://dl.min.io/client/mc/release/linux-$(if [ "x86_64" == "$(arch)" ] ; then echo amd64; else echo arm64; fi)/mc -o /usr/local/bin/mc \
-  && chmod +x /usr/local/bin/mc
+RUN apk add --no-cache curl ca-certificates jq minio-client
 
 ENTRYPOINT ["/usr/bin/curl"]
