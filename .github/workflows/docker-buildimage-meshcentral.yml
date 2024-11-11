@@ -34,6 +34,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
+        name: Get latest version
+        id: get-version
+        run: |
+          VERSION=$(curl -sSL https://api.github.com/repos/Ylianst/MeshCentral/releases/latest | jq -r '.name')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT"
+      -
         name: Set build date
         id: build-date
         run: |
@@ -48,8 +54,12 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            MESHCENTRAL2_VERSION=1.1.33
+            MESHCENTRAL2_VERSION=${{ steps.get-version.outputs.version }}
+            BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
-            docker.io/gsmlg/meshcentral:1.1.33
+            docker.io/gsmlg/meshcentral:${{ steps.get-version.outputs.version }}
             docker.io/gsmlg/meshcentral:latest
+            ghcr.io/gsmlg-dev/meshcentral:${{ steps.get-version.outputs.version }}
+            ghcr.io/gsmlg-dev/meshcentral:latest
+
 
