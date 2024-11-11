@@ -1,6 +1,8 @@
 name: docker-buildimage-meshcentral
 
 on:
+  schedule:
+    - cron: '0 8 5 * *'
   push:
     branches: [ main ]
     paths:
