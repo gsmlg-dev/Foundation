@@ -48,8 +48,8 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            MESHCENTRAL2_VERSION=1.1.22
+            MESHCENTRAL2_VERSION=1.1.33
           tags: |
-            docker.io/gsmlg/meshcentral:1.1.22
+            docker.io/gsmlg/meshcentral:1.1.33
             docker.io/gsmlg/meshcentral:latest
 
