@@ -23,7 +23,7 @@ ARG KC_PROXY=edge
 ARG KC_LOG_CONSOLE_OUTPUT=json
 
 # Default user
-ARG KEYCLOAK_ADMIN=admin
+ARG KEYCLOAK_ADMIN=gao
 ARG KEYCLOAK_ADMIN_PASSWORD=change_me
 
 WORKDIR /opt/keycloak
@@ -37,11 +37,13 @@ FROM quay.io/keycloak/keycloak:latest
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
+LABEL org.opencontainers.image.source.path="docker/keycloak"
 
 # change these values to point to a running postgres instance
 ENV KC_DB_URL=<jdbc:mariadb://localhost:3306/keycloak>
-ENV KC_DB_USERNAME=<keycloak>
-ENV KC_DB_PASSWORD=<keycloak_pwd>
+ENV KC_DB_USERNAME=keycloak
+ENV KC_DB_PASSWORD=keycloak
 
 ENV KC_HOSTNAME=keycloak
 
