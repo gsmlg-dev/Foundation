@@ -5,6 +5,7 @@ FROM couchdb:$VERSION
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL document="https://github.com/apache/couchdb-docker/blob/master/README.md"
+LABEL org.opencontainers.image.source https://github.com/gsmlg-dev/Foundation/tree/main/docker/couchdb
 
 ENV COUCHDB_USER=gao
 ENV COUCHDB_PASSWORD=gsmlg-dev

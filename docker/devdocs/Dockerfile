@@ -7,6 +7,7 @@ FROM ruby:$RUBY_VERSION
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL BUILD_DATE=$BUILD_DATE
 LABEL BUILD_MONTH=$BUILD_MONTH
+LABEL org.opencontainers.image.source https://github.com/gsmlg-dev/Foundation/tree/main/docker/devdocs
 
 ENV LANG=C.UTF-8
 ENV ENABLE_SERVICE_WORKER=true
