@@ -42,7 +42,12 @@ jobs:
         name: Get latest version
         id: get-version
         run: |
-          echo "version=$(curl -sSL https://api.github.com/repos/Ylianst/MeshCentral/releases/latest | jq -r '.name')" >> $GITHUB_OUTPUT"
+          TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          OUT=$(curl -sSL https://api.github.com/repos/Ylianst/MeshCentral/releases/latest \
+            --header "Authorization: Bearer $TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28")
+          VERSION=$(echo $OUT | jq -r '.name')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT"
       -
         name: Set build date
         id: build-date
