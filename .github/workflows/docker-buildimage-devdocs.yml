@@ -27,7 +27,9 @@ jobs:
         name: Get ruby version
         id: ruby-version
         run: |
-          echo ruby-version=$(cat devdocs/Gemfile | grep '^ruby' | cut -d"'" -f2) >> $GITHUB_OUTPUT
+          RUBY_VERSION=$(cat devdocs/Gemfile | grep '^ruby' | cut -d"'" -f2)
+          echo "current ruby version: $RUBY_VERSION"
+          echo ruby-version=$RUBY_VERSION >> $GITHUB_OUTPUT
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
