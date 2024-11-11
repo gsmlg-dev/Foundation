@@ -42,8 +42,7 @@ jobs:
         name: Get latest version
         id: get-version
         run: |
-          export VERSION=$(curl -sSL https://api.github.com/repos/Ylianst/MeshCentral/releases/latest | jq -r '.name')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT"
+          echo "version=$(curl -sSL https://api.github.com/repos/Ylianst/MeshCentral/releases/latest | jq -r '.name')" >> $GITHUB_OUTPUT"
       -
         name: Set build date
         id: build-date
