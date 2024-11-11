@@ -10,7 +10,7 @@ on:
       - '.github/workflows/docker-buildimage-devdocs.yml'
 
 jobs:
-  build-image:
+  build-devdocs-image:
     runs-on: ubuntu-latest
     steps:
       -
@@ -20,7 +20,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: freeCodeCamp/devdocs'
+          repository: freeCodeCamp/devdocs
           ref: main
           path: 'devdocs/'
       -
