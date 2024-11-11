@@ -7,7 +7,8 @@ FROM ruby:$RUBY_VERSION
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL BUILD_MONTH="$BUILD_MONTH"
 LABEL BUILD_DATE="$BUILD_DATE"
-LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/tree/main/docker/devdocs"
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
+LABEL org.opencontainers.image.source.path="docker/devdocs"
 
 ENV LANG=C.UTF-8
 ENV ENABLE_SERVICE_WORKER=true
@@ -31,4 +32,7 @@ COPY ./devdocs /devdocs
 VOLUME [ "/devdocs/public/docs", "/devdocs/public/assets" ]
 
 EXPOSE 9292
-CMD rackup -o 0.0.0.0
+
+ENV PORT=9292
+
+CMD ["rackup", "-o", "0.0.0.0", "-p", "\$PORT"]
