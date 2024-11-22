@@ -2,11 +2,14 @@ FROM debian:12
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/tree/main/docker/code-server"
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
+LABEL org.opencontainers.image.source.path="/docker/code-server"
+LABEL org.opencontainers.image.title="Code-Server"
+LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL org.opencontainers.image.description="Code-Server running on top of debian"
 LABEL org.opencontainers.image.licenses=MIT
 
-ARG VERSION=4.93.1
+ARG VERSION=4.95.3
 ARG container=docker
 ARG LC_ALL=C
 ARG DEBIAN_FRONTEND=noninteractive

@@ -11,7 +11,7 @@ jobs:
   create-caddy-sematic-version:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.semantic.outputs.new_release_version }}
+      version: "2.8.4"
       caddy_version: v2.8.4
       go_build_flags: "-trimpath -ldflags '-w s'"
       caddy_with: >
@@ -33,28 +33,6 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Create package.json
-        run: |
-          cat <<EOF > docker/caddy/package.json
-          {
-            "name": "caddy"
-          }
-          EOF
-      - name: 🏗 Run install semantic-release
-        working-directory: docker/caddy
-        run: npm install --save-dev semantic-release-monorepo semantic-release @semantic-release/exec
-      - name: 🚀 Release
-        working-directory: docker/caddy
-        id: semantic
-        run: npx semantic-release --extends semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GOPRIVATE: github.com/gsmlg-dev/gsmlg-golang
   build-caddy-package:
     runs-on: ubuntu-latest
     needs: [ sematic-version ]
@@ -84,7 +62,7 @@ jobs:
       - name: Setup golang
         uses: actions/setup-go@v3
         with:
-          go-version: '1.21.4'
+          go-version: '1.22.8'
       - name: Install xcaddy
         run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
       - name: Configure git for private modules

@@ -17,6 +17,7 @@ FROM caddy:alpine
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL caddy_version=${CADDY_VERSION}
 
 WORKDIR "/srv"
 
