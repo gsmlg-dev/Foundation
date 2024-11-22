@@ -52,5 +52,5 @@ jobs:
           build-args: |
             MARIADB_VERSION=${{ matrix.version.ver }}
           tags: |
-            docker.io/gsmlg/mariadb:v${{ matrix.version.tag }}
-            ghcr.io/gsmlg-dev/mariadb:v${{ matrix.version.tag }}
+            docker.io/gsmlg/mariadb:${{ matrix.version.tag }}
+            ghcr.io/gsmlg-dev/mariadb:${{ matrix.version.tag }}
