@@ -11,7 +11,12 @@ jobs:
   build-image:
     strategy:
       matrix:
-        version: ["10.10", "10.11", "11.6", "11.7", "10", "11"]
+        version:
+          - ver: 10.11.10
+            tag: 10
+          - ver: 11.7.1
+            tag: 11
+
     runs-on: ubuntu-latest
     steps:
       -
@@ -45,7 +50,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            MARIADB_VERSION=${{ matrix.version }}
+            MARIADB_VERSION=${{ matrix.version.ver }}
           tags: |
-            docker.io/gsmlg/mariadb:v${{ matrix.version }}
-            ghcr.io/gsmlg-dev/mariadb:v${{ matrix.version }}
+            docker.io/gsmlg/mariadb:v${{ matrix.version.tag }}
+            ghcr.io/gsmlg-dev/mariadb:v${{ matrix.version.tag }}
