@@ -1,5 +1,11 @@
 FROM alpine:3.20
 
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
+LABEL org.opencontainers.image.source.path="/docker/stunnel"
+LABEL org.opencontainers.image.title="stunnel"
+LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL org.opencontainers.image.description="stunnel running on top of alpine"
+LABEL org.opencontainers.image.licenses=MIT
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ENV PROXY_MODE=master \
