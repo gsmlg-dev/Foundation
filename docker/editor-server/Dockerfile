@@ -38,7 +38,7 @@ RUN apt-get install -y -qq \
   gcc g++ pkg-config \
   libssl-dev libcrypto++-dev \
   vim \
-  zip unzip xz-utils \
+  zip unzip xz-utils 7zip \
   wget aria2 \
   protobuf-compiler \
   jq \
