@@ -11,7 +11,7 @@ jobs:
   build-image:
     strategy:
       matrix:
-        version: ["10.7", "10.8", "10.9"]
+        version: ["10.10", "10.11", "11.6", "11.7", "10", "11"]
     runs-on: ubuntu-latest
     steps:
       -
@@ -29,6 +29,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWD }}
+      - 
+        name: Login to Github Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       -
         name: Build and push
         uses: docker/build-push-action@v5
@@ -41,3 +48,4 @@ jobs:
             MARIADB_VERSION=${{ matrix.version }}
           tags: |
             docker.io/gsmlg/mariadb:v${{ matrix.version }}
+            ghcr.io/gsmlg-dev/mariadb:v${{ matrix.version }}

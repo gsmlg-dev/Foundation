@@ -1,10 +1,16 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
+LABEL org.opencontainers.image.source.path="/docker/mariadb"
+LABEL org.opencontainers.image.title="MariaDB"
+LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL org.opencontainers.image.description="MariaDB running on top of ubuntu"
+LABEL org.opencontainers.image.licenses=MIT
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 ARG DEBIAN_FRONTEND="noninteractive"
 ARG TZ="Asia/Shanghai"
-ARG MARIADB_VERSION="10.9"
+ARG MARIADB_VERSION="11.7"
 
 # Install prerequisites
 RUN apt update && apt-get install -y curl ca-certificates
