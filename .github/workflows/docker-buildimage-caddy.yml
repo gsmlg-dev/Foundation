@@ -35,6 +35,7 @@ jobs:
         uses: actions/checkout@v4
   build-caddy-package:
     runs-on: ubuntu-latest
+    needs: setup-caddy-version
     strategy:
       matrix:
         platforms:
@@ -73,11 +74,11 @@ jobs:
         env:
           GOOS: ${{ matrix.platforms.os }}
           GOARCH: ${{ matrix.platforms.arch }}
-          CADDY_VERSION: ${{ jobs.setup-caddy-version.outputs.caddy_version }}
-          CADDY_WITH: ${{ jobs.setup-caddy-version.outputs.caddy_with }}
+          CADDY_VERSION: ${{ needs.setup-caddy-version.outputs.caddy_version }}
+          CADDY_WITH: ${{ needs.setup-caddy-version.outputs.caddy_with }}
           GOPRIVATE: github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
           CGO_ENABLED: "0"
-          # XCADDY_GO_BUILD_FLAGS: ${{ jobs.setup-caddy-version.outputs.go_build_flags }}
+          # XCADDY_GO_BUILD_FLAGS: ${{ needs.setup-caddy-version.outputs.go_build_flags }}
         run: |
           xcaddy build ${CADDY_VERSION} --output "caddy_${GOOS}_${GOARCH}" $CADDY_WITH
       - name: Upload binaries to release
@@ -86,9 +87,10 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
           asset_name: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
-          tag: caddy-v${{ jobs.setup-caddy-version.outputs.version }}
+          tag: caddy-v${{ needs.setup-caddy-version.outputs.version }}
   build-caddy-image:
     runs-on: ubuntu-latest
+    needs: setup-caddy-version
     steps:
       -
         name: Checkout
@@ -122,14 +124,14 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            CADDY_VERSION=${{ jobs.setup-caddy-version.outputs.caddy_version }}
-            CADDY_WITH=${{ jobs.setup-caddy-version.outputs.caddy_with }}
+            CADDY_VERSION=${{ needs.setup-caddy-version.outputs.caddy_version }}
+            CADDY_WITH=${{ needs.setup-caddy-version.outputs.caddy_with }}
             USER=${{ secrets.GIT_USER_ID }}
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
             GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
             CGO_ENABLED=0
           tags: |
-            docker.io/gsmlg/caddy:v${{ jobs.setup-caddy-version.outputs.version }}
+            docker.io/gsmlg/caddy:v${{ needs.setup-caddy-version.outputs.version }}
             docker.io/gsmlg/caddy:latest
-            ghcr.io/gsmlg-dev/caddy:v${{ jobs.setup-caddy-version.outputs.version }}
+            ghcr.io/gsmlg-dev/caddy:v${{ needs.setup-caddy-version.outputs.version }}
             ghcr.io/gsmlg-dev/caddy:latest
