@@ -1,19 +1,23 @@
-ARG ELIXIR_VERSION="1.16"
+ARG ELIXIR_VERSION="1.17"
 FROM elixir:${ELIXIR_VERSION}
 
-ARG PHOENIX_VERSION="1.7.11"
+ARG PHOENIX_VERSION="1.7.18"
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL org.opencontainers.image.title="Phoenix"
+LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL org.opencontainers.image.description="Phoenix running on top of elixir"
+LABEL org.opencontainers.image.licenses=MIT
 
 LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
 # install nodejs
-ARG NODEJS_VERSION=20
+ARG NODEJS_VERSION=22
 ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get update \
-  && apt-get install clang make git -y \
+  && apt-get install clang make git figlet curl -y \
   && apt-get install -y nodejs
 
 RUN mix local.rebar --force

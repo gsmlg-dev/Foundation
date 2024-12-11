@@ -1,9 +1,13 @@
-ARG ELIXIR_VERSION="1.16"
+ARG ELIXIR_VERSION="1.17"
 FROM elixir:${ELIXIR_VERSION}-alpine
 
-ARG PHOENIX_VERSION="1.7.11"
+ARG PHOENIX_VERSION="1.7.18"
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL org.opencontainers.image.title="Phoenix alpine"
+LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
+LABEL org.opencontainers.image.description="Phoenix alpine running on top of alpine"
+LABEL org.opencontainers.image.licenses=MIT
 
 LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
