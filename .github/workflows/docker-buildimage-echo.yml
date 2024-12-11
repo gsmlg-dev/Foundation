@@ -8,7 +8,7 @@ on:
       - '.github/workflows/docker-buildimage-echo.yml'
 
 jobs:
-  build-image:
+  build-echo-image:
     runs-on: ubuntu-latest
     steps:
       -
