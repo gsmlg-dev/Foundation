@@ -8,10 +8,14 @@ ENV CODE_SERVER_VERSION=$CODE_SERVER_VERSION
 LABEL CODE_SERVER_VERSION=$CODE_SERVER_VERSION
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation/tree/main/docker/editor-server"
+LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
+LABEL org.opencontainers.image.source.path="/docker/editor-server"
+LABEL org.opencontainers.image.title="Editor-Server"
+LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL org.opencontainers.image.description="Jonathan Gao's personal code-server, with his common dev envrionment."
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.build-date=$BUILD_DATE
+LABEL org.opencontainers.image.version=$CODE_SERVER_VERSION
 
 ARG VERSION
 LABEL VERSION=$VERSION
@@ -95,7 +99,7 @@ RUN apt-get install -y -qq default-jdk \
   && chmod +x /usr/local/bin/grun
 
 # install nodejs
-ARG NODEJS_VERSION=20
+ARG NODEJS_VERSION=22
 ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install -y -qq nodejs \
@@ -151,13 +155,17 @@ RUN export RUSTUP_HOME=${RUSTPATH} \
   && echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path \
   && /opt/rust/bin/rustup target add wasm32-unknown-unknown \
+  && /opt/rust/bin/rustup target add x86_64-unknown-linux-gnu \
+  && /opt/rust/bin/rustup target add x86_64-unknown-linux-musl \
+  && /opt/rust/bin/rustup target add x86_64-linux-android \
   && /opt/rust/bin/rustup target add x86_64-pc-windows-msvc \
   && /opt/rust/bin/rustup target add x86_64-unknown-freebsd \
   && /opt/rust/bin/rustup target add x86_64-apple-darwin \
   && /opt/rust/bin/rustup target add aarch64-apple-darwin \
   && /opt/rust/bin/rustup target add aarch64-apple-ios \
   && /opt/rust/bin/rustup target add aarch64-linux-android \
-  && /opt/rust/bin/rustup target add aarch64-unknown-linux-gnu	\
+  && /opt/rust/bin/rustup target add aarch64-unknown-linux-gnu \
+  && /opt/rust/bin/rustup target add aarch64-unknown-linux-musl \
   && /opt/rust/bin/cargo install difftastic \
   && /opt/rust/bin/cargo install cargo-generate \
   && /opt/rust/bin/cargo install wasm-pack \
@@ -194,7 +202,7 @@ RUN aria2c -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_releas
   && /opt/flutter/bin/dart pub global activate vscode_ext_cli \
   && /opt/flutter/bin/dart pub global activate melos
 
-# install kubectl v1.31.2
+# install kubectl v1.32.0
 ARG KUBECTL_VERSION
 RUN export ARCH=`dpkg --print-architecture` \
   && export KUBECTL_LATEST_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) \
