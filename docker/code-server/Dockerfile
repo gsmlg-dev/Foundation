@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL org.opencontainers.image.description="Code-Server running on top of debian"
 LABEL org.opencontainers.image.licenses=MIT
 
-ARG VERSION=4.95.3
+ARG VERSION=4.96.2
 ARG container=docker
 ARG LC_ALL=C
 ARG DEBIAN_FRONTEND=noninteractive

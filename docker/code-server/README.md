@@ -2,5 +2,5 @@
 
 VSCode server from https://github.com/cdr/code-server
 
-Base on debian:11
+Base on debian:12
 

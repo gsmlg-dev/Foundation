@@ -48,10 +48,10 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=4.95.3
+            VERSION=4.96.2
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
-            ghcr.io/gsmlg-dev/code-server:v4.95.3
+            ghcr.io/gsmlg-dev/code-server:v4.96.2
             ghcr.io/gsmlg-dev/code-server:latest
-            docker.io/gsmlg/code-server:v4.95.3
+            docker.io/gsmlg/code-server:v4.96.2
             docker.io/gsmlg/code-server:latest
