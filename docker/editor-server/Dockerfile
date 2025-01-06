@@ -83,7 +83,8 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
 # RUN curl -sSfL https://nixos.org/nix/install > /tmp/install.sh && sh /tmp/install.sh --no-daemon
 
 # install erlang and elixir
-RUN add-apt-repository ppa:rabbitmq/rabbitmq-erlang \
+RUN add-apt-repository --yes --no-update ppa:rabbitmq/rabbitmq-erlang \
+  && sed -i 's;bookworm;jammy;g' /etc/apt/sources.list.d/rabbitmq-ubuntu-rabbitmq-erlang-bookworm.list \
   && apt-get update \
   && apt-get install -y elixir erlang-dev erlang-xmerl erlang-os-mon erlang-idna erlang-mnesia rebar rebar3
 
