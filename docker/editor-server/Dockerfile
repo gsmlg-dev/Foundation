@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.93.1
+ARG CODE_SERVER_VERSION=4.96.2
 FROM ghcr.io/gsmlg-dev/code-server:v$CODE_SERVER_VERSION
 
 ARG BUILD_DATE
@@ -61,7 +61,8 @@ RUN apt-get install -y -qq \
   emscripten \
   openjdk-17-jdk \
   mandoc \
-  cmake ninja-build libgtk-3-dev liblzma-dev libglu1-mesa
+  cmake ninja-build libgtk-3-dev liblzma-dev libglu1-mesa \
+  software-properties-common
 
 RUN apt-file update
 
@@ -78,7 +79,9 @@ RUN echo $LANG UTF-8 | tee -a /etc/locale.gen \
 # RUN curl -sSfL https://nixos.org/nix/install > /tmp/install.sh && sh /tmp/install.sh --no-daemon
 
 # install erlang and elixir
-RUN apt-get install -y erlang-dev elixir erlang-xmerl erlang-os-mon erlang-idna erlang-mnesia rebar rebar3
+RUN add-apt-repository ppa:rabbitmq/rabbitmq-erlang \
+  && apt-get update \
+  && apt-get install -y elixir erlang-dev erlang-xmerl erlang-os-mon erlang-idna erlang-mnesia rebar rebar3
 
 # install jdk
 ARG ANTLR_VERSION=4.12.0
@@ -178,7 +181,7 @@ RUN apt-get install -y -qq php-cli
 RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
-ARG FLUTTER_VERSION=3.24.4
+ARG FLUTTER_VERSION=3.27.1
 ARG PUB_CACHE=/opt/flutter/pub-cache
 ENV PUB_CACHE=${PUB_CACHE}
 ENV FLUTTER_VERSION=${FLUTTER_VERSION}

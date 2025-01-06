@@ -84,12 +84,12 @@ jobs:
           platforms: linux/amd64
           push: true
           build-args: |
-            CODE_SERVER_VERSION=4.93.1
+            CODE_SERVER_VERSION=4.96.2
             VERSION=latest
             BUILD_MONTH=${{ steps.build-date.outputs.ym }}
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             ghcr.io/gsmlg-dev/editor-server:latest
             docker.io/gsmlg/editor-server:latest
-            ghcr.io/gsmlg-dev/editor-server:v4.93.1
-            docker.io/gsmlg/editor-server:v4.93.1
+            ghcr.io/gsmlg-dev/editor-server:v4.96.2
+            docker.io/gsmlg/editor-server:v4.96.2
