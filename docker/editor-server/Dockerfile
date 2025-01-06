@@ -62,7 +62,7 @@ RUN apt-get install -y -qq \
   openjdk-17-jdk \
   mandoc \
   cmake ninja-build libgtk-3-dev liblzma-dev libglu1-mesa \
-  software-properties-common
+  software-properties-common python3-launchpadlib
 
 RUN apt-file update
 
