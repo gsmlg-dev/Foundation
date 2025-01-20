@@ -1,4 +1,4 @@
-FROM debian:12
+FROM ubuntu:24.04
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
@@ -28,6 +28,8 @@ RUN apt-get update \
 COPY install.sh /tmp/install.sh
 COPY duskmoon /etc/duskmoon
 
+# Code Server installation
+# Source code: [https://github.com/coder/code-server]
 RUN /tmp/install.sh --method standalone --prefix=/usr/local --version $VERSION
 
 RUN rm -rf /root/.cache && rm -rf /tmp/*
