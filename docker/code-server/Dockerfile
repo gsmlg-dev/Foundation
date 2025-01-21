@@ -38,13 +38,11 @@ EOF
 WORKDIR /home/coder
 USER coder
 
-ENTRYPOINT ["/usr/local/bin/code-server"]
-CMD [
-  "--disable-update-check",
-  "--bind-addr",
-  "0.0.0.0:8080",
-  "--disable-telemetry",
-  "--app-name",
-  "GSMLG.DEV","--welcome-text",
-  "MAY THE FORCE BE WITH YOU"
-]
+SHELL ["/bin/zsh", "-c"]
+
+ENV ADDR="0.0.0.0"
+ENV PORT="8080"
+ENV APP_NAME="GSMLG.DEV"
+ENV WELCOME_TEXT="MAY THE FORCE BE WITH YOU"
+
+CMD [ "sh", "-c", "/usr/local/bin/code-server --disable-update-check --bind-addr $ADDR:$PORT --disable-telemetry --app-name $APP_NAME --welcome-text $WELCOME_TEXT" ]
