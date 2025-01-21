@@ -4,6 +4,7 @@ ARG VERSION=4.96.4
 ARG container=docker
 ARG LC_ALL=C
 ARG DEBIAN_FRONTEND=noninteractive
+ARG TZ=Asia/Shanghai
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
@@ -19,6 +20,7 @@ ENV container=docker
 ENV LC_ALL=C
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CODE_SERVER_VERSION=$VERSION
+ENV TZ=$TZ
 
 COPY install.sh /tmp/install.sh
 COPY duskmoon /etc/duskmoon
