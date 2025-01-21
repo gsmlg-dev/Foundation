@@ -8,9 +8,13 @@ on:
       - ".github/workflows/docker-buildimage-editor-server.yml"
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: "4.96.4"
   build-editor-server-image:
     runs-on: ubuntu-latest-m
-
+    needs: [ "version" ]
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.12.1
@@ -22,37 +26,6 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-
-      # - name: Setup node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20
-      # - name: Create package.json
-      #   run: |
-      #     cat <<EOF > docker/editor-server/package.json
-      #     {
-      #       "name": "editor-server"
-      #     }
-      #     EOF
-      # - name: 🏗 Run install semantic-release
-      #   working-directory: docker/editor-server
-      #   run: npm install --save-dev semantic-release-monorepo semantic-release @semantic-release/exec
-      # - name: 🚀 Release
-      #   working-directory: docker/editor-server
-      #   id: semantic
-      #   run: npx semantic-release --extends semantic-release-monorepo
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #     GOPRIVATE: github.com/gsmlg-dev/gsmlg-golang
-      # -
-      #   name: check if a new release has been created
-      #   run: |
-      #     echo "New release version is ${{ steps.semantic.outputs.new_release_version }}"
-      #     if [ -z "${{ steps.semantic.outputs.new_release_version }}" ]; then
-      #       echo "No new release. Exiting..."
-      #       exit 78
-      #     fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -81,15 +54,15 @@ jobs:
         with:
           context: docker/editor-server/
           file: docker/editor-server/Dockerfile
-          platforms: linux/amd64,linux/arm64/v8
+          platforms: linux/amd64
           push: true
           build-args: |
-            CODE_SERVER_VERSION=4.96.2
+            CODE_SERVER_VERSION=${{ needs.version.outputs.version }}
             VERSION=latest
             BUILD_MONTH=${{ steps.build-date.outputs.ym }}
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             ghcr.io/gsmlg-dev/editor-server:latest
             docker.io/gsmlg/editor-server:latest
-            ghcr.io/gsmlg-dev/editor-server:v4.96.2
-            docker.io/gsmlg/editor-server:v4.96.2
+            ghcr.io/gsmlg-dev/editor-server:v${{ needs.version.outputs.version }}
+            docker.io/gsmlg/editor-server:v${{ needs.version.outputs.version }}
