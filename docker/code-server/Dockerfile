@@ -6,6 +6,11 @@ ARG LC_ALL=C
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=Asia/Shanghai
 
+ARG TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
 LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
@@ -26,6 +31,10 @@ COPY install.sh /tmp/install.sh
 COPY duskmoon /etc/duskmoon
 
 RUN <<EOF
+echo $TARGETPLATFORM | tee /etc/PLATFORM
+echo $TARGETOS | tee /etc/OS
+echo $TARGETARCH | tee /etc/ARCH
+echo $TARGETVARIANT | tee /etc/VARIANT
 apt-get update
 apt-get upgrade -y
 apt install -y curl ca-certificates zsh sudo gpg
