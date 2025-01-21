@@ -15,9 +15,9 @@ LABEL org.opencontainers.image.description="Code-Server running on top of debian
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.version="$VERSION"
 
-ENV container docker
-ENV LC_ALL C
-ENV DEBIAN_FRONTEND noninteractive
+ENV container=docker
+ENV LC_ALL=C
+ENV DEBIAN_FRONTEND=noninteractive
 ENV CODE_SERVER_VERSION=$VERSION
 
 COPY install.sh /tmp/install.sh
