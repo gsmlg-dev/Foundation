@@ -8,13 +8,10 @@ on:
       - ".github/workflows/docker-buildimage-editor-server.yml"
 
 jobs:
-  version:
-    runs-on: ubuntu-latest
-    outputs:
-      version: "4.96.4"
   build-editor-server-image:
     runs-on: ubuntu-latest-m
-    needs: [ "version" ]
+    outputs:
+      version: "4.96.4"
     steps:
       - name: 🛑 Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.12.1
@@ -57,12 +54,12 @@ jobs:
           platforms: linux/amd64
           push: true
           build-args: |
-            CODE_SERVER_VERSION=${{ needs.version.outputs.version }}
+            CODE_SERVER_VERSION=${{ jobs.build-editor-server-image.outputs.version }}
             VERSION=latest
             BUILD_MONTH=${{ steps.build-date.outputs.ym }}
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             ghcr.io/gsmlg-dev/editor-server:latest
             docker.io/gsmlg/editor-server:latest
-            ghcr.io/gsmlg-dev/editor-server:v${{ needs.version.outputs.version }}
-            docker.io/gsmlg/editor-server:v${{ needs.version.outputs.version }}
+            ghcr.io/gsmlg-dev/editor-server:v${{ jobs.build-editor-server-image.outputs.version }}
+            docker.io/gsmlg/editor-server:v${{ jobs.build-editor-server-image.outputs.version }}
