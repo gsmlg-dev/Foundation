@@ -43,6 +43,8 @@ echo $TARGETVARIANT | tee /etc/VARIANT
 apt-get update
 apt-get upgrade -y
 apt install -y curl ca-certificates zsh sudo gpg
+userdel -f -r ubuntu
+groupdel -f ubuntu
 useradd coder --create-home --shell $(which zsh)
 echo "coder ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers.d/coder
 # Code Server installation
