@@ -1,6 +1,8 @@
 ARG ELIXIR_VERSION="1.17"
 FROM elixir:${ELIXIR_VERSION}
 
+ARG TARGETOS
+ARG TARGETARCH
 ARG PHOENIX_VERSION="1.7.18"
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
@@ -20,6 +22,19 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install clang make git figlet curl -y \
   && apt-get install -y nodejs \
   && npm install -g bun
+
+RUN <<EOF
+if [ "$TARGETARCH" = "amd64" ]; then
+  curl -sSLf https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip -o /tmp/bun-linux-x64.zip
+  unzip /tmp/bun-linux-x64.zip -d /tmp
+  mv /tmp/bun-linux-x64/bun /usr/bin/bun
+fi
+if [ "$TARGETARCH" = "arm64" ]; then
+  curl -sSLf https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64.zip -o /tmp/bun-linux-aarch64.zip
+  unzip /tmp/bun-linux-aarch64.zip -d /tmp
+  mv /tmp/bun-linux-aarch64/bun /usr/bin/bun
+fi
+EOF
 
 RUN mix local.rebar --force
 RUN mix local.hex --force
