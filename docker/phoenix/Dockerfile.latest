@@ -18,7 +18,8 @@ ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get update \
   && apt-get install clang make git figlet curl -y \
-  && apt-get install -y nodejs
+  && apt-get install -y nodejs \
+  && npm install -g bun
 
 RUN mix local.rebar --force
 RUN mix local.hex --force

@@ -12,7 +12,7 @@ LABEL org.opencontainers.image.licenses=MIT
 LABEL ELIXIR_VERSION="${ELIXIR_VERSION}"
 LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
-RUN apk --force-broken-world --no-cache add make bash figlet git curl nodejs npm
+RUN apk --force-broken-world --no-cache add make bash figlet git curl nodejs npm && npm install -g bun
 
 RUN mix local.rebar --force
 RUN mix local.hex --force
