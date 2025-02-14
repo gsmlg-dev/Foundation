@@ -6,3 +6,4 @@
 *.go linguist-detectable=false
 *.rs linguist-detectable=false
 *.pac linguist-detectable=false
+*.sh linguist-detectable=false
