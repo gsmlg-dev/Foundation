@@ -1,2 +1,7 @@
 *.txt linguist-detectable=false
+*.html linguist-detectable=false
 *.js linguist-detectable=false
+*.css linguist-detectable=false
+*.py linguist-detectable=false
+*.go linguist-detectable=false
+*.rs linguist-detectable=false
