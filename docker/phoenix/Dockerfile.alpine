@@ -5,6 +5,9 @@ ARG TARGETOS
 ARG TARGETARCH
 ARG PHOENIX_VERSION="1.7.18"
 
+ARG TAILWIND_URL_AMD64=https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64-musl
+ARG TAILWIND_URL_ARM64=https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-arm64-musl
+
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL org.opencontainers.image.title="Phoenix alpine"
 LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
@@ -20,12 +23,16 @@ RUN <<EOF
 if [ "$TARGETARCH" = "amd64" ]; then
   curl -sSLf https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64-musl.zip -o /tmp/bun-linux-x64-musl.zip
   unzip /tmp/bun-linux-x64-musl.zip -d /tmp
-  mv /tmp/bun-linux-x64-musl/bun /usr/bin/bun
+  install -m 755 /tmp/bun-linux-x64-musl/bun /usr/bin/bun
+  curl -sSLf $TAILWIND_URL_AMD64 -o /tmp/tailwindcss
+  install -m 755 /tmp/tailwindcss /usr/bin/tailwindcss
 fi
 if [ "$TARGETARCH" = "arm64" ]; then
   curl -sSLf https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64-musl.zip -o /tmp/bun-linux-aarch64-musl.zip
   unzip /tmp/bun-linux-aarch64-musl.zip -d /tmp
-  mv /tmp/bun-linux-aarch64-musl/bun /usr/bin/bun
+  install -m 755 /tmp/bun-linux-aarch64-musl/bun /usr/bin/bun
+  curl -sSLf $TAILWIND_URL_ARM64 -o /tmp/tailwindcss
+  install -m 755 /tmp/tailwindcss /usr/bin/tailwindcss
 fi
 EOF
 

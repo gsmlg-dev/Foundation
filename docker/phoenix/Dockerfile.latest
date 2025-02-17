@@ -5,6 +5,9 @@ ARG TARGETOS
 ARG TARGETARCH
 ARG PHOENIX_VERSION="1.7.18"
 
+ARG TAILWIND_URL_AMD64=https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64
+ARG TAILWIND_URL_ARM64=https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-arm64
+
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL org.opencontainers.image.title="Phoenix"
 LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
@@ -27,13 +30,18 @@ RUN <<EOF
 if [ "$TARGETARCH" = "amd64" ]; then
   curl -sSLf https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip -o /tmp/bun-linux-x64.zip
   unzip /tmp/bun-linux-x64.zip -d /tmp
-  mv /tmp/bun-linux-x64/bun /usr/bin/bun
+  install -m 755 /tmp/bun-linux-x64/bun /usr/bin/bun
+  curl -sSLf $TAILWIND_URL_AMD64 -o /tmp/tailwindcss
+  install -m 755 /tmp/tailwindcss /usr/bin/tailwindcss
 fi
 if [ "$TARGETARCH" = "arm64" ]; then
   curl -sSLf https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64.zip -o /tmp/bun-linux-aarch64.zip
   unzip /tmp/bun-linux-aarch64.zip -d /tmp
-  mv /tmp/bun-linux-aarch64/bun /usr/bin/bun
+  install -m 755 /tmp/bun-linux-aarch64/bun /usr/bin/bun
+  curl -sSLf $TAILWIND_URL_ARM64 -o /tmp/tailwindcss
+  install -m 755 /tmp/tailwindcss /usr/bin/tailwindcss
 fi
+rm -rf /tmp/*
 EOF
 
 RUN mix local.rebar --force
