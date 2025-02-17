@@ -19,7 +19,7 @@ LABEL PHOENIX_VERSION="${PHOENIX_VERSION}"
 
 RUN apk --force-broken-world --no-cache add make bash figlet git curl nodejs npm unzip curl
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 RUN <<EOF
 if [ "$TARGETARCH" = "amd64" ]; then
