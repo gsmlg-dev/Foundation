@@ -23,8 +23,9 @@ ENV NODE_PATH=/usr/lib/node_modules
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get update \
   && apt-get install clang make git figlet curl -y \
-  && apt-get install -y nodejs \
-  && npm install -g bun
+  && apt-get install -y nodejs
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 RUN <<EOF
 if [ "$TARGETARCH" = "amd64" ]; then
