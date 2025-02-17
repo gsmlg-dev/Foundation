@@ -25,7 +25,7 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
   && apt-get install clang make git figlet curl -y \
   && apt-get install -y nodejs
 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+RUN apt-get install -y cargo rustc
 
 RUN <<EOF
 if [ "$TARGETARCH" = "amd64" ]; then
