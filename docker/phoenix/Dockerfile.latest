@@ -33,17 +33,20 @@ if [ "$TARGETARCH" = "amd64" ]; then
   unzip /tmp/bun-linux-x64.zip -d /tmp
   install -m 755 /tmp/bun-linux-x64/bun /usr/bin/bun
   curl -sSLf $TAILWIND_URL_AMD64 -o /tmp/tailwindcss
-  install -m 755 /tmp/tailwindcss /usr/bin/tailwindcss
+  install -m 755 /tmp/tailwindcss /usr/bin/tailwind
 fi
 if [ "$TARGETARCH" = "arm64" ]; then
   curl -sSLf https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64.zip -o /tmp/bun-linux-aarch64.zip
   unzip /tmp/bun-linux-aarch64.zip -d /tmp
   install -m 755 /tmp/bun-linux-aarch64/bun /usr/bin/bun
   curl -sSLf $TAILWIND_URL_ARM64 -o /tmp/tailwindcss
-  install -m 755 /tmp/tailwindcss /usr/bin/tailwindcss
+  install -m 755 /tmp/tailwindcss /usr/bin/tailwind
 fi
 rm -rf /tmp/*
 EOF
+
+ENV MIX_TAILWIND_PATH=/usr/bin/tailwind
+ENV MIX_BUN_PATH=/usr/bin/bun
 
 RUN mix local.rebar --force
 RUN mix local.hex --force
