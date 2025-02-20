@@ -27,7 +27,7 @@ apk add --no-cache \
   npm \
   mozjs115-dev
 
-git clone git clone https://github.com/apache/couchdb.git /couchdb
+git clone https://github.com/apache/couchdb.git /couchdb
 cd /couchdb
 git checkout -f $VERSION
 
