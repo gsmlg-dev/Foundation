@@ -26,12 +26,10 @@ apk add --no-cache \
   linux-headers \
   openssl-dev \
   python3 \
+  npm \
   mozjs115-dev
 
-# curl -sSLf https://github.com/apache/couchdb/archive/refs/tags/${VERSION}.zip -o /tmp/couchdb.zip
-curl -sSLf https://github.com/apache/couchdb/archive/refs/tags/3.4.2.zip -o /tmp/couchdb.zip
-unzip /tmp/couchdb.zip -d /tmp
-cp -r /tmp/couchdb-3.4.2 /couchdb
+git clone git clone https://github.com/apache/couchdb.git /couchdb
 cd /couchdb
 
 ./configure --spidermonkey-version=115 --disable-docs
