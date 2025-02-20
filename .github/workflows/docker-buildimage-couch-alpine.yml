@@ -8,7 +8,7 @@ on:
       - '.github/workflows/docker-buildimage-couch-alpine.yml'
 
 jobs:
-  build-image:
+  build-couch-alpine-image:
     runs-on: ubuntu-latest
     steps:
       -
