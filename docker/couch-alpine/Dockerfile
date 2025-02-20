@@ -8,6 +8,14 @@ RUN <<EOF
 set -ex
 
 apk add --no-cache \
+  nspr \
+  build-base \
+  m4 \
+  nspr-dev \
+  perl \
+  zip
+
+apk add --no-cache \
   autoconf \
   automake \
   build-base \
@@ -17,19 +25,8 @@ apk add --no-cache \
   libtool \
   linux-headers \
   openssl-dev \
-  python3
-
-curl -sSLf http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz | tar -zx -C /tmp
-cd /tmp/js-1.8.5/js/src
-## - build 
-## - disable #pragma visibility
-sed -ri 's/ac_cv_have_visibility_builtin_bug=no/ac_cv_have_visibility_builtin_bug=yes/' configure.in
-autoconf
-mkdir build_OPT.OBJ
-cd build_OPT.OBJ
-CXXFLAGS="--std=gnu++98" ../configure --prefix=/usr
-make
-make install
+  python3 \
+  mozjs115-dev
 
 # curl -sSLf https://github.com/apache/couchdb/archive/refs/tags/${VERSION}.zip -o /tmp/couchdb.zip
 curl -sSLf https://github.com/apache/couchdb/archive/refs/tags/3.4.2.zip -o /tmp/couchdb.zip
@@ -37,7 +34,7 @@ unzip /tmp/couchdb.zip -d /tmp
 cp -r /tmp/couchdb-3.4.2 /couchdb
 cd /couchdb
 
-./configure
+./configure --spidermonkey-version=115 --disable-docs
 make release
 
 EOF
