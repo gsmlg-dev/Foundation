@@ -13,9 +13,7 @@ apk add --no-cache \
   m4 \
   nspr-dev \
   perl \
-  zip
-
-apk add --no-cache \
+  zip \
   autoconf \
   automake \
   build-base \
@@ -31,6 +29,7 @@ apk add --no-cache \
 
 git clone git clone https://github.com/apache/couchdb.git /couchdb
 cd /couchdb
+git checkout -f $VERSION
 
 ./configure --spidermonkey-version=115 --disable-docs
 make release
