@@ -10,6 +10,11 @@ on:
 jobs:
   build-couch-alpine-image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm64/v8
     steps:
       -
         name: Checkout
@@ -39,7 +44,7 @@ jobs:
         with:
           context: docker/couch-alpine/
           file: docker/couch-alpine/Dockerfile
-          platforms: linux/amd64, linux/arm64/v8
+          platforms: ${{ matrix.platform }}
           push: true
           build-args: |
             VERSION=3.4.2
