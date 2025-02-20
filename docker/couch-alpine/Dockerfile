@@ -59,4 +59,6 @@ EXPOSE 5984 4369 9100
 
 COPY --from=builder /couchdb/rel/couchdb /opt/couchdb
 
+RUN apk add --no-cache libncursesw libstdc++
+
 VOLUME ["/opt/couchdb/data", "/opt/couchdb/log", "/opt/couchdb/etc/local.d"]
