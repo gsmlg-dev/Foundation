@@ -29,7 +29,6 @@ apk add --no-cache \
 
 git clone https://github.com/apache/couchdb.git /couchdb
 cd /couchdb
-git checkout -f $VERSION
 
 ./configure --spidermonkey-version=115 --disable-docs
 make release
