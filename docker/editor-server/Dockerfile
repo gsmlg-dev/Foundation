@@ -74,6 +74,7 @@ apt-get install -y -qq \
   emscripten \
   openjdk-17-jdk \
   mandoc \
+  watchman \
   cmake ninja-build libgtk-3-dev liblzma-dev libglu1-mesa \
   software-properties-common python3-launchpadlib
 apt-file update
