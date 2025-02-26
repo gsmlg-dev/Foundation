@@ -3,7 +3,7 @@ FROM quay.io/keycloak/keycloak:latest as builder
 ARG BUILD_DATE
 
 # Features
-ARG KC_FEATURES="account,account-api,admin,admin-api,admin-fine-grained-authz,authorization,cache-embedded-remote-store,ciba,client-policies,client-secret-rotation,client-types,clusterless,declarative-ui,device-flow,docker,dpop,dynamic-scopes,fips,impersonation,kerberos,login,multi-site,oid4vc-vci,opentelemetry,organization,par,passkeys,persistent-user-sessions,preview,recovery-codes,scripts,step-up-authentication,token-exchange,transient-users,update-email,web-authn"
+ARG KC_FEATURES="account,account-api,admin,admin-api,admin-fine-grained-authz,authorization,cache-embedded-remote-store,ciba,client-policies,client-secret-rotation,client-types,declarative-ui,device-flow,docker,dpop,dynamic-scopes,fips,impersonation,kerberos,login,oid4vc-vci,opentelemetry,organization,par,passkeys,persistent-user-sessions,preview,recovery-codes,scripts,step-up-authentication,token-exchange,transient-users,update-email,web-authn"
 
 # Cache set to local, if run a cluster, use `ispn` instead
 ARG KC_CACHE=local
