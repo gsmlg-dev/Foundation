@@ -10,7 +10,7 @@ on:
       - '.github/workflows/docker-buildimage-keycloak.yml'
 
 jobs:
-  build-image:
+  build-keycloak-image:
     runs-on: ubuntu-latest
     steps:
       -
@@ -54,6 +54,6 @@ jobs:
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             docker.io/gsmlg/keycloak:${{ steps.build-date.outputs.ym }}
-            ghcr.io/gsmlg-dev/keycloak:${{ steps.build-date.outputs.ym }}
             docker.io/gsmlg/keycloak:latest
+            ghcr.io/gsmlg-dev/keycloak:${{ steps.build-date.outputs.ym }}
             ghcr.io/gsmlg-dev/keycloak:latest
