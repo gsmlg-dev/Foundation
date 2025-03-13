@@ -226,9 +226,6 @@ tar xf flutter.tar.xz -C /opt
 echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.local"
 echo 'export PATH="$PATH":"${PUB_CACHE}/bin"' | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.local"
 rm -f flutter.tar.xz
-/opt/flutter/bin/dart pub global activate mason_cli
-/opt/flutter/bin/dart pub global activate vscode_ext_cli
-/opt/flutter/bin/dart pub global activate melos
 EOF
 
 # Install command line tools
@@ -266,3 +263,9 @@ RUN chown -R coder:coder /opt
 RUN rm -rf /var/cache/* && rm -rf /tmp/*
 
 USER coder
+
+RUN <<EOF
+/opt/flutter/bin/dart pub global activate mason_cli
+/opt/flutter/bin/dart pub global activate vscode_ext_cli
+/opt/flutter/bin/dart pub global activate melos
+EOF
