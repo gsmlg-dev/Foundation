@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.96.4
+ARG CODE_SERVER_VERSION=4.98.0
 FROM ghcr.io/gsmlg-dev/code-server:v$CODE_SERVER_VERSION
 
 ARG TARGETPLATFORM
@@ -75,6 +75,7 @@ apt-get install -y -qq \
   openjdk-17-jdk \
   mandoc \
   watchman \
+  ncat nmap \
   cmake ninja-build libgtk-3-dev liblzma-dev libglu1-mesa \
   software-properties-common python3-launchpadlib
 apt-file update
@@ -134,7 +135,7 @@ echo "export NODE_PATH=/usr/lib/node_modules" | tee -a "/etc/zsh/zshenv" | tee -
 EOF
 
 # install golang
-ARG GO_VERSION=1.22.8
+ARG GO_VERSION=1.24.1
 ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
@@ -180,15 +181,15 @@ curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
 /opt/rust/bin/rustup target add wasm32-unknown-unknown
 /opt/rust/bin/rustup target add x86_64-unknown-linux-gnu
 /opt/rust/bin/rustup target add x86_64-unknown-linux-musl
-/opt/rust/bin/rustup target add x86_64-linux-android
-/opt/rust/bin/rustup target add x86_64-pc-windows-msvc
-/opt/rust/bin/rustup target add x86_64-unknown-freebsd
-/opt/rust/bin/rustup target add x86_64-apple-darwin
-/opt/rust/bin/rustup target add aarch64-apple-darwin
-/opt/rust/bin/rustup target add aarch64-apple-ios
+# /opt/rust/bin/rustup target add x86_64-linux-android
+# /opt/rust/bin/rustup target add x86_64-pc-windows-msvc
+# /opt/rust/bin/rustup target add x86_64-unknown-freebsd
+# /opt/rust/bin/rustup target add x86_64-apple-darwin
+# /opt/rust/bin/rustup target add aarch64-apple-darwin
+# /opt/rust/bin/rustup target add aarch64-apple-ios
 /opt/rust/bin/rustup target add aarch64-linux-android
 /opt/rust/bin/rustup target add aarch64-unknown-linux-gnu
-/opt/rust/bin/rustup target add aarch64-unknown-linux-musl
+# /opt/rust/bin/rustup target add aarch64-unknown-linux-musl
 /opt/rust/bin/cargo install difftastic
 /opt/rust/bin/cargo install cargo-generate
 /opt/rust/bin/cargo install wasm-pack
@@ -215,7 +216,7 @@ RUN apt-get install -y -qq php-cli
 RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
-ARG FLUTTER_VERSION=3.27.1
+ARG FLUTTER_VERSION=3.29.1
 ARG PUB_CACHE=/opt/flutter/pub-cache
 ENV PUB_CACHE=${PUB_CACHE}
 ENV FLUTTER_VERSION=${FLUTTER_VERSION}

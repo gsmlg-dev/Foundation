@@ -14,7 +14,7 @@ jobs:
       - 
         name: Set Version
         id: version
-        run: echo "version=4.96.4" >> $GITHUB_OUTPUT
+        run: echo "version=4.98.0" >> $GITHUB_OUTPUT
 
       - 
         name: 🛑 Cancel Previous Runs
