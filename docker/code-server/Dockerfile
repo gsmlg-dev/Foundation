@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-ARG VERSION=4.96.4
+ARG VERSION=4.98.0
 ARG container=docker
 ARG LC_ALL=C
 ARG DEBIAN_FRONTEND=noninteractive
