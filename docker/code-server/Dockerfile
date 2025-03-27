@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-ARG VERSION=4.98.2
+ARG VERSION=
 ARG container=docker
 ARG LC_ALL=C
 ARG DEBIAN_FRONTEND=noninteractive
@@ -17,7 +17,7 @@ LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
 LABEL org.opencontainers.image.source.path="/docker/code-server"
 LABEL org.opencontainers.image.title="Code-Server"
 LABEL org.opencontainers.image.authors="Jonathan Gao <gsmlg.com@gmail.com>"
-LABEL org.opencontainers.image.description="Code-Server running on top of debian"
+LABEL org.opencontainers.image.description="Code-Server running on top of ubuntu 24.04"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.version="$VERSION"
 
@@ -42,7 +42,7 @@ echo $TARGETARCH | tee /etc/ARCH
 echo $TARGETVARIANT | tee /etc/VARIANT
 apt-get update
 apt-get upgrade -y
-apt install -y curl ca-certificates zsh sudo gpg
+apt-get install -y curl ca-certificates zsh sudo gpg
 userdel -f -r ubuntu
 groupdel -f ubuntu
 useradd coder --create-home --shell $(which zsh)

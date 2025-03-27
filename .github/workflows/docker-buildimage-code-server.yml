@@ -19,7 +19,7 @@ jobs:
         name: Get latest version
         id: get-latest-version
         run: |
-          version=$(curl -sSLf https://api.github.com/repos/coder/code-server/releases/latest | jq -r .name | cut -c 1-)
+          version=$(curl -sSLf https://api.github.com/repos/coder/code-server/releases/latest | jq -r .name | cut -c 2-)
           echo "version=$version" | tee -a $GITHUB_OUTPUT
   build-code-server-image:
     needs: get-latest-version
