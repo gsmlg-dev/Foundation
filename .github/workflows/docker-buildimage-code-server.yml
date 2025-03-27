@@ -16,15 +16,11 @@ jobs:
       version: ${{ steps.get-latest-version.outputs.version }}
     steps:
       -
-        name: setup
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-      -
         name: Get latest version
         id: get-latest-version
         run: |
-          echo "version=$(curl -sSLf https://api.github.com/repos/coder/code-server/releases/latest | jq -r .name | cut -c 1-)" >> $GITHUB_OUTPUT
+          version=$(curl -sSLf https://api.github.com/repos/coder/code-server/releases/latest | jq -r .name | cut -c 1-)
+          echo "version=$version" | tee -a $GITHUB_OUTPUT
   build-code-server-image:
     needs: get-latest-version
     runs-on: ubuntu-latest
