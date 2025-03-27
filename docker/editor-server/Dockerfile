@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.98.0
+ARG CODE_SERVER_VERSION=4.98.2
 FROM ghcr.io/gsmlg-dev/code-server:v$CODE_SERVER_VERSION
 
 ARG TARGETPLATFORM
@@ -75,7 +75,7 @@ apt-get install -y -qq \
   openjdk-17-jdk \
   mandoc \
   watchman \
-  ncat nmap \
+  ncat nmap tcpdump \
   cmake ninja-build libgtk-3-dev liblzma-dev libglu1-mesa \
   software-properties-common python3-launchpadlib
 apt-file update
@@ -161,6 +161,7 @@ echo "export GOPATH=${GOPATH}" | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.
 /usr/local/go/bin/go install golang.org/x/mobile/cmd/gobind@latest
 /usr/local/go/bin/go install github.com/evanw/esbuild/cmd/esbuild@latest
 /usr/local/go/bin/go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+/usr/local/go/bin/go install github.com/asdf-vm/asdf/cmd/asdf@latest
 /usr/local/go/bin/go clean -modcache
 /usr/local/go/bin/go env -w GO111MODULE=on
 /usr/local/go/bin/go env -w GOPROXY=https://goproxy.gsmlg.dev,direct
@@ -216,7 +217,7 @@ RUN apt-get install -y -qq php-cli
 RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
-ARG FLUTTER_VERSION=3.29.1
+ARG FLUTTER_VERSION=3.29.2
 ARG PUB_CACHE=/opt/flutter/pub-cache
 ENV PUB_CACHE=${PUB_CACHE}
 ENV FLUTTER_VERSION=${FLUTTER_VERSION}
@@ -227,16 +228,6 @@ echo 'export PATH="/opt/flutter/bin:$PATH"' | tee -a "/etc/zsh/zshenv" | tee -a 
 echo 'export PATH="$PATH":"${PUB_CACHE}/bin"' | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.local"
 rm -f flutter.tar.xz
 EOF
-
-# Install command line tools
-RUN <<EOF
-# Install kubectl Latest Version
-export ARCH=`dpkg --print-architecture`
-export KUBECTL_LATEST_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
-export KUBECTL_VERSION=${KUBECTL_VERSION:-$KUBECTL_LATEST_VERSION}
-curl -sSfLo kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl"
-chmod +x kubectl
-mv kubectl /usr/local/bin/kubectl
 
 # install skaffold
 export ARCH=`dpkg --print-architecture`

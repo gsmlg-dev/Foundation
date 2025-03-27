@@ -1,30 +1,26 @@
 name: docker-buildimage-editor-server
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - "docker/editor-server/Dockerfile"
-      - ".github/workflows/docker-buildimage-editor-server.yml"
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'The version of the code-server'
+        default: '4.98.2'
+      platform:
+        required: true
+        description: 'The platform of the code-server'
+        default: 'linux/amd64'
 
 jobs:
   build-editor-server-image:
     runs-on: ubuntu-latest-m
     steps:
       - 
-        name: Set Version
-        id: version
-        run: echo "version=4.98.0" >> $GITHUB_OUTPUT
-
-      - 
-        name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.1
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - 
         name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - 
         name: Set up QEMU
@@ -58,15 +54,15 @@ jobs:
         with:
           context: docker/editor-server/
           file: docker/editor-server/Dockerfile
-          platforms: linux/amd64
+          platforms: ${{ github.event.inputs.platform }}
           push: true
           build-args: |
-            CODE_SERVER_VERSION=${{ steps.version.outputs.version }}
-            VERSION=latest
+            CODE_SERVER_VERSION=${{ github.event.inputs.version }}
+            VERSION=${{ github.event.inputs.version }}
             BUILD_MONTH=${{ steps.build-date.outputs.ym }}
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
             ghcr.io/gsmlg-dev/editor-server:latest
             docker.io/gsmlg/editor-server:latest
-            ghcr.io/gsmlg-dev/editor-server:v${{ steps.version.outputs.version }}
-            docker.io/gsmlg/editor-server:v${{ steps.version.outputs.version }}
+            ghcr.io/gsmlg-dev/editor-server:v${{ github.event.inputs.version }}
+            docker.io/gsmlg/editor-server:v${{ github.event.inputs.version }}
