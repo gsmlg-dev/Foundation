@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-ARG VERSION=4.98.0
+ARG VERSION=4.98.2
 ARG container=docker
 ARG LC_ALL=C
 ARG DEBIAN_FRONTEND=noninteractive
@@ -58,9 +58,9 @@ USER coder
 
 SHELL ["/bin/zsh", "-c"]
 
-ENV ADDR="0.0.0.0"
-ENV PORT="8080"
-ENV APP_NAME="GSMLG.DEV"
-ENV WELCOME_TEXT="MAY THE FORCE BE WITH YOU"
+ENV CODE_SERVER_ADDR="0.0.0.0"
+ENV CODE_SERVER_PORT="8080"
+ENV CODE_SERVER_APP_NAME="GSMLG.DEV"
+ENV CODE_SERVER_WELCOME_TEXT="MAY THE FORCE BE WITH YOU"
 
-CMD [ "sh", "-c", "/usr/local/bin/code-server --disable-update-check --bind-addr $ADDR:$PORT --disable-telemetry --app-name $APP_NAME --welcome-text $WELCOME_TEXT" ]
+CMD [ "sh", "-c", "/usr/local/bin/code-server --disable-update-check --bind-addr $CODE_SERVER_ADDR:$CODE_SERVER_PORT --disable-telemetry --app-name $CODE_SERVER_APP_NAME --welcome-text $CODE_SERVER_WELCOME_TEXT" ]

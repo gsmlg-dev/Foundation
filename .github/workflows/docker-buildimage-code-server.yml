@@ -1,6 +1,8 @@
 name: docker-buildimage-code-server
 
 on:
+  schedule:
+    - cron: '0 8 * * 0'
   push:
     branches: [ main ]
     paths:
@@ -8,7 +10,23 @@ on:
       - '.github/workflows/docker-buildimage-code-server.yml'
 
 jobs:
+  get-latest-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-latest-version.outputs.version }}
+    steps:
+      -
+        name: setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+      -
+        name: Get latest version
+        id: get-latest-version
+        run: |
+          echo "version=$(curl -sSLf https://api.github.com/repos/coder/code-server/releases/latest | jq -r .name | cut -c 1-)" >> $GITHUB_OUTPUT
   build-code-server-image:
+    needs: get-latest-version
     runs-on: ubuntu-latest
     steps:
       -
@@ -48,10 +66,10 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=4.98.0
+            VERSION=${{ needs.get-latest-version.outputs.version }}
             BUILD_DATE=${{ steps.build-date.outputs.date }}
           tags: |
-            ghcr.io/gsmlg-dev/code-server:v4.98.0
+            ghcr.io/gsmlg-dev/code-server:v${{ needs.get-latest-version.outputs.version }}
             ghcr.io/gsmlg-dev/code-server:latest
-            docker.io/gsmlg/code-server:v4.98.0
+            docker.io/gsmlg/code-server:v${{ needs.get-latest-version.outputs.version }}
             docker.io/gsmlg/code-server:latest
