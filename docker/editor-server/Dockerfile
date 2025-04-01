@@ -140,7 +140,6 @@ ARG GO111MODULE=on
 ARG GOPATH=/opt/go
 ENV GOPATH=$GOPATH
 RUN <<EOF
-export ARCH=`dpkg --print-architecture`
 export GOPKG="go${GO_VERSION}.linux-${ARCH}.tar.gz"
 curl -sSL "https://golang.org/dl/${GOPKG}" -o "/tmp/${GOPKG}"
 tar -C /usr/local -xzf "/tmp/${GOPKG}"
@@ -230,21 +229,21 @@ rm -f flutter.tar.xz
 EOF
 
 # install skaffold
-export ARCH=`dpkg --print-architecture`
+RUN <<EOF
 curl -sSfLo skaffold "https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-${ARCH}"
 chmod +x skaffold
 mv skaffold /usr/local/bin/skaffold
+EOF
 
 # install helm
-curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+RUN curl -fL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 # install cli53 gsmlg-cli
-export ARCH=`dpkg --print-architecture`
+RUN <<EOF
 curl -sSfL https://github.com/barnybug/cli53/releases/latest/download/cli53-linux-${ARCH} -o /usr/local/bin/cli53
 chmod +x /usr/local/bin/cli53
 curl -sSfL https://github.com/gsmlg-dev/gsmlg-cli/releases/latest/download/gsmlg-cli_linux_${ARCH} -o /usr/local/bin/gsmlg-cli
 chmod +x /usr/local/bin/gsmlg-cli
-
 EOF
 
 # change permision
