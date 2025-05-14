@@ -1,6 +1,6 @@
 # Build Caddy
 
-caddy verison `v2.8.4`
+caddy verison `v2.9.1`
 
 xcaddy build with
 
