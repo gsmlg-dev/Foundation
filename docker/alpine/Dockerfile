@@ -1,4 +1,5 @@
-FROM alpine:3.21
+ARG ALPINE_VERSION
+FROM alpine:${ALPINE_VERSION}
 
 LABEL org.opencontainers.image.source="https://github.com/gsmlg-dev/Foundation"
 LABEL org.opencontainers.image.source.path="/docker/alpine"
@@ -8,6 +9,7 @@ LABEL org.opencontainers.image.description="Alpine Linux is a Linux distribution
 LABEL org.opencontainers.image.licenses=MIT
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
+ENV ALPINE_VERSION=${ALPINE_VERSION}
 ENV TZ=Asia/Shanghai
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
