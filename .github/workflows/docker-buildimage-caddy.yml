@@ -11,8 +11,8 @@ jobs:
   setup-caddy-version:
     runs-on: ubuntu-latest
     outputs:
-      version: "2.10.0"
-      caddy_version: v2.10.0
+      version: "2.9.1"
+      caddy_version: v2.9.1
       go_build_flags: "-trimpath -ldflags '-w s'"
       caddy_with: >
         --with github.com/caddy-dns/cloudflare
@@ -20,6 +20,7 @@ jobs:
         --with github.com/caddy-dns/vultr
         --with github.com/gsmlg-dev/caddy-storage-s3
         --with github.com/gsmlg-dev/caddy-admin-ui@main
+        --with github.com/gsmlg-dev/caddy-oauth2
         --with github.com/gsmlg-dev/caddy-handler-plugin
         --with github.com/caddyserver/cache-handler
         --with github.com/caddyserver/replace-response
