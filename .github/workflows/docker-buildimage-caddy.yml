@@ -11,8 +11,8 @@ jobs:
   setup-caddy-version:
     runs-on: ubuntu-latest
     outputs:
-      version: "2.9.1"
-      caddy_version: v2.9.1
+      version: "2.10.0"
+      caddy_version: v2.10.0
       go_build_flags: "-trimpath -ldflags '-w s'"
       caddy_with: >
         --with github.com/caddy-dns/cloudflare
