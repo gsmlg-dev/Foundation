@@ -20,7 +20,6 @@ jobs:
         --with github.com/caddy-dns/vultr
         --with github.com/gsmlg-dev/caddy-storage-s3
         --with github.com/gsmlg-dev/caddy-admin-ui@main
-        --with github.com/gsmlg-dev/caddy-oauth2
         --with github.com/gsmlg-dev/caddy-handler-plugin
         --with github.com/caddyserver/cache-handler
         --with github.com/caddyserver/replace-response
