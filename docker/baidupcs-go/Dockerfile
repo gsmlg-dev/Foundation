@@ -1,6 +1,6 @@
 FROM golang:alpine as builder
 
-ARG VERSION=v3.9.5
+ARG VERSION
 ARG CGO_ENABLED=0
 ENV GO111MODULE=on
 
@@ -14,7 +14,7 @@ FROM ghcr.io/gsmlg-dev/alpine:3.22
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ARG VERSION=v3.9.5
+ARG VERSION
 
 ENV VERSION=$VERSION
 

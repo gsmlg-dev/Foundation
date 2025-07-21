@@ -1,18 +1,15 @@
 name: docker-buildimage-baidupcs-go
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'docker/baidupcs-go/**'
-      - '.github/workflows/docker-buildimage-baidupcs-go.yml'
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'The version of the alpine'
+        default: 'v3.9.7'
 
 jobs:
   build-image:
-    strategy:
-      matrix:
-        version:
-          - v3.9.5
     runs-on: ubuntu-latest
     steps:
       -
@@ -23,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'qjfoidnh/BaiduPCS-Go'
-          ref: ${{ matrix.version }}
+          ref: ${{ github.event.inputs.version }}
           path: 'docker/baidupcs-go/src'
       -
         name: Set up QEMU
@@ -49,7 +46,7 @@ jobs:
           push: true
           build-args: |
             GO111MODULE=on
-            VERSION=${{ matrix.version }}
+            VERSION=${{ github.event.inputs.version }}
           tags: |
-            ghcr.io/gsmlg-dev/baidupcs-go:${{ matrix.version }}
+            ghcr.io/gsmlg-dev/baidupcs-go:${{ github.event.inputs.version }}
             ghcr.io/gsmlg-dev/baidupcs-go:latest
