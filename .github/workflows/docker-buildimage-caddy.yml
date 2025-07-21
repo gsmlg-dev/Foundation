@@ -1,11 +1,6 @@
 name: docker-buildimage-caddy
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'docker/caddy/**'
-      - '.github/workflows/docker-buildimage-caddy.yml'
   workflow_dispatch:
     inputs:
       version:
