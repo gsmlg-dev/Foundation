@@ -37,7 +37,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=v1.13.5
+            VERSION=v1.16.1
           tags: |
             ghcr.io/gsmlg-dev/go-ethereum:latest
-            ghcr.io/gsmlg-dev/go-ethereum:v1.13.5
+            ghcr.io/gsmlg-dev/go-ethereum:v1.16.1

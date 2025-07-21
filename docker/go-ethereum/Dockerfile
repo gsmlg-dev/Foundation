@@ -2,7 +2,7 @@ FROM golang:alpine as builder
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 
-ARG VERSION=v1.13.5
+ARG VERSION=v1.16.1
 ARG GO111MODULE=on
 ARG CGO_ENABLED=0
 
@@ -12,7 +12,7 @@ RUN apk add --update git curl make gcc musl-dev linux-headers \
   && tar zxf /archive.tar.gz --strip-components=1 -C /src \
   && cd /src && make all
 
-FROM alpine:3.20
+FROM ghcr.io/gsmlg-dev/alpine:3.22
 
 LABEL maintainer="Jonathan Gao <gsmlg.com@gmail.com>"
 LABEL VERSION="$VERSION"
