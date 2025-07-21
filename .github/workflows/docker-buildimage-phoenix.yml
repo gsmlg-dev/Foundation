@@ -10,7 +10,7 @@ on:
       phoenix-version:
         required: true
         description: 'The version of the phoenix'
-        default: '1.17.18'
+        default: '1.7.21'
 
 jobs:
   build-image:
