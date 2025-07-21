@@ -1,4 +1,4 @@
-ARG CODE_SERVER_VERSION=4.98.2
+ARG CODE_SERVER_VERSION
 FROM ghcr.io/gsmlg-dev/code-server:v$CODE_SERVER_VERSION
 
 ARG TARGETPLATFORM
@@ -167,38 +167,6 @@ echo "export GOPATH=${GOPATH}" | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.
 chown -R coder:coder "${GOPATH}"
 EOF
 
-# install rust
-ARG RUSTPATH=/opt/rust
-ENV RUSTUP_HOME=${RUSTPATH}
-ENV CARGO_HOME=${RUSTPATH}
-RUN <<EOF
-export RUSTUP_HOME=${RUSTPATH}
-export CARGO_HOME=${RUSTPATH}
-echo "export PATH=\${PATH}:${RUSTPATH}/bin" | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.local"
-echo "export RUSTUP_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.local"
-echo "export CARGO_HOME=${RUSTPATH}" | tee -a "/etc/zsh/zshenv" | tee -a "/etc/bashrc.local"
-curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
-/opt/rust/bin/rustup target add wasm32-unknown-unknown
-/opt/rust/bin/rustup target add x86_64-unknown-linux-gnu
-/opt/rust/bin/rustup target add x86_64-unknown-linux-musl
-# /opt/rust/bin/rustup target add x86_64-linux-android
-# /opt/rust/bin/rustup target add x86_64-pc-windows-msvc
-# /opt/rust/bin/rustup target add x86_64-unknown-freebsd
-# /opt/rust/bin/rustup target add x86_64-apple-darwin
-# /opt/rust/bin/rustup target add aarch64-apple-darwin
-# /opt/rust/bin/rustup target add aarch64-apple-ios
-/opt/rust/bin/rustup target add aarch64-linux-android
-/opt/rust/bin/rustup target add aarch64-unknown-linux-gnu
-# /opt/rust/bin/rustup target add aarch64-unknown-linux-musl
-/opt/rust/bin/cargo install difftastic
-/opt/rust/bin/cargo install cargo-generate
-/opt/rust/bin/cargo install wasm-pack
-/opt/rust/bin/cargo install trunk wasm-bindgen-cli
-/opt/rust/bin/cargo install mdbook
-/opt/rust/bin/cargo install deno --locked
-chown -R coder:coder "${RUSTPATH}"
-EOF
-
 # install python
 RUN <<EOF
 apt-get install -y -qq python3 python3-pip python3-full
@@ -216,7 +184,7 @@ RUN apt-get install -y -qq php-cli
 RUN apt-get install -y -qq ruby-full && gem install bundler jekyll jekyll-remote-theme
 
 # install flutter
-ARG FLUTTER_VERSION=3.29.2
+ARG FLUTTER_VERSION=3.32.7
 ARG PUB_CACHE=/opt/flutter/pub-cache
 ENV PUB_CACHE=${PUB_CACHE}
 ENV FLUTTER_VERSION=${FLUTTER_VERSION}
