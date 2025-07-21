@@ -6,18 +6,25 @@ on:
     paths:
       - 'docker/caddy/**'
       - '.github/workflows/docker-buildimage-caddy.yml'
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'The version of the alpine'
+        default: '2.10.0'
 
 jobs:
   setup-caddy-version:
     runs-on: ubuntu-latest
     outputs:
-      version: "2.10.0"
-      caddy_version: v2.10.0
+      version: "${{ github.event.inputs.version }}"
+      caddy_version: v${{ github.event.inputs.version }}
       go_build_flags: "-trimpath -ldflags '-w s'"
       caddy_with: >
         --with github.com/caddy-dns/cloudflare
         --with github.com/caddy-dns/route53
         --with github.com/caddy-dns/vultr
+        --with github.com/gsmlg-dev/caddy-admin-ui
         --with github.com/gsmlg-dev/caddy-storage-s3
         --with github.com/gsmlg-dev/caddy-handler-plugin
         --with github.com/caddyserver/cache-handler
@@ -75,7 +82,6 @@ jobs:
           CADDY_WITH: ${{ needs.setup-caddy-version.outputs.caddy_with }}
           GOPRIVATE: github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
           CGO_ENABLED: "0"
-          # XCADDY_GO_BUILD_FLAGS: ${{ needs.setup-caddy-version.outputs.go_build_flags }}
         run: |
           xcaddy build ${CADDY_VERSION} --output "caddy_${GOOS}_${GOARCH}" $CADDY_WITH
       - name: Upload binaries to release
