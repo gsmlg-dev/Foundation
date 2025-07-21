@@ -1,26 +1,14 @@
 name: docker-buildimage-python
 
 on:
-  schedule:
-    - cron: '0 4 1 * *'
-  push:
-    branches: [ main ]
-    paths:
-      - 'docker/python/**'
-      - '.github/workflows/docker-buildimage-python.yml'
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'The version of the alpine'
+        default: '3.13'
 
-jobs:
   build-image:
-    strategy:
-      matrix:
-        version:
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13-rc"
-          - "3"
     runs-on: ubuntu-latest
     steps:
       -
@@ -60,8 +48,8 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            VERSION=${{ matrix.version }}
+            VERSION=${{ github.event.inputs.version }}
           tags: |
-            docker.io/gsmlg/python:v${{ matrix.version }}
-            ghcr.io/gsmlg-dev/python:v${{ matrix.version }}
+            docker.io/gsmlg/python:${{ github.event.inputs.version }}
+            ghcr.io/gsmlg-dev/python:${{ github.event.inputs.version }}
 

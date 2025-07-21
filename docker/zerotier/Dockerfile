@@ -1,9 +1,7 @@
-ARG ALPINE_IMAGE=alpine
-ARG ALPINE_VERSION=3.20
 ARG ZT_COMMIT=91e7ce87f09ac1cfdeaf6ff22c3cedcd93574c86
 ARG ZT_VERSION=1.14.0
 
-FROM ${ALPINE_IMAGE}:${ALPINE_VERSION} as builder
+FROM ghcr.io/gsmlg-dev/alpine:3.22 as builder
 
 RUN apk add --update alpine-sdk linux-headers \
   && git clone https://github.com/zerotier/ZeroTierOne.git /src \
@@ -11,7 +9,7 @@ RUN apk add --update alpine-sdk linux-headers \
   && cd /src \
   && make -f make-linux.mk
 
-FROM ${ALPINE_IMAGE}:${ALPINE_VERSION}
+FROM ghcr.io/gsmlg-dev/alpine:3.22
 
 ARG ZT_VERSION
 

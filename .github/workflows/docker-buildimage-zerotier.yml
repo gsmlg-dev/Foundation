@@ -1,11 +1,16 @@
 name: docker-buildimage-zerotier
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'docker/zerotier/**'
-      - '.github/workflows/docker-buildimage-zerotier.yml'
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'The version of the zerotier'
+        default: '1.14.2'
+      git-ref:
+        required: true
+        description: 'The git-ref of the zerotier'
+        default: '1.14.2'
 
 jobs:
   build-image:
@@ -42,12 +47,10 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           build-args: |
-            ALPINE_IMAGE=alpine
-            ALPINE_VERSION=3.16
-            ZT_COMMIT=651f45fe29155c462f4e56dd74f4a347f6861d0d
-            ZT_VERSION=1.10.1
+            ZT_COMMIT=${{ github.event.inputs.git-ref }}
+            ZT_VERSION=${{ github.event.inputs.version }}
           tags: |
-            docker.io/gsmlg/zerotier:v1.10.1
+            docker.io/gsmlg/zerotier:${{ github.event.inputs.version }}
             docker.io/gsmlg/zerotier:latest
-            ghcr.io/gsmlg-dev/zerotier:v1.10.1
+            ghcr.io/gsmlg-dev/zerotier:${{ github.event.inputs.version }}
             ghcr.io/gsmlg-dev/zerotier:latest
