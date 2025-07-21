@@ -17,16 +17,6 @@ jobs:
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      - 
-        name: 🚀 Release
-        uses: gsmlg/semantic-release-action@v3
-        id: semantic
-        with:
-          release_name: log-forwarder
-          working-directory: 'docker/log-forwarder'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -52,7 +42,5 @@ jobs:
           platforms: linux/amd64,linux/386,linux/arm64/v8,linux/arm/v7,linux/arm/v6
           push: true
           tags: |
-            docker.io/gsmlg/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
             docker.io/gsmlg/log-forwarder:latest
-            ghcr.io/gsmlg-dev/log-forwarder:v${{ steps.semantic.outputs.new_release_version }}
             ghcr.io/gsmlg-dev/log-forwarder:latest
