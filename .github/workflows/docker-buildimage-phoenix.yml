@@ -1,23 +1,19 @@
 name: docker-buildimage-phoenix
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'docker/phoenix/**'
-      - '.github/workflows/docker-buildimage-phoenix.yml'
+  workflow_dispatch:
+    inputs:
+      elixir-version:
+        required: true
+        description: 'The version of the elixir'
+        default: '1.18.4'
+      phoenix-version:
+        required: true
+        description: 'The version of the phoenix'
+        default: '1.17.18'
 
 jobs:
   build-image:
-    strategy:
-      matrix:
-        type:
-          - base: "latest"
-            platforms: linux/amd64,linux/arm64
-            tag: 1.7.18
-          - base: "alpine"
-            platforms: linux/amd64,linux/arm64
-            tag: 1.7.18-alpine
     runs-on: ubuntu-latest
     steps:
       -
@@ -47,14 +43,30 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: docker/phoenix/
-          file: docker/phoenix/Dockerfile.${{ matrix.type.base }}
-          platforms: ${{ matrix.type.platforms }}
+          file: docker/phoenix/Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           build-args: |
-            ELIXIR_VERSION=1.17
-            PHOENIX_VERSION=1.7.18
+            ELIXIR_VERSION=${{ github.event.inputs.elixir-version }}
+            PHOENIX_VERSION=${{ github.event.inputs.phoenix-version }}
           tags: |
-            docker.io/gsmlg/phoenix:${{ matrix.type.tag }}
-            docker.io/gsmlg/phoenix:${{ matrix.type.base }}
-            ghcr.io/gsmlg-dev/phoenix:${{ matrix.type.tag }}
-            ghcr.io/gsmlg-dev/phoenix:${{ matrix.type.base }}
+            docker.io/gsmlg/phoenix:${{ github.event.inputs.phoenix-version }}
+            docker.io/gsmlg/phoenix:latest
+            ghcr.io/gsmlg-dev/phoenix:${{ github.event.inputs.phoenix-version }}
+            ghcr.io/gsmlg-dev/phoenix:latest
+      -
+        name: Build and push alpine
+        uses: docker/build-push-action@v5
+        with:
+          context: docker/phoenix/
+          file: docker/phoenix/Dockerfile.alpine
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: |
+            ELIXIR_VERSION=${{ github.event.inputs.elixir-version }}
+            PHOENIX_VERSION=${{ github.event.inputs.phoenix-version }}
+          tags: |
+            docker.io/gsmlg/phoenix:${{ github.event.inputs.phoenix-version }}-alpine
+            docker.io/gsmlg/phoenix:alpine
+            ghcr.io/gsmlg-dev/phoenix:${{ github.event.inputs.phoenix-version }}-alpine
+            ghcr.io/gsmlg-dev/phoenix:alpine
