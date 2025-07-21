@@ -34,7 +34,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          password: ${{ secrets.GHCR_TOKEN }}
       -
         name: Set build date
         id: build-date
@@ -55,7 +55,7 @@ jobs:
           build-args: |
             LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}
             USER=${{ secrets.GIT_USER_ID }}
-            TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            TOKEN=${{ secrets.GHCR_TOKEN }}
             GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang
             CGO_ENABLED=0
             DATE=${{ steps.build-date.outputs.date }}
@@ -75,7 +75,7 @@ jobs:
           build-args: |
             LICENSE=${{ secrets.MAXMIND_LICENSE_KEY }}
             USER=${{ secrets.GIT_USER_ID }}
-            TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            TOKEN=${{ secrets.GHCR_TOKEN }}
             GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang
             CGO_ENABLED=0
             DATE=${{ steps.build-date.outputs.date }}

@@ -34,7 +34,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          password: ${{ secrets.GHCR_TOKEN }}
       - name: ⚙️ Install deps
         run: |
           export DEBIAN_FRONTEND=noninteractive
@@ -44,7 +44,7 @@ jobs:
         name: Get latest version
         id: get-version
         run: |
-          TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          TOKEN=${{ secrets.GHCR_TOKEN }}
           OUT=$(curl -sSL https://api.github.com/repos/Ylianst/MeshCentral/releases/latest \
             --header "Authorization: Bearer $TOKEN" \
             --header "X-GitHub-Api-Version: 2022-11-28")
