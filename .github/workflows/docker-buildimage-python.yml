@@ -5,7 +5,7 @@ on:
     inputs:
       version:
         required: true
-        description: 'The version of the alpine'
+        description: 'The version of the python'
         default: '3.13'
 
   build-image:
@@ -33,12 +33,6 @@ on:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
-      -
-        name: Set build date
-        id: build-date
-        run: |
-          echo "ym=$(date +%Y-%m)" >> $GITHUB_OUTPUT
-          echo "date=$(date +%F)" >> $GITHUB_OUTPUT
       -
         name: Build and push
         uses: docker/build-push-action@v5
