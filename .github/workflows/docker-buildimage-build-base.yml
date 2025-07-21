@@ -36,6 +36,6 @@ jobs:
           push: true
           tags: |
             docker.io/gsmlg/build-base:latest
-            docker.io/gsmlg/build-base:20.04
-            docker.io/gsmlg/build-base:focal
+            docker.io/gsmlg/build-base:24.04
+            docker.io/gsmlg/build-base:noble
 
