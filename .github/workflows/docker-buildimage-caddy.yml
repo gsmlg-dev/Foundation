@@ -81,6 +81,7 @@ jobs:
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
+          overwrite: true
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
           asset_name: caddy_${{ matrix.platforms.os }}_${{ matrix.platforms.arch }}
