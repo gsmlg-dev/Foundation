@@ -17,8 +17,8 @@ jobs:
       go_build_flags: "-trimpath -ldflags '-w s'"
       caddy_with: >
         --with github.com/caddy-dns/cloudflare
-        --with github.com/caddy-dns/route53@v1.5.1
         --with github.com/caddy-dns/vultr
+        --with github.com/gsmlg-dev/route53@master
         --with github.com/gsmlg-dev/caddy-storage-s3
         --with github.com/gsmlg-dev/caddy-handler-plugin
         --with github.com/caddyserver/cache-handler
