@@ -19,8 +19,9 @@ jobs:
         --with github.com/caddy-dns/cloudflare
         --with github.com/caddy-dns/vultr
         --with github.com/gsmlg-dev/route53
-        --with github.com/gsmlg-dev/caddy-storage-s3
+        --with github.com/gsmlg-dev/caddy-admin-ui
         --with github.com/gsmlg-dev/caddy-handler-plugin
+        --with github.com/gsmlg-dev/caddy-storage-s3
         --with github.com/caddyserver/cache-handler
         --with github.com/caddyserver/replace-response
         --with github.com/caddyserver/forwardproxy
@@ -76,6 +77,7 @@ jobs:
           CADDY_WITH: ${{ needs.setup-caddy-version.outputs.caddy_with }}
           GOPRIVATE: github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
           CGO_ENABLED: "0"
+          XCADDY_DEBUG: "1"
         run: |
           xcaddy build ${CADDY_VERSION} --output "caddy_${GOOS}_${GOARCH}" $CADDY_WITH
       - name: Upload binaries to release
@@ -126,7 +128,7 @@ jobs:
             CADDY_WITH=${{ needs.setup-caddy-version.outputs.caddy_with }}
             USER=${{ secrets.GIT_USER_ID }}
             TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }}
-            GOPRIVATE=github.com/gsmlg-dev/gsmlg-golang,gsmlg.dev
+            GOPRIVATE=github.com/gsmlg-dev,gsmlg.dev
             CGO_ENABLED=0
           tags: |
             docker.io/gsmlg/caddy:v${{ needs.setup-caddy-version.outputs.version }}
