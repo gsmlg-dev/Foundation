@@ -44,16 +44,16 @@ jobs:
             arch: amd64
           - os: freebsd
             arch: amd64
-          - os: windows
-            arch: amd64
+          # - os: windows
+          #   arch: amd64
           - os: linux
             arch: arm64
           - os: android
             arch: arm64
           - os: darwin
             arch: arm64
-          - os: windows
-            arch: arm64
+          # - os: windows
+          #   arch: arm64
     steps:
       -
         name: Checkout
