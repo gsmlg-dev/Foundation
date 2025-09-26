@@ -43,10 +43,6 @@ I've manage too many repositories, that I have to combine them to one so that I 
         docker.io/gsmlg/pac-server:latest
         ghcr.io/gsmlg/pac-server:latest
 
-    - [caddy-static](golang/caddy-static)
-
-    A caddy module that build static site into caddy server.
-
 
 - [docker](docker)
 
