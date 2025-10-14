@@ -8,6 +8,7 @@ on:
         description: 'The version of the python'
         default: '3.13'
 
+jobs:
   build-image:
     runs-on: ubuntu-latest
     steps:
