@@ -28,7 +28,7 @@ I've manage too many repositories, that I have to combine them to one so that I 
     PAC (Proxy Auto-Config) file server.
 
     Download:
-  
+
         https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_linux_amd64
         https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_linux_arm64
         https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_darwin_amd64
@@ -39,261 +39,20 @@ I've manage too many repositories, that I have to combine them to one so that I 
         https://github.com/gsmlg-dev/Foundation/releases/download/pac-server-release/pac-server_android_arm64
 
     Docker:
-  
+
         docker.io/gsmlg/pac-server:latest
         ghcr.io/gsmlg/pac-server:latest
 
 
-- [docker](docker)
+## Docker Images
 
-    My docker images
+Docker images have been migrated to the [gsmlg-ci](https://github.com/gsmlg-ci) organization for better maintainability.
 
-    - [antlr](docker/antlr)
-    Another Tool for Language Recognition.
-    [Repo Link](https://hub.docker.com/r/gsmlg/antlr/tags)
+See [docs/DOCKER_REPOS.md](docs/DOCKER_REPOS.md) for the complete list of Docker image repositories.
 
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/antlr)](https://hub.docker.com/r/gsmlg/antlr)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-antlr.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-antlr.yml)
-
-    - [baidupcs-go](docker/baidupcs-go)
-    Baidu Cloud Disk conmandline tools.
-    [Repo Link](https://hub.docker.com/r/gsmlg/baidupcs-go/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/baidupcs-go)](https://hub.docker.com/r/gsmlg/baidupcs-go)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-baidupcs-go.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-baidupcs-go.yml)
-
-    - [caddy](docker/caddy)
-    Caddy reverse proxy server, multi architecture at github release.
-    [Repo Link](https://hub.docker.com/r/gsmlg/caddy/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/caddy)](https://hub.docker.com/r/gsmlg/caddy)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-caddy.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-caddy.yml)
-
-    - [code-server](docker/code-server)
-    VS Code Server edition, download and change to use zsh, base on ubuntu.
-    [Repo Link](https://hub.docker.com/r/gsmlg/code-server/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/code-server)](https://hub.docker.com/r/gsmlg/code-server)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-code-server.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-code-server.yml)
-
-    - [couchdb](docker/couchdb)
-    Couchdb Server.
-    [Repo Link](https://hub.docker.com/r/gsmlg/couchdb/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/couchdb)](https://hub.docker.com/r/gsmlg/couchdb)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-couchdb.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-couchdb.yml)
-
-    - [curl](docker/curl)
-    Minimal curl base on alpine.
-    [Repo Link](https://hub.docker.com/r/gsmlg/curl/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/curl)](https://hub.docker.com/r/gsmlg/curl)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-curl.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-curl.yml)
-
-    - [daedalos](docker/daedalos)
-    Desktop environment in the browser.
-    [Repo Link](https://hub.docker.com/r/gsmlg/daedalos/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/daedalos)](https://hub.docker.com/r/gsmlg/daedalos)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-daedalos.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-daedalos.yml)
-
-    - [dell-openmanage](docker/dell-openmanage)
-    Dell openmanage package. Use to automate manage server through iDrac base on centos 7.
-    [Repo Link](https://hub.docker.com/r/gsmlg/dell-openmanage/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/dell-openmanage)](https://hub.docker.com/r/gsmlg/dell-openmanage)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-dell-openmanage.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-dell-openmanage.yml)
-
-    - [dell-poweredge](docker/dell-poweredge)
-    Dell openmanage package. Use to automate manage server through iDrac base on ubuntu, not work yet.
-    [Repo Link](https://hub.docker.com/r/gsmlg/dell-poweredge/tags)
-
-    <!--
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/dell-poweredge)](https://hub.docker.com/r/gsmlg/dell-poweredge) 
-    -->
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-dell-poweredge.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-dell-poweredge.yml)
-
-    - [devdocs](docker/devdocs)
-    A devdocs.io mirror image to local use.
-    [Repo Link](https://hub.docker.com/r/gsmlg/devdocs/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/devdocs)](https://hub.docker.com/r/gsmlg/devdocs)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-devdocs.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-devdocs.yml)
-
-    - [echo](docker/echo).
-    Http dump service, using for test http.
-    [Repo Link](https://hub.docker.com/r/gsmlg/echo/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/echo)](https://hub.docker.com/r/gsmlg/echo)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-echo.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-echo.yml)
-
-    - [editor-server](docker/editor-server)
-    My cloud editor, base on my code-server, add a lot of usefull support.
-    [Repo Link](https://hub.docker.com/r/gsmlg/editor-server/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/editor-server)](https://hub.docker.com/r/gsmlg/editor-server)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-editor-server.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-editor-server.yml)
-
-    - [geoip2](docker/geoip2)
-    My GeoIP2 server image.
-    [Repo Link](https://hub.docker.com/r/gsmlg/geoip2/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/geoip2)](https://hub.docker.com/r/gsmlg/geoip2)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-geoip2.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-geoip2.yml)
-
-    - [go-ethereum](docker/go-ethereum)
-    Golang implementation of the Ethereum.
-    [Repo Link](https://hub.docker.com/r/gsmlg/go-ethereum/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/go-ethereum)](https://hub.docker.com/r/gsmlg/go-ethereum)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-go-ethereum.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-go-ethereum.yml)
-
-    - [kubectl](docker/kubectl)
-    The `kubectl` command.
-    [Repo Link](https://hub.docker.com/r/gsmlg/kubectl/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/kubectl)](https://hub.docker.com/r/gsmlg/kubectl)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-kubectl.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-kubectl.yml)
-
-    - [log-forwarder](docker/log-forwarder)
-    Forward log to couchdb.
-    [Repo Link](https://hub.docker.com/r/gsmlg/log-forwarder/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/log-forwarder)](https://hub.docker.com/r/gsmlg/log-forwarder)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-log-forwarder.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-log-forwarder.yml)
-
-    - [mariadb](docker/mariadb)
-    My mariadb distribution, with galera clusster.
-    [Repo Link](https://hub.docker.com/r/gsmlg/mariadb/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/mariadb)](https://hub.docker.com/r/gsmlg/mariadb)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-mariadb.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-mariadb.yml)
-
-    - [meshcentral](docker/meshcentral)
-    MeshCentral controll computers anywhere.
-    [Repo Link](https://hub.docker.com/r/gsmlg/meshcentral/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/meshcentral)](https://hub.docker.com/r/gsmlg/meshcentral)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-meshcentral.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-meshcentral.yml)
-
-    - [nginx](docker/nginx)
-    Reverse proxy service, also for static site.
-    [Repo Link](https://hub.docker.com/r/gsmlg/nginx/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/nginx)](https://hub.docker.com/r/gsmlg/nginx)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-nginx.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-nginx.yml)
-
-    - [openssl](docker/openssl)
-    OpenSSL, base on ubuntu, manage CA.
-    [Repo Link](https://hub.docker.com/r/gsmlg/openssl/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/openssl)](https://hub.docker.com/r/gsmlg/openssl)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-openssl.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-openssl.yml)
-
-    - [openwrt](docker/openwrt)
-    OpenWRT, Create OpenWRT image, can not run on github actions, because action space is not enough.
-    [Repo Link](https://hub.docker.com/r/gsmlg/openwrt/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/openwrt)](https://hub.docker.com/r/gsmlg/openwrt)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-openwrt.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-openwrt.yml)
-
-    - [phoenix](docker/phoenix)
-    My phoenix project base image.
-    [Repo Link](https://hub.docker.com/r/gsmlg/phoenix/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/phoenix)](https://hub.docker.com/r/gsmlg/phoenix)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-phoenix.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-phoenix.yml)
-
-    - [python](docker/python)
-    My Python docker base image.
-    [Repo Link](https://hub.docker.com/r/gsmlg/python/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/python)](https://hub.docker.com/r/gsmlg/python)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-python.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-python.yml)
-
-    - [python](docker/rabbitmq)
-    My RabbitMQ docker image.
-    [Repo Link](https://hub.docker.com/r/gsmlg/rabbitmq/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/rabbitmq)](https://hub.docker.com/r/gsmlg/rabbitmq)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-rabbitmq.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-rabbitmq.yml)
-
-    - [python](docker/semantic-release)
-    My semantic-release docker image, with kanico image builder, and plugins: gitlab, git and monorepo.
-    [Repo Link](https://hub.docker.com/r/gsmlg/semantic-release/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/semantic-release)](https://hub.docker.com/r/gsmlg/semantic-release)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-semantic-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-semantic-release.yml)
-
-    - [snapdrop](docker/snapdrop)
-    My snapdrop project base image.
-    [Repo Link](https://hub.docker.com/r/gsmlg/snapdrop/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/snapdrop)](https://hub.docker.com/r/gsmlg/snapdrop)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-snapdrop.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-snapdrop.yml)
-
-    - [squid](docker/squid)
-    Proxy service.
-    [Repo Link](https://hub.docker.com/r/gsmlg/squid/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/squid)](https://hub.docker.com/r/gsmlg/squid)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-squid.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-squid.yml)
-
-    - [stunnel](docker/stunnel)
-    Encrypt connection service.
-    [Repo Link](https://hub.docker.com/r/gsmlg/stunnel/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/stunnel)](https://hub.docker.com/r/gsmlg/stunnel)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-stunnel.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-stunnel.yml)
-
-    - [svg-autocrop](docker/svg-autocrop)
-    Optimize svg with headless browser.
-    [Repo Link](https://hub.docker.com/r/gsmlg/svg-autocrop/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/svg-autocrop)](https://hub.docker.com/r/gsmlg/svg-autocrop)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-svg-autocrop.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-svg-autocrop.yml)
-
-    - [stunnel](docker/tinyproxy)
-    Proxy server tinyproxy.
-    [Repo Link](https://hub.docker.com/r/gsmlg/tinyproxy/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/tinyproxy)](https://hub.docker.com/r/gsmlg/tinyproxy)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-tinyproxy.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-tinyproxy.yml)
-
-    - [unbound](docker/unbound)
-    Encrypt connection service.
-    [Repo Link](https://hub.docker.com/r/gsmlg/unbound/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/unbound)](https://hub.docker.com/r/gsmlg/unbound)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-unbound.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-unbound.yml)
-
-    - [varnish](docker/varnish)
-    Varnish Cache server.
-    [Repo Link](https://hub.docker.com/r/gsmlg/varnish/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/varnish)](https://hub.docker.com/r/gsmlg/varnish)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-varnish.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-varnish.yml)
-
-    - [zerotier](docker/zerotier)
-    Open source network switch.
-    [Repo Link](https://hub.docker.com/r/gsmlg/zerotier/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/zerotier)](https://hub.docker.com/r/gsmlg/zerotier)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-zerotier.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-zerotier.yml)
-
-    - [zerotier-ui](docker/zerotier-ui)
-    Zerotier One management ui.
-    [Repo Link](https://hub.docker.com/r/gsmlg/zerotier-ui/tags)
-
-    [![Docker Pulls](https://badgen.net/docker/pulls/gsmlg/zerotier-ui)](https://hub.docker.com/r/gsmlg/zerotier-ui)
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-zerotier-ui.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/docker-buildimage-zerotier-ui.yml)
-
-
-- [rust](rust)
-    - [chat](rust/chat)
-    Rust Chat client use http comet technique. 
-
-    [![Build](https://github.com/gsmlg-dev/Foundation/actions/workflows/rust-chat-release.yml/badge.svg)](https://github.com/gsmlg-dev/Foundation/actions/workflows/rust-chat-release.yml)
+Images are still published to:
+- Docker Hub: `docker.io/gsmlg/{image}`
+- GitHub Container Registry: `ghcr.io/gsmlg-dev/{image}`
 
 
 ## Use sementic release
@@ -301,7 +60,7 @@ I've manage too many repositories, that I have to combine them to one so that I 
 If a dir is develop by me, can use @gsmlg/semantic-release-action, like so:
 
 ```yaml
-  - name: 🚀 Release
+  - name: Release
     uses: gsmlg/semantic-release-action@v3
     with:
         release_name: <Release name>
@@ -345,6 +104,3 @@ Must be one of the following:
 * perf: A code change that improves performance
 * test: Adding missing or correcting existing tests
 * chore: Changes to the build process or auxiliary tools and libraries such as documentation generation
-
-
-
